@@ -15,9 +15,13 @@
     <div class="container py-5">
         <div class="row justify-content-center">
             {% if matches | length > 0 %}
-                {% if not current_user.active %}
+                {% if current_user.phone and not current_user.active %}
                 <h6 class="py-5 text-center text-danger">
                     Sorry, You do not have an Active Subscription! Kindly <a href="{{ url_for('subscribe') }}">Subscribe</a> to View Predictions
+                </h6>
+                {% elif not current_user.phone %}
+                <h6 class="py-5 text-center text-danger">
+                    Sorry, You are not Logged in! Kindly <a href="{{ url_for('login') }}">Login</a> to View Predictions
                 </h6>
                 {% endif %}
             {% else %}
