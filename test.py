@@ -1,8 +1,9 @@
 
-from utils.pesapal import Pesapal
+from utils.betika import Betika
 
 if __name__ == '__main__':
-    pesapal = Pesapal()
+    betika = Betika()
     
-    pesapal.register_IPN_URL()
-    pesapal.get_IPN_list()
+    #betika.login('0105565532', 'Mmxsp65$$$')
+
+    bal = betika.get_balance()
