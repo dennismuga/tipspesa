@@ -9,8 +9,8 @@ class Pesapal():
         self.consumer_key = os.getenv('PESAPAL_CONSUMER_KEY')
         self.consumer_secret = os.getenv('PESAPAL_CONSUMER_SECRET')
         self.base_url = 'https://pay.pesapal.com/v3/api' 
-        self.callback_url = 'https://tipspesa.matrixsys.co.ke/pesapal-callback'  #Redirect back after payment URL
-        self.ipn_url = 'https://tipspesa.matrixsys.co.ke/pesapal-ipn'  # IPN (Instant Payment Notification) URL
+        self.callback_url = 'https://tipspesa.vercel.app/pesapal-callback'  #Redirect back after payment URL
+        self.ipn_url = 'https://tipspesa.vercel.app/pesapal-ipn'  # IPN (Instant Payment Notification) URL
         # Headers
         self.headers = {
             'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ class Pesapal():
             "amount": amount,
             "description": "Payment For Premium Tips",
             "callback_url": self.callback_url,
-            "notification_id": "8e856c97-6295-4de0-94a6-dc24d6e4b181",
+            "notification_id": "69d97e59-3b5f-4b9a-a022-dc2211b9c5a7",
             "billing_address": {
                 "phone_number": phone
             }

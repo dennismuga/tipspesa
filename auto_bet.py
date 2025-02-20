@@ -39,7 +39,7 @@ class AutoBet():
                 predictions = {**total_goals, **total_corners}
                 for key in predictions:
                     prediction = int(predictions.get(key).replace('%',''))
-                    if (prediction>=75 and key in ['OVER 1.5']) or (prediction>=70 and key in ['OVER 2.5']) or (prediction>=65 and key in['OVER 7.5']) or (prediction>=60 and key in ['OVER 8.5']) or (prediction>=55 and key in ['OVER 9.5']) or (prediction>=50 and key in ['OVER 10.5']):  
+                    if (prediction>=80 and key in ['OVER 1.5', 'OVER 7.5']) or (prediction>=75 and key in ['OVER 2.5', 'OVER 8.5']) or (prediction>=70 and key in ['OVER 9.5']) or (prediction>=65 and key in ['OVER 10.5']):  
                         url = f'https://api.betika.com/v1/uo/match?parent_match_id={parent_match_id}'
                         match_details = self.betika.fetch_data(url)
                         data = match_details.get('data')
@@ -57,7 +57,7 @@ class AutoBet():
                                             betslip = self.compose_bet_slip(parent_match_id, sub_type_id, bet_pick, odd_value, outcome_id, special_bet_value)
                                             betslips.append(betslip)
                                             print(f"{datum.get('home_team')} vs {datum.get('away_team')} = {key} [x{odd_value}]")
-                                            added_parent_match_ids.add(parent_match_id)
+                                            # added_parent_match_ids.add(parent_match_id)
                                             total_odd *= float(odd_value)                                            
                                             composite_betslip = {
                                                 'total_odd': total_odd,
