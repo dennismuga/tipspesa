@@ -73,6 +73,7 @@ class PostgresCRUD:
     
     def insert_match(self, match):
         match_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, match['match_id']))
+        parent_match_id = match['parent_match_id']
         kickoff = match['start_time']
         home_team = match['home_team'].replace("'","''")
         away_team = match['away_team'].replace("'","''")
@@ -83,14 +84,14 @@ class PostgresCRUD:
         self.ensure_connection()
         with self.conn.cursor() as cursor:
             query = """
-                INSERT INTO matches(match_id, kickoff, home_team, away_team, prediction, odd, overall_prob)
-                VALUES(%s, %s, %s, %s, %s, %s, %s)
+                INSERT INTO matches(match_id, parent_match_id, kickoff, home_team, away_team, prediction, odd, overall_prob)
+                VALUES(%s, %s, %s, %s, %s, %s, %s, %s)
                 ON CONFLICT (match_id) DO UPDATE SET
                     prediction = %s,
                     odd = %s,
                     overall_prob = %s     
                 """
-            cursor.execute(query, (match_id, kickoff, home_team, away_team, prediction, odd, overall_prob, prediction, odd, overall_prob))
+            cursor.execute(query, (match_id, parent_match_id, kickoff, home_team, away_team, prediction, odd, overall_prob, prediction, odd, overall_prob))
             self.conn.commit()
             
     def fetch_open_matches(self):

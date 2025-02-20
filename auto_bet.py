@@ -34,19 +34,21 @@ class AutoBet():
             for datum in data:
                 parent_match_id= datum.get('parent_match_id')
                 predictions = datum.get('predictions')
+                winner = predictions.get('1X2')
                 total_goals = predictions.get('TOTAL GOALS')
+                btts = predictions.get('BOTH TEAMS TO SCORE')
                 total_corners = predictions.get('TOTAL CORNERS')
-                predictions = {**total_goals, **total_corners}
+                predictions = {**winner, **total_goals, **btts, **total_corners}
                 for key in predictions:
                     prediction = int(predictions.get(key).replace('%',''))
-                    if (prediction>=80 and key in ['OVER 1.5', 'OVER 7.5']) or (prediction>=75 and key in ['OVER 2.5', 'OVER 8.5']) or (prediction>=70 and key in ['OVER 9.5']) or (prediction>=65 and key in ['OVER 10.5']):  
+                    if (prediction>=80 and key in ['OVER 1.5', 'OVER 7.5']) or (prediction>=75 and key in ['OVER 2.5', 'OVER 8.5', 'YES']) or (prediction>=70 and key in ['OVER 9.5', '1', 'X', '2']) or (prediction>=65 and key in ['OVER 10.5']):  
                         url = f'https://api.betika.com/v1/uo/match?parent_match_id={parent_match_id}'
                         match_details = self.betika.fetch_data(url)
                         data = match_details.get('data')
                         if data:
                             for d in data:
                                 sub_type_id = d.get('sub_type_id')
-                                if sub_type_id in ["18", "166"]:
+                                if sub_type_id in ["1", "18", "29", "166"]:
                                     odds = d.get('odds')
                                     for odd in odds:
                                         odd_value = odd.get('odd_value')
@@ -72,6 +74,7 @@ class AutoBet():
                                                 
                                             match = {
                                                 'match_id': match_details.get('meta').get('match_id'),
+                                                'parent_match_id': parent_match_id,
                                                 'start_time': match_details.get('meta').get('start_time'),
                                                 'home_team': datum.get('home_team'),
                                                 'away_team': datum.get('away_team'),

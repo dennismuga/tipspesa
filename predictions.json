@@ -1,123 +1,618 @@
 [
-  {
-      "parent_match_id": "58088527",
-      "home_team": "AL Naft Maysan",
-      "away_team": "AL Karma",
-      "predictions": {
-          "1X2": {"1": "45%", "X": "30%", "2": "25%"},
-          "TOTAL GOALS": {"OVER 2.5": "40%", "OVER 1.5": "65%"},
-          "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
-          "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
-      }
-  },
-  {
-      "parent_match_id": "58088529",
-      "home_team": "Diyala FC",
-      "away_team": "Newroz SC",
-      "predictions": {
-          "1X2": {"1": "35%", "X": "35%", "2": "30%"},
-          "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
-          "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
-          "TOTAL CORNERS": {"OVER 10.5": "25%", "OVER 9.5": "35%", "OVER 8.5": "45%", "OVER 7.5": "55%"}
-      }
-  },
-  {
-      "parent_match_id": "56375105",
-      "home_team": "Lion City Sailors FC",
-      "away_team": "Muang Thong United",
-      "predictions": {
-          "1X2": {"1": "55%", "X": "25%", "2": "20%"},
-          "TOTAL GOALS": {"OVER 2.5": "60%", "OVER 1.5": "80%"},
-          "BOTH TEAMS TO SCORE": {"YES": "60%", "NO": "40%"},
-          "TOTAL CORNERS": {"OVER 10.5": "45%", "OVER 9.5": "55%", "OVER 8.5": "65%", "OVER 7.5": "75%"}
-      }
-  },
-  {
-      "parent_match_id": "56555343",
-      "home_team": "Gol Gohar Sirjan FC",
-      "away_team": "Mes Rafsanjan FC",
-      "predictions": {
-          "1X2": {"1": "50%", "X": "30%", "2": "20%"},
-          "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
-          "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
-          "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
-      }
-  },
-  {
-      "parent_match_id": "57795129",
-      "home_team": "Mathare United",
-      "away_team": "Kenya Police FC",
-      "predictions": {
-          "1X2": {"1": "40%", "X": "30%", "2": "30%"},
-          "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
-          "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
-          "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
-      }
-  },
-  {
-      "parent_match_id": "56555341",
-      "home_team": "Chador Malu Yazd",
-      "away_team": "Esteghlal Khuzestan FC",
-      "predictions": {
-          "1X2": {"1": "45%", "X": "30%", "2": "25%"},
-          "TOTAL GOALS": {"OVER 2.5": "40%", "OVER 1.5": "65%"},
-          "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
-          "TOTAL CORNERS": {"OVER 10.5": "25%", "OVER 9.5": "35%", "OVER 8.5": "45%", "OVER 7.5": "55%"}
-      }
-  },
-  {
-      "parent_match_id": "56806709",
-      "home_team": "El Sekka El Hadid",
-      "away_team": "Wadi Degla SC",
-      "predictions": {
-          "1X2": {"1": "35%", "X": "35%", "2": "30%"},
-          "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
-          "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
-          "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
-      }
-  },
-  {
-      "parent_match_id": "51828535",
-      "home_team": "Genoa CFC",
-      "away_team": "Udinese Calcio",
-      "predictions": {
-          "1X2": {"1": "50%", "X": "30%", "2": "20%"},
-          "TOTAL GOALS": {"OVER 2.5": "55%", "OVER 1.5": "80%"},
-          "BOTH TEAMS TO SCORE": {"YES": "60%", "NO": "40%"},
-          "TOTAL CORNERS": {"OVER 10.5": "40%", "OVER 9.5": "50%", "OVER 8.5": "60%", "OVER 7.5": "70%"}
-      }
-  },
-  {
-      "parent_match_id": "57795117",
-      "home_team": "Bidco United",
-      "away_team": "Gor Mahia",
-      "predictions": {
-          "1X2": {"1": "30%", "X": "30%", "2": "40%"},
-          "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
-          "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
-          "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
-      }
-  },
-  {
-      "parent_match_id": "57993559",
-      "home_team": "Sfaxien",
-      "away_team": "Africain",
-      "predictions": {
-          "1X2": {"1": "45%", "X": "30%", "2": "25%"},
-          "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
-          "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
-          "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
-      }
-  },
-  {
-      "parent_match_id": "57993557",
-      "home_team": "Monastir",
-      "away_team": "Omrane",
-      "predictions": {
-          "1X2": {"1": "50%", "X": "30%", "2": "20%"},
-          "TOTAL GOALS": {"OVER 2.5": "40%", "OVER 1.5": "65%"},
-          "BOTH TEAMS TO SCORE": {"YES": "45%", "NO": "55%"},
-          "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
-      }
-  }
+    {
+        "parent_match_id": "56929395",
+        "home_team": "Al Fehaheel",
+        "away_team": "Al Tadamon",
+        "predictions": {
+            "1X2": {"1": "55%", "X": "25%", "2": "20%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "55210443",
+        "home_team": "Mohammedan SC",
+        "away_team": "Jamshedpur FC",
+        "predictions": {
+            "1X2": {"1": "40%", "X": "30%", "2": "30%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "58088531",
+        "home_team": "Air Force Club",
+        "away_team": "AL Hedood",
+        "predictions": {
+            "1X2": {"1": "60%", "X": "25%", "2": "15%"},
+            "TOTAL GOALS": {"OVER 2.5": "40%", "OVER 1.5": "65%"},
+            "BOTH TEAMS TO SCORE": {"YES": "45%", "NO": "55%"},
+            "TOTAL CORNERS": {"OVER 10.5": "25%", "OVER 9.5": "35%", "OVER 8.5": "45%", "OVER 7.5": "55%"}
+        }
+    },
+    {
+        "parent_match_id": "57399481",
+        "home_team": "Sheff Utd",
+        "away_team": "Fleetwood Town",
+        "predictions": {
+            "1X2": {"1": "65%", "X": "20%", "2": "15%"},
+            "TOTAL GOALS": {"OVER 2.5": "55%", "OVER 1.5": "80%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "40%", "OVER 9.5": "50%", "OVER 8.5": "60%", "OVER 7.5": "70%"}
+        }
+    },
+    {
+        "parent_match_id": "57252653",
+        "home_team": "FC Pyunik Yerevan",
+        "away_team": "FC Ararat Armenia",
+        "predictions": {
+            "1X2": {"1": "45%", "X": "30%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "60%", "NO": "40%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "58174487",
+        "home_team": "Al Shabab",
+        "away_team": "Al Seeb",
+        "predictions": {
+            "1X2": {"1": "50%", "X": "25%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "51828543",
+        "home_team": "SS Lazio",
+        "away_team": "Cesena FC",
+        "predictions": {
+            "1X2": {"1": "70%", "X": "20%", "2": "10%"},
+            "TOTAL GOALS": {"OVER 2.5": "60%", "OVER 1.5": "85%"},
+            "BOTH TEAMS TO SCORE": {"YES": "45%", "NO": "55%"},
+            "TOTAL CORNERS": {"OVER 10.5": "45%", "OVER 9.5": "55%", "OVER 8.5": "65%", "OVER 7.5": "75%"}
+        }
+    },
+    {
+        "parent_match_id": "52034651",
+        "home_team": "Al-Fateh SC",
+        "away_team": "Al-Orobah",
+        "predictions": {
+            "1X2": {"1": "55%", "X": "25%", "2": "20%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "57445567",
+        "home_team": "Al Kharaitiyat SC",
+        "away_team": "AL Markhiya",
+        "predictions": {
+            "1X2": {"1": "40%", "X": "30%", "2": "30%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "57445565",
+        "home_team": "Lusail SC",
+        "away_team": "Al-Sailiya SC",
+        "predictions": {
+            "1X2": {"1": "35%", "X": "30%", "2": "35%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "60%", "NO": "40%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "52034661",
+        "home_team": "Al-Fayha FC",
+        "away_team": "Al-Khaleej Club",
+        "predictions": {
+            "1X2": {"1": "50%", "X": "25%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "57989115",
+        "home_team": "ES Setif",
+        "away_team": "CR Belouizdad",
+        "predictions": {
+            "1X2": {"1": "45%", "X": "30%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "58224809",
+        "home_team": "Czech U19 Women",
+        "away_team": "Belgium U19 Women",
+        "predictions": {
+            "1X2": {"1": "40%", "X": "25%", "2": "35%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "56929397",
+        "home_team": "Khaitan",
+        "away_team": "Kazma",
+        "predictions": {
+            "1X2": {"1": "35%", "X": "30%", "2": "35%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "60%", "NO": "40%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "58088533",
+        "home_team": "AL Zawraa",
+        "away_team": "Karbalaa",
+        "predictions": {
+            "1X2": {"1": "60%", "X": "25%", "2": "15%"},
+            "TOTAL GOALS": {"OVER 2.5": "40%", "OVER 1.5": "65%"},
+            "BOTH TEAMS TO SCORE": {"YES": "45%", "NO": "55%"},
+            "TOTAL CORNERS": {"OVER 10.5": "25%", "OVER 9.5": "35%", "OVER 8.5": "45%", "OVER 7.5": "55%"}
+        }
+    },
+    {
+        "parent_match_id": "58174289",
+        "home_team": "Remo Stars",
+        "away_team": "Kwara United",
+        "predictions": {
+            "1X2": {"1": "55%", "X": "25%", "2": "20%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "52034649",
+        "home_team": "Al-Riyadh SC",
+        "away_team": "Al-Raed Club",
+        "predictions": {
+            "1X2": {"1": "40%", "X": "30%", "2": "30%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "53303417",
+        "home_team": "FC Tzeirey Tira",
+        "away_team": "Hapoel Marmorek FC",
+        "predictions": {
+            "1X2": {"1": "50%", "X": "25%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "57687897",
+        "home_team": "AS Roma",
+        "away_team": "FC Porto",
+        "predictions": {
+            "1X2": {"1": "55%", "X": "25%", "2": "20%"},
+            "TOTAL GOALS": {"OVER 2.5": "55%", "OVER 1.5": "80%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "40%", "OVER 9.5": "50%", "OVER 8.5": "60%", "OVER 7.5": "70%"}
+        }
+    },
+    {
+        "parent_match_id": "57687905",
+        "home_team": "Galatasaray Istanbul",
+        "away_team": "AZ Alkmaar",
+        "predictions": {
+            "1X2": {"1": "60%", "X": "25%", "2": "15%"},
+            "TOTAL GOALS": {"OVER 2.5": "60%", "OVER 1.5": "85%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "45%", "OVER 9.5": "55%", "OVER 8.5": "65%", "OVER 7.5": "75%"}
+        }
+    },
+    {
+        "parent_match_id": "56591509",
+        "home_team": "Olimpija Ljubljana",
+        "away_team": "FK Borac Banja Luka",
+        "predictions": {
+            "1X2": {"1": "50%", "X": "25%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "56591521",
+        "home_team": "Pafos",
+        "away_team": "Omonia Nicosi",
+        "predictions": {
+            "1X2": {"1": "45%", "X": "30%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "56591491",
+        "home_team": "Real Betis Seville",
+        "away_team": "KAA Gent",
+        "predictions": {
+            "1X2": {"1": "65%", "X": "20%", "2": "15%"},
+            "TOTAL GOALS": {"OVER 2.5": "55%", "OVER 1.5": "80%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "40%", "OVER 9.5": "50%", "OVER 8.5": "60%", "OVER 7.5": "70%"}
+        }
+    },
+    {
+        "parent_match_id": "56591495",
+        "home_team": "Heidenheim",
+        "away_team": "FC Copenhagen",
+        "predictions": {
+            "1X2": {"1": "40%", "X": "30%", "2": "30%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "57687921",
+        "home_team": "Bodoe/Glimt",
+        "away_team": "FC Twente",
+        "predictions": {
+            "1X2": {"1": "55%", "X": "25%", "2": "20%"},
+            "TOTAL GOALS": {"OVER 2.5": "60%", "OVER 1.5": "85%"},
+            "BOTH TEAMS TO SCORE": {"YES": "60%", "NO": "40%"},
+            "TOTAL CORNERS": {"OVER 10.5": "45%", "OVER 9.5": "55%", "OVER 8.5": "65%", "OVER 7.5": "75%"}
+        }
+    },
+    {
+        "parent_match_id": "57687915",
+        "home_team": "Fotbal Club FCSB",
+        "away_team": "PAOK Thessaloniki",
+        "predictions": {
+            "1X2": {"1": "50%", "X": "25%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "58026151",
+        "home_team": "IK Start",
+        "away_team": "Arendal FK",
+        "predictions": {
+            "1X2": {"1": "55%", "X": "25%", "2": "20%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "57869081",
+        "home_team": "Racing Club Dabidjan",
+        "away_team": "Inova Sca",
+        "predictions": {
+            "1X2": {"1": "45%", "X": "30%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "56154877",
+        "home_team": "Ennepetal",
+        "away_team": "SC Preussen Munster II",
+        "predictions": {
+            "1X2": {"1": "40%", "X": "30%", "2": "30%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "58217433",
+        "home_team": "Throttur Reykjavik",
+        "away_team": "Valur Reykjavik",
+        "predictions": {
+            "1X2": {"1": "30%", "X": "25%", "2": "45%"},
+            "TOTAL GOALS": {"OVER 2.5": "55%", "OVER 1.5": "80%"},
+            "BOTH TEAMS TO SCORE": {"YES": "60%", "NO": "40%"},
+            "TOTAL CORNERS": {"OVER 10.5": "40%", "OVER 9.5": "50%", "OVER 8.5": "60%", "OVER 7.5": "70%"}
+        }
+    },
+    {
+        "parent_match_id": "57911157",
+        "home_team": "England",
+        "away_team": "Germany",
+        "predictions": {
+            "1X2": {"1": "50%", "X": "25%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "55%", "OVER 1.5": "80%"},
+            "BOTH TEAMS TO SCORE": {"YES": "60%", "NO": "40%"},
+            "TOTAL CORNERS": {"OVER 10.5": "45%", "OVER 9.5": "55%", "OVER 8.5": "65%", "OVER 7.5": "75%"}
+        }
+    },
+    {
+        "parent_match_id": "57687891",
+        "home_team": "Viktoria Plzen",
+        "away_team": "Ferencvarosi Budapest",
+        "predictions": {
+            "1X2": {"1": "45%", "X": "30%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "57687909",
+        "home_team": "Real Sociedad",
+        "away_team": "FC Midtjylland",
+        "predictions": {
+            "1X2": {"1": "60%", "X": "25%", "2": "15%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "80%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "40%", "OVER 9.5": "50%", "OVER 8.5": "60%", "OVER 7.5": "70%"}
+        }
+    },
+    {
+        "parent_match_id": "57687923",
+        "home_team": "RSC Anderlecht",
+        "away_team": "Fenerbahce Istanbul",
+        "predictions": {
+            "1X2": {"1": "40%", "X": "30%", "2": "30%"},
+            "TOTAL GOALS": {"OVER 2.5": "55%", "OVER 1.5": "80%"},
+            "BOTH TEAMS TO SCORE": {"YES": "60%", "NO": "40%"},
+            "TOTAL CORNERS": {"OVER 10.5": "45%", "OVER 9.5": "55%", "OVER 8.5": "65%", "OVER 7.5": "75%"}
+        }
+    },
+    {
+        "parent_match_id": "57687913",
+        "home_team": "Ajax Amsterdam",
+        "away_team": "Union Saint-Gilloise",
+        "predictions": {
+            "1X2": {"1": "55%", "X": "25%", "2": "20%"},
+            "TOTAL GOALS": {"OVER 2.5": "60%", "OVER 1.5": "85%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "45%", "OVER 9.5": "55%", "OVER 8.5": "65%", "OVER 7.5": "75%"}
+        }
+    },
+    {
+        "parent_match_id": "56591535",
+        "home_team": "Shamrock Rovers",
+        "away_team": "Molde FK",
+        "predictions": {
+            "1X2": {"1": "35%", "X": "25%", "2": "40%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "56591501",
+        "home_team": "Panathinaikos",
+        "away_team": "Vikingur Reykjavik",
+        "predictions": {
+            "1X2": {"1": "70%", "X": "20%", "2": "10%"},
+            "TOTAL GOALS": {"OVER 2.5": "55%", "OVER 1.5": "85%"},
+            "BOTH TEAMS TO SCORE": {"YES": "45%", "NO": "55%"},
+            "TOTAL CORNERS": {"OVER 10.5": "40%", "OVER 9.5": "50%", "OVER 8.5": "60%", "OVER 7.5": "70%"}
+        }
+    },
+    {
+        "parent_match_id": "56591527",
+        "home_team": "Jagiellonia Bialystok",
+        "away_team": "TSC Backa Topola",
+        "predictions": {
+            "1X2": {"1": "50%", "X": "25%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "56591517",
+        "home_team": "Apoel Nicosia",
+        "away_team": "NK Celje",
+        "predictions": {
+            "1X2": {"1": "55%", "X": "25%", "2": "20%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "56382125",
+        "home_team": "IA Akranes",
+        "away_team": "UMF Grindavik",
+        "predictions": {
+            "1X2": {"1": "60%", "X": "25%", "2": "15%"},
+            "TOTAL GOALS": {"OVER 2.5": "55%", "OVER 1.5": "80%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "40%", "OVER 9.5": "50%", "OVER 8.5": "60%", "OVER 7.5": "70%"}
+        }
+    },
+    {
+        "parent_match_id": "57852231",
+        "home_team": "CA Platense Reserves",
+        "away_team": "CA River Plate (Arg) Reserve",
+        "predictions": {
+            "1X2": {"1": "30%", "X": "25%", "2": "45%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "57852229",
+        "home_team": "CD Godoy Cruz Reserves",
+        "away_team": "Rosario Central Reserves",
+        "predictions": {
+            "1X2": {"1": "50%", "X": "25%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "57852223",
+        "home_team": "CA Lanus Reserves",
+        "away_team": "Deportivo Riestra Reserves",
+        "predictions": {
+            "1X2": {"1": "55%", "X": "25%", "2": "20%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "57852225",
+        "home_team": "CA Tigre Reserves",
+        "away_team": "Velez Sarsfield Reserves",
+        "predictions": {
+            "1X2": {"1": "40%", "X": "30%", "2": "30%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "58233511",
+        "home_team": "Humble Lions FC",
+        "away_team": "Waterhouse FC",
+        "predictions": {
+            "1X2": {"1": "35%", "X": "30%", "2": "35%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "60%", "NO": "40%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "58233533",
+        "home_team": "Tivoli Gardens",
+        "away_team": "Jamalco FC",
+        "predictions": {
+            "1X2": {"1": "50%", "X": "25%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "58233541",
+        "home_team": "Mount Pleasant FC",
+        "away_team": "Chapelton Maroons FC",
+        "predictions": {
+            "1X2": {"1": "60%", "X": "25%", "2": "15%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "80%"},
+            "BOTH TEAMS TO SCORE": {"YES": "45%", "NO": "55%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "58204885",
+        "home_team": "CD Universitario II",
+        "away_team": "SD Atletico Nacional",
+        "predictions": {
+            "1X2": {"1": "45%", "X": "30%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "57852227",
+        "home_team": "S. M. de San Juan R.",
+        "away_team": "Atletico Tucuman Reserves",
+        "predictions": {
+            "1X2": {"1": "50%", "X": "25%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "56136593",
+        "home_team": "Red Bull Bragantino SP",
+        "away_team": "Mirassol",
+        "predictions": {
+            "1X2": {"1": "55%", "X": "25%", "2": "20%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "80%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "40%", "OVER 9.5": "50%", "OVER 8.5": "60%", "OVER 7.5": "70%"}
+        }
+    },
+    {
+        "parent_match_id": "58200657",
+        "home_team": "Cavaliers FC",
+        "away_team": "Harbour View",
+        "predictions": {
+            "1X2": {"1": "40%", "X": "30%", "2": "30%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "30%", "OVER 9.5": "40%", "OVER 8.5": "50%", "OVER 7.5": "60%"}
+        }
+    },
+    {
+        "parent_match_id": "58009657",
+        "home_team": "Monagas SC",
+        "away_team": "Cerro Porteno",
+        "predictions": {
+            "1X2": {"1": "35%", "X": "25%", "2": "40%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "56064727",
+        "home_team": "Japan",
+        "away_team": "Australia",
+        "predictions": {
+            "1X2": {"1": "50%", "X": "25%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "45%", "OVER 1.5": "70%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "40%", "OVER 9.5": "50%", "OVER 8.5": "60%", "OVER 7.5": "70%"}
+        }
+    },
+    {
+        "parent_match_id": "58179451",
+        "home_team": "Monsoon FC RS",
+        "away_team": "Ypiranga FC",
+        "predictions": {
+            "1X2": {"1": "45%", "X": "30%", "2": "25%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "75%"},
+            "BOTH TEAMS TO SCORE": {"YES": "55%", "NO": "45%"},
+            "TOTAL CORNERS": {"OVER 10.5": "35%", "OVER 9.5": "45%", "OVER 8.5": "55%", "OVER 7.5": "65%"}
+        }
+    },
+    {
+        "parent_match_id": "56136597",
+        "home_team": "SE Palmeiras",
+        "away_team": "Botafogo SP",
+        "predictions": {
+            "1X2": {"1": "65%", "X": "20%", "2": "15%"},
+            "TOTAL GOALS": {"OVER 2.5": "55%", "OVER 1.5": "85%"},
+            "BOTH TEAMS TO SCORE": {"YES": "45%", "NO": "55%"},
+            "TOTAL CORNERS": {"OVER 10.5": "45%", "OVER 9.5": "55%", "OVER 8.5": "65%", "OVER 7.5": "75%"}
+        }
+    },
+    {
+        "parent_match_id": "57615745",
+        "home_team": "Goias",
+        "away_team": "Inhumas EC GO",
+        "predictions": {
+            "1X2": {"1": "60%", "X": "25%", "2": "15%"},
+            "TOTAL GOALS": {"OVER 2.5": "50%", "OVER 1.5": "80%"},
+            "BOTH TEAMS TO SCORE": {"YES": "50%", "NO": "50%"},
+            "TOTAL CORNERS": {"OVER 10.5": "40%", "OVER 9.5": "50%", "OVER 8.5": "60%", "OVER 7.5": "70%"}
+        }
+    }
 ]
