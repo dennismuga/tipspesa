@@ -49,10 +49,10 @@
                             <small class="col-2 col-sm-2 text-center"><b>x{{ match.odd }}</b></small>
                             <small class="col-5 col-sm-5 text-right"><b>
                                     {% if ns.counter == 1 or (current_user.active) %}
-                                        {% if match.prediction in ['OVER 1.5', 'OVER 2.5'] %}
-                                            {{ match.prediction }} GOALS
-                                        {% elif match.prediction in ['OVER 7.5', 'OVER 8.5', 'OVER 9.5', 'OVER 10.5'] %}
-                                            {{ match.prediction }} CORNERS
+                                        {% if match.prediction in ['over 1.5', 'over 2.5'] %}
+                                            {{ match.prediction }} goals
+                                        {% elif match.prediction in ['over 7.5', 'over 8.5', 'over 9.5', 'over 10.5'] %}
+                                            {{ match.prediction }} corners
                                         {% else %}
                                             {{ match.prediction }}
                                         {% endif %}
@@ -91,10 +91,10 @@
                             <small class="col-4 col-sm-4 text-left">{{ match.kickoff.strftime('%d %b %Y %H:%M') }}</small>
                             <small class="col-2 col-sm-2 text-center"><b>{{ match.home_results }} - {{ match.away_results }}</b></small>
                             <small class="col-4 col-sm-4 text-right"><b>                                
-                                {% if match.prediction in ['OVER 1.5', 'OVER 2.5'] %}
-                                    {{ match.prediction }} GOALS
-                                {% elif match.prediction in ['OVER 7.5', 'OVER 8.5', 'OVER 9.5', 'OVER 10.5'] %}
-                                    {{ match.prediction }} CORNERS
+                                {% if match.prediction in ['over 1.5', 'over 2.5'] %}
+                                    {{ match.prediction }} goals
+                                {% elif match.prediction in ['over 7.5', 'over 8.5', 'over 9.5', 'over 10.5'] %}
+                                    {{ match.prediction }} corners
                                 {% else %}
                                     {{ match.prediction }}
                                 {% endif %}
