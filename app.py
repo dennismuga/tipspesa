@@ -112,7 +112,7 @@ def login():
                 return render_template('login.html', error=error)
         else:
             db.add_user(phone, hashed_password)
-            user = db.get_user(phone)
+            user = db.get_user(phone=phone)
             login_user(user)
             return redirect(url_for('today'))
     

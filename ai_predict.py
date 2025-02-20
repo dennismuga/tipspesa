@@ -10,7 +10,6 @@ from pathlib import Path
 def compose_question(events):     
     request_json = {
         "instructions": """Predict the outcome of the following football matches using available web data, including team form and Twitter feeds. 
-        Provide predictions for the following markets: [TOTAL GOALS, TOTAL CORNERS]. 
         For each market, provide a probability percentage. Return the results as a JSON array of objects, where each object represents a match.""" ,
         "matches": events,  # Use the 'events' list here
         "format": {
@@ -21,9 +20,18 @@ def compose_question(events):
                     "home_team": "string",
                     "away_team": "string",
                     "predictions": {
+                        "1X2":{
+                            "1": "probability",
+                            "X": "probability",
+                            "2": "probability"
+                        },       
                         "TOTAL GOALS":{
                             "OVER 2.5": "probability",
                             "OVER 1.5": "probability"
+                        },       
+                        "BOTH TEAMS TO SCORE":{
+                            "YES": "probability",
+                            "NO": "probability"
                         },                        
                         "TOTAL CORNERS":{
                             "OVER 10.5": "probability",
