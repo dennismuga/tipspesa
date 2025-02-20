@@ -366,16 +366,16 @@ class PostgresCRUD:
             
         return str(uuid.uuid5(uuid.NAMESPACE_DNS, code)).split('-')
     
-    def add_user(self, phone, password):
+    def add_user(self, phone):
         id = str(uuid.uuid5(uuid.NAMESPACE_DNS, phone))        
         self.ensure_connection()
         with self.conn.cursor() as cursor:
             query = """
-                INSERT INTO subscribers(id, phone, password, expires_at)
-                VALUES(%s, %s, %s, NOW())
+                INSERT INTO subscribers(id, phone, expires_at)
+                VALUES(%s, %s, NOW())
                 ON CONFLICT DO NOTHING
             """
-            cursor.execute(query, (id, phone, password))
+            cursor.execute(query, (id, phone))
             self.conn.commit()      
     
     def update_user_expiry(self, order_tracking_id, days):         

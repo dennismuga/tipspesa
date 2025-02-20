@@ -1,5 +1,5 @@
 
-import os, uuid
+import os
 from datetime import datetime
 from flask import Flask, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_user
@@ -65,6 +65,22 @@ atexit.register(lambda: scheduler.shutdown())
 waapi_instance_id = os.getenv('WAAPI_INSTANCE_ID')
 waapi_token = os.getenv('WAAPI_TOKEN')
 
+
+def login():           
+    phone = request.form['phone']
+    user = db.get_user(phone=phone)
+    
+    if user:      
+        login_user(user)
+        if user.active:
+            return redirect(url_for('today'))       
+    else:
+        db.add_user(phone)
+        user = db.get_user(phone=phone)
+        login_user(user)
+
+    return redirect(url_for('subscribe'))
+    
 # Callback to reload the user object
 @login_manager.user_loader
 def load_user(user_id):
@@ -75,51 +91,33 @@ def page_not_found(e):
     # Redirect to a specific endpoint, like 'today', or a custom 404 page
     return redirect(url_for('today'), 302)
   
-@app.route('/today')
+@app.route('/today', methods=['GET', 'POST'])
 def today(): 
+    if request.method == 'POST': 
+        login()
     matches, played, won = helper.fetch_matches('', '=', '')
     return render_template('index.html', header="Today Games Predictions", matches=matches, played=played, won=won)
 
-@app.route('/tomorrow')
+@app.route('/tomorrow', methods=['GET', 'POST'])
 def tomorrow():    
+    if request.method == 'POST': 
+        login()
     matches, played, won = helper.fetch_matches('+1', '=', '')
     return render_template('index.html', header="Tomorrow Games Predictions", matches = matches, played = played, won = won)
 
-@app.route('/yesterday')
+@app.route('/yesterday', methods=['GET', 'POST'])
 def yesterday():    
+    if request.method == 'POST': 
+        login()
     matches, played, won = helper.fetch_matches('-1', '=')
     return render_template('index.html', header="Yesterday's Predictions Results", matches = matches, played = played, won = won)
 
-@app.route('/history')
+@app.route('/history', methods=['GET', 'POST'])
 def history():    
+    if request.method == 'POST': 
+        login()
     matches, played, won = helper.fetch_matches('', '<')
     return render_template('index.html', header="Last 100 Predicted Games Results", matches = matches, played = played, won = won )
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():    
-    if request.method == 'POST':        
-        phone = request.form['phone']
-        password = request.form['password']   
-        hashed_password = str(uuid.uuid5(uuid.NAMESPACE_DNS, f'{password}'))
-        user = db.get_user(phone=phone)
-        
-        if user:  
-            if user.password == hashed_password:     
-                login_user(user)
-                if user.active:
-                    return redirect(url_for('today'))  
-                else:                    
-                    return redirect(url_for('subscribe'))                
-            else: 
-                error = 'Login failed! Phone & Password do not match.'
-                return render_template('login.html', error=error)
-        else:
-            db.add_user(phone, hashed_password)
-            user = db.get_user(phone=phone)
-            login_user(user)
-            return redirect(url_for('subscribe'))
-    
-    return render_template('login.html')
 
 @app.route('/subscribe', methods=['GET', 'POST'])
 def subscribe():   

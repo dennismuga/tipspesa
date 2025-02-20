@@ -21,7 +21,7 @@
                 </h6>
                 {% elif not current_user.phone %}
                 <h6 class="py-5 text-center text-danger">
-                    Sorry, You are not Logged in! Kindly <a href="{{ url_for('login') }}">Login</a> to View Predictions
+                    Sorry, You are not Logged in! Kindly <a href="#" data-toggle="modal" data-target="#loginModal">Login</a> to View Predictions
                 </h6>
                 {% endif %}
             {% else %}
@@ -36,7 +36,7 @@
                 {% if current_user.phone and not current_user.active and ns.counter != 1 %} 
                     href="{{ url_for('subscribe') }}"
                 {% elif not current_user.phone %}
-                    href="{{ url_for('login') }}"
+                    href="#" data-toggle="modal" data-target="#loginModal"
                 {% endif %}
             >
                 <div class="card box-shadow my-2">
@@ -112,6 +112,34 @@
     </div>
 
     {% include 'nav.html' %}
+
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="POST" class="form-horizontal">
+                    <div class="modal-header text-center">
+                        <h5 class="text-center">Login/Register</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-4 text-end control-label col-form-label">Phone No.:</label>
+                            <div class="col-8">
+                                <input required="required" type="text" name="phone" id="phone" class="form-control input-sm"
+                                    placeholder="e.g 0712345678">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" id="action" name="action" value="login"
+                            class="btn btn-success">Login/Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- jQuery UI -->

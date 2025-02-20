@@ -31,7 +31,7 @@
     </div> -->    
     <div class="mobile-nav__item">
         {% if not current_user.phone %}
-        <a class="mobile-nav__item-content" href="{{ url_for('login') }}">
+        <a class="mobile-nav__item-content" href="#" data-toggle="modal" data-target="#loginModal">
             <i class="material-icons">create_new_folder</i>
             Login/Register
         </a>
