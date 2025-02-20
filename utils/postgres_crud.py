@@ -72,26 +72,30 @@ class PostgresCRUD:
             self.conn.commit()
     
     def insert_match(self, match):
-        match_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, match['match_id']))
-        parent_match_id = match['parent_match_id']
         kickoff = match['start_time']
         home_team = match['home_team'].replace("'","''")
         away_team = match['away_team'].replace("'","''")
         prediction = match['prediction']
         odd = match['odd']
         overall_prob = round(match['overall_prob'])
-        
+        parent_match_id = match['parent_match_id']
+        sub_type_id = match['sub_type_id']
+        bet_pick = match['bet_pick']
+        special_bet_value = match['special_bet_value']
+        outcome_id = match['outcome_id']
+        match_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, f"{match['match_id']}{prediction}"))
+                
         self.ensure_connection()
         with self.conn.cursor() as cursor:
             query = """
-                INSERT INTO matches(match_id, parent_match_id, kickoff, home_team, away_team, prediction, odd, overall_prob)
-                VALUES(%s, %s, %s, %s, %s, %s, %s, %s)
+                INSERT INTO matches(match_id, kickoff, home_team, away_team, prediction, odd, overall_prob, parent_match_id, sub_type_id, bet_pick, special_bet_value, outcome_id)
+                VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 ON CONFLICT (match_id) DO UPDATE SET
                     prediction = %s,
                     odd = %s,
                     overall_prob = %s     
                 """
-            cursor.execute(query, (match_id, parent_match_id, kickoff, home_team, away_team, prediction, odd, overall_prob, prediction, odd, overall_prob))
+            cursor.execute(query, (match_id, kickoff, home_team, away_team, prediction, odd, overall_prob, parent_match_id, sub_type_id, bet_pick, special_bet_value, outcome_id, prediction, odd, overall_prob))
             self.conn.commit()
             
     def fetch_open_matches(self):
@@ -107,30 +111,35 @@ class PostgresCRUD:
             cur.execute(query)
             return cur.fetchall()
             
-    def get_events(self, limit, page):
+    def get_predictions(self):
         self.ensure_connection()
-        offset = (page-1)*limit
-        events = []
         with self.conn.cursor() as cur:
             query = """
-                SELECT match_id, DATE(kickoff), home_team, away_team, prediction
-                FROM matches
-                WHERE status IS NULL AND DATE(kickoff) = CURRENT_DATE - 1
-                OFFSET %s LIMIT %s
+                WITH filtered AS(
+                    SELECT parent_match_id, prediction, odd, overall_prob, special_bet_value, outcome_id, sub_type_id, kickoff,
+                        ROW_NUMBER() OVER (PARTITION BY parent_match_id ORDER BY odd DESC) AS rn
+                    FROM matches
+                    WHERE DATE(kickoff) >= CURRENT_DATE
+                )
+                SELECT * FROM filtered
+                WHERE rn = 1
+                ORDER BY kickoff
             """
-            cur.execute(query, (offset, limit))
+            cur.execute(query)
             
+            predictions = []
             for datum in cur.fetchall():
-                event = {
-                    "match_id": datum[0],
-                    "match_date": str(datum[1]),
-                    "home_team": datum[2],
-                    "away_team": datum[3],
-                    "prediction": 'home_team to win' if datum[4]=="1" else 'away_team to win' if datum[4]=="2" else "DRAW" if datum[4]=="X" else datum[4]
+                prediction = {
+                    'parent_match_id': datum[0],
+                    'bet_pick': 'GG' if datum[1] == 'GG' else datum[1],
+                    'odd_value': datum[2],
+                    'overall_prob': datum[3],
+                    'special_bet_value': datum[4],
+                    'outcome_id': datum[5],
+                    'sub_type_id': datum[6]
                 }
-                events.append(event)
-                
-        return events
+                predictions.append(prediction)
+        return predictions
     
     def fetch_matches(self, day, comparator, status): 
         self.ensure_connection()           
@@ -157,8 +166,7 @@ class PostgresCRUD:
             """
             
             cur.execute(query, (home_results, away_results, status, match_id)) 
-            self.conn.commit()
-    
+            self.conn.commit()    
         
     def fetch_subscribers(self, status, sms=None):
         self.ensure_connection()

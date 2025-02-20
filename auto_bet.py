@@ -21,12 +21,7 @@ class AutoBet():
             "bet_type": 7
         }
     
-    def __call__(self):
-        betslips = []
-        min_odd = 100
-        total_odd = 1
-        composite_betslip = None
-        composite_betslips = []
+    def auto_predict(self):
         # Load JSON data from a file
         with open('predictions.json', 'r') as file:
             data = json.load(file)
@@ -53,54 +48,72 @@ class AutoBet():
                                     for odd in odds:
                                         odd_value = odd.get('odd_value')
                                         if key == odd.get('display') and parent_match_id not in added_parent_match_ids:
-                                            bet_pick = odd.get('odd_key')
-                                            special_bet_value = odd.get('special_bet_value')
-                                            outcome_id = odd.get('outcome_id')
-                                            betslip = self.compose_bet_slip(parent_match_id, sub_type_id, bet_pick, odd_value, outcome_id, special_bet_value)
-                                            betslips.append(betslip)
-                                            print(f"{datum.get('home_team')} vs {datum.get('away_team')} = {key} [x{odd_value}]")
-                                            # added_parent_match_ids.add(parent_match_id)
-                                            total_odd *= float(odd_value)                                            
-                                            composite_betslip = {
-                                                'total_odd': total_odd,
-                                                'betslips': betslips
-                                            }
-                                            if total_odd > min_odd:
-                                                print(total_odd)
-                                                composite_betslips.append(composite_betslip)
-                                                betslips = []
-                                                total_odd = 1
-                                                composite_betslip = None 
-                                                
+                                            print(f"{datum.get('home_team')} vs {datum.get('away_team')} = {key} [x{odd_value}]")                                            
                                             match = {
                                                 'match_id': match_details.get('meta').get('match_id'),
-                                                'parent_match_id': parent_match_id,
                                                 'start_time': match_details.get('meta').get('start_time'),
                                                 'home_team': datum.get('home_team'),
                                                 'away_team': datum.get('away_team'),
                                                 'prediction': key if key != 'YES' else 'GG',
                                                 'odd': odd_value,
-                                                'overall_prob': prediction
+                                                'overall_prob': prediction,
+                                                'parent_match_id': parent_match_id,
+                                                'sub_type_id': sub_type_id,
+                                                'bet_pick': odd.get('odd_key'),
+                                                'special_bet_value': odd.get('special_bet_value'),
+                                                'outcome_id': odd.get('outcome_id')
                                             }
                                             self.db.insert_match(match)
-            if composite_betslip:
+    
+    def auto_bet(self):
+        betslips = []
+        min_odd = 5
+        total_odd = 1
+        composite_betslip = None
+        composite_betslips = []
+        for prediction in self.db.get_predictions():
+            parent_match_id = prediction['parent_match_id']
+            sub_type_id = prediction['sub_type_id']
+            bet_pick = prediction['bet_pick']
+            odd_value = prediction['odd_value']
+            special_bet_value = prediction['special_bet_value']
+            outcome_id = prediction['outcome_id']
+            betslip = self.compose_bet_slip(parent_match_id, sub_type_id, bet_pick, odd_value, outcome_id, special_bet_value)
+            print(betslip)
+            betslips.append(betslip)
+            total_odd *= float(odd_value)                                            
+            composite_betslip = {
+                'total_odd': total_odd,
+                'betslips': betslips
+            }
+            if total_odd > min_odd*1.2:
                 print(total_odd)
                 composite_betslips.append(composite_betslip)
-            if len(composite_betslips) > 0:                        
-                balance, bonus = self.betika.get_balance()
-                placeable = (balance+bonus) #*0.75
-                min_stake = placeable/min_odd
-                equal_stake = placeable/len(composite_betslips)
-                max_stake = max(min_stake, equal_stake)
-                stake = int( max_stake if max_stake>1 else placeable)
-                #stake = round(equal_stake)
-                if stake > 0:
-                    for cb in composite_betslips:
-                        ttl_odd = cb['total_odd']
-                        slips = cb['betslips']
-                        print(f'TOTAL ODD: {ttl_odd}')
-                        self.betika.place_bet(slips, ttl_odd, stake)
-                        time.sleep(5)
-             
+                betslips = []
+                total_odd = 1
+                composite_betslip = None 
+
+        if composite_betslip:
+            print(total_odd)
+            composite_betslips.append(composite_betslip)
+        if len(composite_betslips) > 0:                        
+            balance, bonus = self.betika.get_balance()
+            placeable = (balance+bonus) #*0.75
+            min_stake = placeable/min_odd
+            equal_stake = placeable/len(composite_betslips)
+            max_stake = max(min_stake, equal_stake)
+            stake = int( max_stake if max_stake>1 else placeable)
+            if stake > 0:
+                for cb in composite_betslips:
+                    ttl_odd = cb['total_odd']
+                    slips = cb['betslips']
+                    print(f'TOTAL ODD: {ttl_odd}')
+                    self.betika.place_bet(slips, ttl_odd, stake)
+                    time.sleep(5)
+
+    def __call__(self):
+        # self.auto_predict()
+        self.auto_bet()
+
 if __name__ == '__main__':
     AutoBet()()
