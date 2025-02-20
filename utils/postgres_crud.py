@@ -148,7 +148,7 @@ class PostgresCRUD:
                 SELECT *
                 FROM matches
                 WHERE DATE(kickoff) {comparator} CURRENT_DATE {day} {status}
-                ORDER BY kickoff DESC
+                ORDER BY kickoff DESC, odd DESC
                 LIMIT 100
             """
             cur.execute(query)
