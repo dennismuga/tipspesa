@@ -90,7 +90,6 @@ class AutoBet():
                             if bet_pick == odd.get('odd_key'): 
                                 odd_value = odd.get('odd_value') 
                                 betslip = self.compose_bet_slip(parent_match_id, sub_type_id, bet_pick, odd_value, outcome_id, special_bet_value)
-                                print(betslip)
                                 betslips.append(betslip)
                                 total_odd *= float(odd_value)                                            
                                 composite_betslip = {
@@ -109,11 +108,11 @@ class AutoBet():
             composite_betslips.append(composite_betslip)
         if len(composite_betslips) > 0:                        
             balance, bonus = self.betika.get_balance()
-            placeable = (balance+bonus) #*0.75
+            placeable = (balance) #*0.75
             min_stake = placeable/min_odd
             equal_stake = placeable/len(composite_betslips)
             max_stake = max(min_stake, equal_stake)
-            stake = 1 #int( max_stake if max_stake>1 else placeable)
+            stake = int( max_stake if max_stake>1 else placeable)
             if stake > 0:
                 for cb in composite_betslips:
                     ttl_odd = cb['total_odd']

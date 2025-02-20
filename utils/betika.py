@@ -108,13 +108,6 @@ class Betika():
             "betslip": betslips,
             "token": BETIKA_TOKEN,
             "src": self.src
-            # ,
-            # "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
-            # "app_version": "6.0.0",
-            # "affiliate": None,
-            # "promo_id": None,
-            # "fbpid": False,
-            # "is_freebet": False
         }
 
         response = self.post_data(url, payload)
