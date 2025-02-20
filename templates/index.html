@@ -53,12 +53,6 @@
                                             {{ match.prediction }} GOALS
                                         {% elif match.prediction in ['OVER 7.5', 'OVER 8.5', 'OVER 9.5', 'OVER 10.5'] %}
                                             {{ match.prediction }} CORNERS
-                                        {% elif match.prediction == '1' %}
-                                            {{ match.home_team }}
-                                        {% elif match.prediction == 'X' %}
-                                            DRAW
-                                        {% elif match.prediction == '2' %}
-                                            {{ match.away_team }}
                                         {% else %}
                                             {{ match.prediction }}
                                         {% endif %}
@@ -96,8 +90,14 @@
                         <div class="row">
                             <small class="col-4 col-sm-4 text-left">{{ match.kickoff.strftime('%d %b %Y %H:%M') }}</small>
                             <small class="col-2 col-sm-2 text-center"><b>{{ match.home_results }} - {{ match.away_results }}</b></small>
-                            <small class="col-4 col-sm-4 text-right"><b>
-                                {{ match.prediction ~ ' GOALS' if match.prediction in ['OVER 1.5', 'OVER 2.5'] else (match.prediction ~ ' CORNERS' if match.prediction in ['OVER 7.5', 'OVER 8.5', 'OVER 9.5'] else '') }}
+                            <small class="col-4 col-sm-4 text-right"><b>                                
+                                {% if match.prediction in ['OVER 1.5', 'OVER 2.5'] %}
+                                    {{ match.prediction }} GOALS
+                                {% elif match.prediction in ['OVER 7.5', 'OVER 8.5', 'OVER 9.5', 'OVER 10.5'] %}
+                                    {{ match.prediction }} CORNERS
+                                {% else %}
+                                    {{ match.prediction }}
+                                {% endif %}
                             </b></small>
                             <small class="col-2 col-sm-2 text-center {{ match.status.lower() }}"><i class="material-icons">
                                 {{ 'do_not_disturb_on' if match.status == 'LOST' else ('check_circle' if match.status == 'WON' else 'autorenew') }}
