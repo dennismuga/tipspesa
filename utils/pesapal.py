@@ -15,7 +15,6 @@ class Pesapal():
         self.headers = {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
-            # 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3VzZXJkYXRhIjoiNmZlNGM2NjYtY2EyNC00OTlmLWExNWEtZGRmNTUwNTVkOTAwIiwidWlkIjoiU1hiZW5zS0gzOEk4SFJMUWtYb3JqRlBuWGhmSTZ3UHMiLCJuYmYiOjE3Mzk5MjU4MjYsImV4cCI6MTczOTkyNjEyNiwiaWF0IjoxNzM5OTI1ODI2LCJpc3MiOiJodHRwOi8vcGF5LnBlc2FwYWwuY29tLyIsImF1ZCI6Imh0dHA6Ly9wYXkucGVzYXBhbC5jb20vIn0.auHUzSLR-YL2CNhS1Z50sEErMD_6LDCQqodM59xvRlo'
         }
         self.authenticate()
 
