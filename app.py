@@ -106,7 +106,7 @@ def login():
         if user:  
             if user.password == hashed_password:     
                 login_user(user)
-                return redirect(url_for('today'))                
+                return redirect(url_for('subscribe'))                
             else: 
                 error = 'Login failed! Phone & Password do not match.'
                 return render_template('login.html', error=error)
@@ -114,7 +114,7 @@ def login():
             db.add_user(phone, hashed_password)
             user = db.get_user(phone=phone)
             login_user(user)
-            return redirect(url_for('today'))
+            return redirect(url_for('subscribe'))
     
     return render_template('login.html')
 
