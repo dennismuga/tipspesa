@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    {% include 'head.html' %}
+
+<body>
+
+    <nav class="mobile-nav mobile-nav-top">
+        <div class="mobile-nav__item">
+            <h4 class="mobile-nav__item-content">
+                Download Mobile App
+            </h4>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+
+            <div class="container-fluid table-responsive">
+                <div class="pt-3 pb-3 border-bottom border-secondary">
+                    <h6 class="text-center">Installation Guide For Android</h6>
+                    <ol>
+                        <li>Open the settings on your phone</li>
+                        <li>Click on “Security”</li>
+                        <li>Scroll to “Unknown sources” and select it</li>
+                        <li>Tap on “OK” to confirm your alteration</li>
+                    </ol>
+                    <div class="col-12 text-center">
+                        <h6>PLEASE NOTE:</h6>
+                        This is the official Tipspesa for Android.
+                        Despite the warning message which appears after you tap on the button “Download”, installing
+                        this app will NOT damage your device.
+                    </div>
+                </div>
+
+                <div class="pt-3 pb-3 text-white border-bottom border-secondary">
+                    <div class="col-12 text-center">
+                        <a href="{{ url_for('static', filename='TipsPesa.apk') }}" style="
+                            background: none;
+                            cursor:pointer;
+                            border: none;
+                          ">
+                            <img src="{{ url_for('static', filename='download.png') }}" alt="homepage" class="light-logo" width="150" />
+                        </a>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'nav.html' %}
+
+</body>
+
+</html>

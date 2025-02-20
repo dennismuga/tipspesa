@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'head.html' %}
+
+<body>
+
+    <nav class="mobile-nav mobile-nav-top">
+        <div class="mobile-nav__item">
+            <h4 class="mobile-nav__item-content">
+                Subscribe to Get Daily Sure Predictions
+            </h4>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+
+            <div class="container-fluid table-responsive">
+                <div class="pt-3 pb-3 text-center">
+                    <h5 class="text-center"><u>Subscription Guide</u></h5>
+                    1. Click or Tap your <b>Preferred Package</b> below <br />
+                    2. You will be redirected to Payment Page <br />
+                    3. Once Paid you will be able to view our Predictions
+                    <h5></h5>
+                    <div class="col-12">                                
+                        <form method="POST" class="form-horizontal pt-3 pb-3 border-top border-bottom border-secondary">
+                                <div class="form-group row">                                    
+                                    <div class="col-4 text-center">                      
+                                        <button type="submit" id="daily" name="amount" value="30" class="btn btn-secondary">
+                                            Daily <br />
+                                            1 Day<br />
+                                            KSh. 30
+                                        </button>
+                                    </div>                                  
+                                    <div class="col-4 text-center">                      
+                                        <button type="submit" id="weekly" name="amount" value="150" class="btn btn-warning">
+                                            Weekly <br />
+                                            7 Days <br />
+                                            KSh. 150
+                                        </button>
+                                    </div>                                  
+                                    <div class="col-4 text-center">                      
+                                        <button type="submit" id="monthly" name="amount" value="500" class="btn btn-success">
+                                            Monthly <br />
+                                            30 Days <br />
+                                            KSh. 500
+                                        </button>
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a href="{{ url_for('terms_and_conditions') }}">Terms and conditions</a> apply.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'nav.html' %}
+
+</body>
+
+</html>
