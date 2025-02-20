@@ -68,7 +68,7 @@ class AutoBet():
     
     def auto_bet(self):
         betslips = []
-        min_odd = 5
+        min_odd = 10
         total_odd = 1
         composite_betslip = None
         composite_betslips = []
@@ -122,7 +122,7 @@ class AutoBet():
                     time.sleep(5)
 
     def __call__(self):
-        self.auto_predict()
+        # self.auto_predict()
         self.auto_bet()
 
 if __name__ == '__main__':
