@@ -43,7 +43,7 @@ class CornerStone():
                         bet_pick = odd.get('odd_key')      
                         special_bet_value = odd.get('special_bet_value')      
                         outcome_id = odd.get('outcome_id')
-                        if odd_value <= 1.4 and 'over' in bet_pick:                                                
+                        if odd_value>=1.29 and odd_value <= 1.34 and 'over' in bet_pick:                                                
                             match = {
                                 'match_id': match_id,
                                 'start_time': start_time,
