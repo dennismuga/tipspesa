@@ -1,0 +1,1320 @@
+{
+    "instructions": "Predict the outcome of the following football matches using available web data, including team form and Twitter feeds.For each market, provide a probability percentage. Save the results as a JSON array of objects, where each object represents a match in predictions.json file.",
+    "matches": [
+        {
+            "home_team": "Sepahan SC",
+            "away_team": "Zob Ahan Isfahan FC",
+            "parent_match_id": "56555349"
+        },
+        {
+            "home_team": "Beitar Jerusalem FC",
+            "away_team": "Hapoel Jerusalem FC",
+            "parent_match_id": "51069741"
+        },
+        {
+            "home_team": "Hapoel Bnei Musmus",
+            "away_team": "Beit Shean Mesilot",
+            "parent_match_id": "53303077"
+        },
+        {
+            "home_team": "Tzeirei Kfar Kanna",
+            "away_team": "Hapoel Bnei Zalafa",
+            "parent_match_id": "53303079"
+        },
+        {
+            "home_team": "Ironi Nesher",
+            "away_team": "Hapoel Kiryat Yam",
+            "parent_match_id": "53303083"
+        },
+        {
+            "home_team": "Shams Azar Qazvin",
+            "away_team": "Malavan Bandar Anzali FC",
+            "parent_match_id": "56555345"
+        },
+        {
+            "home_team": "SC Hapoel Lod",
+            "away_team": "Shimshon Tel Aviv",
+            "parent_match_id": "53303413"
+        },
+        {
+            "home_team": "Tanjong Pagar United FC",
+            "away_team": "Albirex Niigata (S)",
+            "parent_match_id": "49405439"
+        },
+        {
+            "home_team": "FK Igman Konjic",
+            "away_team": "FK Sloga Doboj",
+            "parent_match_id": "51859171"
+        },
+        {
+            "home_team": "Southampton Reserves",
+            "away_team": "SUNDERLAND RESERVE",
+            "parent_match_id": "52146887"
+        },
+        {
+            "home_team": "SK Prostejov",
+            "away_team": "Pardubice B",
+            "parent_match_id": "58026157"
+        },
+        {
+            "home_team": "Nakhon Ratchasima",
+            "away_team": "Sukhothai",
+            "parent_match_id": "51251427"
+        },
+        {
+            "home_team": "KF Ballkani",
+            "away_team": "KF Feronikeli",
+            "parent_match_id": "58249553"
+        },
+        {
+            "home_team": "Trepca 89",
+            "away_team": "KF Drenica Skenderaj",
+            "parent_match_id": "58184135"
+        },
+        {
+            "home_team": "Kasetsart",
+            "away_team": "Chiangmai United",
+            "parent_match_id": "52457163"
+        },
+        {
+            "home_team": "Bosnia & Herzegovina",
+            "away_team": "Romania",
+            "parent_match_id": "55671751"
+        },
+        {
+            "home_team": "Dewa United",
+            "away_team": "Persebaya Surabaya",
+            "parent_match_id": "52324971"
+        },
+        {
+            "home_team": "Foolad KHouzestan FC",
+            "away_team": "Havadar SC",
+            "parent_match_id": "56555347"
+        },
+        {
+            "home_team": "Bulgaria",
+            "away_team": "Israel",
+            "parent_match_id": "55671333"
+        },
+        {
+            "home_team": "El Terasanah",
+            "away_team": "El Mansurah",
+            "parent_match_id": "56806715"
+        },
+        {
+            "home_team": "FC Talanta",
+            "away_team": "City Stars",
+            "parent_match_id": "57795121"
+        },
+        {
+            "home_team": "Inter Stars",
+            "away_team": "Moso Sugar Company",
+            "parent_match_id": "57186927"
+        },
+        {
+            "home_team": "Abo Qair Semads",
+            "away_team": "Tanta FC",
+            "parent_match_id": "56806717"
+        },
+        {
+            "home_team": "Hapoel Ra`anana FC",
+            "away_team": "Hapoel Afula FC",
+            "parent_match_id": "51088933"
+        },
+        {
+            "home_team": "Asyut Petroleum",
+            "away_team": "AL Mehalla",
+            "parent_match_id": "56806719"
+        },
+        {
+            "home_team": "Hapoel Nof Hagalil FC",
+            "away_team": "Maccabi Kabilio Jaffa",
+            "parent_match_id": "51088931"
+        },
+        {
+            "home_team": "Hapoel Petah Tikva FC",
+            "away_team": "Hapoel Rishon Lezion FC",
+            "parent_match_id": "51088937"
+        },
+        {
+            "home_team": "Hapoel Tel Aviv FC",
+            "away_team": "Hapoel Acre FC",
+            "parent_match_id": "51088925"
+        },
+        {
+            "home_team": "FC Kafr Qasim",
+            "away_team": "Hapoel Ramat Gan Givatayim FC",
+            "parent_match_id": "51088923"
+        },
+        {
+            "home_team": "El Qanah FC",
+            "away_team": "Aswan SC",
+            "parent_match_id": "56806725"
+        },
+        {
+            "home_team": "La Viena FC",
+            "away_team": "Proxy SC",
+            "parent_match_id": "56806727"
+        },
+        {
+            "home_team": "Azerbaijan",
+            "away_team": "Montenegro",
+            "parent_match_id": "55671419"
+        },
+        {
+            "home_team": "OFK Vrsac",
+            "away_team": "Borac",
+            "parent_match_id": "50731435"
+        },
+        {
+            "home_team": "Bournemouth",
+            "away_team": "Bristol City",
+            "parent_match_id": "57218465"
+        },
+        {
+            "home_team": "Gfk Sloven Ruma",
+            "away_team": "FK Javor Ivanjica",
+            "parent_match_id": "50731445"
+        },
+        {
+            "home_team": "Birmingham",
+            "away_team": "Barnsley",
+            "parent_match_id": "51873071"
+        },
+        {
+            "home_team": "Moldova",
+            "away_team": "Gibraltar",
+            "parent_match_id": "55671655"
+        },
+        {
+            "home_team": "El Daklyeh",
+            "away_team": "Dayrout",
+            "parent_match_id": "56806723"
+        },
+        {
+            "home_team": "Terengganu",
+            "away_team": "Kuching City FC",
+            "parent_match_id": "58016799"
+        },
+        {
+            "home_team": "Telecom Egypt",
+            "away_team": "Al Mokawloon",
+            "parent_match_id": "56806713"
+        },
+        {
+            "home_team": "Sporting Alexandria",
+            "away_team": "Suez Montakhsb",
+            "parent_match_id": "56806721"
+        },
+        {
+            "home_team": "Kahrabaa Ismailia",
+            "away_team": "Kafr Eldwar",
+            "parent_match_id": "56806711"
+        },
+        {
+            "home_team": "North Macedonia",
+            "away_team": "Kosovo",
+            "parent_match_id": "55671321"
+        },
+        {
+            "home_team": "PFK Beroe Stara Zagora",
+            "away_team": "FK Hebar Pazardzhik",
+            "parent_match_id": "50748625"
+        },
+        {
+            "home_team": "Jkt Tanzania",
+            "away_team": "Kagera Sugar",
+            "parent_match_id": "57350267"
+        },
+        {
+            "home_team": "Sur SC",
+            "away_team": "Sohar",
+            "parent_match_id": "57008467"
+        },
+        {
+            "home_team": "Emirates Club",
+            "away_team": "Gulf FC",
+            "parent_match_id": "53825171"
+        },
+        {
+            "home_team": "Fujairah FC",
+            "away_team": "Dibba",
+            "parent_match_id": "53825173"
+        },
+        {
+            "home_team": "Gulf United",
+            "away_team": "AL Jazira AL Hamra",
+            "parent_match_id": "53825169"
+        },
+        {
+            "home_team": "Albania U19 Women",
+            "away_team": "Azerbaijan",
+            "parent_match_id": "56228455"
+        },
+        {
+            "home_team": "Kolos Kovalivka",
+            "away_team": "Chernomorets Odessa",
+            "parent_match_id": "51158337"
+        },
+        {
+            "home_team": "Saham",
+            "away_team": "AL Nasr SC",
+            "parent_match_id": "57008347"
+        },
+        {
+            "home_team": "Highbury FC",
+            "away_team": "Milford FC",
+            "parent_match_id": "52888345"
+        },
+        {
+            "home_team": "Yarmouk",
+            "away_team": "Al Arabi",
+            "parent_match_id": "56929399"
+        },
+        {
+            "home_team": "Kustosija Zagreb",
+            "away_team": "NK Trnje",
+            "parent_match_id": "51123659"
+        },
+        {
+            "home_team": "Mladost Zdralovi",
+            "away_team": "Karlovac 1919",
+            "parent_match_id": "51123669"
+        },
+        {
+            "home_team": "FC Dinamo City",
+            "away_team": "KF Laci",
+            "parent_match_id": "51578869"
+        },
+        {
+            "home_team": "Opatija",
+            "away_team": "NK Sesvete",
+            "parent_match_id": "51123181"
+        },
+        {
+            "home_team": "AL Salt",
+            "away_team": "AL Ahli",
+            "parent_match_id": "56926113"
+        },
+        {
+            "home_team": "FK Trayal",
+            "away_team": "FK Indjija",
+            "parent_match_id": "50731447"
+        },
+        {
+            "home_team": "FK Spartak Subotica",
+            "away_team": "FK Radnicki Nis",
+            "parent_match_id": "50730361"
+        },
+        {
+            "home_team": "Pharco FC",
+            "away_team": "Future FC",
+            "parent_match_id": "54775721"
+        },
+        {
+            "home_team": "Northeast United FC",
+            "away_team": "Bengaluru FC",
+            "parent_match_id": "55210445"
+        },
+        {
+            "home_team": "Enppi Club",
+            "away_team": "Smouha SC",
+            "parent_match_id": "54775719"
+        },
+        {
+            "home_team": "Damac FC",
+            "away_team": "Al-Ahli Saudi FC",
+            "parent_match_id": "52034657"
+        },
+        {
+            "home_team": "Greece",
+            "away_team": "Slovenia",
+            "parent_match_id": "55671727"
+        },
+        {
+            "home_team": "Bahla Club",
+            "away_team": "Al Nahda",
+            "parent_match_id": "57008469"
+        },
+        {
+            "home_team": "AFC Hermannstadt",
+            "away_team": "FC Gloria Buzau",
+            "parent_match_id": "51208041"
+        },
+        {
+            "home_team": "Neftchi Baku PFC",
+            "away_team": "Sumgayit FK",
+            "parent_match_id": "53332805"
+        },
+        {
+            "home_team": "Club Puebla",
+            "away_team": "Club Tijuana de Caliente",
+            "parent_match_id": "56898663"
+        },
+        {
+            "home_team": "Necaxa",
+            "away_team": "Mazatlan FC",
+            "parent_match_id": "56898661"
+        },
+        {
+            "home_team": "Georgia",
+            "away_team": "Andorra",
+            "parent_match_id": "55671633"
+        },
+        {
+            "home_team": "FK Tekstilac Odzaci",
+            "away_team": "FK Radnicki 1923 Kragujevac",
+            "parent_match_id": "50730351"
+        },
+        {
+            "home_team": "Al-Qadisiyah",
+            "away_team": "Al-Akhdoud Club",
+            "parent_match_id": "52034663"
+        },
+        {
+            "home_team": "Al Mesaimeer",
+            "away_team": "Muaither SC",
+            "parent_match_id": "57445571"
+        },
+        {
+            "home_team": "AL Bidda SC",
+            "away_team": "AL Waab",
+            "parent_match_id": "57445569"
+        },
+        {
+            "home_team": "Stjordals-Blink",
+            "away_team": "Strindheim TF",
+            "parent_match_id": "58184235"
+        },
+        {
+            "home_team": "PFC Levski Sofia",
+            "away_team": "FK Spartak 1918 Varna",
+            "parent_match_id": "50748627"
+        },
+        {
+            "home_team": "CF Correcaminos Uat II",
+            "away_team": "Petroleros de Salamanca FC",
+            "parent_match_id": "53131379"
+        },
+        {
+            "home_team": "FC Zlin",
+            "away_team": "Slavia Kromeriz",
+            "parent_match_id": "58256239"
+        },
+        {
+            "home_team": "Isa Town",
+            "away_team": "Al-Hala",
+            "parent_match_id": "57539765"
+        },
+        {
+            "home_team": "Al Ittihad",
+            "away_team": "AL Tadamun Buri",
+            "parent_match_id": "57539763"
+        },
+        {
+            "home_team": "Bouri",
+            "away_team": "Al Ittifaq BHR",
+            "parent_match_id": "57539761"
+        },
+        {
+            "home_team": "Kuwait SC",
+            "away_team": "Al Salmiyah",
+            "parent_match_id": "56929401"
+        },
+        {
+            "home_team": "Vllaznia Shkoder",
+            "away_team": "Af Elbasani",
+            "parent_match_id": "51578871"
+        },
+        {
+            "home_team": "Nafta 1903 Lendava",
+            "away_team": "Primorje Ajdovscina",
+            "parent_match_id": "51170645"
+        },
+        {
+            "home_team": "Ramtha",
+            "away_team": "Al Jazeera Jordan",
+            "parent_match_id": "56926115"
+        },
+        {
+            "home_team": "Serbia",
+            "away_team": "Finland",
+            "parent_match_id": "55671705"
+        },
+        {
+            "home_team": "Albania",
+            "away_team": "Ukraine",
+            "parent_match_id": "55671679"
+        },
+        {
+            "home_team": "FAC Wien",
+            "away_team": "KSV 1919",
+            "parent_match_id": "51157801"
+        },
+        {
+            "home_team": "SV Stripfing",
+            "away_team": "SKU Amstetten",
+            "parent_match_id": "51157797"
+        },
+        {
+            "home_team": "SC Austria Lustenau",
+            "away_team": "SKN St Polten",
+            "parent_match_id": "51157803"
+        },
+        {
+            "home_team": "Stroemsgodset IF",
+            "away_team": "SK Brann",
+            "parent_match_id": "58116415"
+        },
+        {
+            "home_team": "Akritas Chlorakas",
+            "away_team": "Olympiakos Nicosia",
+            "parent_match_id": "57150121"
+        },
+        {
+            "home_team": "NK Siroki Brijeg",
+            "away_team": "HSK Zrinjski Mostar",
+            "parent_match_id": "51859175"
+        },
+        {
+            "home_team": "Eyupspor",
+            "away_team": "Besiktas Istanbul",
+            "parent_match_id": "51472243"
+        },
+        {
+            "home_team": "Petrojet FC",
+            "away_team": "Haras El Hodood",
+            "parent_match_id": "54775723"
+        },
+        {
+            "home_team": "Cyprus",
+            "away_team": "Malta",
+            "parent_match_id": "55671631"
+        },
+        {
+            "home_team": "Polonia Warszawa",
+            "away_team": "Gornik Leczna",
+            "parent_match_id": "50743775"
+        },
+        {
+            "home_team": "Al-Nassr FC",
+            "away_team": "Al-Ittifaq FC",
+            "parent_match_id": "52034653"
+        },
+        {
+            "home_team": "Austria",
+            "away_team": "Scotland",
+            "parent_match_id": "55671925"
+        },
+        {
+            "home_team": "Morocco",
+            "away_team": "Ghana",
+            "parent_match_id": "58254187"
+        },
+        {
+            "home_team": "GKS Piast Gliwice",
+            "away_team": "Stal Mielec",
+            "parent_match_id": "50592937"
+        },
+        {
+            "home_team": "National Bank Egypt",
+            "away_team": "Al Ittihad Alex",
+            "parent_match_id": "54775725"
+        },
+        {
+            "home_team": "Lok Zagreb",
+            "away_team": "Varazdin",
+            "parent_match_id": "50603301"
+        },
+        {
+            "home_team": "Bodrumspor",
+            "away_team": "Hatayspor",
+            "parent_match_id": "51472251"
+        },
+        {
+            "home_team": "Manisa Futbol Kulubu",
+            "away_team": "Boluspor",
+            "parent_match_id": "51857011"
+        },
+        {
+            "home_team": "Italy",
+            "away_team": "Wales",
+            "parent_match_id": "55671849"
+        },
+        {
+            "home_team": "Seekirchen",
+            "away_team": "Wals-Grunau",
+            "parent_match_id": "57809991"
+        },
+        {
+            "home_team": "HERTHA",
+            "away_team": "Nuremberg",
+            "parent_match_id": "51270087"
+        },
+        {
+            "home_team": "Hamburg",
+            "away_team": "Kaiserslautern",
+            "parent_match_id": "51270079"
+        },
+        {
+            "home_team": "Stellenbosch FC",
+            "away_team": "Richards Bay FC",
+            "parent_match_id": "52371753"
+        },
+        {
+            "home_team": "Hobro IK",
+            "away_team": "Vendsyssel FF",
+            "parent_match_id": "50838251"
+        },
+        {
+            "home_team": "Karlbergs",
+            "away_team": "GAIS",
+            "parent_match_id": "56739041"
+        },
+        {
+            "home_team": "Spain",
+            "away_team": "Belgium",
+            "parent_match_id": "55671879"
+        },
+        {
+            "home_team": "Croatia",
+            "away_team": "Czechia",
+            "parent_match_id": "55671681"
+        },
+        {
+            "home_team": "Hillerod Fodbold",
+            "away_team": "Odense Boldklub",
+            "parent_match_id": "50838249"
+        },
+        {
+            "home_team": "Furstenfeld",
+            "away_team": "Kohfidisch",
+            "parent_match_id": "58184253"
+        },
+        {
+            "home_team": "Slovakia",
+            "away_team": "Faroe Islands",
+            "parent_match_id": "55671657"
+        },
+        {
+            "home_team": "Wandsbeker TSV Concordia 1881",
+            "away_team": "Hamburg",
+            "parent_match_id": "51134243"
+        },
+        {
+            "home_team": "1860 Munich",
+            "away_team": "Bielefeld",
+            "parent_match_id": "51447139"
+        },
+        {
+            "home_team": "Lyngby BK",
+            "away_team": "Randers FC",
+            "parent_match_id": "50606313"
+        },
+        {
+            "home_team": "CD Real Zamora",
+            "away_team": "Artesanos Metepec FC",
+            "parent_match_id": "56784709"
+        },
+        {
+            "home_team": "Gleisdorf",
+            "away_team": "SV Tillmitsch",
+            "parent_match_id": "58145075"
+        },
+        {
+            "home_team": "Switzerland",
+            "away_team": "Iceland",
+            "parent_match_id": "55671903"
+        },
+        {
+            "home_team": "FC Penafiel",
+            "away_team": "Portimonense SC",
+            "parent_match_id": "51391599"
+        },
+        {
+            "home_team": "B93 Copenhagen",
+            "away_team": "Hvidovre IF",
+            "parent_match_id": "50838243"
+        },
+        {
+            "home_team": "ASC Otelul Galati",
+            "away_team": "FC Universitatea Cluj",
+            "parent_match_id": "51208049"
+        },
+        {
+            "home_team": "Denmark",
+            "away_team": "Sweden",
+            "parent_match_id": "55671847"
+        },
+        {
+            "home_team": "Luxembourg",
+            "away_team": "Kazakhstan",
+            "parent_match_id": "55671433"
+        },
+        {
+            "home_team": "Lubeck",
+            "away_team": "Drochtersen",
+            "parent_match_id": "51625217"
+        },
+        {
+            "home_team": "Jeddeloh",
+            "away_team": "Bremer SV",
+            "parent_match_id": "51625223"
+        },
+        {
+            "home_team": "Blau-Weiss Lohne",
+            "away_team": "Bremen II",
+            "parent_match_id": "51625215"
+        },
+        {
+            "home_team": "Fortuna Cologne",
+            "away_team": "Wuppertal",
+            "parent_match_id": "51469395"
+        },
+        {
+            "home_team": "Stade Nyonnais",
+            "away_team": "Stade Lausanne Ouchy",
+            "parent_match_id": "56616943"
+        },
+        {
+            "home_team": "Oberneuland",
+            "away_team": "Vegesack",
+            "parent_match_id": "51774399"
+        },
+        {
+            "home_team": "Waasland Beveren Youth",
+            "away_team": "Lierse Kempenzonen Youth",
+            "parent_match_id": "52491997"
+        },
+        {
+            "home_team": "Dijon FCO",
+            "away_team": "Nancy-Lorraine",
+            "parent_match_id": "51628569"
+        },
+        {
+            "home_team": "LB Chateauroux",
+            "away_team": "FC Rouen",
+            "parent_match_id": "51628579"
+        },
+        {
+            "home_team": "US Boulogne",
+            "away_team": "Paris 13 Atletico",
+            "parent_match_id": "51628565"
+        },
+        {
+            "home_team": "Sochaux-Montbeliard",
+            "away_team": "Aubagne FC",
+            "parent_match_id": "51628581"
+        },
+        {
+            "home_team": "US Concarneau",
+            "away_team": "Valenciennes FC",
+            "parent_match_id": "51628567"
+        },
+        {
+            "home_team": "FC Versailles 78",
+            "away_team": "Nimes Olympique",
+            "parent_match_id": "51628575"
+        },
+        {
+            "home_team": "Football Bourg-En-Bresse Peronnas",
+            "away_team": "Le Mans FC",
+            "parent_match_id": "51628571"
+        },
+        {
+            "home_team": "FC Villefranche Beaujolais",
+            "away_team": "US Orleans",
+            "parent_match_id": "51628577"
+        },
+        {
+            "home_team": "LOKEREN YOUTH",
+            "away_team": "RFC Liege",
+            "parent_match_id": "52492001"
+        },
+        {
+            "home_team": "SC Bastia",
+            "away_team": "Red Star FC",
+            "parent_match_id": "50956745"
+        },
+        {
+            "home_team": "Rodez Aveyron Football",
+            "away_team": "Amiens SC",
+            "parent_match_id": "50956739"
+        },
+        {
+            "home_team": "Roda JC",
+            "away_team": "FC Den Bosch",
+            "parent_match_id": "50869505"
+        },
+        {
+            "home_team": "Helmond Sport",
+            "away_team": "Vitesse Arnhem",
+            "parent_match_id": "50869503"
+        },
+        {
+            "home_team": "SC Telstar",
+            "away_team": "Excelsior Rotterdam",
+            "parent_match_id": "50869507"
+        },
+        {
+            "home_team": "TOP Oss",
+            "away_team": "FC Emmen",
+            "parent_match_id": "50869509"
+        },
+        {
+            "home_team": "Fulham Reserves",
+            "away_team": "Everton Reserves",
+            "parent_match_id": "52146883"
+        },
+        {
+            "home_team": "STOKE CITY RESERVE",
+            "away_team": "Liverpool Reserves",
+            "parent_match_id": "52146889"
+        },
+        {
+            "home_team": "TOTTENHAM RESERVE",
+            "away_team": "Wolves Reserves",
+            "parent_match_id": "52146891"
+        },
+        {
+            "home_team": "ARSENAL RESERVE",
+            "away_team": "NEWCASTLE UNITED RESERVES",
+            "parent_match_id": "52146879"
+        },
+        {
+            "home_team": "Chelsea Reserves",
+            "away_team": "Manchester United Reserve",
+            "parent_match_id": "52146881"
+        },
+        {
+            "home_team": "MIDDLESBROUGH FC RESERVE",
+            "away_team": "Manchester City Reserve",
+            "parent_match_id": "52146885"
+        },
+        {
+            "home_team": "Belarus",
+            "away_team": "Hungary",
+            "parent_match_id": "55671703"
+        },
+        {
+            "home_team": "SV Zulte Waregem",
+            "away_team": "KRC Genk",
+            "parent_match_id": "50716213"
+        },
+        {
+            "home_team": "MTK Budapest",
+            "away_team": "Diosgyori",
+            "parent_match_id": "50938107"
+        },
+        {
+            "home_team": "De Graafschap",
+            "away_team": "Jong AZ Alkmaar",
+            "parent_match_id": "50869499"
+        },
+        {
+            "home_team": "Grenoble Foot",
+            "away_team": "EA Guingamp",
+            "parent_match_id": "50956737"
+        },
+        {
+            "home_team": "RWD Molenbeek 47",
+            "away_team": "Royal Francs Borains",
+            "parent_match_id": "50716215"
+        },
+        {
+            "home_team": "Paris FC",
+            "away_team": "ESTAC Troyes",
+            "parent_match_id": "51967085"
+        },
+        {
+            "home_team": "USL Dunkerque",
+            "away_team": "Clermont Foot 63",
+            "parent_match_id": "50956743"
+        },
+        {
+            "home_team": "FC Martigues",
+            "away_team": "FC Annecy",
+            "parent_match_id": "50956741"
+        },
+        {
+            "home_team": "HK Kopavogur",
+            "away_team": "FH Hafnarfjordur",
+            "parent_match_id": "56382369"
+        },
+        {
+            "home_team": "Schaffhausen",
+            "away_team": "Neuchatel Xamax",
+            "parent_match_id": "56616945"
+        },
+        {
+            "home_team": "KVC Westerlo Youth",
+            "away_team": "RAAL La Louviere",
+            "parent_match_id": "52492003"
+        },
+        {
+            "home_team": "Ireland",
+            "away_team": "Turkey",
+            "parent_match_id": "55671729"
+        },
+        {
+            "home_team": "Pontypridd Town",
+            "away_team": "Penrhiwceiber Rangers",
+            "parent_match_id": "50919485"
+        },
+        {
+            "home_team": "RKS Rakow Czestochowa",
+            "away_team": "Gornik Zabrze",
+            "parent_match_id": "50592941"
+        },
+        {
+            "home_team": "Malaga CF",
+            "away_team": "Tenerife",
+            "parent_match_id": "51103523"
+        },
+        {
+            "home_team": "Atletico Madrid B",
+            "away_team": "Villarreal B",
+            "parent_match_id": "51830125"
+        },
+        {
+            "home_team": "Sampdoria Genoa",
+            "away_team": "Sassuolo Calcio",
+            "parent_match_id": "51468121"
+        },
+        {
+            "home_team": "Freiburg",
+            "away_team": "Werder Bremen",
+            "parent_match_id": "51269415"
+        },
+        {
+            "home_team": "ZKS Stal Rzeszow",
+            "away_team": "MKP Kotwica Kolobrzeg",
+            "parent_match_id": "50743779"
+        },
+        {
+            "home_team": "FC Admira Wacker Modling",
+            "away_team": "First Vienna FC",
+            "parent_match_id": "51157805"
+        },
+        {
+            "home_team": "Llanelli Town",
+            "away_team": "Ammanford",
+            "parent_match_id": "50919481"
+        },
+        {
+            "home_team": "Gzira United FC",
+            "away_team": "Marsaxlokk",
+            "parent_match_id": "56858309"
+        },
+        {
+            "home_team": "Taffs Well",
+            "away_team": "Carmarthen Town",
+            "parent_match_id": "50919487"
+        },
+        {
+            "home_team": "Trefelin BGC",
+            "away_team": "Goytre Utd",
+            "parent_match_id": "50919489"
+        },
+        {
+            "home_team": "Newport City FC",
+            "away_team": "Baglan Dragons",
+            "parent_match_id": "50919483"
+        },
+        {
+            "home_team": "Asd Pineto Calcio",
+            "away_team": "Vis Pesaro 1898",
+            "parent_match_id": "51548073"
+        },
+        {
+            "home_team": "Athletic Bilbao B",
+            "away_team": "CD Lugo",
+            "parent_match_id": "51829585"
+        },
+        {
+            "home_team": "AC Trento",
+            "away_team": "US Pergolettese Crema",
+            "parent_match_id": "51547239"
+        },
+        {
+            "home_team": "KV Kortrijk Youth",
+            "away_team": "Jeugd Union Saint-Gilloise",
+            "parent_match_id": "52492005"
+        },
+        {
+            "home_team": "Yellow-Red KV Mechelen",
+            "away_team": "St. Truidense VV",
+            "parent_match_id": "50715307"
+        },
+        {
+            "home_team": "Galway United FC",
+            "away_team": "Saint Patrick´s Athletic FC",
+            "parent_match_id": "56525597"
+        },
+        {
+            "home_team": "Poland",
+            "away_team": "Northern Ireland",
+            "parent_match_id": "55671753"
+        },
+        {
+            "home_team": "Waterford FC",
+            "away_team": "Shelbourne FC",
+            "parent_match_id": "56525599"
+        },
+        {
+            "home_team": "Drogheda United FC",
+            "away_team": "Sligo Rovers FC",
+            "parent_match_id": "56525595"
+        },
+        {
+            "home_team": "Netherlands",
+            "away_team": "Germany",
+            "parent_match_id": "55671927"
+        },
+        {
+            "home_team": "Bala Town FC",
+            "away_team": "The New Saints FC",
+            "parent_match_id": "57401049"
+        },
+        {
+            "home_team": "Haverfordwest County AFC",
+            "away_team": "Cardiff Metropolitan University FC",
+            "parent_match_id": "57401051"
+        },
+        {
+            "home_team": "Flint Mountain",
+            "away_team": "Mold Alexandra",
+            "parent_match_id": "50918897"
+        },
+        {
+            "home_team": "Wexford FC",
+            "away_team": "Longford Town FC",
+            "parent_match_id": "56527181"
+        },
+        {
+            "home_team": "Finn Harps FC",
+            "away_team": "Dundalk FC",
+            "parent_match_id": "56527179"
+        },
+        {
+            "home_team": "Athlone Town AFC",
+            "away_team": "Treaty United",
+            "parent_match_id": "56527173"
+        },
+        {
+            "home_team": "Trethomas Bluebirds",
+            "away_team": "Caerau Ely FC",
+            "parent_match_id": "50919491"
+        },
+        {
+            "home_team": "Bristol City",
+            "away_team": "Middlesbrough",
+            "parent_match_id": "51096305"
+        },
+        {
+            "home_team": "Cliftonville FC",
+            "away_team": "Glentoran FC",
+            "parent_match_id": "51080261"
+        },
+        {
+            "home_team": "Stade Rennes",
+            "away_team": "Stade Reims",
+            "parent_match_id": "50955741"
+        },
+        {
+            "home_team": "Cobh Ramblers",
+            "away_team": "Kerry FC",
+            "parent_match_id": "56527177"
+        },
+        {
+            "home_team": "Greenock Morton FC",
+            "away_team": "Falkirk FC",
+            "parent_match_id": "51116439"
+        },
+        {
+            "home_team": "Portugal",
+            "away_team": "England",
+            "parent_match_id": "55671877"
+        },
+        {
+            "home_team": "Bedford Town ",
+            "away_team": "Kettering",
+            "parent_match_id": "57050467"
+        },
+        {
+            "home_team": "US Lecce",
+            "away_team": "Udinese Calcio",
+            "parent_match_id": "51273315"
+        },
+        {
+            "home_team": "University College Dublin",
+            "away_team": "Bray Wanderers AFC",
+            "parent_match_id": "56527269"
+        },
+        {
+            "home_team": "Derry City FC",
+            "away_team": "Bohemians Dublin FC",
+            "parent_match_id": "56525593"
+        },
+        {
+            "home_team": "Burnley",
+            "away_team": "Sheffield Wednesday",
+            "parent_match_id": "51096307"
+        },
+        {
+            "home_team": "Leicester",
+            "away_team": "Brentford",
+            "parent_match_id": "50850487"
+        },
+        {
+            "home_team": "Gresford Athletic",
+            "away_team": "Bangor 1876 FC",
+            "parent_match_id": "50918899"
+        },
+        {
+            "home_team": "Racing Club Montevideo",
+            "away_team": "Montevideo City Torque",
+            "parent_match_id": "58023397"
+        },
+        {
+            "home_team": "Europa Point FC",
+            "away_team": "Mons Calpe SC",
+            "parent_match_id": "52665009"
+        },
+        {
+            "home_team": "Deportivo Riestra",
+            "away_team": "CA Talleres de Cordoba",
+            "parent_match_id": "56742901"
+        },
+        {
+            "home_team": "Celta Vigo",
+            "away_team": "Osasuna",
+            "parent_match_id": "50852563"
+        },
+        {
+            "home_team": "Boca Jrs Cali",
+            "away_team": "Boyaca Patriotas",
+            "parent_match_id": "57308651"
+        },
+        {
+            "home_team": "IR Reykjavik",
+            "away_team": "Afturelding",
+            "parent_match_id": "56382371"
+        },
+        {
+            "home_team": "France",
+            "away_team": "Norway",
+            "parent_match_id": "55671901"
+        },
+        {
+            "home_team": "SC Braga",
+            "away_team": "Nacional da Madeira",
+            "parent_match_id": "51389165"
+        },
+        {
+            "home_team": "Arucas CF",
+            "away_team": "Panaderia Pulido",
+            "parent_match_id": "53061549"
+        },
+        {
+            "home_team": "Audax Italiano",
+            "away_team": "Deportes Iquique",
+            "parent_match_id": "57380125"
+        },
+        {
+            "home_team": "Espanola",
+            "away_team": "CD Palestino",
+            "parent_match_id": "57380135"
+        },
+        {
+            "home_team": "Club Guarani Asuncion",
+            "away_team": "CD Recoleta",
+            "parent_match_id": "57135669"
+        },
+        {
+            "home_team": "La Equidad W",
+            "away_team": "R.Santander W",
+            "parent_match_id": "58178027"
+        },
+        {
+            "home_team": "Estudiantes de Merida",
+            "away_team": "Departivo Rayo Zuliano",
+            "parent_match_id": "57249979"
+        },
+        {
+            "home_team": "Floresta EC",
+            "away_team": "Iguatu CE",
+            "parent_match_id": "57987991"
+        },
+        {
+            "home_team": "Tauro FC II",
+            "away_team": "Champions FC Academy",
+            "parent_match_id": "58204889"
+        },
+        {
+            "home_team": "Betim Futebol MG",
+            "away_team": "Uberlandia",
+            "parent_match_id": "58067765"
+        },
+        {
+            "home_team": "Tiradentes",
+            "away_team": "FC Atletico Cearense CE",
+            "parent_match_id": "56517261"
+        },
+        {
+            "home_team": "Estudiantes de la Plata",
+            "away_team": "CA Central Cordoba SE",
+            "parent_match_id": "56742885"
+        },
+        {
+            "home_team": "CD Godoy Cruz",
+            "away_team": "CA Platense",
+            "parent_match_id": "56742893"
+        },
+        {
+            "home_team": "Athletic Club Sjdr MG",
+            "away_team": "Democrata",
+            "parent_match_id": "58067763"
+        },
+        {
+            "home_team": "Huila",
+            "away_team": "Cucuta",
+            "parent_match_id": "57308649"
+        },
+        {
+            "home_team": "Azuriz FC PR",
+            "away_team": "CA Paranaense",
+            "parent_match_id": "58141317"
+        },
+        {
+            "home_team": "Tecos",
+            "away_team": "Leones Negros Udg II",
+            "parent_match_id": "53131381"
+        },
+        {
+            "home_team": "Club Aurora",
+            "away_team": "San Antonio Bulo Bulo",
+            "parent_match_id": "58245477"
+        },
+        {
+            "home_team": "D. Concepcion",
+            "away_team": "Temuco",
+            "parent_match_id": "57866775"
+        },
+        {
+            "home_team": "S. Wanderers",
+            "away_team": "U. de Concep",
+            "parent_match_id": "57866773"
+        },
+        {
+            "home_team": "Paraguay",
+            "away_team": "Uruguay",
+            "parent_match_id": "58000339"
+        },
+        {
+            "home_team": "Excursionistas",
+            "away_team": "Club Atletico Acassuso",
+            "parent_match_id": "56984439"
+        },
+        {
+            "home_team": "Sportivo Luqueno",
+            "away_team": "CS 2 de Mayo",
+            "parent_match_id": "57135663"
+        },
+        {
+            "home_team": "CD Cuenca",
+            "away_team": "SD Aucas",
+            "parent_match_id": "57381129"
+        },
+        {
+            "home_team": "Inter Playa Carmen",
+            "away_team": "Acatlan FC",
+            "parent_match_id": "53131609"
+        },
+        {
+            "home_team": "Atletico Lanus",
+            "away_team": "Velez Sarsfield",
+            "parent_match_id": "56742895"
+        },
+        {
+            "home_team": "La Equidad",
+            "away_team": "Boyaca Chico",
+            "parent_match_id": "57310685"
+        },
+        {
+            "home_team": "Alianza Lima",
+            "away_team": "Juan Pablo II College",
+            "parent_match_id": "57509183"
+        },
+        {
+            "home_team": "Venados",
+            "away_team": "Oaxaca",
+            "parent_match_id": "56596719"
+        },
+        {
+            "home_team": "Necaxa",
+            "away_team": "Mazatlan FC",
+            "parent_match_id": "56591099"
+        },
+        {
+            "home_team": "Faraones de Texcoco",
+            "away_team": "CA San Juan de Aragon",
+            "parent_match_id": "53131383"
+        },
+        {
+            "home_team": "Santiago FC",
+            "away_team": "CF Petroleros De Poza Rica",
+            "parent_match_id": "56784711"
+        },
+        {
+            "home_team": "Guanacasteca",
+            "away_team": "Municipal S. A.",
+            "parent_match_id": "57055205"
+        }
+    ],
+    "format": {
+        "type": "json",
+        "structure": [
+            {
+                "parent_match_id": "string",
+                "home_team": "string",
+                "away_team": "string",
+                "predictions": {
+                    "1X2": {
+                        "1": "probability",
+                        "X": "probability",
+                        "2": "probability"
+                    },
+                    "TOTAL GOALS": {
+                        "OVER 2.5": "probability",
+                        "OVER 1.5": "probability"
+                    },
+                    "BOTH TEAMS TO SCORE": {
+                        "YES": "probability",
+                        "NO": "probability"
+                    },
+                    "TOTAL CORNERS": {
+                        "OVER 10.5": "probability",
+                        "OVER 9.5": "probability",
+                        "OVER 8.5": "probability",
+                        "OVER 7.5": "probability"
+                    }
+                }
+            }
+        ]
+    },
+    "data_sources": [
+        "Recent match results for the last 7 games, weighted by recency",
+        "League standings",
+        "Head-to-head records for the last 5 meetings",
+        "Player statistics: goals and assists for key players this season, current injuries/suspensions",
+        "Team news from official team websites and reputable sports news sources",
+        "Expert predictions from ESPN and Sky Sports",
+        "Weather forecast for the match location",
+        "Home form for Team A, away form for Team B",
+        "Tweets from official team accounts and reputable sports journalists covering the league",
+        "Aggregate fan sentiment from Twitter (treat with caution)",
+        "Team information from Wikipedia",
+        "Player transfer data from Transfermarkt"
+    ]
+}

@@ -1,5 +1,5 @@
 
-import json, time
+import time
 
 from utils.betika import Betika
 from utils.postgres_crud import PostgresCRUD
@@ -23,7 +23,7 @@ class AutoBet():
     
     def auto_bet(self):
         betslips = []
-        min_odd = 5
+        max_games = 5
         total_odd = 1
         composite_betslip = None
         composite_betslips = []
@@ -51,7 +51,7 @@ class AutoBet():
                                     'total_odd': total_odd,
                                     'betslips': betslips
                                 }
-                                if total_odd > min_odd*1.2:
+                                if len(betslips) == max_games:
                                     print(total_odd)
                                     composite_betslips.append(composite_betslip)
                                     betslips = []
@@ -64,10 +64,7 @@ class AutoBet():
         if len(composite_betslips) > 0:                        
             balance, bonus = self.betika.get_balance()
             placeable = balance + bonus #*0.75
-            min_stake = placeable/min_odd
-            equal_stake = placeable/len(composite_betslips)
-            max_stake = max(min_stake, equal_stake)
-            stake = int( max_stake if max_stake>1 else placeable)
+            stake = int(placeable/len(composite_betslips))
             if stake > 0:
                 for cb in composite_betslips:
                     ttl_odd = cb['total_odd']
