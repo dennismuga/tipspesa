@@ -1,9 +1,11 @@
 apscheduler
+cryptography
 Flask
 Flask-Login
 flask-session
 google-genai
 openai
+pycryptodome
 psycopg2-binary
 python-dotenv
 pytz
