@@ -2,10 +2,9 @@
 from flask_login import UserMixin
 
 class User(UserMixin):
-    def __init__(self, id, phone, password, active):  
+    def __init__(self, id, phone, active):  
         self.id = id
         self.phone = phone
-        self.password = password
         self.active = active
 
 class Match():     

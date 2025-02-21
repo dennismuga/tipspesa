@@ -3,7 +3,6 @@
 CREATE TABLE IF NOT EXISTS subscribers (
   id TEXT PRIMARY KEY,
   phone VARCHAR(20),
-  password TEXT,
   expires_at TIMESTAMP,
   created_at TIMESTAMP,
   updated_at TIMESTAMP,
