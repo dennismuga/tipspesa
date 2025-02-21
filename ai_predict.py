@@ -105,8 +105,8 @@ def save_predictions():
                             if sub_type_id in ["1", "18", "29", "166"]:
                                 odds = d.get('odds')
                                 for odd in odds:
-                                    odd_value = odd.get('odd_value')
-                                    if key == odd.get('display') and parent_match_id not in added_parent_match_ids:
+                                    odd_value = float(odd.get('odd_value'))
+                                    if key == odd.get('display') and parent_match_id not in added_parent_match_ids and odd_value>=1.29 and odd_value<=1.34 :
                                         bet_pick = 'GG' if key == 'YES' else odd.get('odd_key')
                                         print(f"{datum.get('home_team')} vs {datum.get('away_team')} = {bet_pick} [x{odd_value}]")                                            
                                         match = {
