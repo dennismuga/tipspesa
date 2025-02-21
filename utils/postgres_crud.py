@@ -398,7 +398,7 @@ class PostgresCRUD:
         self.ensure_connection()
         with self.conn.cursor() as cur:
             query = """
-                SELECT id, phone, password, expires_at > NOW() AS active
+                SELECT id, phone, expires_at > NOW() AS active
                 FROM subscribers
                 WHERE 1=1
             """
@@ -412,7 +412,7 @@ class PostgresCRUD:
             cur.execute(query, tuple(params))            
             datum = cur.fetchone()
             if datum:
-                return User(datum[0], datum[1], datum[2], datum[3])
+                return User(datum[0], datum[1], datum[2])
             else:
                 return None
     
