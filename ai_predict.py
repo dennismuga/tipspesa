@@ -95,7 +95,7 @@ def save_predictions():
             predictions = {**winner, **total_goals, **btts, **total_corners}
             for key in predictions:
                 prediction = int(predictions.get(key).replace('%',''))
-                if (prediction>=80 and key in ['OVER 1.5', 'OVER 7.5']) or (prediction>=75 and key in ['OVER 2.5', 'OVER 8.5', 'YES']) or (prediction>=70 and key in ['OVER 9.5', '1', 'X', '2']) or (prediction>=65 and key in ['OVER 10.5']):  
+                if (prediction>=85 and key in ['OVER 1.5', 'OVER 7.5']) or (prediction>=80 and key in ['OVER 2.5', 'OVER 8.5', 'YES']) or (prediction>=75 and key in ['OVER 9.5', '1', 'X', '2']) or (prediction>=70 and key in ['OVER 10.5']):  
                     url = f'https://api.betika.com/v1/uo/match?parent_match_id={parent_match_id}'
                     match_details = Betika().get_data(url)
                     data = match_details.get('data')
