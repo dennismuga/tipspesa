@@ -148,12 +148,12 @@ class PostgresCRUD:
             WITH m AS(
                 SELECT * FROM matches
                 WHERE DATE(kickoff) {comparator} CURRENT_DATE {day} {status}
-                ORDER BY odd ASC 
+                ORDER BY odd DESC 
                 LIMIT 10
             )
 
             SELECT * FROM m
-            ORDER BY odd DESC
+            ORDER BY odd ASC
             """
             cur.execute(query)
             return cur.fetchall()
