@@ -149,7 +149,7 @@ class PostgresCRUD:
                 SELECT * FROM matches
                 WHERE DATE(kickoff) {comparator} CURRENT_DATE {day} {status}
                 ORDER BY odd DESC 
-                LIMIT 10
+                LIMIT 12
             )
 
             SELECT * FROM m
