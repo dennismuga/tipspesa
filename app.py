@@ -90,7 +90,14 @@ def load_user(user_id):
 def page_not_found(e):
     # Redirect to a specific endpoint, like 'today', or a custom 404 page
     return redirect(url_for('today'), 302)
-  
+
+@app.route('/home', methods=['GET', 'POST'])
+def home(): 
+    # if request.method == 'POST': 
+    #     login()
+    # matches, played, won = helper.fetch_matches('', '=', '')
+    return render_template('home.html')
+
 @app.route('/today', methods=['GET', 'POST'])
 def today(): 
     if request.method == 'POST': 
