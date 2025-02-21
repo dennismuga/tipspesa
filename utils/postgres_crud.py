@@ -153,7 +153,7 @@ class PostgresCRUD:
             )
 
             SELECT * FROM m
-            ORDER BY kickoff DESC, odd DESC
+            ORDER BY odd DESC
             """
             cur.execute(query)
             return cur.fetchall()
