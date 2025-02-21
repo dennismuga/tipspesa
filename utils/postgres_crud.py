@@ -147,7 +147,7 @@ class PostgresCRUD:
             query = f"""
             WITH m AS(
                 SELECT * FROM matches
-                WHERE ODD>1.25 AND DATE(kickoff) {comparator} CURRENT_DATE {day} {status}
+                WHERE DATE(kickoff) {comparator} CURRENT_DATE {day} {status}
                 ORDER BY odd ASC 
                 LIMIT 10
             )
