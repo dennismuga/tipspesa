@@ -103,28 +103,28 @@ def today():
     if request.method == 'POST': 
         login()
     matches, played, won = helper.fetch_matches('', '=', '')
-    return render_template('index.html', header="Today Games Predictions", matches=matches, played=played, won=won)
+    return render_template('index_old.html', header="Today Games Predictions", matches=matches, played=played, won=won)
 
 @app.route('/tomorrow', methods=['GET', 'POST'])
 def tomorrow():    
     if request.method == 'POST': 
         login()
     matches, played, won = helper.fetch_matches('+1', '=', '')
-    return render_template('index.html', header="Tomorrow Games Predictions", matches = matches, played = played, won = won)
+    return render_template('index_old.html', header="Tomorrow Games Predictions", matches = matches, played = played, won = won)
 
 @app.route('/yesterday', methods=['GET', 'POST'])
 def yesterday():    
     if request.method == 'POST': 
         login()
     matches, played, won = helper.fetch_matches('-1', '=')
-    return render_template('index.html', header="Yesterday's Predictions Results", matches = matches, played = played, won = won)
+    return render_template('index_old.html', header="Yesterday's Predictions Results", matches = matches, played = played, won = won)
 
 @app.route('/history', methods=['GET', 'POST'])
 def history():    
     if request.method == 'POST': 
         login()
     matches, played, won = helper.fetch_matches('', '<')
-    return render_template('index.html', header="Last 100 Predicted Games Results", matches = matches, played = played, won = won )
+    return render_template('index_old.html', header="Last 100 Predicted Games Results", matches = matches, played = played, won = won )
 
 @app.route('/subscribe', methods=['GET', 'POST'])
 def subscribe():   

@@ -145,11 +145,15 @@ class PostgresCRUD:
         self.ensure_connection()           
         with self.conn.cursor() as cur:
             query = f"""
-                SELECT *
-                FROM matches
-                WHERE DATE(kickoff) {comparator} CURRENT_DATE {day} {status}
+                WITH m AS(
+                    SELECT * FROM matches
+                    WHERE DATE(kickoff) {comparator} CURRENT_DATE {day} {status}
+                    ORDER BY odd DESC 
+                    LIMIT 10
+                )
+
+                SELECT * FROM m
                 ORDER BY kickoff DESC, odd DESC
-                LIMIT 100
             """
             cur.execute(query)
             return cur.fetchall()
