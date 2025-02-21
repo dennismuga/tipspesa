@@ -30,16 +30,12 @@
         </a>
     </div> -->    
     <div class="mobile-nav__item">
-        {% if not current_user.phone %}
-        <a class="mobile-nav__item-content" href="#" data-toggle="modal" data-target="#loginModal">
-            <i class="material-icons">create_new_folder</i>
-            Login/Register
-        </a>
-        {% else %}
-        <a class="mobile-nav__item-content" href="{{ url_for('subscribe') }}" >
-            <i class="material-icons">create_new_folder</i>
-            Subscribe
-        </a>    
-        {% endif %}
+        <a class="mobile-nav__item-content" 
+            {% if current_user.phone %}
+            href="{{ url_for('subscribe') }}" 
+            {% else %}
+            href="#" data-toggle="modal" data-target="#loginModal"
+            {% endif %}
+        ><i class="material-icons">create_new_folder</i>Subscribe</a>    
     </div>    
 </nav>

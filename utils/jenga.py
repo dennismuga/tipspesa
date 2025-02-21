@@ -110,3 +110,64 @@ class Jenga:
             return response.json()
         else:
             raise Exception(f"STK Push failed: {response.status_code} - {response.text}")
+
+    def generate_payment_link(self, order_ref, amount, phone_number, customer_name, customer_email, description="Test Payment"):
+        if not self.token:
+            self.get_access_token()  # Authenticate if token is not set
+        # https://uat.finserve.africa/api-checkout/api/v1/create/payment-link
+        url = f"{self.base_url}/api-checkout/api/v1/create/payment-link"
+        url = f"{self.base_url}/api/v1/create/payment-link"
+
+        payload = {
+            "customers": [
+                {
+                    "firstName": "John",
+                    "lastName": "Doe",
+                    "email": "johndoe902@gmail.com",
+                    "phoneNumber": "254759697757",
+                    "firstAddress": "",
+                    "countryCode": "KE",
+                    "postalOrZipCode": "00100",
+                    "customerExternalRef": "5756577887795"
+                }
+            ],
+            "paymentLink": {
+                "expiryDate": "2025-03-22",
+                "saleDate": "2025-02-20",
+                "paymentLinkType": "SINGLE",
+                "saleType": "SERVICE",
+                "name": "Hotel Reservation",
+                "description": "Hotel Reservation",
+                "externalRef": "5756577887795",
+                "paymentLinkRef": "",
+                "redirectURL": "https://v3.jengahq.io",
+                "amountOption": "OPEN",
+                "amount": 400,
+                "currency": "KES"
+            },
+            "notifications": [
+                "EMAIL",
+                "SMS"
+            ]
+        }
+
+        # Generate signature
+        signature = self.generate_signature(
+            payload["paymentLink"]["expiryDate"],
+            payload["paymentLink"]["amount"],
+            payload["paymentLink"]["details"]["currency"],
+            payload["paymentLink"]["details"]["amountOption"],
+            payload["paymentLink"]["details"]["externalRef"]
+        )
+
+        headers = {
+            "Authorization": f"Bearer {self.token}",
+            "Content-Type": "application/json",
+            "Signature": signature
+        }
+        try:
+            response = requests.post(url, json=payload, headers=headers)
+            print(response.json())
+            return response.json()
+        except Exception as e:
+            print(e)

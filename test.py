@@ -9,7 +9,7 @@ if __name__ == "__main__":
         jenga = Jenga()
 
         # Test STK Push
-        response = jenga.initiate_stk_push(
+        response = jenga.generate_payment_link(
             order_ref="ORDER12345",
             amount=10,
             phone_number="0759697757",

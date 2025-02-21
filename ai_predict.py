@@ -10,9 +10,8 @@ from pathlib import Path
 from utils.postgres_crud import PostgresCRUD
 
 def compose_question(events):     
-    request_json = {
-        "instructions": """Predict the outcome of the following football matches using available web data, including team form and Twitter feeds. 
-        For each market, provide a probability percentage. Return the results as a JSON array of objects, where each object represents a match.""" ,
+    question = {
+        "instructions": "Predict the outcome of the following football matches using available web data, including team form and Twitter feeds.For each market, provide a probability percentage. Save the results as a JSON array of objects, where each object represents a match in predictions.json file." ,
         "matches": events,  # Use the 'events' list here
         "format": {
             "type": "json",
@@ -61,21 +60,22 @@ def compose_question(events):
         ]
     }
 
-    question = json.dumps(request_json)  # Convert the JSON to a string
-
     return question
 
 def generate_questions():
     questions = []        
-    total = 16
-    limit = 15
+    total = 1001
+    limit = 1000
     page = 1
+    
     while limit*page < total:
         total, page, events = Betika().get_events(limit, page)
          
-        question = compose_question(events)      
-        print(question)  
-        print('')    
+        question = compose_question(events)  
+        
+        # Write data to file
+        with open("questions.json", 'w', encoding='utf-8') as f:
+            json.dump(question, f, indent=4, ensure_ascii=False)
         #questions.append(question)
         
     return questions
@@ -157,4 +157,5 @@ def gemini_predict():
         print(f"An unexpected error occurred: {e}")
 
 if __name__ == '__main__':
-    gemini_predict()
+    #gemini_predict()
+    save_predictions()
