@@ -10,8 +10,8 @@ class CornerStone():
         self.db = PostgresCRUD()
     
     def get_upcoming_match_ids(self):    
-        total = 16
-        limit = 15
+        total = 1001
+        limit = 1000
         page = 1
         matches_ids = set()
         while limit*page < total:
