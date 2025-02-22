@@ -72,7 +72,7 @@ def home():
     
     else:
         matches = helper.fetch_matches('', '=', '', limit=12)
-        matches_yesterday = helper.fetch_matches('-1', '=', "AND status='WON'", limit=12)
+        matches_yesterday = helper.fetch_matches('-1', '>=', "AND status='WON'", limit=12)
         plans = [
             Plan('Free Tips', 0, 2, 'red', 1, matches[:3] if len(matches)>= 3 else matches, matches_yesterday[:3] if len(matches_yesterday)>= 3 else matches_yesterday),
             Plan('Bronze Plan', 20, 4, 'red', 2, matches[3:8] if len(matches)>= 8 else matches, matches_yesterday[3:8] if len(matches_yesterday)>= 8 else matches_yesterday),
