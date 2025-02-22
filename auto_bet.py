@@ -58,9 +58,9 @@ class AutoBet():
                                     total_odd = 1
                                     composite_betslip = None 
 
-        if composite_betslip:
-            print(total_odd)
-            composite_betslips.append(composite_betslip)
+        # if composite_betslip:
+        #     print(total_odd)
+        #     composite_betslips.append(composite_betslip)
         if len(composite_betslips) > 0:                        
             balance, bonus = self.betika.get_balance()
             placeable = balance #*0.75
