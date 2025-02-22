@@ -45,7 +45,8 @@ class CornerStone():
                         outcome_id = odd.get('outcome_id')
                         # if (odd_value>=1.29 and odd_value<=1.34) or (odd_value>=1.43 and odd_value <= 1.44) and 'over' in bet_pick:   
                         if (odd_value < 1.32 and bet_pick == 'over 7.5'):    
-                            for odd in odds:       
+                            for odd in odds:    
+                                overall_prob = 98 if odd_value < 1.3 else 88
                                 bet_pick = odd.get('odd_key')   
                                 if bet_pick == 'over 8.5':   
                                     odd_value = float(odd.get('odd_value'))    
@@ -58,7 +59,7 @@ class CornerStone():
                                         'away_team': away_team,
                                         'prediction': bet_pick,
                                         'odd': odd_value,
-                                        'overall_prob': 88,
+                                        'overall_prob': overall_prob,
                                         'parent_match_id': parent_match_id,
                                         'sub_type_id': sub_type_id,
                                         'bet_pick': bet_pick,
