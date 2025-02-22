@@ -23,7 +23,7 @@ class AutoBet():
     
     def auto_bet(self):
         betslips = []
-        max_games = 3
+        max_games = 4
         total_odd = 1
         composite_betslip = None
         composite_betslips = []
