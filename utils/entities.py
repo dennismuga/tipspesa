@@ -16,6 +16,7 @@ class Plan():
         self.color = color 
         self.stars = stars
         self.matches = sorted(matches, key=lambda match: match.kickoff) 
+        matches_yesterday = [match for match in matches_yesterday if match.status != 'LOST']
         self.matches_yesterday = sorted(matches_yesterday, key=lambda match: match.kickoff)
 
 class Match():     
