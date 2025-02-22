@@ -2,10 +2,21 @@
 from flask_login import UserMixin
 
 class User(UserMixin):
-    def __init__(self, id, phone, active):  
+    def __init__(self, id, phone, plan, active):  
         self.id = id
         self.phone = phone
+        self.plan = plan
         self.active = active
+
+class Plan():
+    def __init__(self, name, amount, odds, color, stars, matches, matches_yesterday):
+        self.name = name 
+        self.amount = amount
+        self.odds = odds
+        self.color = color 
+        self.stars = stars
+        self.matches = matches
+        self.matches_yesterday = matches_yesterday
 
 class Match():     
     def __init__(self):

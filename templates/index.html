@@ -1,388 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:image" content="https://tipspesa.vercel.app/coconuts.png">
-    <meta name="author" content="TipsPesa">
-    <meta name="description" content="TipsPesa is the best free football prediction website that provides you with the most accurate football tips to help you make profits">
-    <meta name="keywords" content="Sure Prediction, TipsPesa prediction, best jackpot prediction site, jackpot predictions, sports fans reviews, sportpesa kenya, sokafans, sokafans prediction, prima tips, sure straight win for today, best midweek football bets, jackpot predictions for today, jackpot prediction, betika games today football, betika best online sports betting in kenya, best jackpot prediction site, mega jackpot prediction, bet 360, sportpesa login, statarea guru prediction, 180bet tip, statarea, free bet tips bet numbers, mega jackpot analysis prediction, betpawa jackpot prediction, betpawa, sportpesa, predictz, mega jackpot analysis, betpawa jackpot predictions, jackpot predictions, football prediction site, soccer prediction site, sure odds, soccer prediction, best football prediction site, free football prediction site, sure jackpot, accurate football prediction website, best VIP prediction website, best football prediction website, accurate football predictions, world's best prediction site, best free soccer prediction website, accurate soccer predictions, accurate football prediction for free, world's best prediction site, best football prediction, TipsPesa correct score, best VIP tips, best soccer prediction website, soccer prediction">
-    <title>TipsPesa | Betting Predictions</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" href="favicon.ico">
-    
-    <!-- External Stylesheets -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-</head>
+
+{% include 'head.html' %}
 
 <body>
-    <!-- Header -->
-    <header class="sticky top-0 bg-gray-900 shadow-md z-10 text-white p-4">
-        <div class="container mx-auto flex items-center justify-between">
-            <a href="https://tipspesa.vercel.app/" class="flex items-center">
-                <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="h-7">
-            </a>
-            
-            <nav id="menuItems" class="hidden lg:flex items-center space-x-4">
-                <a href="https://tipspesa.vercel.app" class="hover:text-gray-300">Home</a>
-                <a href="buytippage2.php" class="hover:text-gray-300">Silver Plan</a>
-                <a href="buytippage3.php" class="hover:text-gray-300">Gold Plan</a>
-                <a href="buytippage4.php" class="hover:text-gray-300">Platinum Plan</a>
-            </nav>
-            
-            <button id="menuToggle" class="lg:hidden focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                </svg>
-            </button>
-            
-            <nav id="slideInMenu" class="lg:hidden fixed top-0 right-0 h-full w-1/2 bg-gray-900 text-white transform translate-x-full transition-transform duration-300">
-                <div class="flex justify-end p-4">
-                    <button id="menuClose" class="focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="flex flex-col items-center space-y-4">
-                    <a href="index.php" class="hover:text-gray-300">Home</a>
-                    <a href="buytippage2.php" class="hover:text-gray-300">Silver Plan</a>
-                    <a href="buytippage3.php" class="hover:text-gray-300">Gold Plan</a>
-                    <a href="buytippage4.php" class="hover:text-gray-300">Platinum Plan</a>
-                    <div class="mt-auto py-4">
-                        <p class="text-sm text-gray-500">© 2025 TipsPesa</p>
-                    </div>
-                </div>
-            </nav>
+    <nav class="mobile-nav mobile-nav-top">
+        <div class="mobile-nav__item">
+            <h4 class="mobile-nav__item-content">
+                {{ header }}
+            </h4>
         </div>
-    </header>
+    </nav>
 
-    <!-- Main Content -->
-    <div class="bg-white">
-        <div class="whatsapp-float">
-            <a href="https://wa.me/+254759697757" target="_blank" title="Chat with us on WhatsApp">
-                <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            {% if matches | length > 0 %}
+                <!-- <h6 class="py-5 text-center text-danger">
+                    Sorry, You do not have an Active Subscription! Kindly 
+                    <a 
+                    {% if current_user.phone and not current_user.active %} 
+                        href="{{ url_for('subscribe') }}"
+                    {% elif not current_user.phone %}
+                        href="#" data-toggle="modal" data-target="#loginModal"
+                    {% endif %}
+                    >Subscribe</a> to View Predictions
+                </h6> -->
+            {% else %}
+            <h4 class="py-5 text-center">No Matches Predicted Yet <br /> Please Check Later</h4>
+            {% endif %}
+
+            {% set ns = namespace(counter=0) %}
+            {% for match in matches %}
+            {% if match.status is none %}
+            {% set ns.counter = ns.counter + 1 %}
+            <a class="col-12 col-sm-4" style="color: black;" 
+                {% if current_user.phone and not current_user.active and ns.counter > 3 %} 
+                    href="{{ url_for('subscribe') }}"
+                {% elif not current_user.phone %}
+                    href="#" data-toggle="modal" data-target="#loginModal"
+                {% endif %}
+            >
+                <div class="card box-shadow my-2">
+                    <div class="card-header text-center">
+                        <b>{{ match.home_team }} vs {{ match.away_team }}</b>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <small class="col-5 col-sm-5 text-left">{{ match.kickoff.strftime('%d %b %Y %H:%M') }}</small>
+                            <small class="col-2 col-sm-2 text-center"><b>x{{ match.odd }}</b></small>
+                            <small class="col-5 col-sm-5 text-right"><b>
+                                    {% if ns.counter <= 3 or (current_user.active) %}
+                                        {% if match.prediction in ['over 1.5', 'over 2.5'] %}
+                                            {{ match.prediction }} goals
+                                        {% elif match.prediction in ['over 7.5', 'over 8.5', 'over 9.5', 'over 10.5'] %}
+                                            {{ match.prediction }} corners
+                                        {% else %}
+                                            {{ match.prediction }}
+                                        {% endif %}
+                                    {% else %}
+                                    Subscribe to View
+                                    {% endif %}
+                                </b></small>
+                        </div>
+                    </div>
+                </div>
             </a>
-        </div>
-
-        <div class="container sm:px-6 lg:px-60">
-            <!-- Free Tips Section -->
-            <section class="p-2">
-                <div class="bg-white text-gray-900 p-2 rounded-lg shadow-md">
-                    <h2 class="text-2xl font-bold text-green-600 mb-1 text-center">Free Guaranteed Tips</h2>
-                    <div class="flex justify-center my-4 mx-6 gap-2">
-                        <button id="yesterday-btn" data-date="yesterday" class="date-btn px-4 py-2 border rounded-lg">Yesterday</button>
-                        <button id="today-btn" data-date="today" class="date-btn px-4 py-2 border rounded-lg active-button">Today</button>
-                        <button id="tomorrow-btn" data-date="tomorrow" class="date-btn px-4 py-2 border rounded-lg">Tomorrow</button>
-                    </div>
-                    <div id="tips-table-container" class="table-container"></div>
-                </div>
-            </section>
-
-            <!-- Premium Tips Section -->
-            <section class="p-2">
-                <h2 class="text-xl font-bold mb-2">Premium Tips</h2>
-                <!-- Silver Plan -->
-                <div class="bg-white text-white p-4 mb-7 rounded-lg shadow-md" style="background-image: url({{ url_for('static', filename='Subbackground.png') }}); background-size: cover;">
-                    <div class="flex justify-between items-center">
-                        <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">Silver Plan</span>
-                        <div class="text-yellow-400">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <p class="text-white mt-5 mb-0 pb-2">Get sure 3-5 odds daily and earn consistently. Click BUY to purchase our Silver plan now. Tips are sent instantly via SMS.</p>
-                    <a href="buytippage2.php">
-                        <button class="bg-green-600 text-white py-2 px-4 rounded-lg font-semibold mt-2">BUY @KSH. 50</button>
-                    </a>
-                </div>
-                <!-- Gold Plan -->
-                <div class="bg-white text-white p-4 mb-2 rounded-lg shadow-md" style="background-image: url({{ url_for('static', filename='Subbackground.png') }}); background-size: cover;">
-                    <div class="flex justify-between items-center">
-                        <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">Gold Plan</span>
-                        <div class="text-yellow-400">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <p class="text-white mt-2 mb-0 pb-2">Get sure 5-7 odds daily and earn consistently. Click BUY to purchase our Gold plan now. Tips are sent instantly via SMS.</p>
-                    <a href="buytippage3.php">
-                        <button class="bg-green-600 text-white py-2 px-4 rounded-lg font-semibold mt-4">BUY @KSH. 70</button>
-                    </a>
-                </div>
-                <!-- Platinum Plan -->
-                <div class="bg-white text-white p-4 mb-2 rounded-lg shadow-md" style="background-image: url({{ url_for('static', filename='Subbackground.png') }}); background-size: cover;">
-                    <div class="flex justify-between items-center">
-                        <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">Platinum Plan</span>
-                        <div class="text-yellow-400">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <p class="text-white mt-2 mb-0 pb-2">Get sure 8-15 odds daily and earn consistently. Click BUY to purchase our Platinum plan now. Tips are sent instantly via SMS.</p>
-                    <a href="buytippage4.php">
-                        <button class="bg-green-600 text-white py-2 px-4 rounded-lg font-semibold mt-4">BUY @KSH. 100</button>
-                    </a>
-                </div>
-            </section>
-
-            <!-- Recently Won Tips -->
-            <section class="p-2">
-                <div class="bg-white p-2 rounded-lg shadow-md">
-                    <h2 class="text-2xl font-bold text-green-600 mb-1 text-center">Recently Won Premium Tips</h2>
-                    <!-- Silver Plan -->
-                    <button class="collapsible">Silver Plan <span class="dropdown-symbol">▼</span></button>
-                    <div class="content">
-                        <table class="results-table">
-                            <tr>
-                                <th>Date</th><th>Fixture</th><th>Tip</th><th>Result</th><th>Status</th>
-                            </tr>
-                            <tr>
-                                <td>17/02</td><td>Zaglebie Lubin vs Lechia Gdansk</td><td>gg</td><td>1:3</td>
-                                <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
-                            </tr>
-                            <tr>
-                                <td>17/02</td><td>Genoa vs Venezia</td><td>1</td><td>2:0</td>
-                                <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <!-- Gold Plan -->
-                    <button class="collapsible">Gold Plan <span class="dropdown-symbol">▼</span></button>
-                    <div class="content">
-                        <table class="results-table">
-                            <tr>
-                                <th>Date</th><th>Fixture</th><th>Tip</th><th>Result</th><th>Status</th>
-                            </tr>
-                            <tr>
-                                <td>08/02</td><td>Ashdod vs Hapoel Be`er Sheva</td><td>2</td><td>0:2</td>
-                                <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
-                            </tr>
-                            <tr>
-                                <td>08/02</td><td>Las Palmas vs Villarreal</td><td>over 2.5</td><td>1:2</td>
-                                <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
-                            </tr>
-                            <tr>
-                                <td>08/02</td><td>Empoli vs AC Milan</td><td>2</td><td>0:2</td>
-                                <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
-                            </tr>
-                            <tr>
-                                <td>08/02</td><td>Heracles vs GA Eagles</td><td>gg</td><td>4:2</td>
-                                <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <!-- Platinum Plan -->
-                    <button class="collapsible">Platinum Plan <span class="dropdown-symbol">▼</span></button>
-                    <div class="content">
-                        <table class="results-table">
-                            <tr>
-                                <th>Date</th><th>Fixture</th><th>Tip</th><th>Result</th><th>Status</th>
-                            </tr>
-                            <tr>
-                                <td>01/02</td><td>Cercle Brugge vs Standard Liege</td><td>gg</td><td>1:1</td>
-                                <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
-                            </tr>
-                            <tr>
-                                <td>01/02</td><td>Al-Ittihad FC vs Al-Kholood</td><td>1</td><td>4:3</td>
-                                <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
-                            </tr>
-                            <tr>
-                                <td>01/02</td><td>Partizan Belgrade vs Spartak Subotica</td><td>over 2.5</td><td>2:2</td>
-                                <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
-                            </tr>
-                            <tr>
-                                <td>01/02</td><td>Lausanne-Sport vs Young Boys</td><td>over 2.5</td><td>1:2</td>
-                                <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Why Choose Us -->
-            <section class="my-24 md:px-6 p-4">
-                <div class="max-w-[700px] text-left">
-                    <p class="mb-2 font-bold uppercase text-green-600">Why Us</p>
-                    <h2 class="mb-6 text-3xl font-bold">Why Choose TipsPesa?</h2>
-                    <p class="mb-16 text-gray-900">TipsPesa offers a range of benefits that set us apart from other betting prediction platforms. Our tips are expertly crafted, based on in-depth analysis and research, ensuring that you get the best possible results. We offer a range of categories to suit your needs, including 2+ sure odds, 3+ sure odds, and 5+ sure odds. Our pricing is competitive, and our customer service is second to none.</p>
-                </div>
-                <div class="grid gap-x-6 md:grid-cols-2 lg:grid-cols-4 xl:gap-x-12">
-                    <div class="mb-12 flex">
-                        <svg class="mr-3 h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <div>
-                            <p class="mb-1 font-bold">Expert Analysis</p>
-                            <p class="text-gray-900">Our betting prediction tips are expertly crafted, based on in-depth analysis and research, ensuring that you get the best possible results.</p>
-                        </div>
-                    </div>
-                    <div class="mb-12 flex">
-                        <svg class="mr-3 h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <div>
-                            <p class="mb-1 font-bold">Multiple Categories</p>
-                            <p class="text-gray-900">We offer a range of categories to suit your needs, including sure 2+odds, sure 3+odds, and sure 5+odds, giving you the flexibility to choose what works best for you.</p>
-                        </div>
-                    </div>
-                    <div class="mb-12 flex">
-                        <svg class="mr-3 h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <div>
-                            <p class="mb-1 font-bold">Competitive Pricing</p>
-                            <p class="text-gray-900">Our pricing is competitive, ensuring that you get the best value for your money.</p>
-                        </div>
-                    </div>
-                    <div class="mb-12 flex">
-                        <svg class="mr-3 h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <div>
-                            <p class="mb-1 font-bold">Excellent Customer Service</p>
-                            <p class="text-gray-900">We pride ourselves on our excellent customer service, ensuring that our customers are always satisfied with our tips and our support.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Additional Info -->
-                <div class="flex flex-wrap">
-                    <div class="mb-6 w-full lg:w-4/12 px-3">
-                        <h2 class="mb-6 text-2xl font-bold">TipsPesa: Your Ultimate Destination for Accurate Football Betting Predictions</h2>
-                        <p class="mb-2 text-gray-900">In the dynamic world of football betting, finding a reliable and accurate prediction website is crucial for enthusiasts looking to turn their passion into profitable ventures...</p>
-                    </div>
-                    <div class="w-full lg:w-8/12 px-3">
-                        <div class="flex flex-wrap">
-                            <div class="mb-12 w-full lg:w-6/12 px-3">
-                                <div class="ml-4">
-                                    <p class="mb-3 font-bold">Unrivaled Accuracy and Expertise</p>
-                                    <p class="text-gray-900">TipsPesa boasts a team of seasoned experts dedicated to analyzing statistical information and forecasts to craft predictions with an impressive 90% average accuracy...</p>
-                                </div>
-                            </div>
-                            <div class="mb-12 w-full lg:w-6/12 px-3">
-                                <div class="ml-4">
-                                    <p class="mb-3 font-bold">Diverse Betting Markets</p>
-                                    <p class="text-gray-900">TipsPesa caters to a wide array of betting preferences, ensuring there's something for every punter...</p>
-                                </div>
-                            </div>
-                            <div class="mb-12 w-full lg:w-12/12 px-3">
-                                <div class="ml-4">
-                                    <p class="mb-3 font-bold">Conclusion</p>
-                                    <p class="text-gray-900">In the competitive landscape of football prediction websites, TipsPesa emerges as a trusted and unparalleled destination...</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            {% endif %}
+            {% endfor %}
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900">
-        <div class="max-w-screen-xl px-4 py-12 mx-auto">
-            <nav class="flex flex-wrap justify-center -mx-5 -my-2">
-                <a href="disclaimer.php" class="px-5 py-2 text-white hover:text-gray-200">Disclaimer</a>
-                <a href="privacypolicy.php" class="px-5 py-2 text-white hover:text-gray-200">Privacy Policy</a>
-                <a href="terms.php" class="px-5 py-2 text-white hover:text-gray-200">Terms</a>
-                <a href="https://wa.me/+254707187271" class="px-5 py-2 text-white hover:text-gray-200">Contact Us</a>
-            </nav>
-            <div class="flex justify-center mt-8 space-x-6">
-                <a href="https://facebook.com/Tipspesa" class="text-white hover:text-gray-200">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path>
-                    </svg>
-                </a>
-                <a href="#" class="text-white hover:text-gray-200">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
-                    </svg>
-                </a>
-                <a href="https://x.com/tipspesa" class="text-white hover:text-gray-200">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 512 512">
-                        <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
-                    </svg>
-                </a>
-            </div>
-            <p class="mt-8 text-base text-center text-white">© 2025 TipsPesa, Inc. All rights reserved.</p>
-            <div class="mt-4 text-center">
-                <a href="https://wa.me/+254759697757" class="text-sm text-white hover:text-gray-200">
-                    🚀 Developed with ❤️ by <span class="font-semibold">Matrix Systems</span>
-                </a>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-12 col-sm-offset-4 text-center">
+                <div class="my-progress-bar"></div>
             </div>
         </div>
-    </footer>
+    </div>
 
-    <!-- Scripts -->
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for match in matches %}
+            {% if match.status is not none %}
+            <a class="col-12 col-sm-4" style="color: black;">
+                <div class="card box-shadow my-2">
+                    <div class="card-header text-center">
+                        <b>{{ match.home_team }} vs {{ match.away_team }}</b>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <small class="col-4 col-sm-4 text-left">{{ match.kickoff.strftime('%d %b %Y %H:%M') }}</small>
+                            <small class="col-2 col-sm-2 text-center"><b>{{ match.home_results }} - {{ match.away_results }}</b></small>
+                            <small class="col-4 col-sm-4 text-right"><b>                                
+                                {% if match.prediction in ['over 1.5', 'over 2.5'] %}
+                                    {{ match.prediction }} goals
+                                {% elif match.prediction in ['over 7.5', 'over 8.5', 'over 9.5', 'over 10.5'] %}
+                                    {{ match.prediction }} corners
+                                {% else %}
+                                    {{ match.prediction }}
+                                {% endif %}
+                            </b></small>
+                            <small class="col-2 col-sm-2 text-center {{ match.status.lower() }}"><i class="material-icons">
+                                {{ 'do_not_disturb_on' if match.status == 'LOST' else ('check_circle' if match.status == 'WON' else 'autorenew') }}
+                            </i></small>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    {% include 'nav.html' %}
+
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="POST" class="form-horizontal">
+                    <div class="modal-header text-center">
+                        <h5 class="text-center">Premium Tips Subscription</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-4 text-end control-label col-form-label">Phone No.:</label>
+                            <div class="col-8">
+                                <input required="required" type="text" name="phone" id="phone" class="form-control input-sm"
+                                    placeholder="e.g 0712345678">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" id="action" name="action" value="login"
+                            class="btn btn-success">Login/Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <!-- Script JS -->
+    <script src="{{ url_for('static', filename='plugin.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
     <script>
-        // Menu Toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const menuClose = document.getElementById('menuClose');
-        const slideInMenu = document.getElementById('slideInMenu');
+        var pStart = { x: 0, y: 0 };
+        var pStop = { x: 0, y: 0 };
 
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            slideInMenu.classList.toggle('translate-x-full');
-        });
-
-        menuClose.addEventListener('click', () => {
-            slideInMenu.classList.add('translate-x-full');
-        });
-
-        document.body.addEventListener('click', (e) => {
-            if (!slideInMenu.classList.contains('translate-x-full') && !slideInMenu.contains(e.target)) {
-                slideInMenu.classList.add('translate-x-full');
-            }
-        });
-
-        // Responsive Menu
-        window.addEventListener('resize', () => {
-            const menuItems = document.getElementById('menuItems');
-            if (window.innerWidth >= 1024) {
-                menuItems.style.display = 'flex';
-                menuToggle.style.display = 'none';
+        function swipeStart(e) {
+            if (typeof e["targetTouches"] !== "undefined") {
+                var touch = e.targetTouches[0];
+                pStart.x = touch.screenX;
+                pStart.y = touch.screenY;
             } else {
-                menuItems.style.display = 'none';
-                menuToggle.style.display = 'block';
+                pStart.x = e.screenX;
+                pStart.y = e.screenY;
             }
-        });
-        window.dispatchEvent(new Event('resize'));
+        }
 
-        // Tips Fetching
-        document.addEventListener("DOMContentLoaded", () => {
-            const buttons = document.querySelectorAll(".date-btn");
-            buttons.forEach(button => {
-                button.addEventListener("click", () => {
-                    const selectedDate = button.getAttribute("data-date");
-                    // fetchTips(selectedDate); // Implement this function if needed
-                });
-            });
-        });
-
-        // Disable Developer Tools
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('keydown', e => {
-            if ((e.ctrlKey && e.shiftKey && e.key === 'I') || e.key === 'F12') {
-                e.preventDefault();
+        function swipeEnd(e) {
+            if (typeof e["changedTouches"] !== "undefined") {
+                var touch = e.changedTouches[0];
+                pStop.x = touch.screenX;
+                pStop.y = touch.screenY;
+            } else {
+                pStop.x = e.screenX;
+                pStop.y = e.screenY;
             }
-        });
 
-        // Collapsible Sections
-        document.querySelectorAll('.collapsible').forEach(coll => {
-            coll.addEventListener('click', function() {
-                document.querySelectorAll('.collapsible').forEach(other => {
-                    if (other !== this) {
-                        other.classList.remove('active');
-                        other.nextElementSibling.style.display = 'none';
-                    }
-                });
-                this.classList.toggle('active');
-                const content = this.nextElementSibling;
-                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            swipeCheck();
+        }
+
+        function swipeCheck() {
+            var changeY = pStart.y - pStop.y;
+            var changeX = pStart.x - pStop.x;
+            if (isPullDown(changeY, changeX)) {
+                window.location.reload();
+            }
+        }
+
+        function isPullDown(dY, dX) {
+            // methods of checking slope, length, direction of line created by swipe action
+            return (
+                dY < 0 &&
+                ((Math.abs(dX) <= 100 && Math.abs(dY) >= 300) ||
+                    (Math.abs(dX) / Math.abs(dY) <= 0.3 && dY >= 60))
+            );
+        }
+
+        document.addEventListener(
+            "touchstart",
+            function (e) {
+                swipeStart(e);
+            },
+            false
+        );
+        document.addEventListener(
+            "touchend",
+            function (e) {
+                swipeEnd(e);
+            },
+            false
+        );
+
+        const played = {{ played | safe }};
+        const won = {{ won | safe }};
+
+        if (played > 0) {
+            $(document).ready(function () {
+                $(".my-progress-bar")
+                    .circularProgress({
+                        line_width: 6,
+                        color: 100 * won / played > 75 ? 'green' : 100 * won / played > 50 ? 'yellow' : 100 * won / played > 25 ? 'orange' : 'red',
+                        starting_position: 0, // 12.00 o' clock position, 25 stands for 3.00 o'clock (clock-wise)
+                        percent: 0, // percent starts from
+                        percentage: true,
+                        text: won + ' of ' + played + ' Predicted Games Won (Verified Results)'
+                    })
+                    .circularProgress("animate", 100 * won / played, 1000);
             });
-        });
+        }
+
+        setInterval(() => {
+            const elements = document.querySelectorAll('.blinking-text');
+            elements.forEach(element => {
+                element.style.visibility = (element.style.visibility === 'hidden') ? 'visible' : 'hidden';
+            });
+        }, 1000);
     </script>
+
 </body>
+
 </html>
