@@ -15,8 +15,8 @@ class Plan():
         self.odds = odds
         self.color = color 
         self.stars = stars
-        self.matches = matches.sort(key=lambda match: match.kickoff)
-        self.matches_yesterday = matches_yesterday.sort(key=lambda match: match.kickoff)
+        self.matches = sorted(matches, key=lambda match: match.kickoff) 
+        self.matches_yesterday = sorted(matches_yesterday, key=lambda match: match.kickoff)
 
 class Match():     
     def __init__(self):
