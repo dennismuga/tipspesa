@@ -43,21 +43,28 @@ class CornerStone():
                         bet_pick = odd.get('odd_key')      
                         special_bet_value = odd.get('special_bet_value')      
                         outcome_id = odd.get('outcome_id')
-                        if (odd_value>=1.29 and odd_value<=1.34) or (odd_value>=1.43 and odd_value <= 1.44) and 'over' in bet_pick:                                                
-                            match = {
-                                'match_id': match_id,
-                                'start_time': start_time,
-                                'home_team': home_team,
-                                'away_team': away_team,
-                                'prediction': bet_pick,
-                                'odd': odd_value,
-                                'overall_prob': 88,
-                                'parent_match_id': parent_match_id,
-                                'sub_type_id': sub_type_id,
-                                'bet_pick': bet_pick,
-                                'special_bet_value': special_bet_value,
-                                'outcome_id': outcome_id
-                            }
+                        # if (odd_value>=1.29 and odd_value<=1.34) or (odd_value>=1.43 and odd_value <= 1.44) and 'over' in bet_pick:   
+                        if (odd_value < 1.32 and bet_pick == 'over 7.5'):    
+                            for odd in odds:       
+                                bet_pick = odd.get('odd_key')   
+                                if bet_pick == 'over 8.5':   
+                                    odd_value = float(odd.get('odd_value'))    
+                                    special_bet_value = odd.get('special_bet_value')      
+                                    outcome_id = odd.get('outcome_id')
+                                    match = {
+                                        'match_id': match_id,
+                                        'start_time': start_time,
+                                        'home_team': home_team,
+                                        'away_team': away_team,
+                                        'prediction': bet_pick,
+                                        'odd': odd_value,
+                                        'overall_prob': 88,
+                                        'parent_match_id': parent_match_id,
+                                        'sub_type_id': sub_type_id,
+                                        'bet_pick': bet_pick,
+                                        'special_bet_value': special_bet_value,
+                                        'outcome_id': outcome_id
+                                    }
         if match:
             print(match)
             self.db.insert_match(match)
