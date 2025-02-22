@@ -62,7 +62,7 @@ def page_not_found(e):
     # Redirect to a specific endpoint, like 'home', or a custom 404 page
     return redirect(url_for('home'), 302)
 
-@app.route('/home', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def home(): 
     if request.method == 'POST': 
         return subscribe()
