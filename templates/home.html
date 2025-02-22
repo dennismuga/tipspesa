@@ -155,7 +155,7 @@
                         {% set ns.total_odds = ns.total_odds * match.odd %}
                         {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips' %}
                         <tr>
-                            <td>{{ match.kickoff.strftime('%d %b %Y %H:%M') }}</td>
+                            <td>{{ match.kickoff.strftime('%H:%M') }}</td>
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                             <td>
                                 {% if match.prediction in ['over 1.5', 'over 2.5'] %}
@@ -196,13 +196,13 @@
                     <div class="content">
                         <table class="results-table">
                             <tr>
-                                <th>Date</th><th>Fixture</th><th>Tip</th><th>Odd</th><th>Result</th><th>Status</th>
+                                <th>Date</th><th>Fixture</th><th>Tip</th><th>Result</th><th>Status</th>
                             </tr>
                             {% set ns = namespace(total_odds=1) %}
                             {% for match in plan.matches_yesterday %}
                             {% set ns.total_odds = ns.total_odds * match.odd %}
                             <tr>
-                                <td>{{ match.kickoff.strftime('%d %b %Y %H:%M') }}</td>
+                                <td>{{ match.kickoff.strftime('%d %b') }}</td>
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                                 <td>
                                     {% if match.prediction in ['over 1.5', 'over 2.5'] %}
@@ -213,14 +213,13 @@
                                         {{ match.prediction }}
                                     {% endif %}
                                 </td>
-                                <td>{{ match.odd }}</td>
-                                <td>{{ match.result }}</td>
+                                <td>{{ match.home_results ~ '-' ~match.away_results }}</td>
                                 <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
                             </tr>
                             {% endfor %}
                             <tr>
-                                <th colspan="3">Total Odds</th><th>{{ ns.total_odds | round(2) }}</th>
-                                <th colspan="2"></th>
+                                <th colspan="3">Total Odds</th>
+                                <th colspan="2">{{ ns.total_odds | round(2) }}</th>
                             </tr>
                         </table>
                     </div>
@@ -233,7 +232,7 @@
                 <div class="max-w-[700px] text-left">
                     <p class="mb-2 font-bold uppercase text-green-600">Why Us</p>
                     <h2 class="mb-6 text-3xl font-bold">Why Choose TipsPesa?</h2>
-                    <p class="mb-16 text-gray-900">TipsPesa offers a range of benefits that set us apart from other betting prediction platforms. Our tips are expertly crafted, based on in-depth analysis and research, ensuring that you get the best possible results. We offer a range of categories to suit your needs, including 2+ sure odds, 3+ sure odds, and 5+ sure odds. Our pricing is competitive, and our customer service is second to none.</p>
+                    <p class="mb-16 text-gray-900">TipsPesa offers a range of benefits that set us apart from other betting prediction platforms. Our tips are expertly crafted, based on in-depth analysis and research, ensuring that you get the best possible results. We offer a range of categories to suit your needs, including 2+ sure odds, 5+ sure odds, 7+ sure odds, 9+ sure odds, and 12+ sure odds. Our pricing is competitive, and our customer service is second to none.</p>
                 </div>
                 <div class="grid gap-x-6 md:grid-cols-2 lg:grid-cols-4 xl:gap-x-12">
                     <div class="mb-12 flex">
@@ -285,7 +284,7 @@
                             <div class="mb-12 w-full lg:w-6/12 px-3">
                                 <div class="ml-4">
                                     <p class="mb-3 font-bold">Unrivaled Accuracy and Expertise</p>
-                                    <p class="text-gray-900">TipsPesa boasts a team of seasoned experts dedicated to analyzing statistical information and forecasts to craft predictions with an impressive 90% average accuracy...</p>
+                                    <p class="text-gray-900">TipsPesa boasts a team of seasoned experts dedicated to analyzing statistical information and forecasts to craft predictions with an impressive 95% average accuracy...</p>
                                 </div>
                             </div>
                             <div class="mb-12 w-full lg:w-6/12 px-3">
@@ -393,17 +392,6 @@
             }
         });
         window.dispatchEvent(new Event('resize'));
-
-        // Tips Fetching
-        document.addEventListener("DOMContentLoaded", () => {
-            const buttons = document.querySelectorAll(".date-btn");
-            buttons.forEach(button => {
-                button.addEventListener("click", () => {
-                    const selectedDate = button.getAttribute("data-date");
-                    // fetchTips(selectedDate); // Implement this function if needed
-                });
-            });
-        });
 
         // Disable Developer Tools
         document.addEventListener('contextmenu', e => e.preventDefault());
