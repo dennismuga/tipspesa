@@ -1,7 +1,7 @@
 
 import os
 from flask import Flask, redirect, render_template, request, url_for
-from flask_login import LoginManager, current_user, login_user
+from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_session import Session
 from redis import Redis
 from dotenv import load_dotenv
@@ -37,7 +37,7 @@ db = PostgresCRUD()
 helper = Helper()
 
 def subscribe():     
-    phone = request.form['phone'][-9:]
+    phone = request.form['phone']
     amount = request.form['amount']
     user = db.get_user(phone=phone)
         
@@ -45,9 +45,12 @@ def subscribe():
         db.add_user(phone)
         user = db.get_user(phone=phone)
 
+    if current_user.is_authenticated:
+        logout_user()
+
     login_user(user)
 
-    order_details = Pesapal().submit_order_request(phone, amount)
+    order_details = Pesapal().submit_order_request(phone[-9:], amount)
     order_tracking_id = order_details.get('order_tracking_id')
     db.insert_transaction(order_tracking_id, current_user.id, amount)
     return render_template('pay.html', order_tracking_id=order_tracking_id)
