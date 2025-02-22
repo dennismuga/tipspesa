@@ -44,7 +44,7 @@ class CornerStone():
                         special_bet_value = odd.get('special_bet_value')      
                         outcome_id = odd.get('outcome_id')
                         # if (odd_value>=1.29 and odd_value<=1.34) or (odd_value>=1.43 and odd_value <= 1.44) and 'over' in bet_pick:   
-                        if (odd_value < 1.32 and bet_pick == 'over 7.5'):    
+                        if (odd_value < 1.34 and bet_pick == 'over 7.5'):    
                             for odd in odds:    
                                 overall_prob = 98 if odd_value < 1.3 else 88
                                 bet_pick = odd.get('odd_key')   
