@@ -53,11 +53,9 @@ class Helper():
         response = requests.post(url, json=body_dict, timeout=timeout)
         return response.json()
 
-    def fetch_matches(self, day, comparator='=', status="AND status IS NOT NULL"):
+    def fetch_matches(self, day, comparator='=', status="AND status IS NOT NULL", limit=12):
         matches = []
-        played = 0
-        won = 0
-        for open_match in PostgresCRUD().fetch_matches(day, comparator, status):
+        for open_match in PostgresCRUD().fetch_matches(day, comparator, status, limit):
             match = Match()
             match.kickoff = open_match[1]
             match.home_team = open_match[2]
@@ -69,9 +67,6 @@ class Helper():
             match.away_results = open_match[8] 
             match.overall_prob = int(open_match[9])    
             matches.append(match)
-            if match.status is not None:
-                played += 1
-                won += 0 if match.status == 'LOST' else 1
                 
-        return matches, played, won
+        return matches
     

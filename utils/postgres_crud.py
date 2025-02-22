@@ -141,7 +141,7 @@ class PostgresCRUD:
                 predictions.append(prediction)
         return predictions
     
-    def fetch_matches(self, day, comparator, status): 
+    def fetch_matches(self, day, comparator, status, limit=12): 
         self.ensure_connection()           
         with self.conn.cursor() as cur:
             query = f"""
@@ -154,6 +154,7 @@ class PostgresCRUD:
 
             SELECT * FROM m
             ORDER BY odd ASC
+            LIMIT {limit}
             """
             cur.execute(query)
             return cur.fetchall()
@@ -382,27 +383,23 @@ class PostgresCRUD:
             cursor.execute(query, (id, phone))
             self.conn.commit()      
     
-    def update_user_expiry(self, order_tracking_id, days):         
+    def update_user_expiry(self, order_tracking_id, plan):         
         self.ensure_connection()
         with self.conn.cursor() as cur:
             query = """
                 UPDATE subscribers
-                SET expires_at = CASE 
-                    WHEN expires_at <= NOW() 
-                        THEN NOW() + INTERVAL '%s days' 
-                        ELSE expires_at + INTERVAL '%s days' 
-                    END
+                SET password=%s, expires_at = NOW() + INTERVAL '1 days' 
                 WHERE id = (SELECT subscriber_id FROM transactions WHERE id = %s)
             """
             
-            cur.execute(query, (days, days, order_tracking_id)) 
+            cur.execute(query, (plan, order_tracking_id)) 
             self.conn.commit()  
 
     def get_user(self, user_id=None, phone=None):
         self.ensure_connection()
         with self.conn.cursor() as cur:
             query = """
-                SELECT id, phone, expires_at > NOW() AS active
+                SELECT id, phone, password, expires_at > NOW() AS active
                 FROM subscribers
                 WHERE 1=1
             """
@@ -416,7 +413,7 @@ class PostgresCRUD:
             cur.execute(query, tuple(params))            
             datum = cur.fetchone()
             if datum:
-                return User(datum[0], datum[1], datum[2])
+                return User(datum[0], datum[1], datum[2], datum[3])
             else:
                 return None
     
