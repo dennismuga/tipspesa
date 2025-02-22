@@ -143,6 +143,9 @@
                             {% for i in range(plan.stars) %}
                             <i class="fas fa-star"></i>
                             {% endfor %}
+                            {% for i in range(5-plan.stars) %}
+                            <i class="fas fa-star text-white"></i>
+                            {% endfor %}
                         </div>
                     </div>
                     
