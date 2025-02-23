@@ -183,8 +183,10 @@
                                 Once Paid, Tips will be displayed here. <br />
                                 <a href="#" data-toggle="modal" data-target="#loginModal"
                                     onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
-                                    <button class="bg-green-600 text-white py-2 px-4 rounded-lg font-semibold mt-2">BUY
-                                        @KSH. {{ plan.amount }}</button>
+                                    <button class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
+                                        BUY {{ plan.name }}<br />
+                                        @ KSh. {{ plan.amount }}
+                                    </button>
                                 </a>
                             </th>
                             {% endif %}
