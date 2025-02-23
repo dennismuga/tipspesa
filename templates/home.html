@@ -150,9 +150,11 @@
                     </div>
                     
                     <table class="results-table">
+                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips' %}
                         <tr>
                             <th>Kickoff</th><th>Fixture</th><th>Tip</th><th>Odd</th>
                         </tr>
+                        {% endif %}
                         {% set ns = namespace(total_odds=1) %}
                         {% for match in plan.matches %}
                         {% set ns.total_odds = ns.total_odds * match.odd %}
@@ -197,6 +199,7 @@
                     <!-- Silver Plan -->
                     <button class="collapsible">{{ plan.name }}<span class="dropdown-symbol">▼</span></button>
                     <div class="content">
+                        {% if  plan.matches_yesterday | length > 0 %}
                         <table class="results-table">
                             <tr>
                                 <th>Date</th><th>Fixture</th><th>Tip</th><th>Result</th><th>Status</th>
@@ -219,6 +222,7 @@
                             </tr>
                             {% endfor %}
                         </table>
+                        {% endif %}
                     </div>
                     {% endfor %}
                 </div>
