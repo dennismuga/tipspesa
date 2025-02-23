@@ -201,9 +201,7 @@
                             <tr>
                                 <th>Date</th><th>Fixture</th><th>Tip</th><th>Result</th><th>Status</th>
                             </tr>
-                            {% set ns = namespace(total_odds=1) %}
                             {% for match in plan.matches_yesterday %}
-                            {% set ns.total_odds = ns.total_odds * match.odd %}
                             <tr>
                                 <td>{{ match.kickoff.strftime('%d %b') }}</td>
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
@@ -220,10 +218,6 @@
                                 <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
                             </tr>
                             {% endfor %}
-                            <tr>
-                                <th colspan="3">Total Odds</th>
-                                <th colspan="2">{{ ns.total_odds | round(2) }}</th>
-                            </tr>
                         </table>
                     </div>
                     {% endfor %}
