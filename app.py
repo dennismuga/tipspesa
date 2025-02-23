@@ -71,14 +71,14 @@ def home():
         return subscribe()
     
     else:
-        matches = helper.fetch_matches('', '=', '', limit=7)
-        matches_yesterday = helper.fetch_matches('-1', '=', '', limit=7)
+        matches = helper.fetch_matches('', '=', '', limit=9)
+        matches_yesterday = helper.fetch_matches('-1', '=', '', limit=9)
         plans = [
             Plan('Free Tips', 0, 2, 'red', 1, matches[:2] if len(matches)>= 2 else matches, matches_yesterday[:2] if len(matches_yesterday)>= 2 else matches_yesterday),
-            Plan('Bronze Plan', 20, 5, 'red', 2, matches[:4] if len(matches)>= 4 else matches, matches_yesterday[:4] if len(matches_yesterday)>= 4 else matches_yesterday),
-            Plan('Silver Plan', 30, 8, 'yellow', 3, matches[:5] if len(matches)>= 5 else matches, matches_yesterday[:5] if len(matches_yesterday)>= 5 else matches_yesterday),
-            Plan('Gold Plan', 50, 12, 'yellow', 4, matches[:6] if len(matches)>= 6 else matches, matches_yesterday[:6] if len(matches_yesterday)>= 6 else matches_yesterday),
-            Plan('Platinum Plan', 70, 20, 'green', 5, matches[:7] if len(matches)>= 7 else matches, matches_yesterday[:7] if len(matches_yesterday)>= 7 else matches_yesterday)
+            Plan('Bronze Plan', 20, 5, 'red', 2, matches[2:6] if len(matches)>= 6 else matches, matches_yesterday[2:6] if len(matches_yesterday)>= 6 else matches_yesterday),
+            Plan('Silver Plan', 30, 8, 'yellow', 3, matches[2:7] if len(matches)>= 7 else matches, matches_yesterday[2:7] if len(matches_yesterday)>= 7 else matches_yesterday),
+            Plan('Gold Plan', 50, 12, 'yellow', 4, matches[2:8] if len(matches)>= 8 else matches, matches_yesterday[2:8] if len(matches_yesterday)>= 8 else matches_yesterday),
+            Plan('Platinum Plan', 70, 20, 'green', 5, matches[2:9] if len(matches)>= 9 else matches, matches_yesterday[2:9] if len(matches_yesterday)>= 9 else matches_yesterday)
         ]
         return render_template('home.html', plans=plans)
 
