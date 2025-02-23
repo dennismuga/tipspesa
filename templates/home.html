@@ -150,11 +150,19 @@
                     </div>
                     
                     <table class="results-table">
-                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips' %}
                         <tr>
+                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips' %}
                             <th>Kickoff</th><th>Fixture</th><th>Tip</th><th>Odd</th>
-                        </tr>
+                        {% else %}
+                        <th colspan="4">
+                            Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{ plan.name }} now. 
+                            Once Paid, Tips will be displayed here. <br />
+                            <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
+                                <button class="bg-green-600 text-white py-2 px-4 rounded-lg font-semibold mt-2">BUY @KSH. {{ plan.amount }}</button>
+                            </a>
+                        </th>
                         {% endif %}
+                        </tr>
                         {% set ns = namespace(total_odds=1) %}
                         {% for match in plan.matches %}
                         {% set ns.total_odds = ns.total_odds * match.odd %}
@@ -175,14 +183,6 @@
                         </tr>
                         {% endif %}
                         {% endfor %}
-                        {% if (not current_user.active or current_user.plan != plan.name) and plan.name != 'Free Tips' %}
-                        <td colspan="4">
-                            <p class="text-white mt-5 mb-0 pb-2">Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{ plan.name }} now. Once Paid, Tips will be displayed here.</p>
-                            <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
-                                <button class="bg-green-600 text-white py-2 px-4 rounded-lg font-semibold mt-2">BUY @KSH. {{ plan.amount }}</button>
-                            </a>
-                        </td>
-                        {% endif %}
                         <tr>
                             <th colspan="3">Total Odds</th><th>{{ ns.total_odds | round(2) }}</th>
                         </tr>
