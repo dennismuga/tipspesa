@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="TipsPesa">
-    <meta name="description" content="TipsPesa is the best free football prediction website that provides you with the most accurate football tips to help you make profits">
-    <meta name="keywords" content="Sure Prediction, TipsPesa prediction, best jackpot prediction site, jackpot predictions, sports fans reviews, sportpesa kenya, sokafans, sokafans prediction, prima tips, sure straight win for today, best midweek football bets, jackpot predictions for today, jackpot prediction, betika games today football, betika best online sports betting in kenya, best jackpot prediction site, mega jackpot prediction, bet 360, sportpesa login, statarea guru prediction, 180bet tip, statarea, free bet tips bet numbers, mega jackpot analysis prediction, betpawa jackpot prediction, betpawa, sportpesa, predictz, mega jackpot analysis, betpawa jackpot predictions, jackpot predictions, football prediction site, soccer prediction site, sure odds, soccer prediction, best football prediction site, free football prediction site, sure jackpot, accurate football prediction website, best VIP prediction website, best football prediction website, accurate football predictions, world's best prediction site, best free soccer prediction website, accurate soccer predictions, accurate football prediction for free, world's best prediction site, best football prediction, TipsPesa correct score, best VIP tips, best soccer prediction website, soccer prediction">
+    <meta name="description"
+        content="TipsPesa is the best free football prediction website that provides you with the most accurate football tips to help you make profits">
+    <meta name="keywords"
+        content="Sure Prediction, TipsPesa prediction, best jackpot prediction site, jackpot predictions, sports fans reviews, sportpesa kenya, sokafans, sokafans prediction, prima tips, sure straight win for today, best midweek football bets, jackpot predictions for today, jackpot prediction, betika games today football, betika best online sports betting in kenya, best jackpot prediction site, mega jackpot prediction, bet 360, sportpesa login, statarea guru prediction, 180bet tip, statarea, free bet tips bet numbers, mega jackpot analysis prediction, betpawa jackpot prediction, betpawa, sportpesa, predictz, mega jackpot analysis, betpawa jackpot predictions, jackpot predictions, football prediction site, soccer prediction site, sure odds, soccer prediction, best football prediction site, free football prediction site, sure jackpot, accurate football prediction website, best VIP prediction website, best football prediction website, accurate football predictions, world's best prediction site, best free soccer prediction website, accurate soccer predictions, accurate football prediction for free, world's best prediction site, best football prediction, TipsPesa correct score, best VIP tips, best soccer prediction website, soccer prediction">
     <title>TipsPesa | Betting Predictions</title>
-    
-    
+
+
     <!-- External Stylesheets -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -52,9 +55,11 @@
     <meta name="apple-mobile-web-app-title" content="Tipspesa App">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
 </head>
+
 <body>
-    
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form method="POST" class="form-horizontal">
@@ -67,8 +72,8 @@
                             <label class="col-4 text-end control-label col-form-label">Phone No.:</label>
                             <div class="col-8">
                                 <input type="hidden" id="amount" name="amount">
-                                <input required="required" type="text" name="phone" id="phone" class="form-control input-sm" minlength="9"
-                                    placeholder="e.g 0712345678">
+                                <input required="required" type="text" name="phone" id="phone"
+                                    class="form-control input-sm" minlength="9" placeholder="e.g 0712345678">
                             </div>
                         </div>
                     </div>
@@ -88,35 +93,46 @@
             <a href="https://tipspesa.vercel.app/" class="flex items-center">
                 <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="h-7">
             </a>
-            
-            <nav id="menuItems" class="hidden lg:flex items-center space-x-4">                
+
+            <nav id="menuItems" class="hidden lg:flex items-center space-x-4">
                 <a href="{{ url_for('home') }}" class="hover:text-gray-300">Home</a>
-                <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Bronze Plan', 20)" class="hover:text-gray-300">Bronze Plan</a>
-                <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Silver Plan', 30)" class="hover:text-gray-300">Silver Plan</a>
-                <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Gold Plan', 50)" class="hover:text-gray-300">Gold Plan</a>
-                <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Platinum Plan', 70)" class="hover:text-gray-300">Platinum Plan</a>
+                <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Bronze Plan', 20)"
+                    class="hover:text-gray-300">Bronze Plan</a>
+                <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Silver Plan', 30)"
+                    class="hover:text-gray-300">Silver Plan</a>
+                <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Gold Plan', 50)"
+                    class="hover:text-gray-300">Gold Plan</a>
+                <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Platinum Plan', 70)"
+                    class="hover:text-gray-300">Platinum Plan</a>
             </nav>
-            
+
             <button id="menuToggle" class="lg:hidden focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
                 </svg>
             </button>
-            
-            <nav id="slideInMenu" class="lg:hidden fixed top-0 right-0 h-full w-1/2 bg-gray-900 text-white transform translate-x-full transition-transform duration-300">
+
+            <nav id="slideInMenu"
+                class="lg:hidden fixed top-0 right-0 h-full w-1/2 bg-gray-900 text-white transform translate-x-full transition-transform duration-300">
                 <div class="flex justify-end p-4">
                     <button id="menuClose" class="focus:outline-none">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
                     </button>
                 </div>
                 <div class="flex flex-col items-center space-y-4">
                     <a href="{{ url_for('home') }}" class="hover:text-gray-300">Home</a>
-                    <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Bronze Plan', 20)" class="hover:text-gray-300">Bronze Plan</a>
-                    <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Silver Plan', 30)" class="hover:text-gray-300">Silver Plan</a>
-                    <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Gold Plan', 50)" class="hover:text-gray-300">Gold Plan</a>
-                    <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Platinum Plan', 70)" class="hover:text-gray-300">Platinum Plan</a>
+                    <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Bronze Plan', 20)"
+                        class="hover:text-gray-300">Bronze Plan</a>
+                    <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Silver Plan', 30)"
+                        class="hover:text-gray-300">Silver Plan</a>
+                    <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Gold Plan', 50)"
+                        class="hover:text-gray-300">Gold Plan</a>
+                    <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Platinum Plan', 70)"
+                        class="hover:text-gray-300">Platinum Plan</a>
                     <div class="mt-auto py-4">
                         <p class="text-sm text-gray-500">© 2025 TipsPesa</p>
                     </div>
@@ -136,9 +152,12 @@
         <div class="container sm:px-6 lg:px-60">
             <section class="p-2">
                 {% for plan in plans %}
-                <div class="bg-white text-white p-4 mb-7 rounded-lg shadow-md" style="background-image: url({{ url_for('static', filename='Subbackground.png') }}); background-size: cover;">
+                <div class="bg-white text-white p-4 mb-7 rounded-lg shadow-md"
+                    style="background-image: url({{ url_for('static', filename='Subbackground.png') }}); background-size: cover;">
                     <div class="flex justify-between items-center">
-                        <span class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full">{{ plan.name }}</span>
+                        <span
+                            class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full">{{
+                            plan.name }}</span>
                         <div class="text-yellow-400">
                             {% for i in range(plan.stars) %}
                             <i class="fas fa-star"></i>
@@ -148,20 +167,27 @@
                             {% endfor %}
                         </div>
                     </div>
-                    
+
                     <table class="results-table">
                         <tr>
-                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips' %}
-                            <th>Kickoff</th><th>Fixture</th><th>Tip</th><th>Odd</th>
-                        {% else %}
-                        <th colspan="4">
-                            Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{ plan.name }} now. 
-                            Once Paid, Tips will be displayed here. <br />
-                            <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
-                                <button class="bg-green-600 text-white py-2 px-4 rounded-lg font-semibold mt-2">BUY @KSH. {{ plan.amount }}</button>
-                            </a>
-                        </th>
-                        {% endif %}
+                            {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'
+                            %}
+                            <th>Kickoff</th>
+                            <th>Fixture</th>
+                            <th>Tip</th>
+                            <th>Odd</th>
+                            {% else %}
+                            <th colspan="4">
+                                Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{
+                                plan.name }} now.
+                                Once Paid, Tips will be displayed here. <br />
+                                <a href="#" data-toggle="modal" data-target="#loginModal"
+                                    onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
+                                    <button class="bg-green-600 text-white py-2 px-4 rounded-lg font-semibold mt-2">BUY
+                                        @KSH. {{ plan.amount }}</button>
+                                </a>
+                            </th>
+                            {% endif %}
                         </tr>
                         {% set ns = namespace(total_odds=1) %}
                         {% for match in plan.matches %}
@@ -172,11 +198,11 @@
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                             <td>
                                 {% if match.prediction in ['over 1.5', 'over 2.5'] %}
-                                    {{ match.prediction }} goals
+                                {{ match.prediction }} goals
                                 {% elif match.prediction in ['over 7.5', 'over 8.5', 'over 9.5', 'over 10.5'] %}
-                                    {{ match.prediction }} corners
+                                {{ match.prediction }} corners
                                 {% else %}
-                                    {{ match.prediction }}
+                                {{ match.prediction }}
                                 {% endif %}
                             </td>
                             <td>{{ match.odd }}</td>
@@ -184,7 +210,8 @@
                         {% endif %}
                         {% endfor %}
                         <tr>
-                            <th colspan="3">Total Odds</th><th>{{ ns.total_odds | round(2) }}</th>
+                            <th colspan="3">Total Odds</th>
+                            <th>{{ ns.total_odds | round(2) }}</th>
                         </tr>
                     </table>
                 </div>
@@ -199,10 +226,14 @@
                     <!-- Silver Plan -->
                     <button class="collapsible">{{ plan.name }}<span class="dropdown-symbol">▼</span></button>
                     <div class="content">
-                        {% if  plan.matches_yesterday | length > 0 %}
+                        {% if plan.matches_yesterday | length > 0 %}
                         <table class="results-table">
                             <tr>
-                                <th>Date</th><th>Fixture</th><th>Tip</th><th>Result</th><th>Status</th>
+                                <th>Date</th>
+                                <th>Fixture</th>
+                                <th>Tip</th>
+                                <th>Result</th>
+                                <th>Status</th>
                             </tr>
                             {% for match in plan.matches_yesterday %}
                             <tr>
@@ -210,11 +241,11 @@
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                                 <td>
                                     {% if match.prediction in ['over 1.5', 'over 2.5'] %}
-                                        {{ match.prediction }} goals
+                                    {{ match.prediction }} goals
                                     {% elif match.prediction in ['over 7.5', 'over 8.5', 'over 9.5', 'over 10.5'] %}
-                                        {{ match.prediction }} corners
+                                    {{ match.prediction }} corners
                                     {% else %}
-                                        {{ match.prediction }}
+                                    {{ match.prediction }}
                                     {% endif %}
                                 </td>
                                 <td>{{ match.home_results ~ '-' ~match.away_results }}</td>
@@ -233,43 +264,61 @@
                 <div class="max-w-[700px] text-left">
                     <p class="mb-2 font-bold uppercase text-green-600">Why Us</p>
                     <h2 class="mb-6 text-3xl font-bold">Why Choose TipsPesa?</h2>
-                    <p class="mb-16 text-gray-900">TipsPesa offers a range of benefits that set us apart from other betting prediction platforms. Our tips are expertly crafted, based on in-depth analysis and research, ensuring that you get the best possible results. We offer a range of categories to suit your needs, including 2+ sure odds, 5+ sure odds, 7+ sure odds, 9+ sure odds, and 12+ sure odds. Our pricing is competitive, and our customer service is second to none.</p>
+                    <p class="mb-16 text-gray-900">TipsPesa offers a range of benefits that set us apart from other
+                        betting prediction platforms.
+                        Our tips are expertly crafted, based on in-depth analysis and research, ensuring that you get
+                        the best possible results. We offer a range of categories to suit your needs, including 2+ sure
+                        odds, 5+ sure odds, 8+ sure odds, 12+ sure odds, and 20+ sure odds. Our pricing is competitive,
+                        and our customer service is second to none.</p>
                 </div>
                 <div class="grid gap-x-6 md:grid-cols-2 lg:grid-cols-4 xl:gap-x-12">
                     <div class="mb-12 flex">
-                        <svg class="mr-3 h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg class="mr-3 h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="green"
+                            stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <div>
                             <p class="mb-1 font-bold">Expert Analysis</p>
-                            <p class="text-gray-900">Our betting prediction tips are expertly crafted, based on in-depth analysis and research, ensuring that you get the best possible results.</p>
+                            <p class="text-gray-900">Our betting prediction tips are expertly crafted, based on in-depth
+                                analysis and research, ensuring that you get the best possible results.</p>
                         </div>
                     </div>
                     <div class="mb-12 flex">
-                        <svg class="mr-3 h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg class="mr-3 h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="green"
+                            stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <div>
                             <p class="mb-1 font-bold">Multiple Categories</p>
-                            <p class="text-gray-900">We offer a range of categories to suit your needs, including sure 2+odds, sure 3+odds, and sure 5+odds, giving you the flexibility to choose what works best for you.</p>
+                            <p class="text-gray-900">We offer a range of categories to suit your needs, including sure
+                                2+odds, sure 3+odds, and sure 5+odds, giving you the flexibility to choose what works
+                                best for you.</p>
                         </div>
                     </div>
                     <div class="mb-12 flex">
-                        <svg class="mr-3 h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg class="mr-3 h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="green"
+                            stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <div>
                             <p class="mb-1 font-bold">Competitive Pricing</p>
-                            <p class="text-gray-900">Our pricing is competitive, ensuring that you get the best value for your money.</p>
+                            <p class="text-gray-900">Our pricing is competitive, ensuring that you get the best value
+                                for your money.</p>
                         </div>
                     </div>
                     <div class="mb-12 flex">
-                        <svg class="mr-3 h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg class="mr-3 h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="green"
+                            stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <div>
                             <p class="mb-1 font-bold">Excellent Customer Service</p>
-                            <p class="text-gray-900">We pride ourselves on our excellent customer service, ensuring that our customers are always satisfied with our tips and our support.</p>
+                            <p class="text-gray-900">We pride ourselves on our excellent customer service, ensuring that
+                                our customers are always satisfied with our tips and our support.</p>
                         </div>
                     </div>
                 </div>
@@ -277,27 +326,34 @@
                 <!-- Additional Info -->
                 <div class="flex flex-wrap">
                     <div class="mb-6 w-full lg:w-4/12 px-3">
-                        <h2 class="mb-6 text-2xl font-bold">TipsPesa: Your Ultimate Destination for Accurate Football Betting Predictions</h2>
-                        <p class="mb-2 text-gray-900">In the dynamic world of football betting, finding a reliable and accurate prediction website is crucial for enthusiasts looking to turn their passion into profitable ventures...</p>
+                        <h2 class="mb-6 text-2xl font-bold">TipsPesa: Your Ultimate Destination for Accurate Football
+                            Betting Predictions</h2>
+                        <p class="mb-2 text-gray-900">In the dynamic world of football betting, finding a reliable and
+                            accurate prediction website is crucial for enthusiasts looking to turn their passion into
+                            profitable ventures...</p>
                     </div>
                     <div class="w-full lg:w-8/12 px-3">
                         <div class="flex flex-wrap">
                             <div class="mb-12 w-full lg:w-6/12 px-3">
                                 <div class="ml-4">
                                     <p class="mb-3 font-bold">Unrivaled Accuracy and Expertise</p>
-                                    <p class="text-gray-900">TipsPesa boasts a team of seasoned experts dedicated to analyzing statistical information and forecasts to craft predictions with an impressive 95% average accuracy...</p>
+                                    <p class="text-gray-900">TipsPesa boasts a team of seasoned experts dedicated to
+                                        analyzing statistical information and forecasts to craft predictions with an
+                                        impressive 95% average accuracy...</p>
                                 </div>
                             </div>
                             <div class="mb-12 w-full lg:w-6/12 px-3">
                                 <div class="ml-4">
                                     <p class="mb-3 font-bold">Diverse Betting Markets</p>
-                                    <p class="text-gray-900">TipsPesa caters to a wide array of betting preferences, ensuring there's something for every punter...</p>
+                                    <p class="text-gray-900">TipsPesa caters to a wide array of betting preferences,
+                                        ensuring there's something for every punter...</p>
                                 </div>
                             </div>
                             <div class="mb-12 w-full lg:w-12/12 px-3">
                                 <div class="ml-4">
                                     <p class="mb-3 font-bold">Conclusion</p>
-                                    <p class="text-gray-900">In the competitive landscape of football prediction websites, TipsPesa emerges as a trusted and unparalleled destination...</p>
+                                    <p class="text-gray-900">In the competitive landscape of football prediction
+                                        websites, TipsPesa emerges as a trusted and unparalleled destination...</p>
                                 </div>
                             </div>
                         </div>
@@ -312,24 +368,31 @@
         <div class="max-w-screen-xl px-4 py-12 mx-auto">
             <nav class="flex flex-wrap justify-center -mx-5 -my-2">
                 <a href="#" class="px-5 py-2 text-white hover:text-gray-200">Disclaimer</a>
-                <a href="{{ url_for('privacy_policy') }}" class="px-5 py-2 text-white hover:text-gray-200">Privacy Policy</a>
-                <a href="{{ url_for('terms_and_conditions') }}" class="px-5 py-2 text-white hover:text-gray-200">Terms</a>
+                <a href="{{ url_for('privacy_policy') }}" class="px-5 py-2 text-white hover:text-gray-200">Privacy
+                    Policy</a>
+                <a href="{{ url_for('terms_and_conditions') }}"
+                    class="px-5 py-2 text-white hover:text-gray-200">Terms</a>
                 <a href="https://wa.me/+254707187271" class="px-5 py-2 text-white hover:text-gray-200">Contact Us</a>
             </nav>
             <div class="flex justify-center mt-8 space-x-6">
                 <a href="https://facebook.com/Tipspesa" class="text-white hover:text-gray-200">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path>
+                        <path fill-rule="evenodd"
+                            d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                            clip-rule="evenodd"></path>
                     </svg>
                 </a>
                 <a href="#" class="text-white hover:text-gray-200">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
+                        <path fill-rule="evenodd"
+                            d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                            clip-rule="evenodd"></path>
                     </svg>
                 </a>
                 <a href="https://x.com/tipspesa" class="text-white hover:text-gray-200">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 512 512">
-                        <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
+                        <path
+                            d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
                     </svg>
                 </a>
             </div>
@@ -343,7 +406,7 @@
     </footer>
 
     <!-- Scripts -->
-     <!-- jQuery -->
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- jQuery UI -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -356,7 +419,7 @@
     <script src="{{ url_for('static', filename='plugin.js') }}"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     <script>
-        function setPlan(name, amount){
+        function setPlan(name, amount) {
             $('#plan').html(name)
             $('#amount').val(amount)
         }
@@ -404,7 +467,7 @@
 
         // Collapsible Sections
         document.querySelectorAll('.collapsible').forEach(coll => {
-            coll.addEventListener('click', function() {
+            coll.addEventListener('click', function () {
                 document.querySelectorAll('.collapsible').forEach(other => {
                     if (other !== this) {
                         other.classList.remove('active');
@@ -418,4 +481,5 @@
         });
     </script>
 </body>
+
 </html>
