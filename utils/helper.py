@@ -65,7 +65,8 @@ class Helper():
             match.home_results = open_match[6] 
             match.status = open_match[7] 
             match.away_results = open_match[8] 
-            match.overall_prob = int(open_match[9])    
+            match.overall_prob = int(open_match[9])   
+            match.subtype_id = int(open_match[10])    
             matches.append(match)
                 
         return matches

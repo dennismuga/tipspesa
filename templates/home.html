@@ -199,13 +199,8 @@
                             <td>{{ match.kickoff.strftime('%H:%M') }}</td>
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                             <td>
-                                {% if match.prediction in ['over 1.5', 'over 2.5'] %}
-                                {{ match.prediction }} goals
-                                {% elif match.prediction in ['over 7.5', 'over 8.5', 'over 9.5', 'over 10.5'] %}
-                                {{ match.prediction }} corners
-                                {% else %}
                                 {{ match.prediction }}
-                                {% endif %}
+                                {{ 'goals' if match.subtype_id == 18 else ' bookings' if match.subtype_id == 139 else ' corners' if match.subtype_id == 166 else '' }}
                             </td>
                             <td>{{ match.odd }}</td>
                         </tr>
@@ -241,14 +236,9 @@
                             <tr>
                                 <td>{{ match.kickoff.strftime('%d %b') }}</td>
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
-                                <td>
-                                    {% if match.prediction in ['over 1.5', 'over 2.5'] %}
-                                    {{ match.prediction }} goals
-                                    {% elif match.prediction in ['over 7.5', 'over 8.5', 'over 9.5', 'over 10.5'] %}
-                                    {{ match.prediction }} corners
-                                    {% else %}
-                                    {{ match.prediction }}
-                                    {% endif %}
+                                <td>                                    
+                                {{ match.prediction }}
+                                {{ 'goals' if match.subtype_id == 18 else ' bookings' if match.subtype_id == 139 else ' corners' if match.subtype_id == 166 else '' }}
                                 </td>
                                 <td>{{ match.home_results ~ '-' ~match.away_results }}</td>
                                 <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
