@@ -259,8 +259,10 @@
                     <p class="mb-16 text-gray-900">TipsPesa offers a range of benefits that set us apart from other
                         betting prediction platforms.
                         Our tips are expertly crafted, based on in-depth analysis and research, ensuring that you get
-                        the best possible results. We offer a range of categories to suit your needs, including 2+ sure
-                        odds, 5+ sure odds, 8+ sure odds, 12+ sure odds, and 20+ sure odds. Our pricing is competitive,
+                        the best possible results. We offer a range of categories to suit your needs, including
+                        {% for plan in plans %}
+                        sure {{ plan.odds }}+ odds,
+                        {% endfor %} and our pricing is competitive,
                         and our customer service is second to none.</p>
                 </div>
                 <div class="grid gap-x-6 md:grid-cols-2 lg:grid-cols-4 xl:gap-x-12">
@@ -284,8 +286,11 @@
                         </svg>
                         <div>
                             <p class="mb-1 font-bold">Multiple Categories</p>
-                            <p class="text-gray-900">We offer a range of categories to suit your needs, including sure
-                                2+odds, sure 3+odds, and sure 5+odds, giving you the flexibility to choose what works
+                            <p class="text-gray-900">We offer a range of categories to suit your needs, including
+                                {% for plan in plans %}
+                                sure {{ plan.odds }}+ odds,
+                                {% endfor %}
+                                giving you the flexibility to choose what works
                                 best for you.</p>
                         </div>
                     </div>

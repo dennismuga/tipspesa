@@ -71,14 +71,16 @@ def home():
         return subscribe()
     
     else:
-        matches = helper.fetch_matches('', '=', '', limit=9)
-        matches_yesterday = helper.fetch_matches('-1', '=', '', limit=9)
+        matches = helper.fetch_matches('', '=', '', limit=15)
+        lm = len(matches)
+        matches_yesterday = helper.fetch_matches('-1', '=', '', limit=15)
+        lmy = len(matches_yesterday)
         plans = [
-            Plan('Free Tips', 0, 2, 'pink', 1, matches[:3] if len(matches)>= 3 else matches, matches_yesterday[:3] if len(matches_yesterday)>= 2 else matches_yesterday),
-            Plan('Bronze Plan', 20, 5, 'purple', 2, matches[3:8] if len(matches)>= 8 else matches, matches_yesterday[3:8] if len(matches_yesterday)>= 8 else matches_yesterday),
-            Plan('Silver Plan', 30, 8, 'blue', 3, matches[3:10] if len(matches)>= 10 else matches, matches_yesterday[3:10] if len(matches_yesterday)>= 10 else matches_yesterday),
-            Plan('Gold Plan', 50, 12, 'yellow', 4, matches[3:12] if len(matches)>= 12 else matches, matches_yesterday[3:12] if len(matches_yesterday)>= 12 else matches_yesterday),
-            Plan('Platinum Plan', 70, 20, 'green', 5, matches[3:15] if len(matches)>= 15 else matches, matches_yesterday[3:15] if len(matches_yesterday)>= 15 else matches_yesterday)
+            Plan('Free Tips', 0, 2, 'pink', 1, matches[lm-4:lm] if lm>= 4 else matches, matches_yesterday[lmy-4:lmy] if lmy>= 5 else matches_yesterday),
+            Plan('Bronze Plan', 20, 5, 'purple', 2, matches[:5] if lm>= 5 else matches, matches_yesterday[:5] if lmy>= 5 else matches_yesterday),
+            Plan('Silver Plan', 30, 8, 'blue', 3, matches[:7] if lm>= 7 else matches, matches_yesterday[:7] if lmy>= 7 else matches_yesterday),
+            Plan('Gold Plan', 50, 12, 'yellow', 4, matches[:9] if lm>= 9 else matches, matches_yesterday[:9] if lmy>= 9 else matches_yesterday),
+            Plan('Platinum Plan', 70, 18, 'green', 5, matches[:11] if lm>= 11 else matches, matches_yesterday[:11] if lmy>= 11 else matches_yesterday)
         ]
         return render_template('home.html', plans=plans)
 
