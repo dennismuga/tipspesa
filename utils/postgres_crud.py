@@ -117,7 +117,7 @@ class PostgresCRUD:
             query = """
                 WITH filtered AS(
                     SELECT parent_match_id, prediction, odd, overall_prob, special_bet_value, outcome_id, sub_type_id, kickoff,
-                        ROW_NUMBER() OVER (PARTITION BY parent_match_id ORDER BY sub_type_id ASC, odd DESC) AS rn
+                        ROW_NUMBER() OVER (PARTITION BY parent_match_id ORDER BY odd DESC) AS rn
                     FROM matches
                     WHERE DATE(kickoff) >= CURRENT_DATE
                 )

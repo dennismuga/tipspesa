@@ -64,7 +64,7 @@ class AutoBet():
                 composite_betslips.append(composite_betslip)
         if len(composite_betslips) > 0:                        
             balance, bonus = self.betika.get_balance()
-            placeable = balance+bonus #*0.75
+            placeable = balance #*0.75
             stake = int(placeable/len(composite_betslips))
             stake = 1 if stake == 0 and placeable >=1 else stake
             if stake > 0:

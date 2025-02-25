@@ -46,11 +46,24 @@ class CornerStone():
                             under = float(bet_pick.replace('under ', ''))
                             for odd in odds:    
                                 if sub_type_id == int(d.get('sub_type_id')) and odd.get('odd_key') == f'over {under-3}' and float(odd.get('odd_value')) < odd_value:  
-                                    bet_pick = odd.get('odd_key')    
-                                    odd_value = float(odd.get('odd_value'))    
-                                    special_bet_value = odd.get('special_bet_value')      
-                                    outcome_id = odd.get('outcome_id')
-                                    overall_prob = 98 if odd_value < 1.35 else 88
+                                    if float(odd.get('odd_value')) >= 1.25:
+                                        for d2 in data:
+                                            if int(d2.get('sub_type_id')) in [18]:   
+                                                for odd2 in d2.get('odds'):    
+                                                    if odd2.get('odd_key') == 'over 1.5':
+                                                        sub_type_id = int(d2.get('sub_type_id'))
+                                                        bet_pick = odd2.get('odd_key')    
+                                                        odd_value = float(odd2.get('odd_value'))    
+                                                        special_bet_value = odd2.get('special_bet_value')      
+                                                        outcome_id = odd2.get('outcome_id')
+                                                        overall_prob = 98 if odd_value < 1.32 else 88
+                                    else:  
+                                        sub_type_id = int(d.get('sub_type_id'))                                      
+                                        bet_pick = odd.get('odd_key')    
+                                        odd_value = float(odd.get('odd_value'))    
+                                        special_bet_value = odd.get('special_bet_value')      
+                                        outcome_id = odd.get('outcome_id')
+                                        overall_prob = 98 if odd_value < 1.32 else 88
                                     if odd_value <= 1.38:
                                         match = {
                                             'match_id': match_id,
