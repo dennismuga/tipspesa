@@ -51,22 +51,23 @@ class CornerStone():
                                     special_bet_value = odd.get('special_bet_value')      
                                     outcome_id = odd.get('outcome_id')
                                     overall_prob = 98 if odd_value < 1.35 else 88
-                                    match = {
-                                        'match_id': match_id,
-                                        'start_time': start_time,
-                                        'home_team': home_team,
-                                        'away_team': away_team,
-                                        'prediction': bet_pick,
-                                        'odd': odd_value,
-                                        'overall_prob': overall_prob,
-                                        'parent_match_id': parent_match_id,
-                                        'sub_type_id': sub_type_id,
-                                        'bet_pick': bet_pick,
-                                        'special_bet_value': special_bet_value,
-                                        'outcome_id': outcome_id
-                                    }
-                                    print(match)
-                                    self.db.insert_match(match)
+                                    if odd_value <= 1.35:
+                                        match = {
+                                            'match_id': match_id,
+                                            'start_time': start_time,
+                                            'home_team': home_team,
+                                            'away_team': away_team,
+                                            'prediction': bet_pick,
+                                            'odd': odd_value,
+                                            'overall_prob': overall_prob,
+                                            'parent_match_id': parent_match_id,
+                                            'sub_type_id': sub_type_id,
+                                            'bet_pick': bet_pick,
+                                            'special_bet_value': special_bet_value,
+                                            'outcome_id': outcome_id
+                                        }
+                                        print(match)
+                                        self.db.insert_match(match)
 
     def __call__(self):
         # Use ThreadPoolExecutor to spawn a thread for each match
