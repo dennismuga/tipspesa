@@ -65,6 +65,12 @@ class CornerStone():
                                         outcome_id = odd.get('outcome_id')
                                         overall_prob = 98 if odd_value < 1.32 else 88
                                     if odd_value <= 1.38:
+                                        if odd_value < 1.2:
+                                            v = float(bet_pick.replace('over ',''))
+                                            bet_pick = f'over {v+1}'
+                                            special_bet_value = f'total={v+1}'
+                                            odd_value += 0.15
+
                                         match = {
                                             'match_id': match_id,
                                             'start_time': start_time,
