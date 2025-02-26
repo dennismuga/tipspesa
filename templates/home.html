@@ -156,12 +156,8 @@
                     style="background-image: url({{ url_for('static', filename='Subbackground.png') }}); background-size: cover;">
                     <div class="flex justify-between items-center">
                         <span
-                            class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full">{{
+                            class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full">{{ 'premium ' if plan.name != 'Free Tips' else '' ~
                             plan.name }}</span>
-{% if plan.name != 'Free Tips' %}
-<span
-                            class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full">premium</span>
-{% endif %}
                         <div class="text-yellow-400">
                             {% for i in range(plan.stars) %}
                             <i class="fas fa-star"></i>
