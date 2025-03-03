@@ -1,5 +1,5 @@
 {
-    "name": "SOCCER-PREDICTIONS",
+    "name": "TIPSPESA",
     "runServices": ["app"],
     "service": "app",
     "workspaceFolder": "/workspace",
