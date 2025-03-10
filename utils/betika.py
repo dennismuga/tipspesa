@@ -10,6 +10,7 @@ BETIKA_TOKEN = os.getenv("BETIKA_TOKEN")
 class Betika():
     def __init__(self):
         self.base_url = "https://api.betika.com"
+        self.live_url = "https://live.betika.com"
         self.headers = {
             "Content-Type": "application/json",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
@@ -74,30 +75,41 @@ class Betika():
         data = response.get('data')
         return data.get('balance'), data.get('bonus')        
       
-    def get_events(self, limit, page):
-        url = f'{self.base_url}/v1/uo/matches?tab=&sub_type_id=1,186,340&sport_id=14&tag_id=&sort_id=2&period_id=-1&esports=false&limit={limit}&page={page}'
+    def get_events(self, limit, page, live=False):
+        url = f'{self.live_url if live else self.base_url}/v1/uo/matches?sport_id=14&sort_id=1&esports=false&is_srl=false&limit={limit}&page={page}'
         response = self.get_data(url)
-        upcoming_matches = response.get('data')
+        data = response.get('data')
         events = []
 
-        for upcoming_match in upcoming_matches:
-            home = upcoming_match.get('home_team')
-            away = upcoming_match.get('away_team')
-            parent_match_id = upcoming_match.get('parent_match_id')
+        for datum in data:
+            home = datum.get('home_team')
+            away = datum.get('away_team')
+            parent_match_id = datum.get('parent_match_id')
 
-            if not ('SRL' in home or 'SRL' in away):
-                event = {
-                    "home_team": home,
-                    "away_team": away,
-                    "parent_match_id": parent_match_id
-                }
-                events.append(event)
+            event = {
+                "home_team": home,
+                "away_team": away,
+                "parent_match_id": parent_match_id
+            }
+            events.append(event)
 
         total = int(response.get('meta').get('total'))
         current_page = int(response.get('meta').get('current_page'))
         page = current_page + 1
 
         return total, page, events
+
+    def get_match_details(self, parent_match_id, live=False):
+        url = f'{self.live_url if live else self.base_url}/v1/uo/match?parent_match_id={parent_match_id}'
+        response = self.get_data(url)
+        data = response.get('data')
+        return data        
+
+    def get_match_stats(self, parent_match_id, live=False):
+        url = f'{self.live_url if live else self.base_url}/v1/uo/match?parent_match_id={parent_match_id}'
+        response = self.get_data(url)
+        meta = response.get('meta')
+        return meta        
      
     def place_bet(self, betslips, total_odd, stake):
         url = f'{self.base_url}/v2/bet'
