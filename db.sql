@@ -46,3 +46,18 @@ CREATE TABLE IF NOT EXISTS transactions (
   updated_at TIMESTAMP
 );
 
+-- Table structure for odds
+CREATE TABLE IF NOT EXISTS odds (
+  id TEXT PRIMARY KEY,
+  parent_match_id INT,
+  sub_type_id INT,
+  bet_pick TEXT,
+  odd_value DOUBLE PRECISION,
+  outcome_id INT,
+  sport_id INT,
+  special_bet_value TEXT,
+  bet_type INT,
+  created_at TIMESTAMP,
+  updated_at TIMESTAMP
+);
+

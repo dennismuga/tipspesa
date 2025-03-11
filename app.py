@@ -1,15 +1,18 @@
 
-import os
+import os, time
 from flask import Flask, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_session import Session
 from redis import Redis
 from dotenv import load_dotenv
+from apscheduler.schedulers.background import BackgroundScheduler
 
 from utils.entities import Plan
 from utils.helper import Helper
 from utils.pesapal import Pesapal
 from utils.postgres_crud import PostgresCRUD
+from v2.predict_and_bet import PredictAndBet
+from v2.stats import Stats
 
 # Load environment variables from .env file
 load_dotenv()
@@ -36,6 +39,25 @@ login_manager.login_view = 'home'
 db = PostgresCRUD()
 helper = Helper()
 
+def update_stats():
+    try:
+        Stats()()
+    except Exception as e:
+        print(f"Error in background task: {e}")
+
+def predict_and_bet():
+    try:
+        PredictAndBet()()
+    except Exception as e:
+        print(f"Error in background task: {e}")
+
+# Initialize scheduler
+scheduler = BackgroundScheduler()
+
+# Schedule the task to run every 120 seconds
+scheduler.add_job(func=update_stats, trigger="interval", seconds=60)
+scheduler.add_job(func=predict_and_bet, trigger="interval", seconds=120)
+        
 def subscribe():     
     phone = request.form['phone']
     amount = request.form['amount']
@@ -119,4 +141,9 @@ def privacy_policy():
  
 if __name__ == '__main__':
     debug_mode = os.getenv('IS_DEBUG', 'False') in ['True', '1', 't']
+    
+    # Start the scheduler
+    scheduler.start()
+    
+    # Run the Flask app
     app.run(debug=debug_mode)

@@ -431,9 +431,79 @@ class PostgresCRUD:
                 WHERE id=%s
             """
             cursor.execute(query, (payment_method, payment_account, confirmation_code, status, id))
-            self.conn.commit()      
+            self.conn.commit()    
+    
+    def insert_odds(self, id, parent_match_id, sub_type_id, bet_pick, odd_value, outcome_id, sport_id, special_bet_value, bet_type):
+        self.ensure_connection()
+        try:
+            with self.conn.cursor() as cursor:
+                query = """
+                    INSERT INTO odds(id, parent_match_id, sub_type_id, bet_pick, odd_value, outcome_id, sport_id, special_bet_value, bet_type, created_at)
+                    VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())
+                    ON CONFLICT DO NOTHING
+                """
+                cursor.execute(query, (id, parent_match_id, sub_type_id, bet_pick, odd_value, str(outcome_id), sport_id, special_bet_value, bet_type))
+                self.conn.commit()    
+        except Exception as e:
+            print(f"Error inserting odds: {e}") 
                
-            
+    def delete_inactive_odds(self, parent_match_id, sub_type_id):
+        self.ensure_connection()
+        try:
+            with self.conn.cursor() as cursor:
+                query = """
+                    DELETE FROM odds
+                    WHERE parent_match_id = %s AND sub_type_id = %s
+                """
+                cursor.execute(query, (parent_match_id, sub_type_id))
+                self.conn.commit()
+        except Exception as e:
+            print(f"Error deleting odds: {e}")
+    
+    def delete_expired_odds(self, parent_match_ids):
+        self.ensure_connection()
+        try:
+            with self.conn.cursor() as cursor:
+                query = """
+                    DELETE FROM odds
+                    WHERE parent_match_id NOT IN %s
+                """
+                cursor.execute(query, (tuple(parent_match_ids),))
+                self.conn.commit()
+        except Exception as e:
+            print(f"Error deleting odds: {e}")
+
+    def get_odds_history(self, match_id, market, limit=10):
+        self.ensure_connection()
+        try:
+            with self.conn.cursor() as cursor:
+                query = """
+                    SELECT odd_value FROM odds 
+                    WHERE parent_match_id = %s AND bet_pick = %s 
+                    ORDER BY updated_at DESC LIMIT %s
+                """
+                cursor.execute(query, (match_id, market, limit))
+                return [row[0] for row in cursor.fetchall()]
+        except Exception as e:
+            print(f"Error fetching odds history: {e}")
+            return []
+
+    def get_active_odds(self):
+        self.ensure_connection()
+        try:
+            with self.conn.cursor() as cursor:
+                query = """
+                    SELECT id, parent_match_id, sub_type_id, bet_pick, odd_value, outcome_id, sport_id, special_bet_value, bet_type
+                    FROM odds
+                """
+                cursor.execute(query)
+                return cursor.fetchall()
+        except Exception as e:
+            print(f"Error fetching active odds: {e}")
+            return []
+
+    
+                  
 # Example usage:
 if __name__ == "__main__":
     crud = PostgresCRUD()
