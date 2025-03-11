@@ -1,5 +1,5 @@
 
-import os, time
+import os
 from flask import Flask, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_session import Session
