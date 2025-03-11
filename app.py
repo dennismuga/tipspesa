@@ -52,11 +52,11 @@ def predict_and_bet():
         print(f"Error in background task: {e}")
 
 # Initialize scheduler
-scheduler = BackgroundScheduler()
+# scheduler = BackgroundScheduler()
 
-# Schedule the task to run every 120 seconds
-scheduler.add_job(func=update_stats, trigger="interval", seconds=60)
-scheduler.add_job(func=predict_and_bet, trigger="interval", seconds=120)
+# # Schedule the task to run every 120 seconds
+# scheduler.add_job(func=update_stats, trigger="interval", seconds=60)
+# scheduler.add_job(func=predict_and_bet, trigger="interval", seconds=120)
         
 def subscribe():     
     phone = request.form['phone']
@@ -143,7 +143,7 @@ if __name__ == '__main__':
     debug_mode = os.getenv('IS_DEBUG', 'False') in ['True', '1', 't']
     
     # Start the scheduler
-    scheduler.start()
+    # scheduler.start()
     
     # Run the Flask app
     app.run(debug=debug_mode)
