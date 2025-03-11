@@ -98,18 +98,6 @@ class Betika():
         page = current_page + 1
 
         return total, page, events
-
-    def get_match_details(self, parent_match_id, live=False):
-        url = f'{self.live_url if live else self.base_url}/v1/uo/match?parent_match_id={parent_match_id}'
-        response = self.get_data(url)
-        data = response.get('data')
-        return data        
-
-    def get_match_stats(self, parent_match_id, live=False):
-        url = f'{self.live_url if live else self.base_url}/v1/uo/match?parent_match_id={parent_match_id}'
-        response = self.get_data(url)
-        meta = response.get('meta')
-        return meta        
      
     def place_bet(self, betslips, total_odd, stake):
         url = f'{self.base_url}/v2/bet'
@@ -124,5 +112,34 @@ class Betika():
 
         response = self.post_data(url, payload)
         print(response)
+
+    def get_matches(self, limit, page, live=False):
+        url = f'{self.live_url if live else self.base_url}/v1/uo/matches?sport_id=14&sort_id=1&esports=false&is_srl=false&limit={limit}&page={page}'
+        response = self.get_data(url)
+        total = int(response.get('meta').get('total'))
+        current_page = int(response.get('meta').get('current_page'))
+        page = current_page + 1
+
+        return total, page, response.get('data')
+    
+    def get_match_details(self, parent_match_id, live=False):
+        url = f'{self.live_url if live else self.base_url}/v1/uo/match?parent_match_id={parent_match_id}'
+        response = self.get_data(url)
+        return response 
+    
+    def get_match_ids(self, live=False):   
+        limit = 100
+        total = limit + 1
+        page = 1
+        matches_ids = set()
+        while limit*page < total:
+            total, page, matches = self.get_matches(limit, page, live)
+        
+        for match in matches:
+            parent_match_id = match.get('parent_match_id')
+            match_time = match.get('match_time')
+            matches_ids.add((parent_match_id, match_time))
+        
+        return matches_ids 
 
     
