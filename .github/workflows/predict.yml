@@ -6,6 +6,10 @@ on:
   schedule:
     - cron: '0 */3 * * *'  # Runs every 3 hours
 
+concurrency:
+  group: continuous-job
+  cancel-in-progress: true
+
 jobs:
   execute:
     runs-on: ubuntu-latest
