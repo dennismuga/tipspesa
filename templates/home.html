@@ -454,14 +454,6 @@
         });
         window.dispatchEvent(new Event('resize'));
 
-        // Disable Developer Tools
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('keydown', e => {
-            if ((e.ctrlKey && e.shiftKey && e.key === 'I') || e.key === 'F12') {
-                e.preventDefault();
-            }
-        });
-
         // Collapsible Sections
         document.querySelectorAll('.collapsible').forEach(coll => {
             coll.addEventListener('click', function () {
