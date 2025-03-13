@@ -62,7 +62,7 @@ class PredictAndBet:
                     continue
                 
                 # Analyze the market
-                net_change = self.analyze_market(odds[:-7])
+                net_change = self.analyze_market(odds[:-10])
                 if net_change > 0.0:
                     continue
                 
