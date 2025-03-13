@@ -10,6 +10,7 @@ def update_stats():
         Stats()()
         if i>0 and i%2 == 0:
            PredictAndBet()()
+        i += 1
         time.sleep(120)
 
 if __name__ == '__main__':
