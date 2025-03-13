@@ -16,7 +16,7 @@ def update_stats():
 def predict_and_bet():
     while datetime.now() < end_time:
         PredictAndBet()()
-        time.sleep(120)
+        time.sleep(300)
 
 if __name__ == '__main__':
     # Use ThreadPoolExecutor to spawn a thread for each match
