@@ -1,10 +1,10 @@
 name: predict & Autobet
 
-on:
+on:    
+  workflow_dispatch: # Manually trigger the workflow
+
   schedule:
     - cron: '0 */3 * * *'  # Runs every 3 hours
-    
-  workflow_dispatch:
 
 jobs:
   execute:
