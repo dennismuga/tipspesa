@@ -2,7 +2,7 @@ name: predict & Autobet
 
 on:
   schedule:
-    - cron: '0 3 * * *'  # Runs once every day at 3:00 AM UTC (6:00 AM EAT +3)
+    - cron: '0 */3 * * *'  # Runs every 3 hours
     
   workflow_dispatch:
 
@@ -17,11 +17,10 @@ jobs:
       # pick .env variables from github secrets
       - name: Set environment variables
         run: |
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
-          echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
-          echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
-          echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "REDIS_HOSTNAME=${{ secrets.REDIS_HOSTNAME }}" >> $GITHUB_ENV
+          echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> $GITHUB_ENV
+          echo "REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}" >> $GITHUB_ENV
+          echo "REDIS_SSL=${{ secrets.REDIS_SSL }}" >> $GITHUB_ENV
           echo "BETIKA_PROFILE_ID=${{ secrets.BETIKA_PROFILE_ID }}" >> $GITHUB_ENV
           echo "BETIKA_TOKEN=${{ secrets.BETIKA_TOKEN }}" >> $GITHUB_ENV
       
@@ -35,9 +34,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           
-      - name: Predict Corners 
-        run: python corners.py
+      - name: Predict & Autobet 
+        run: python daemons.py
           
-      - name: Auto Bet 
-        run: python auto_bet.py
-      

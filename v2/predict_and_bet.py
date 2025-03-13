@@ -62,17 +62,18 @@ class PredictAndBet:
                     continue
                 
                 # Analyze the market
-                net_change = self.analyze_market(odds[:-5])
+                net_change = self.analyze_market(odds[:-7])
                 if net_change > 0.0:
-                    continue
-                net_change = self.analyze_market(odds[:-10])
-                if net_change > 0.0:
-                    continue
-                net_change = self.analyze_market(odds[:-15])
-                if net_change >= 0.0:
                     continue
                 
-                new_odd = {                    
+                # net_change = self.analyze_market(odds[:-7])
+                # if net_change > 0.0:
+                #     continue
+                # net_change = self.analyze_market(odds[:-15])
+                # if net_change >= 0.0:
+                #     continue
+                
+                betslip = {                    
                     "sub_type_id": sub_type.get('sub_type_id'),
                     "bet_pick": odd.get('odd_key'), #team
                     "odd_value": odd.get('odd_value'),
@@ -82,7 +83,7 @@ class PredictAndBet:
                     "parent_match_id": parent_match_id,
                     "bet_type": 8
                 }
-                results.append((new_odd, net_change))
+                results.append((betslip, net_change))
         
         if not results:
             #print(f"No valid odds data for match ID: {parent_match_id}")
@@ -91,12 +92,13 @@ class PredictAndBet:
         # Sort by net change (most negative = most dropping)
         top_3 = sorted(results, key=lambda x: x[1])[:3]
         
-        top_drops = [odd for odd, _ in top_3]
+        top_drops = [betslip for betslip, _ in top_3]
                 
         return top_drops  # Return for potential further use
 
     def auto_bet(self, data):
         try:
+            composite_betslip = None
             composite_betslips = [] 
             betslips = []
             total_odd = 1
@@ -114,9 +116,12 @@ class PredictAndBet:
                     total_odd = 1
                     composite_betslip = None 
 
-            if len(composite_betslips) > 0:                        
+            if len(composite_betslips) > 0:   
+                if composite_betslip:
+                    composite_betslips[0]['betslips'].extend(composite_betslip['betslips'])
+                    composite_betslips[0]['total_odd'] *= composite_betslip['total_odd'] 
                 balance, bonus = self.betika.get_balance()
-                stake = 1
+                stake = 3
                 if (balance+bonus) >= stake:
                     for cb in composite_betslips:
                         ttl_odd = cb['total_odd']

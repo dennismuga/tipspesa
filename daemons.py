@@ -1,16 +1,20 @@
 
 import concurrent.futures, time
+from datetime import datetime, timedelta
 
 from v2.predict_and_bet import PredictAndBet
 from v2.stats import Stats
+
+start_time = datetime.now()
+end_time = start_time + timedelta(hours=3)
     
 def update_stats():
-    while True:
+    while datetime.now() < end_time:
         Stats()()
-        time.sleep(60)
+        time.sleep(120)
 
 def predict_and_bet():
-    while True:
+    while datetime.now() < end_time:
         PredictAndBet()()
         time.sleep(120)
 
