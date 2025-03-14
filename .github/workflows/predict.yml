@@ -5,7 +5,7 @@ on:
 
   schedule:
      - cron: '0 15-23/3 * * *'  # Runs from 3-9pm
-     - cron: '0 0 * * *'        # Runs at 00:00
+     - cron: '0 0 * * *'        # Runs at midnight
 
 concurrency:
   group: continuous-job
