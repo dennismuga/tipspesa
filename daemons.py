@@ -13,3 +13,4 @@ if __name__ == '__main__':
            PredictAndBet()()
         i += 1
         time.sleep(120)
+        print("sleeping... ") 
