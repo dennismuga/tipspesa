@@ -35,7 +35,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Predict Corners 
+      - name: Predict Corners & Overs 
         run: python corners.py
 
       - name: Auto Bet 
