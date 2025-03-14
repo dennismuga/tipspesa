@@ -57,6 +57,20 @@ class CornerStone():
                                                         special_bet_value = odd2.get('special_bet_value')      
                                                         outcome_id = odd2.get('outcome_id')
                                                         overall_prob = 98 if odd_value < 1.32 else 88
+                                                        
+                                    elif sub_type_id == 139:
+                                        for d2 in data:
+                                            if int(d2.get('sub_type_id')) in [166]:   
+                                                for odd2 in d2.get('odds'):  
+                                                    expected_odd_key = f"{odd.get('odd_key').split(' ')[0]} {float(odd.get('odd_key').split(' ')[1])+5}"
+                                                    if odd2.get('odd_key') == expected_odd_key:
+                                                        sub_type_id = int(d2.get('sub_type_id'))
+                                                        bet_pick = odd2.get('odd_key')    
+                                                        odd_value = float(odd2.get('odd_value'))    
+                                                        special_bet_value = odd2.get('special_bet_value')      
+                                                        outcome_id = odd2.get('outcome_id')
+                                                        overall_prob = 98 if odd_value < 1.32 else 88
+                                                        
                                     else:  
                                         sub_type_id = int(d.get('sub_type_id'))                                      
                                         bet_pick = odd.get('odd_key')    
