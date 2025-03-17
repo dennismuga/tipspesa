@@ -57,8 +57,7 @@ class PredictAndBet:
             odds_list = sub_type.get('odds', [])
             for odd in odds_list:
                 odd['parent_match_id'] = parent_match_id
-                odd_value = self.get_current_odd(parent_match_id, sub_type.get('sub_type_id'), odd.get('odd_key'))
-                if odd.get('sport_id') != 14 or not odd_value or float(odd_value) > 1.6:
+                if odd.get('sport_id') != 14:
                     continue
                 
                 # Extract odds history and market identifier
@@ -79,18 +78,20 @@ class PredictAndBet:
                 if net_change > 0.0:
                     continue 
                 
-                betslip = {                    
-                    "sub_type_id": sub_type.get('sub_type_id'),
-                    "bet_pick": odd.get('odd_key'), #team
-                    "odd_value": odd_value,
-                    "outcome_id": odd.get('outcome_id'),
-                    "sport_id": odd.get('sport_id'),
-                    "special_bet_value": odd.get('special_bet_value'),
-                    "parent_match_id": parent_match_id,
-                    "bet_type": 8
-                }
-            
-                results.append((betslip, net_change))
+                odd_value = self.get_current_odd(parent_match_id, sub_type.get('sub_type_id'), odd.get('odd_key'))
+                if odd_value and float(odd_value) <= 1.6:                    
+                    betslip = {                    
+                        "sub_type_id": sub_type.get('sub_type_id'),
+                        "bet_pick": odd.get('odd_key'), #team
+                        "odd_value": odd_value,
+                        "outcome_id": odd.get('outcome_id'),
+                        "sport_id": odd.get('sport_id'),
+                        "special_bet_value": odd.get('special_bet_value'),
+                        "parent_match_id": parent_match_id,
+                        "bet_type": 8
+                    }
+                
+                    results.append((betslip, net_change))
         
         if not results:
             #print(f"No valid odds data for match ID: {parent_match_id}")

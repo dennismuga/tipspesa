@@ -12,5 +12,5 @@ if __name__ == '__main__':
            print("predicting... ") 
            PredictAndBet()()
         i += 1
-        time.sleep(120)
         print("sleeping... ") 
+        time.sleep(120)
