@@ -23,6 +23,18 @@ class PredictAndBet:
         
         return net_change
 
+    def get_current_odd(self, parent_match_id, sub_type_id, odd_key):
+        match_details = self.betika.get_match_details(parent_match_id, live=True)
+        data = match_details.get('data')
+        if data:
+            for sub_type in data:
+                if sub_type.get('sub_type_id') == sub_type_id:
+                    odds = sub_type.get('odds')
+                    for odd in odds:
+                        if odd.get('odd_key') == odd_key:
+                            return odd.get('odd_value')
+        return None
+                
     def get_top_drops(self, parent_match_id, match_time):
         """Analyze odds for a match and print top 3 dropping markets."""
         results = []
@@ -45,7 +57,8 @@ class PredictAndBet:
             odds_list = sub_type.get('odds', [])
             for odd in odds_list:
                 odd['parent_match_id'] = parent_match_id
-                if odd.get('sport_id') != 14 or float(odd.get('odd_value')) > 1.5:
+                odd_value = self.get_current_odd(parent_match_id, sub_type.get('sub_type_id'), odd.get('odd_key'))
+                if odd.get('sport_id') != 14 or not odd_value or float(odd_value) > 1.6:
                     continue
                 
                 # Extract odds history and market identifier
@@ -64,25 +77,19 @@ class PredictAndBet:
                 # Analyze the market
                 net_change = self.analyze_market(odds[:-10])
                 if net_change > 0.0:
-                    continue
-                
-                # net_change = self.analyze_market(odds[:-7])
-                # if net_change > 0.0:
-                #     continue
-                # net_change = self.analyze_market(odds[:-15])
-                # if net_change >= 0.0:
-                #     continue
+                    continue 
                 
                 betslip = {                    
                     "sub_type_id": sub_type.get('sub_type_id'),
                     "bet_pick": odd.get('odd_key'), #team
-                    "odd_value": odd.get('odd_value'),
+                    "odd_value": odd_value,
                     "outcome_id": odd.get('outcome_id'),
                     "sport_id": odd.get('sport_id'),
                     "special_bet_value": odd.get('special_bet_value'),
                     "parent_match_id": parent_match_id,
                     "bet_type": 8
                 }
+            
                 results.append((betslip, net_change))
         
         if not results:
@@ -95,7 +102,7 @@ class PredictAndBet:
         top_drops = [betslip for betslip, _ in top_3]
                 
         return top_drops  # Return for potential further use
-
+    
     def auto_bet(self, data):
         try:
             composite_betslip = None

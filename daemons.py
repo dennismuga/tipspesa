@@ -1,5 +1,5 @@
 
-import concurrent.futures, time
+import time
 
 from v2.predict_and_bet import PredictAndBet
 from v2.stats import Stats
