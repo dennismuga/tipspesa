@@ -4,7 +4,7 @@ on:
   workflow_dispatch: # Manually trigger the workflow
 
   schedule:
-     - cron: '0 0/3 * * *'  # Runs every 3mins
+     - cron: '0 0/6 * * *'  # Runs every 6hrs
 
 concurrency:
   group: continuous-job
