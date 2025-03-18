@@ -11,7 +11,7 @@ class PredictAndBet:
 
     def analyze_market(self, odds):
         """Analyze odds trend for a market, ignoring sharp drops."""
-        if not odds or len(odds) < 5:
+        if not odds or len(odds) < 7:
             return 0.0
 
         # Convert odds to floats (if not already done)
@@ -110,7 +110,7 @@ class PredictAndBet:
             composite_betslips = [] 
             betslips = []
             total_odd = 1
-            min_odd = 2.0
+            min_odd = 2.7
             for betslip in data:    
                 betslips.append(betslip)
                 total_odd *= float(betslip.get('odd_value'))                                            
