@@ -11,7 +11,7 @@ class PredictAndBet:
 
     def analyze_market(self, odds):
         """Analyze odds trend for a market, ignoring sharp drops."""
-        if not odds or len(odds) < 5:
+        if not odds or len(odds) < 7:
             return 0.0
 
         # Convert odds to floats (if not already done)
@@ -111,7 +111,7 @@ class PredictAndBet:
             composite_betslips = [] 
             betslips = []
             total_odd = 1
-            min_odd = 2.0
+            min_odd = 2.7
             for betslip in data:    
                 betslips.append(betslip)
                 total_odd *= float(betslip.get('odd_value'))                                            
@@ -130,8 +130,8 @@ class PredictAndBet:
                     composite_betslips[0]['betslips'].extend(composite_betslip['betslips'])
                     composite_betslips[0]['total_odd'] *= composite_betslip['total_odd'] 
                 balance, bonus = self.betika.get_balance()
-                stake = 5
-                if (balance+bonus) >= stake:
+                stake = int(min(5, balance)) 
+                if stake > 0:
                     for cb in composite_betslips:
                         ttl_odd = cb['total_odd']
                         slips = cb['betslips']
