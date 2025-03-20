@@ -10,23 +10,24 @@ class Stats():
         self.redis = RedisCRUD()
         
     def save_match_details(self, parent_match_id):
-        match_details = self.betika.get_match_details(parent_match_id, live=True)
-        data = match_details.get('data')
+        data = self.betika.get_match_details(parent_match_id, live=True)
+        subtypes = data.get('data')
         existing_data = self.redis.get(parent_match_id)
         if existing_data:
             existing_data = json.loads(existing_data)
-            for sub_type in existing_data:
+            existing_subtypes = existing_data.get('subtypes')
+            for sub_type in existing_subtypes:
                 odds = sub_type.get('odds')
                 if len(odds) == 0:
-                    existing_data.pop(existing_data.index(sub_type))
+                    existing_subtypes.pop(existing_subtypes.index(sub_type))
                 for odd in odds:
                     if odd.get('sport_id') == 14:
                         odd_history = odd.get('odd_history', [])
-                        for sub_type_2 in data:
+                        for sub_type_2 in subtypes:
                             if sub_type_2.get('sub_type_id'):
                                 odds_2 = sub_type_2.get('odds')
                                 if len(odds_2) == 0:
-                                    existing_data.pop(existing_data.index(sub_type))
+                                    existing_subtypes.pop(existing_subtypes.index(sub_type))
                                 for odd_2 in odds_2:
                                     if odd.get('outcome_id') == odd_2.get('outcome_id'):
                                         odd_value = odd_2.get('odd_value')
@@ -38,16 +39,15 @@ class Stats():
                         odds.pop(odds.index(odd))
                     
                 sub_type['odds'] = odds
-                
         
-            if len(existing_data) == 0:
+            if len(existing_subtypes) == 0:
                 self.redis.delete(parent_match_id)
                 print(f"Data for match {parent_match_id} deleted from Redis.")
                 return
             else:
                 data = existing_data
         else:            
-            for sub_type in data:
+            for sub_type in subtypes:
                 odds = sub_type.get('odds')
                 if len(odds) == 0:
                     data.pop(data.index(sub_type))
@@ -62,7 +62,9 @@ class Stats():
                             odds.pop(odds.index(odd))
                     sub_type['odds'] = odds
                     
-        if len(data) > 0:
+        if len(data.get["data"]) > 0:
+            data.pop("market_groups")
+            data.pop("time_elapsed_secs")
             data = json.dumps(data)
             self.redis.set(parent_match_id, data)  
             print(f"Data for match {parent_match_id} stored in Redis.")

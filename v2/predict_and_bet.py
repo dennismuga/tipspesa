@@ -49,11 +49,12 @@ class PredictAndBet:
             return []
 
         try:
-            data = json.loads(data)
+            meta = json.loads(data)["meta"]
+            subtypes = json.loads(data)["data"]
         except json.JSONDecodeError:
             print(f"Invalid JSON data for match ID: {parent_match_id}")
             return []
-        for sub_type in data:
+        for sub_type in subtypes:
             odds_list = sub_type.get('odds', [])
             for odd in odds_list:
                 odd['parent_match_id'] = parent_match_id
