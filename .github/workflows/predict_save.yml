@@ -1,4 +1,4 @@
-name: Predict, Save & Autobet
+name: Predict, Save
 
 on:    
   workflow_dispatch: # Manually trigger the workflow
@@ -37,6 +37,3 @@ jobs:
 
       - name: Predict Corners & Overs 
         run: python corners.py
-
-      - name: Auto Bet 
-        run: python auto_bet.py

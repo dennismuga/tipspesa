@@ -3,7 +3,6 @@ import concurrent.futures
 from utils.betika import Betika
 from utils.postgres_crud import PostgresCRUD
 
-
 class CornerStone():
     def __init__(self):
         self.betika = Betika()
@@ -83,7 +82,7 @@ class CornerStone():
                                             v = float(bet_pick.replace('over ',''))
                                             bet_pick = f'over {v+1}'
                                             special_bet_value = f'total={v+1}'
-                                            odd_value += 0.15
+                                            odd_value += 0.25
 
                                         match = {
                                             'match_id': match_id,
