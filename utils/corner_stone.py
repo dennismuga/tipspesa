@@ -107,21 +107,21 @@ class CornerStone():
         try:
             betslips = []
             total_odd = 1
-            for match in matches:    
-                betslip = {                    
-                    "sub_type_id": match[13],
-                    "bet_pick": match[4], 
-                    "odd_value": match[5],
-                    "outcome_id": match[10],
-                    "sport_id": 12,
-                    "special_bet_value": match[14],
-                    "parent_match_id": match[11],
-                    "bet_type": 7
-                }
-                
-                betslips.append(betslip)
-                total_odd *= float(betslip.get('odd_value'))     
-
+            for match in matches:   
+                if not any(betslip["parent_match_id"] == match["parent_match_id"] for betslip in betslips):
+                    betslip = {
+                        "sub_type_id": match["sub_type_id"],
+                        "bet_pick": match["bet_pick"],
+                        "odd_value": match["odd"],
+                        "outcome_id": match["outcome_id"],
+                        "sport_id": 14,
+                        "special_bet_value": match["special_bet_value"],
+                        "parent_match_id": match["parent_match_id"],
+                        "bet_type": 7
+                    }
+                    betslips.append(betslip)
+                    total_odd *= float(betslip.get('odd_value'))     
+            print(betslips)
             balance, bonus = self.betika.get_balance()
             stake = int(balance/2) 
             if stake > 0:

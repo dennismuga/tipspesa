@@ -1,4 +1,5 @@
 import os, uuid, psycopg2
+from psycopg2.extras import RealDictCursor
 from dotenv import load_dotenv
 
 from utils.entities import Event, Jackpot, Odds, User
@@ -100,12 +101,12 @@ class PostgresCRUD:
             
     def fetch_open_matches(self):
         self.ensure_connection()
-        with self.conn.cursor() as cur:
+        with self.conn.cursor(cursor_factory=RealDictCursor) as cur:
             query = """
                 SELECT *
                 FROM matches
                 WHERE (status IS NULL OR status = 'LIVE')
-                    AND DATE(kickoff) >= CURRENT_DATE - 1
+                    AND DATE(kickoff) >= CURRENT_DATE
                 ORDER BY kickoff DESC
             """
             cur.execute(query)
