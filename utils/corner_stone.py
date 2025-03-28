@@ -123,7 +123,7 @@ class CornerStone():
                 total_odd *= float(betslip.get('odd_value'))     
 
             balance, bonus = self.betika.get_balance()
-            stake = int(min(5, balance)) 
+            stake = int(balance/2) 
             if stake > 0:
                 # print(slips, ttl_odd, stake)
                 self.betika.place_bet(betslips, total_odd, stake)
