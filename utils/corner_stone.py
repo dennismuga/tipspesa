@@ -1,4 +1,5 @@
 import concurrent.futures
+import time 
 
 from utils.betika import Betika
 from utils.postgres_crud import PostgresCRUD
@@ -77,6 +78,7 @@ class CornerStone():
                                         special_bet_value = odd.get('special_bet_value')      
                                         outcome_id = odd.get('outcome_id')
                                         overall_prob = 98 if odd_value < 1.32 else 88
+                                        
                                     if odd_value <= 1.38:
                                         if odd_value < 1.2:
                                             v = float(bet_pick.replace('over ',''))
@@ -100,7 +102,35 @@ class CornerStone():
                                         }
                                         print(match)
                                         self.db.insert_match(match)
+    
+    def auto_bet(self, matches):
+        try:
+            betslips = []
+            total_odd = 1
+            for match in matches:    
+                betslip = {                    
+                    "sub_type_id": match[13],
+                    "bet_pick": match[4], 
+                    "odd_value": match[5],
+                    "outcome_id": match[10],
+                    "sport_id": 12,
+                    "special_bet_value": match[14],
+                    "parent_match_id": match[11],
+                    "bet_type": 7
+                }
+                
+                betslips.append(betslip)
+                total_odd *= float(betslip.get('odd_value'))     
 
+            balance, bonus = self.betika.get_balance()
+            stake = int(min(5, balance)) 
+            if stake > 0:
+                # print(slips, ttl_odd, stake)
+                self.betika.place_bet(betslips, total_odd, stake)
+                time.sleep(2)
+        except Exception as e:
+            print(f"Error in auto_bet: {e}")
+                  
     def __call__(self):
         # Use ThreadPoolExecutor to spawn a thread for each match
         with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -108,6 +138,9 @@ class CornerStone():
 
             # Wait for all threads to finish
             concurrent.futures.wait(threads)
+        
+        open_matches = self.db.fetch_open_matches()
+        self.auto_bet(open_matches)
 
 if __name__ == '__main__':
     CornerStone()()
