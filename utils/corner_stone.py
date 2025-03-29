@@ -142,7 +142,7 @@ class CornerStone():
                     composite_betslips[0]['betslips'].extend(composite_betslip['betslips'])
                     composite_betslips[0]['total_odd'] *= composite_betslip['total_odd'] 
             balance, bonus = self.betika.get_balance()
-            stake = int(min(5, balance)) 
+            stake = int(balance/2) 
             if stake > 0:
                 for cb in composite_betslips:
                     ttl_odd = cb['total_odd']
