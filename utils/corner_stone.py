@@ -102,45 +102,75 @@ class CornerStone():
                                         }
                                         print(match)
                                         self.db.insert_match(match)
+        return match 
     
     def auto_bet(self, matches):
         try:
             betslips = []
+            composite_betslip = None
+            composite_betslips = [] 
             total_odd = 1
+            min_odd = 10
             for match in matches:   
-                if not any(betslip["parent_match_id"] == match["parent_match_id"] for betslip in betslips):
+                if not any(betslip["parent_match_id"] == match.get("parent_match_id") for betslip in betslips):
                     betslip = {
-                        "sub_type_id": match["sub_type_id"],
-                        "bet_pick": match["bet_pick"],
-                        "odd_value": match["odd"],
-                        "outcome_id": match["outcome_id"],
+                        "sub_type_id": match.get("sub_type_id"),
+                        "bet_pick": match.get("bet_pick"),
+                        "odd_value": match.get("odd"),
+                        "outcome_id": match.get("outcome_id"),
                         "sport_id": 14,
-                        "special_bet_value": match["special_bet_value"],
-                        "parent_match_id": match["parent_match_id"],
+                        "special_bet_value": match.get("special_bet_value"),
+                        "parent_match_id": match.get("parent_match_id"),
                         "bet_type": 7
                     }
                     betslips.append(betslip)
-                    total_odd *= float(betslip.get('odd_value'))     
-            print(betslips)
+                    total_odd *= float(betslip.get('odd_value'))                                              
+                    composite_betslip = {
+                        'total_odd': total_odd,
+                        'betslips': betslips
+                    }
+                    if total_odd >= min_odd:
+                        composite_betslips.append(composite_betslip)
+                        betslips = []
+                        total_odd = 1
+                        composite_betslip = None  
+                       
+            if composite_betslip:
+                if len(composite_betslips) ==0 :
+                    composite_betslips.append(composite_betslip)
+                else:
+                    composite_betslips[0]['betslips'].extend(composite_betslip['betslips'])
+                    composite_betslips[0]['total_odd'] *= composite_betslip['total_odd'] 
             balance, bonus = self.betika.get_balance()
-            stake = int(balance/2) 
+            stake = int(min(5, balance)) 
             if stake > 0:
-                # print(slips, ttl_odd, stake)
-                self.betika.place_bet(betslips, total_odd, stake)
-                time.sleep(2)
+                for cb in composite_betslips:
+                    ttl_odd = cb['total_odd']
+                    slips = cb['betslips']
+                    print(slips, ttl_odd, stake)
+                    self.betika.place_bet(slips, ttl_odd, stake)
+                    time.sleep(2)
+                        
         except Exception as e:
             print(f"Error in auto_bet: {e}")
                   
     def __call__(self):
+        matches = []
         # Use ThreadPoolExecutor to spawn a thread for each match
         with concurrent.futures.ThreadPoolExecutor() as executor:
             threads = [executor.submit(self.predict_match, parent_match_id) for parent_match_id in self.get_upcoming_match_ids()]
 
             # Wait for all threads to finish
             concurrent.futures.wait(threads)
-        
-        open_matches = self.db.fetch_open_matches()
-        self.auto_bet(open_matches)
+            for thread in threads:
+                try:
+                    match = thread.result()
+                    if match:
+                        matches.append(match)
+                except Exception as e:
+                    print(f"Error processing match: {e}")
+
+            self.auto_bet(matches)
 
 if __name__ == '__main__':
     CornerStone()()
