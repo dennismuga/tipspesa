@@ -110,7 +110,7 @@ class CornerStone():
             composite_betslip = None
             composite_betslips = [] 
             total_odd = 1
-            min_odd = 10
+            min_odd = 6
             for match in matches:   
                 if not any(betslip["parent_match_id"] == match.get("parent_match_id") for betslip in betslips):
                     betslip = {
