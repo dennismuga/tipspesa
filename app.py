@@ -5,7 +5,6 @@ from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_session import Session
 from redis import Redis
 from dotenv import load_dotenv
-from apscheduler.schedulers.background import BackgroundScheduler
 
 from utils.entities import Plan
 from utils.helper import Helper
@@ -98,11 +97,12 @@ def home():
         matches_yesterday = helper.fetch_matches('-1', '=', '', limit=16)
         lmy = len(matches_yesterday)
         plans = [
-            Plan('Free Tips', 0, 2, 'pink', 1, matches[lm-4:lm] if lm>= 4 else matches, matches_yesterday[lmy-4:lmy] if lmy>= 4 else matches_yesterday),
-            Plan('Bronze Plan', 20, 4, 'purple', 2, matches[:6] if lm>= 6 else matches, matches_yesterday[:6] if lmy>= 6 else matches_yesterday),
-            Plan('Silver Plan', 30, 7, 'blue', 3, matches[:8] if lm>= 8 else matches, matches_yesterday[:8] if lmy>= 8 else matches_yesterday),
-            Plan('Gold Plan', 50, 10, 'yellow', 4, matches[:10] if lm>= 10 else matches, matches_yesterday[:10] if lmy>= 10 else matches_yesterday),
-            Plan('Platinum Plan', 70, 15, 'green', 5, matches[:12] if lm>= 12 else matches, matches_yesterday[:12] if lmy>= 12 else matches_yesterday)
+            #(name, amount, odds, color, stars, matches, matches_yesterday):)
+            Plan('Free Tips', 0, 3, 'pink', 1, matches[lm-5:lm] if lm>= 5 else matches, matches_yesterday[lmy-5:lmy] if lmy>= 5 else matches_yesterday),
+            Plan('Bronze Plan', 20, 5, 'purple', 2, matches[:6] if lm>= 6 else matches, matches_yesterday[:6] if lmy>= 6 else matches_yesterday),
+            Plan('Silver Plan', 30, 10, 'blue', 3, matches[:8] if lm>= 8 else matches, matches_yesterday[:8] if lmy>= 8 else matches_yesterday),
+            Plan('Gold Plan', 50, 15, 'yellow', 4, matches[:10] if lm>= 10 else matches, matches_yesterday[:10] if lmy>= 10 else matches_yesterday),
+            Plan('Platinum Plan', 70, 20, 'green', 5, matches[:12] if lm>= 12 else matches, matches_yesterday[:12] if lmy>= 12 else matches_yesterday)
         ]
         return render_template('home.html', plans=plans)
 
