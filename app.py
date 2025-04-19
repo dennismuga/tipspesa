@@ -170,12 +170,12 @@ def save_pesapal_response():
 @app.route('/pesapal-callback', methods=['GET', 'POST'])
 def pesapal_callback():  
     save_pesapal_response()
-    return redirect(url_for('home'))
+    return redirect(url_for('free'))
 
 @app.route('/pesapal-ipn', methods=['GET', 'POST'])
 def pesapal_ipn():  
     save_pesapal_response()
-    return redirect(url_for('home'))
+    return redirect(url_for('free'))
     
 @app.route('/terms-and-conditions')
 def terms_and_conditions():    
