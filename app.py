@@ -91,25 +91,23 @@ def page_not_found(e):
     # Redirect to a specific endpoint, like 'home', or a custom 404 page
     return redirect(url_for('home'), 302)
 
-@app.route('/home', methods=['GET', 'POST'])
-def home(): 
-    if request.method == 'POST': 
-        return subscribe()
+def filter_matches(matches, size):
+    filtered_matches = []
+    for match in matches:
+        # Check if home_team or away_team is already in matches_platinum
+        is_duplicate = any(
+            match.home_team in m.home_team and match.away_team in m.away_team for m in filtered_matches
+        )
+        if not is_duplicate:
+            filtered_matches.append(match)
     
-    else:        
-        plans = [
-            #(name, amount, odds, color, stars, matches, matches_yesterday):)
-            Plan('Free Tips', 0, 3, 'pink', 1, matches[lm-5:lm] if lm>= 5 else matches, matches_yesterday[lmy-5:lmy] if lmy>= 5 else matches_yesterday),
-            Plan('Bronze Plan', 20, 5, 'purple', 2, matches[:6] if lm>= 6 else matches, matches_yesterday[:6] if lmy>= 6 else matches_yesterday),
-            Plan('Silver Plan', 30, 10, 'blue', 3, matches[:8] if lm>= 8 else matches, matches_yesterday[:8] if lmy>= 8 else matches_yesterday),
-            Plan('Gold Plan', 50, 15, 'yellow', 4, matches[:10] if lm>= 10 else matches, matches_yesterday[:10] if lmy>= 10 else matches_yesterday),
-            Plan('Platinum Plan', 70, 20, 'green', 5, matches[:12] if lm>= 12 else matches, matches_yesterday[:12] if lmy>= 12 else matches_yesterday)
-        ]
-        return render_template('home.html', plans=plans)
+    filtered_matches = filtered_matches[-4:] if size == 4 and len(filtered_matches) >= 1 else filtered_matches
+    filtered_matches = filtered_matches[:size] if len(filtered_matches) >= 1 else filtered_matches
+    return filtered_matches
 
 @app.route('/', methods=['GET'])
 def free():
-    plan = Plan('Free Tips', 0, 3, 'pink', 1, matches[lm-5:lm] if lm>= 5 else matches, matches_yesterday[lmy-5:lmy] if lmy>= 5 else matches_yesterday)
+    plan = Plan('Free Tips', 0, 3, 'pink', 1, filter_matches(matches, 4), filter_matches(matches_yesterday, 4))
     return render_template('plans.html', plan=plan)
 
 @app.route('/bronze', methods=['GET', 'POST'])
@@ -118,7 +116,7 @@ def bronze():
         return subscribe()
     
     else:        
-        plan = Plan('Bronze Plan', 20, 5, 'purple', 2, matches[:6] if lm>= 6 else matches, matches_yesterday[:6] if lmy>= 6 else matches_yesterday)
+        plan = Plan('Bronze Plan', 20, 5, 'purple', 2, filter_matches(matches, 6), filter_matches(matches_yesterday, 6))
         return render_template('plans.html', plan=plan)
 
 @app.route('/silver', methods=['GET', 'POST'])
@@ -127,7 +125,7 @@ def silver():
         return subscribe()
     
     else:        
-        plan = Plan('Silver Plan', 30, 10, 'blue', 3, matches[:8] if lm>= 8 else matches, matches_yesterday[:8] if lmy>= 8 else matches_yesterday)
+        plan = Plan('Silver Plan', 30, 10, 'blue', 3, filter_matches(matches, 8), filter_matches(matches_yesterday, 8))
         return render_template('plans.html', plan=plan)
 
 @app.route('/gold', methods=['GET', 'POST'])
@@ -136,16 +134,16 @@ def gold():
         return subscribe()
     
     else:        
-        plan = Plan('Gold Plan', 50, 15, 'yellow', 4, matches[:10] if lm>= 10 else matches, matches_yesterday[:10] if lmy>= 10 else matches_yesterday)
+        plan = Plan('Gold Plan', 50, 15, 'yellow', 4, filter_matches(matches, 10), filter_matches(matches_yesterday, 10))
         return render_template('plans.html', plan=plan)
-
+                
 @app.route('/platinum', methods=['GET', 'POST'])
 def platinum():
     if request.method == 'POST': 
         return subscribe()
     
-    else:        
-        plan = Plan('Platinum Plan', 70, 20, 'green', 5, matches[:12] if lm>= 12 else matches, matches_yesterday[:12] if lmy>= 12 else matches_yesterday)
+    else:                
+        plan = Plan('Platinum Plan', 70, 20, 'green', 5, filter_matches(matches, 12), filter_matches(matches_yesterday, 12))
         return render_template('plans.html', plan=plan)
 
 @app.route('/about', methods=['GET'])
