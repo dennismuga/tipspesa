@@ -80,7 +80,9 @@
         }
     </style>
 
+    {% if not current_user or plan.name == 'Free Tips' %}
     <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+    {% endif %}
 
 </head>
 
