@@ -243,6 +243,15 @@
             $('#amount').val(amount)
         }
     </script>
+
+    {% if not current_user or plan.name == 'Free Tips' %}
+    <script type="text/javascript">
+        aclib.runAutoTag({
+            zoneId: 'tlkfkwsy6m',
+        });
+    </script>
+    {% endif %}
+
 </body>
 
 </html>
