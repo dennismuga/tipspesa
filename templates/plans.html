@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="TipsPesa">
+    <meta name="description"
+        content="TipsPesa is the best free football prediction website that provides you with the most accurate football tips to help you make profits">
+    <meta name="keywords"
+        content="Sure Prediction, TipsPesa prediction, best jackpot prediction site, jackpot predictions, sports fans reviews, sportpesa kenya, sokafans, sokafans prediction, prima tips, sure straight win for today, best midweek football bets, jackpot predictions for today, jackpot prediction, betika games today football, betika best online sports betting in kenya, best jackpot prediction site, mega jackpot prediction, bet 360, sportpesa login, statarea guru prediction, 180bet tip, statarea, free bet tips bet numbers, mega jackpot analysis prediction, betpawa jackpot prediction, betpawa, sportpesa, predictz, mega jackpot analysis, betpawa jackpot predictions, jackpot predictions, football prediction site, soccer prediction site, sure odds, soccer prediction, best football prediction site, free football prediction site, sure jackpot, accurate football prediction website, best VIP prediction website, best football prediction website, accurate football predictions, world's best prediction site, best free soccer prediction website, accurate soccer predictions, accurate football prediction for free, world's best prediction site, best football prediction, TipsPesa correct score, best VIP tips, best soccer prediction website, soccer prediction">
+    <title>TipsPesa | Betting Predictions</title>
+
+    <!-- External Stylesheets -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon.png') }}" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <!-- Open Graph and Twitter Card meta tags -->
+    <meta property="og:title" content="Tipspesa App">
+    <meta property="og:image" content="{{ url_for('static', filename='favicon.png') }}">
+    <meta property="og:url" content="https://tipspesa.vercel.app">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Canonical Tag -->
+    <link rel="canonical" href="https://tipspesa.vercel.app" />
+
+    <!-- Mobile Optimization -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="google-site-verification" content="15AUFZEGoq7OBjdz6bUMXfriQsiDQqnm0VisaE6XZi4" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Tipspesa App">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
+
+    <!-- Inline CSS for Fixed Footer -->
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        .main-content {
+            padding-bottom: 60px; /* Adjust based on footer height to prevent overlap */
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1a202c; /* Tailwind bg-gray-900 */
+            padding: 0.5rem; /* Tailwind p-2 */
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Tailwind shadow-md */
+            z-index: 10;
+        }
+        .footer-table {
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="POST" class="form-horizontal">
+                    <div class="modal-header text-center">
+                        <h5 class="text-center"><b id="plan"></b> Premium Tips Subscription</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-4 text-end control-label col-form-label">Phone No.:</label>
+                            <div class="col-8">
+                                <input type="hidden" id="amount" name="amount">
+                                <input required="required" type="text" name="phone" id="phone"
+                                    class="form-control input-sm" minlength="9" placeholder="e.g 0712345678">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" id="action" name="action" value="login"
+                            class="btn btn-success">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 bg-gray-900 shadow-md z-10 p-2">
+        <img src="{{ url_for('static', filename='favicon.png') }}" alt="TipsPesa Logo" class="h-10 w-10 inline-block">
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content bg-white">
+        <!-- <div class="whatsapp-float">
+            <a href="https://wa.me/+254759697757" target="_blank" title="Chat with us on WhatsApp">
+                <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp">
+            </a>
+        </div> -->
+
+        <div>
+            <section class="p-2">
+                <div class="bg-white text-white p-4 mb-7 rounded-lg shadow-md"
+                    style="background-image: url({{ url_for('static', filename='Subbackground.png') }}); background-size: cover;">
+                    <div class="flex justify-between items-center">
+                        <span
+                            class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full">{{
+                            plan.name ~ (' Premium' if plan.name != 'Free Tips' else '') }}</span>
+                        <div class="text-yellow-400">
+                            {% for i in range(plan.stars) %}
+                            <i class="fas fa-star"></i>
+                            {% endfor %}
+                            {% for i in range(5-plan.stars) %}
+                            <i class="fas fa-star text-white"></i>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <table class="results-table">
+                        <tr>
+                            {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'
+                            %}
+                            <th>Kickoff</th>
+                            <th>Fixture</th>
+                            <th>Tip</th>
+                            <th>Odd</th>
+                            {% else %}
+                            <th colspan="4">
+                                Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{
+                                plan.name }} now.
+                                Once Paid, Tips will be displayed here. <br />
+                                <a href="#" data-toggle="modal" data-target="#loginModal"
+                                    onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
+                                    <button class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
+                                        BUY {{ plan.name }}<br />
+                                        @ KSh. {{ plan.amount }}
+                                    </button>
+                                </a>
+                            </th>
+                            {% endif %}
+                        </tr>
+                        {% set ns = namespace(total_odds=1) %}
+                        {% for match in plan.matches %}
+                        {% set ns.total_odds = ns.total_odds * match.odd %}
+                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips' %}
+                        <tr>
+                            <td>{{ match.kickoff.strftime('%H:%M') }}</td>
+                            <td>{{ match.home_team }} vs {{ match.away_team }}</td>
+                            <td>
+                                {{ match.prediction }}
+                                {{ 'goals' if match.subtype_id == 18 else ' bookings' if match.subtype_id == 139 else ' corners' if match.subtype_id == 166 else '' }}
+                            </td>
+                            <td>{{ match.odd }}</td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                        <tr>
+                            <th colspan="3">Total Odds</th>
+                            <th>{{ ns.total_odds | round(2) }}</th>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Yesterday Tips -->
+            <section class="p-2">
+                <div class="bg-white p-2 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold text-green-600 mb-1 text-center">Yesterday Tips</h2>
+                    {% if plan.matches_yesterday | length > 0 %}
+                    <table class="results-table">
+                        <tr>
+                            <th>Fixture</th>
+                            <th>Tip</th>                                
+                            <th></th>
+                        </tr>
+                        {% for match in plan.matches_yesterday %}
+                        <tr>
+                            <td>{{ match.home_team }} vs {{ match.away_team }}</td>
+                            <td>                                    
+                                {{ match.prediction }}
+                                {{ 'goals' if match.subtype_id == 18 else ' bookings' if match.subtype_id == 139 else ' corners' if match.subtype_id == 166 else '' }}
+                            </td>
+                            <td class="fa fa-check-circle" style="color: green; font-size: 16px;"></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    {% endif %}
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <table class="footer-table">
+            <tr style="border-bottom: none;">
+                <th><a href="{{ url_for('free') }}" class="bg-pink-100 text-pink-800 text-xs font-bold px-2 py-1 rounded-full">Free Tips</a></th>
+                <th><a href="{{ url_for('bronze') }}" class="bg-purple-100 text-purple-800 text-xs font-bold px-2 py-1 rounded-full">Bronze</a></th>
+                <th><a href="{{ url_for('silver') }}" class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded-full">Silver</a></th>
+                <th><a href="{{ url_for('gold') }}" class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded-full">Gold</a></th>
+                <th><a href="{{ url_for('platinum') }}" class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">Platinum</a></th>
+                <th><a href="{{ url_for('about') }}">FAQ</a></th>
+            </tr>
+        </table>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='plugin.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>    
+    <script>
+        function setPlan(name, amount) {
+            $('#plan').html(name)
+            $('#amount').val(amount)
+        }
+    </script>
+</body>
+
+</html>

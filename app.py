@@ -38,6 +38,11 @@ login_manager.login_view = 'home'
 db = PostgresCRUD()
 helper = Helper()
 
+matches = helper.fetch_matches('', '=', '', limit=16)
+lm = len(matches)
+matches_yesterday = helper.fetch_matches('-1', '=', '', limit=16)
+lmy = len(matches_yesterday)
+        
 def update_stats():
     try:
         Stats()()
@@ -86,16 +91,12 @@ def page_not_found(e):
     # Redirect to a specific endpoint, like 'home', or a custom 404 page
     return redirect(url_for('home'), 302)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 def home(): 
     if request.method == 'POST': 
         return subscribe()
     
-    else:
-        matches = helper.fetch_matches('', '=', '', limit=16)
-        lm = len(matches)
-        matches_yesterday = helper.fetch_matches('-1', '=', '', limit=16)
-        lmy = len(matches_yesterday)
+    else:        
         plans = [
             #(name, amount, odds, color, stars, matches, matches_yesterday):)
             Plan('Free Tips', 0, 3, 'pink', 1, matches[lm-5:lm] if lm>= 5 else matches, matches_yesterday[lmy-5:lmy] if lmy>= 5 else matches_yesterday),
@@ -106,6 +107,51 @@ def home():
         ]
         return render_template('home.html', plans=plans)
 
+@app.route('/', methods=['GET'])
+def free():
+    plan = Plan('Free Tips', 0, 3, 'pink', 1, matches[lm-5:lm] if lm>= 5 else matches, matches_yesterday[lmy-5:lmy] if lmy>= 5 else matches_yesterday)
+    return render_template('plans.html', plan=plan)
+
+@app.route('/bronze', methods=['GET', 'POST'])
+def bronze():
+    if request.method == 'POST': 
+        return subscribe()
+    
+    else:        
+        plan = Plan('Bronze Plan', 20, 5, 'purple', 2, matches[:6] if lm>= 6 else matches, matches_yesterday[:6] if lmy>= 6 else matches_yesterday)
+        return render_template('plans.html', plan=plan)
+
+@app.route('/silver', methods=['GET', 'POST'])
+def silver():
+    if request.method == 'POST': 
+        return subscribe()
+    
+    else:        
+        plan = Plan('Silver Plan', 30, 10, 'blue', 3, matches[:8] if lm>= 8 else matches, matches_yesterday[:8] if lmy>= 8 else matches_yesterday)
+        return render_template('plans.html', plan=plan)
+
+@app.route('/gold', methods=['GET', 'POST'])
+def gold():
+    if request.method == 'POST': 
+        return subscribe()
+    
+    else:        
+        plan = Plan('Gold Plan', 50, 15, 'yellow', 4, matches[:10] if lm>= 10 else matches, matches_yesterday[:10] if lmy>= 10 else matches_yesterday)
+        return render_template('plans.html', plan=plan)
+
+@app.route('/platinum', methods=['GET', 'POST'])
+def platinum():
+    if request.method == 'POST': 
+        return subscribe()
+    
+    else:        
+        plan = Plan('Platinum Plan', 70, 20, 'green', 5, matches[:12] if lm>= 12 else matches, matches_yesterday[:12] if lmy>= 12 else matches_yesterday)
+        return render_template('plans.html', plan=plan)
+
+@app.route('/about', methods=['GET'])
+def about():
+    return render_template('about.html')
+    
 def save_pesapal_response():   
     order_tracking_id = request.args.get('OrderTrackingId')
     transaction = Pesapal().get_transaction_status(order_tracking_id)

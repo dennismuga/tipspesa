@@ -50,103 +50,64 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Tipspesa App">
-    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}"><!-- Inline CSS for Fixed Footer -->
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        .main-content {
+            padding-bottom: 60px; /* Adjust based on footer height to prevent overlap */
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1a202c; /* Tailwind bg-gray-900 */
+            padding: 0.5rem; /* Tailwind p-2 */
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Tailwind shadow-md */
+            z-index: 10;
+        }
+        .footer-table {
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
+    </style>
 </head>
+
 <body>
- 
     <!-- Header -->
-    <header class="sticky top-0 bg-gray-900 shadow-md z-10 text-white p-4">
-        <div class="container mx-auto flex items-center justify-between">
-            <a href="https://tipspesa.vercel.app/" class="flex items-center">
-                <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="h-7">
-            </a>
-            
-            <nav id="menuItems" class="hidden lg:flex items-center space-x-4">                
-                <a href="{{ url_for('home') }}" class="hover:text-gray-300">Home</a>
-                <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Bronze Plan', 20)" class="hover:text-gray-300">Bronze Plan</a>
-                <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Silver Plan', 30)" class="hover:text-gray-300">Silver Plan</a>
-                <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Gold Plan', 50)" class="hover:text-gray-300">Gold Plan</a>
-                <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Platinum Plan', 70)" class="hover:text-gray-300">Platinum Plan</a>
-            </nav>
-            
-            <button id="menuToggle" class="lg:hidden focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                </svg>
-            </button>
-            
-            <nav id="slideInMenu" class="lg:hidden fixed top-0 right-0 h-full w-1/2 bg-gray-900 text-white transform translate-x-full transition-transform duration-300">
-                <div class="flex justify-end p-4">
-                    <button id="menuClose" class="focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="flex flex-col items-center space-y-4">
-                    <a href="{{ url_for('home') }}" class="hover:text-gray-300">Home</a>
-                    <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Bronze Plan', 20)" class="hover:text-gray-300">Bronze Plan</a>
-                    <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Silver Plan', 30)" class="hover:text-gray-300">Silver Plan</a>
-                    <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Gold Plan', 50)" class="hover:text-gray-300">Gold Plan</a>
-                    <a href="#" data-toggle="modal" data-target="#loginModal" onclick="setPlan('Platinum Plan', 70)" class="hover:text-gray-300">Platinum Plan</a>
-                    <div class="mt-auto py-4">
-                        <p class="text-sm text-gray-500">© 2025 TipsPesa</p>
-                    </div>
-                </div>
-            </nav>
-        </div>
+    <header class="sticky top-0 bg-gray-900 shadow-md z-10 p-2">
+        <img src="{{ url_for('static', filename='favicon.png') }}" alt="TipsPesa Logo" class="h-10 w-10 inline-block">
     </header>
 
+
     <!-- Main Content -->
-    <div class="bg-white">
-        <div class="whatsapp-float">
-            <a href="https://wa.me/+254759697757" target="_blank" title="Chat with us on WhatsApp">
-                <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp">
-            </a>
-        </div>
+    <div class="main-content bg-white">
         <iframe 
             src="https://pay.pesapal.com/iframe/PesapalIframe3/Index?OrderTrackingId={{ order_tracking_id }}" 
             frameborder="0" 
             width="100%" 
-            height="500px" 
+            height="600px" 
             allow="payment"
             class="max-w-screen-xl px-4 py-12 mx-auto"
         ></iframe> 
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-900">
-        <div class="max-w-screen-xl px-4 py-12 mx-auto">
-            <nav class="flex flex-wrap justify-center -mx-5 -my-2">
-                <a href="#" class="px-5 py-2 text-white hover:text-gray-200">Disclaimer</a>
-                <a href="{{ url_for('privacy_policy') }}" class="px-5 py-2 text-white hover:text-gray-200">Privacy Policy</a>
-                <a href="{{ url_for('terms_and_conditions') }}" class="px-5 py-2 text-white hover:text-gray-200">Terms</a>
-                <a href="https://wa.me/+254707187271" class="px-5 py-2 text-white hover:text-gray-200">Contact Us</a>
-            </nav>
-            <div class="flex justify-center mt-8 space-x-6">
-                <a href="https://facebook.com/Tipspesa" class="text-white hover:text-gray-200">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path>
-                    </svg>
-                </a>
-                <a href="#" class="text-white hover:text-gray-200">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
-                    </svg>
-                </a>
-                <a href="https://x.com/tipspesa" class="text-white hover:text-gray-200">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 512 512">
-                        <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
-                    </svg>
-                </a>
-            </div>
-            <p class="mt-8 text-base text-center text-white">© 2025 TipsPesa, Inc. All rights reserved.</p>
-            <div class="mt-4 text-center">
-                <a href="https://wa.me/+254759697757" class="text-sm text-white hover:text-gray-200">
-                    🚀 Developed with ❤️ by <span class="font-semibold">Matrix Systems</span>
-                </a>
-            </div>
-        </div>
+    <footer>
+        <table class="footer-table">
+            <tr style="border-bottom: none;">
+                <th><a href="{{ url_for('free') }}" class="bg-pink-100 text-pink-800 text-xs font-bold px-2 py-1 rounded-full">Free Tips</a></th>
+                <th><a href="{{ url_for('bronze') }}" class="bg-purple-100 text-purple-800 text-xs font-bold px-2 py-1 rounded-full">Bronze</a></th>
+                <th><a href="{{ url_for('silver') }}" class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded-full">Silver</a></th>
+                <th><a href="{{ url_for('gold') }}" class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded-full">Gold</a></th>
+                <th><a href="{{ url_for('platinum') }}" class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">Platinum</a></th>
+                <th><a href="{{ url_for('about') }}">FAQ</a></th>
+            </tr>
+        </table>
     </footer>
 
     <!-- Scripts -->
