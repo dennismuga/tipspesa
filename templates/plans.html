@@ -80,7 +80,7 @@
         }
     </style>
 
-    {% if not current_user or plan.name == 'Free Tips' %}
+    {% if not current_user or not current_user.active %}
     <!-- <script src="https://acscdn.com/script/aclib.js" crossorigin="anonymous"></script> -->
     <meta name="monetag" content="c44c119f305aa7e177c9951489a8b9cc">
     
@@ -88,10 +88,10 @@
     <!-- <script src="https://kulroakonsu.net/88/tag.min.js" data-zone="143321" async data-cfasync="false"></script> -->
 
     <!-- Onclick Pop Under -->
-    <script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9236978,document.body||document.documentElement)</script>
-    
+    <!-- <script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9236978,document.body||document.documentElement)</script>
+     -->
     <!-- Push Notifications -->
-    <script src="https://shoukigaigoors.net/act/files/tag.min.js?z=9236999" data-cfasync="false" async></script>
+    <!-- <script src="https://shoukigaigoors.net/act/files/tag.min.js?z=9236999" data-cfasync="false" async></script> -->
 
     <!-- In Page Push -->
     <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vemtoutcheeg.com',9237014,document.createElement('script'))</script>
@@ -171,7 +171,7 @@
                             {% else %}
                             <th colspan="4">
                                 Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{
-                                plan.name }} now.
+                                plan.name }} now - No More Ads!!! <br />
                                 Once Paid, Tips will be displayed here. <br />
                                 <a href="#" data-toggle="modal" data-target="#loginModal"
                                     onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
