@@ -81,7 +81,6 @@
     </style>
 
     {% if not current_user or not current_user.active %}
-    <!-- <script src="https://acscdn.com/script/aclib.js" crossorigin="anonymous"></script> -->
     <meta name="monetag" content="c44c119f305aa7e177c9951489a8b9cc">
     
     <!-- All Zones-->
@@ -136,11 +135,11 @@
 
     <!-- Main Content -->
     <div class="main-content bg-white">
-        <!-- <div class="whatsapp-float">
+        <div class="whatsapp-float">
             <a href="https://wa.me/+254759697757" target="_blank" title="Chat with us on WhatsApp">
                 <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp">
             </a>
-        </div> -->
+        </div>
 
         <div>
             <section class="p-2">
@@ -262,15 +261,6 @@
             $('#amount').val(amount)
         }
     </script>
-
-    {% if not current_user or plan.name == 'Free Tips' %}
-    <!-- <script type="text/javascript">
-        aclib.runAutoTag({
-            zoneId: 'tlkfkwsy6m',
-        });
-    </script> -->    
-    {% endif %}
-
 </body>
 
 </html>
