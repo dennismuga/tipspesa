@@ -39,10 +39,10 @@ class OverUnder():
             for d in data:
                 if int(d.get('sub_type_id')) in [18]:   
                     odds = d.get('odds') 
-                    size = len(odds)
+                    last_index = len(odds) - 1
                     i = 0
                     for odd in odds:
-                        last_odd = odds[size-1-i]
+                        last_odd = odds[last_index-i]
                         cur_odd_value = float(odd.get('odd_value'))      
                         last_odd_value = float(last_odd.get('odd_value'))  
                         
@@ -60,7 +60,7 @@ class OverUnder():
                             special_bet_value = last_odd.get('special_bet_value')      
                             outcome_id = last_odd.get('outcome_id')
                         
-                        if i+1 == size/2:
+                        if i > last_index/2:
                             break
                         else:
                             i += 1
