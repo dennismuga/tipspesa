@@ -101,13 +101,13 @@ def filter_matches(matches, size):
         if not is_duplicate:
             filtered_matches.append(match)
     
-    filtered_matches = filtered_matches[-4:] if size == 4 and len(filtered_matches) >= 1 else filtered_matches
+    filtered_matches = filtered_matches[-5:] if size == 5 and len(filtered_matches) >= 1 else filtered_matches
     filtered_matches = filtered_matches[:size] if len(filtered_matches) >= 1 else filtered_matches
     return filtered_matches
 
 @app.route('/', methods=['GET'])
 def free():
-    plan = Plan('Free Tips', 0, 3, 'pink', 1, filter_matches(matches, 4), filter_matches(matches_yesterday, 4))
+    plan = Plan('Free Tips', 0, 3, 'pink', 1, filter_matches(matches, 5), filter_matches(matches_yesterday, 5))
     return render_template('plans.html', plan=plan)
 
 @app.route('/bronze', methods=['GET', 'POST'])
