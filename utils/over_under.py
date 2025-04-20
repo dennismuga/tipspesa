@@ -60,7 +60,7 @@ class OverUnder():
                             special_bet_value = last_odd.get('special_bet_value')      
                             outcome_id = last_odd.get('outcome_id')
                         
-                        if i > last_index/2:
+                        if i == (last_index-1)/2:
                             break
                         else:
                             i += 1
