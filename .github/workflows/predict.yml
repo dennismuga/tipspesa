@@ -3,8 +3,8 @@ name: predict & Autobet
 on:    
   workflow_dispatch: # Manually trigger the workflow
 
-  schedule:
-     - cron: '0 0/6 * * *'  # Runs every 6hrs
+  # schedule:
+  #    - cron: '0 0/6 * * *'  # Runs every 6hrs
 
 concurrency:
   group: continuous-job
