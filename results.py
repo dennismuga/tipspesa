@@ -51,7 +51,7 @@ class Results:
         today = datetime.now()
         yesterday = today - timedelta(days=1)        
 
-        yesterday_matches = self.helper.fetch_matches('-1', '=', '', limit=16)        
+        yesterday_matches = self.helper.fetch_matches('-1', '=', '', limit=100)        
         # Combine results
         results = self.livescore.get_results(yesterday)
         results += self.bbc.get_results(today, yesterday)

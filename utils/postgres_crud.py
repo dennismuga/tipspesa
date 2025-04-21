@@ -142,7 +142,7 @@ class PostgresCRUD:
                 predictions.append(prediction)
         return predictions
     
-    def fetch_matches(self, day, comparator, status, limit=12): 
+    def fetch_matches(self, day, comparator, status, limit=16): 
         self.ensure_connection()           
         with self.conn.cursor() as cur:
             query = f"""

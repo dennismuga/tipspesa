@@ -55,7 +55,7 @@ class Helper():
         response = requests.post(url, json=body_dict, timeout=timeout)
         return response.json()
 
-    def fetch_matches(self, day, comparator='=', status="AND status IS NOT NULL", limit=12):
+    def fetch_matches(self, day, comparator='=', status="AND status IS NOT NULL", limit=16):
         matches = []
         for open_match in self.db.fetch_matches(day, comparator, status, limit):
             match = Match()
