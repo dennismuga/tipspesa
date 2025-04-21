@@ -1,4 +1,4 @@
-name: Predict, Save
+name: Predict, Save & Autobet Upcoming Matches
 
 on:    
   workflow_dispatch: # Manually trigger the workflow
@@ -35,7 +35,5 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # - name: Predict Corners & Overs 
-      #   run: python corners.py
-      - name: Predict Overs & Unders
-        run: python ou.py
+      - name: Predict & Autobet
+        run: python predict.py

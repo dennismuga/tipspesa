@@ -1,4 +1,4 @@
-name: predict & Autobet
+name: Predict & Autobet Live Matches
 
 on:    
   workflow_dispatch: # Manually trigger the workflow
