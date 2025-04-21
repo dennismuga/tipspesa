@@ -184,9 +184,9 @@
                             {% endif %}
                         </tr>
                         {% set ns = namespace(total_odds=1) %}
-                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips' %}
                         {% for match in plan.matches %}
                         {% set ns.total_odds = ns.total_odds * match.odd %}
+                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips' %}
                         <tr>
                             <td>{{ match.kickoff.strftime('%H:%M') }}</td>
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
@@ -196,7 +196,9 @@
                             </td>
                             <td>{{ match.odd }}</td>
                         </tr>
+                        {% endif %}
                         {% endfor %}
+                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips' %}
                         <tr>
                             <td id="betika_share" colspan="4">
                                 <button onclick="getBetikaShare()" class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
