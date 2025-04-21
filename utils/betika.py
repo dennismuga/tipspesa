@@ -118,7 +118,9 @@ class Betika():
         payload = {
             "betslip": betslips,
             "product_type": "PREMATCH",
-            "src": self.src
+            "src": self.src,
+            "profile_id": str(BETIKA_PROFILE_ID),
+            "token": BETIKA_TOKEN
         }
         
         response = self.post_data(url, payload)
