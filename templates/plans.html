@@ -184,24 +184,31 @@
                             {% endif %}
                         </tr>
                         {% set ns = namespace(total_odds=1) %}
+                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips' %}
                         {% for match in plan.matches %}
                         {% set ns.total_odds = ns.total_odds * match.odd %}
-                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips' %}
                         <tr>
                             <td>{{ match.kickoff.strftime('%H:%M') }}</td>
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                             <td>
                                 {{ match.prediction }}
-                                {{ 'goals' if match.subtype_id == 18 else ' bookings' if match.subtype_id == 139 else ' corners' if match.subtype_id == 166 else '' }}
+                                {{ 'goals' if match.sub_type_id == 18 else ' bookings' if match.sub_type_id == 139 else ' corners' if match.sub_type_id == 166 else '' }}
                             </td>
                             <td>{{ match.odd }}</td>
                         </tr>
-                        {% endif %}
                         {% endfor %}
+                        <tr>
+                            <td id="betika_share" colspan="4">
+                                <button onclick="getBetikaShare()" class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
+                                    Get Betika Code
+                                </button>
+                            </td>
+                        </tr>
+                        {% endif %}
                         <tr>
                             <th colspan="3">Today Total Odds</th>
                             <th>{{ ns.total_odds | round(2) }}</th>
-                        </tr>
+                        </tr>                        
                     </table>
                 </div>
             </section>
@@ -222,7 +229,7 @@
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                             <td>                                    
                                 {{ match.prediction }}
-                                {{ 'goals' if match.subtype_id == 18 else ' bookings' if match.subtype_id == 139 else ' corners' if match.subtype_id == 166 else '' }}
+                                {{ 'goals' if match.sub_type_id == 18 else ' bookings' if match.sub_type_id == 139 else ' corners' if match.sub_type_id == 166 else '' }}
                             </td>
                             <td class="fa fa-check-circle" style="color: green; font-size: 16px;"></td>
                         </tr>
@@ -269,6 +276,22 @@
         function setPlan(name, amount) {
             $('#plan').html(name)
             $('#amount').val(amount)
+        }
+
+        function getBetikaShare() {
+            url = "{{ url_for('betika_share_code', plan=plan.matches | length) }}";
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (data) {
+                    $('#betika_share').html('<a href="' +data+ '" target="_blank">' +data+ '</a>');
+                },
+                error: function (error) {
+                    console.error('Error fetching Betika share code:', error);
+                }
+            });
+            
+            
         }
     </script>
 </body>

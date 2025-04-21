@@ -33,7 +33,7 @@ app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 Session(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'home'
+login_manager.login_view = 'free'
 
 db = PostgresCRUD()
 helper = Helper()
@@ -83,11 +83,11 @@ def load_user(user_id):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    # Redirect to a specific endpoint, like 'home', or a custom 404 page
-    return redirect(url_for('home'), 302)
+    # Redirect to a specific endpoint, like 'plans', or a custom 404 page
+    return redirect(url_for('free'), 302)
 
-def filter_matches(day, size):
-    matches = helper.fetch_matches(day, '=', '', limit=16)
+def filter_matches(day, size, status=''):
+    matches = helper.fetch_matches(day, '=', status, limit=16)
     filtered_matches = []
     for match in matches:
         # Check if home_team or away_team is already in matches_platinum
@@ -151,6 +151,11 @@ def platinum():
         today_matches, total = filter_matches('', 14)
         plan = Plan('Platinum Plan', 70, 20, 'green', 5, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total=total)
+
+@app.route('/betika-share-code/<plan>', methods=['GET'])
+def betika_share_code(plan):
+    matches, total = filter_matches('', int(plan), '')
+    return helper.get_share_code(matches)
 
 @app.route('/about', methods=['GET'])
 def about():

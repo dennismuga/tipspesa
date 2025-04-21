@@ -102,16 +102,27 @@ class Betika():
     def place_bet(self, betslips, total_odd, stake):
         url = f'{self.base_url}/v2/bet'
         payload = {
-            "profile_id": str(BETIKA_PROFILE_ID),
-            "stake": str(stake),
-            "total_odd": str(total_odd),
             "betslip": betslips,
+            "profile_id": str(BETIKA_PROFILE_ID),
+            "src": self.src,
+            "stake": str(stake),
             "token": BETIKA_TOKEN,
-            "src": self.src
+            "total_odd": str(total_odd),
         }
 
         response = self.post_data(url, payload)
         print(response)
+     
+    def share_bet(self, betslips):
+        url = 'https://api.betika.com/v2/share/encode'
+        payload = {
+            "betslip": betslips,
+            "product_type": "PREMATCH",
+            "src": self.src
+        }
+        
+        response = self.post_data(url, payload)
+        return response.get("link")
 
     def get_matches(self, limit, page, live=False):
         url = f'{self.live_url if live else self.base_url}/v1/uo/matches?sport_id=14&sort_id=1&esports=false&is_srl=false&limit={limit}&page={page}'

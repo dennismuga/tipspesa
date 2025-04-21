@@ -21,25 +21,21 @@ class Plan():
 
 class Match():     
     def __init__(self):
+        self.match_id = None
         self.kickoff = None
         self.home_team = None
         self.away_team = None
         self.prediction = None
-        self.overall_prob = 0
-        self.subtype_id = 0
         self.odd = 0
-        self.over_0_5_home_perc = 0
-        self.over_0_5_away_perc = 0
-        self.over_1_5_home_perc = 0
-        self.over_1_5_away_perc = 0
-        self.over_2_5_home_perc = 0
-        self.over_2_5_away_perc = 0
-        self.over_3_5_home_perc = 0
-        self.over_3_5_away_perc = 0
         self.home_results = None
         self.status = None
         self.away_results = None
-        self.analysis = None 
+        self.overall_prob = 0
+        self.sub_type_id = 0
+        self.parent_match_id = None
+        self.bet_pick = None
+        self.outcome_id = 0
+        self.special_bet_value = None
         
 class BetMarket:
     def __init__(self, data):        

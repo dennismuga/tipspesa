@@ -1,5 +1,6 @@
 
-import json, requests, time
+import json, pytz, requests, time
+from datetime import datetime
 
 from utils.betika import Betika
 from utils.entities import Match
@@ -58,6 +59,7 @@ class Helper():
         matches = []
         for open_match in self.db.fetch_matches(day, comparator, status, limit):
             match = Match()
+            match.match_id = open_match[0]
             match.kickoff = open_match[1]
             match.home_team = open_match[2]
             match.away_team = open_match[3]
@@ -67,9 +69,13 @@ class Helper():
             match.status = open_match[7] 
             match.away_results = open_match[8] 
             match.overall_prob = int(open_match[9])   
-            match.subtype_id = int(open_match[10])    
+            match.sub_type_id = int(open_match[10])  
+            match.parent_match_id = open_match[11]
+            match.bet_pick = open_match[12]
+            match.outcome_id = int(open_match[13])
+            match.special_bet_value = open_match[14]
             matches.append(match)
-                
+            
         return matches
     
     def get_upcoming_match_ids(self):    
@@ -138,4 +144,31 @@ class Helper():
                         
         except Exception as e:
             print(f"Error in auto_bet: {e}")
+            
+    def get_share_code(self, matches):
+        link = ''
+        # Get current time in Nairobi (EAT, UTC+3)
+        nairobi_tz = pytz.timezone('Africa/Nairobi')
+        current_time = datetime.now(nairobi_tz)
+        try:
+            betslips = []
+            for match in matches:   
+                kickoff_aware = nairobi_tz.localize(match.kickoff)
+                if not any(betslip["parent_match_id"] == match.parent_match_id for betslip in betslips) and kickoff_aware > current_time:
+                    betslip = {
+                        "odd_key": match.bet_pick,
+                        "outcome_id": match.outcome_id,
+                        "special_bet_value": match.special_bet_value,
+                        "parent_match_id": match.parent_match_id,
+                        "sub_type_id": match.sub_type_id,
+                    }
+                    betslips.append(betslip)
+                       
+            if betslips:
+                link = self.betika.share_bet(betslips)
+        
+            return link                
+        except Exception as e:
+            print(f"Error in get share code: {e}")
+    
     
