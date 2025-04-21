@@ -53,7 +53,7 @@ class OverUnder():
                             special_bet_value = odd.get('special_bet_value')      
                             outcome_id = odd.get('outcome_id')
                         
-                        elif last_odd_value >=1.19 and last_odd_value <= 1.41 and last_odd_value < cur_odd_value:
+                        elif last_odd_value >=1.19 and last_odd_value <= 1.41 and last_odd_value < cur_odd_value and last_odd.get('odd_key') != 'under 3.5':
                             sub_type_id = int(d.get('sub_type_id'))
                             bet_pick = last_odd.get('odd_key')    
                             odd_value = last_odd_value   
