@@ -300,7 +300,11 @@
                 url: url,
                 type: 'GET',
                 success: function (data) {
-                    $('#betika_share').html('<a href="' +data+ '" target="_blank">' +data+ '</a>');
+                    if (data == '')
+                        html = '<span class="text-red-500">Betika share is not available. Try again later.</span>';
+                    else
+                        html = '<a href="' +data+ '" target="_blank">' +data+ '</a>';
+                    $('#betika_share').html(html);
                 },
                 error: function (error) {
                     console.error('Error fetching Betika share code:', error);

@@ -166,8 +166,8 @@ class Helper():
                        
             if betslips:
                 link = self.betika.share_bet(betslips)
-        
-            return link                
+
+            return link if link else ''              
         except Exception as e:
             print(f"Error in get share code: {e}")
     
