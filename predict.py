@@ -21,7 +21,7 @@ class Predict:
         # Use ThreadPoolExecutor to spawn a thread for each match
         with concurrent.futures.ThreadPoolExecutor() as executor:
             threads = [executor.submit(self.over_under.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids]
-            threads += [executor.submit(self.corners.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids]
+            # threads += [executor.submit(self.corners.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids]
 
             # Wait for all threads to finish
             concurrent.futures.wait(threads)

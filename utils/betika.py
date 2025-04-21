@@ -114,7 +114,7 @@ class Betika():
         print(response)
      
     def share_bet(self, betslips):
-        url = 'https://api.betika.com/v2/share/encode'
+        url = f'{self.base_url}/v2/share/encode'
         payload = {
             "betslip": betslips,
             "product_type": "PREMATCH",

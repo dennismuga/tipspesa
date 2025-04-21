@@ -37,3 +37,6 @@ jobs:
 
       - name: Predict & Autobet
         run: python predict.py
+
+      - name: Update Yesterday Results
+        run: python results.py
