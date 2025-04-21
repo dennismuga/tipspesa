@@ -4,14 +4,12 @@ from datetime import datetime, timedelta
 from utils.helper import Helper
 from utils.livescore import LiveScore
 from utils.postgres_crud import PostgresCRUD
-from utils.sofascore import Sofascore
 
 class Results:
     """
         main class
     """
     def __init__(self):
-        self.sofascore = Sofascore()
         self.livescore = LiveScore()
         self.helper = Helper()
         self.db = PostgresCRUD()
@@ -31,16 +29,20 @@ class Results:
         return home_match and away_match
     
     def get_status(self, home_score, away_score, bet_pick):
-        if bet_pick == 'over 1.5':
-            return 'WON' if home_score + away_score > 1 else 'LOST'
-        if bet_pick == 'over 2.5':
-            return 'WON' if home_score + away_score > 2 else 'LOST'
-        if bet_pick == 'under 3.5':
-            return 'WON' if home_score + away_score <4 else 'LOST'
-        if bet_pick == 'under 4.5':
-            return 'WON' if home_score + away_score <5 else 'LOST'
-        if bet_pick == 'under 5.5':
-            return 'WON' if home_score + away_score <6 else 'LOST'
+        if bet_pick == 'over 1.5' and home_score + away_score < 2:
+            return 'LOST'
+        if bet_pick == 'over 2.5' and home_score + away_score < 3:
+            return 'LOST'
+        if bet_pick == 'over 3.5' and home_score + away_score < 4:
+            return 'LOST'
+        if bet_pick == 'under 3.5' and home_score + away_score > 3:
+            return 'LOST'
+        if bet_pick == 'under 4.5' and home_score + away_score > 4:
+            return 'LOST'
+        if bet_pick == 'under 5.5' and home_score + away_score > 5:
+            return 'LOST'
+        else:
+            return 'WON'
          
     def __call__(self):
         # Get yesterday's date & Format as YYYYMMDD
@@ -53,8 +55,8 @@ class Results:
         for match in yesterday_matches:
             for result in results:
                 if self.check_match_results(match.home_team, match.away_team, result):
-                    print(result)
                     status = self.get_status(int(result['home_score']), int(result['away_score']), match.bet_pick)
+                    print(result, status)
                     self.db.update_match_results(match.match_id, result['home_score'], result['away_score'], status)
 
 if __name__ == "__main__":

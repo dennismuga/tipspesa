@@ -224,6 +224,7 @@
                         <tr>
                             <th>Fixture</th>
                             <th>Tip</th>                                
+                            <th>Result</th>
                             <th></th>
                         </tr>
                         {% for match in plan.matches_yesterday %}
@@ -233,7 +234,15 @@
                                 {{ match.prediction }}
                                 {{ 'goals' if match.sub_type_id == 18 else ' bookings' if match.sub_type_id == 139 else ' corners' if match.sub_type_id == 166 else '' }}
                             </td>
-                            <td class="fa fa-check-circle" style="color: green; font-size: 16px;"></td>
+                            {% if match.status == 'WON' %}
+                                <td>{{ match.home_results ~ '-' ~ match.away_results }}</td>
+                                <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
+                            {% elif match.status == 'LOST' %}
+                                <td>{{ match.home_results ~ '-' ~ match.away_results }}</td>
+                                <td><span class="fa fa-times-circle" style="color: red; font-size: 16px;"></span></td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
                     </table>
