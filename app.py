@@ -103,8 +103,8 @@ def filter_matches(day, size):
 
 @app.route('/', methods=['GET'])
 def free():
-    today_matches, total = filter_matches('', 5)
     yesterday_matches, total = filter_matches('-1', 5)
+    today_matches, total = filter_matches('', 5)
     plan = Plan('Free Tips', 0, 3, 'pink', 1, today_matches, yesterday_matches)
     return render_template('plans.html', plan=plan, total=total)
 
@@ -114,8 +114,8 @@ def bronze():
         return subscribe()
     
     else:        
-        today_matches, total = filter_matches('', 8)
         yesterday_matches, total = filter_matches('-1', 8)
+        today_matches, total = filter_matches('', 8)
         plan = Plan('Bronze Plan', 20, 5, 'purple', 2, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total=total)
 
@@ -125,8 +125,8 @@ def silver():
         return subscribe()
     
     else:        
-        today_matches, total = filter_matches('', 10)
         yesterday_matches, total = filter_matches('-1', 10)
+        today_matches, total = filter_matches('', 10)
         plan = Plan('Silver Plan', 30, 10, 'blue', 3, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total=total)
 
@@ -136,8 +136,8 @@ def gold():
         return subscribe()
     
     else:        
-        today_matches, total = filter_matches('', 12)
         yesterday_matches, total = filter_matches('-1', 12)
+        today_matches, total = filter_matches('', 12)
         plan = Plan('Gold Plan', 50, 15, 'yellow', 4, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total=total)
                 
@@ -147,8 +147,8 @@ def platinum():
         return subscribe()
     
     else:                
-        today_matches, total = filter_matches('', 14)
         yesterday_matches, total = filter_matches('-1', 14)
+        today_matches, total = filter_matches('', 14)
         plan = Plan('Platinum Plan', 70, 20, 'green', 5, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total=total)
 
