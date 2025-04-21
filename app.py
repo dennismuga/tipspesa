@@ -112,7 +112,7 @@ def bronze():
         return subscribe()
     
     else:        
-        plan = Plan('Bronze Plan', 20, 5, 'purple', 2, filter_matches('', 7), filter_matches('-1', 7))
+        plan = Plan('Bronze Plan', 20, 5, 'purple', 2, filter_matches('', 8), filter_matches('-1', 8))
         return render_template('plans.html', plan=plan)
 
 @app.route('/silver', methods=['GET', 'POST'])
@@ -121,7 +121,7 @@ def silver():
         return subscribe()
     
     else:        
-        plan = Plan('Silver Plan', 30, 10, 'blue', 3, filter_matches('', 9), filter_matches('-1', 9))
+        plan = Plan('Silver Plan', 30, 10, 'blue', 3, filter_matches('', 10), filter_matches('-1', 10))
         return render_template('plans.html', plan=plan)
 
 @app.route('/gold', methods=['GET', 'POST'])
@@ -130,7 +130,7 @@ def gold():
         return subscribe()
     
     else:        
-        plan = Plan('Gold Plan', 50, 15, 'yellow', 4, filter_matches('', 11), filter_matches('-1', 11))
+        plan = Plan('Gold Plan', 50, 15, 'yellow', 4, filter_matches('', 12), filter_matches('-1', 12))
         return render_template('plans.html', plan=plan)
                 
 @app.route('/platinum', methods=['GET', 'POST'])
@@ -139,7 +139,7 @@ def platinum():
         return subscribe()
     
     else:                
-        plan = Plan('Platinum Plan', 70, 20, 'green', 5, filter_matches('', 12), filter_matches('-1', 12))
+        plan = Plan('Platinum Plan', 70, 20, 'green', 5, filter_matches('', 14), filter_matches('-1', 14))
         return render_template('plans.html', plan=plan)
 
 @app.route('/about', methods=['GET'])
