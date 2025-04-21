@@ -99,12 +99,14 @@ def filter_matches(day, size):
     
     filtered_matches = filtered_matches[-5:] if size == 5 and len(filtered_matches) >= 1 else filtered_matches
     filtered_matches = filtered_matches[:size] if len(filtered_matches) >= 1 else filtered_matches
-    return filtered_matches
+    return filtered_matches, len(matches)
 
 @app.route('/', methods=['GET'])
 def free():
-    plan = Plan('Free Tips', 0, 3, 'pink', 1, filter_matches('', 5), filter_matches('-1', 5))
-    return render_template('plans.html', plan=plan)
+    today_matches, total = filter_matches('', 5)
+    yesterday_matches, total = filter_matches('-1', 5)
+    plan = Plan('Free Tips', 0, 3, 'pink', 1, today_matches, yesterday_matches)
+    return render_template('plans.html', plan=plan, total=total)
 
 @app.route('/bronze', methods=['GET', 'POST'])
 def bronze():
@@ -112,8 +114,10 @@ def bronze():
         return subscribe()
     
     else:        
-        plan = Plan('Bronze Plan', 20, 5, 'purple', 2, filter_matches('', 8), filter_matches('-1', 8))
-        return render_template('plans.html', plan=plan)
+        today_matches, total = filter_matches('', 8)
+        yesterday_matches, total = filter_matches('-1', 8)
+        plan = Plan('Bronze Plan', 20, 5, 'purple', 2, today_matches, yesterday_matches)
+        return render_template('plans.html', plan=plan, total=total)
 
 @app.route('/silver', methods=['GET', 'POST'])
 def silver():
@@ -121,8 +125,10 @@ def silver():
         return subscribe()
     
     else:        
-        plan = Plan('Silver Plan', 30, 10, 'blue', 3, filter_matches('', 10), filter_matches('-1', 10))
-        return render_template('plans.html', plan=plan)
+        today_matches, total = filter_matches('', 10)
+        yesterday_matches, total = filter_matches('-1', 10)
+        plan = Plan('Silver Plan', 30, 10, 'blue', 3, today_matches, yesterday_matches)
+        return render_template('plans.html', plan=plan, total=total)
 
 @app.route('/gold', methods=['GET', 'POST'])
 def gold():
@@ -130,8 +136,10 @@ def gold():
         return subscribe()
     
     else:        
-        plan = Plan('Gold Plan', 50, 15, 'yellow', 4, filter_matches('', 12), filter_matches('-1', 12))
-        return render_template('plans.html', plan=plan)
+        today_matches, total = filter_matches('', 12)
+        yesterday_matches, total = filter_matches('-1', 12)
+        plan = Plan('Gold Plan', 50, 15, 'yellow', 4, today_matches, yesterday_matches)
+        return render_template('plans.html', plan=plan, total=total)
                 
 @app.route('/platinum', methods=['GET', 'POST'])
 def platinum():
@@ -139,8 +147,10 @@ def platinum():
         return subscribe()
     
     else:                
-        plan = Plan('Platinum Plan', 70, 20, 'green', 5, filter_matches('', 14), filter_matches('-1', 14))
-        return render_template('plans.html', plan=plan)
+        today_matches, total = filter_matches('', 14)
+        yesterday_matches, total = filter_matches('-1', 14)
+        plan = Plan('Platinum Plan', 70, 20, 'green', 5, today_matches, yesterday_matches)
+        return render_template('plans.html', plan=plan, total=total)
 
 @app.route('/about', methods=['GET'])
 def about():
