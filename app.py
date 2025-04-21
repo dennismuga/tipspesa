@@ -37,11 +37,6 @@ login_manager.login_view = 'home'
 
 db = PostgresCRUD()
 helper = Helper()
-
-matches = helper.fetch_matches('', '=', '', limit=16)
-lm = len(matches)
-matches_yesterday = helper.fetch_matches('-1', '=', '', limit=16)
-lmy = len(matches_yesterday)
         
 def update_stats():
     try:
@@ -91,7 +86,8 @@ def page_not_found(e):
     # Redirect to a specific endpoint, like 'home', or a custom 404 page
     return redirect(url_for('home'), 302)
 
-def filter_matches(matches, size):
+def filter_matches(day, size):
+    matches = helper.fetch_matches(day, '=', '', limit=16)
     filtered_matches = []
     for match in matches:
         # Check if home_team or away_team is already in matches_platinum
@@ -107,7 +103,7 @@ def filter_matches(matches, size):
 
 @app.route('/', methods=['GET'])
 def free():
-    plan = Plan('Free Tips', 0, 3, 'pink', 1, filter_matches(matches, 5), filter_matches(matches_yesterday, 5))
+    plan = Plan('Free Tips', 0, 3, 'pink', 1, filter_matches('', 5), filter_matches('-1', 5))
     return render_template('plans.html', plan=plan)
 
 @app.route('/bronze', methods=['GET', 'POST'])
@@ -116,7 +112,7 @@ def bronze():
         return subscribe()
     
     else:        
-        plan = Plan('Bronze Plan', 20, 5, 'purple', 2, filter_matches(matches, 6), filter_matches(matches_yesterday, 6))
+        plan = Plan('Bronze Plan', 20, 5, 'purple', 2, filter_matches('', 6), filter_matches('-1', 6))
         return render_template('plans.html', plan=plan)
 
 @app.route('/silver', methods=['GET', 'POST'])
@@ -125,7 +121,7 @@ def silver():
         return subscribe()
     
     else:        
-        plan = Plan('Silver Plan', 30, 10, 'blue', 3, filter_matches(matches, 8), filter_matches(matches_yesterday, 8))
+        plan = Plan('Silver Plan', 30, 10, 'blue', 3, filter_matches('', 8), filter_matches('-1', 8))
         return render_template('plans.html', plan=plan)
 
 @app.route('/gold', methods=['GET', 'POST'])
@@ -134,7 +130,7 @@ def gold():
         return subscribe()
     
     else:        
-        plan = Plan('Gold Plan', 50, 15, 'yellow', 4, filter_matches(matches, 10), filter_matches(matches_yesterday, 10))
+        plan = Plan('Gold Plan', 50, 15, 'yellow', 4, filter_matches('', 10), filter_matches('-1', 10))
         return render_template('plans.html', plan=plan)
                 
 @app.route('/platinum', methods=['GET', 'POST'])
@@ -143,7 +139,7 @@ def platinum():
         return subscribe()
     
     else:                
-        plan = Plan('Platinum Plan', 70, 20, 'green', 5, filter_matches(matches, 12), filter_matches(matches_yesterday, 12))
+        plan = Plan('Platinum Plan', 70, 20, 'green', 5, filter_matches('', 12), filter_matches('-1', 12))
         return render_template('plans.html', plan=plan)
 
 @app.route('/about', methods=['GET'])
