@@ -12,13 +12,13 @@ class LiveScore():
         """
         self.base_url = "https://prod-cdn-mev-api.livescore.com/v1/api/app/date/soccer"
         
-    def get_results(self, event_date):
+    def get_results(self, yesterday):
         """
         Fetch events for a given date.
         :param event_date: Date in YYYYMMDD format.
         :return: List of events.
         """
-        
+        event_date = yesterday.strftime('%Y%m%d')
         url = f'{self.base_url}/{event_date}/3?locale=en&MD=1'
         try:
             response = requests.get(url).json()

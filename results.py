@@ -1,6 +1,7 @@
 
 from datetime import datetime, timedelta
 
+from utils.bbc import BBC
 from utils.helper import Helper
 from utils.livescore import LiveScore
 from utils.postgres_crud import PostgresCRUD
@@ -11,6 +12,7 @@ class Results:
     """
     def __init__(self):
         self.livescore = LiveScore()
+        self.bbc = BBC()
         self.helper = Helper()
         self.db = PostgresCRUD()
     
@@ -46,11 +48,17 @@ class Results:
          
     def __call__(self):
         # Get yesterday's date & Format as YYYYMMDD
-        yesterday = datetime.now() - timedelta(days=1)
-        event_date = yesterday.strftime('%Y%m%d')
+        today = datetime.now()
+        yesterday = today - timedelta(days=1)        
 
         yesterday_matches = self.helper.fetch_matches('-1', '=', '', limit=16)        
-        results = self.livescore.get_results(event_date)
+        # Combine results
+        results = self.livescore.get_results(yesterday)
+        results += self.bbc.get_results(today, yesterday)
+
+        # Remove duplicates
+        unique_results = {tuple(sorted(d.items())) for d in results}
+        results = [dict(t) for t in unique_results]
         
         for match in yesterday_matches:
             for result in results:
