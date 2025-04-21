@@ -51,15 +51,18 @@ class Results:
         today = datetime.now()
         yesterday = today - timedelta(days=1)        
 
-        yesterday_matches = self.helper.fetch_matches('-1', '=', '', limit=100)        
-        # Combine results
-        results = self.livescore.get_results(yesterday)
-        results += self.bbc.get_results(today, yesterday)
-
-        # Remove duplicates
-        unique_results = {tuple(sorted(d.items())) for d in results}
-        results = [dict(t) for t in unique_results]
+        yesterday_matches = self.helper.fetch_matches('-1', '=', '', limit=100)  
         
+        results = self.livescore.get_results(yesterday)        
+        for match in yesterday_matches:
+            for result in results:
+                if self.check_match_results(match.home_team, match.away_team, result):
+                    status = self.get_status(int(result['home_score']), int(result['away_score']), match.bet_pick)
+                    print(result, status)
+                    self.db.update_match_results(match.match_id, result['home_score'], result['away_score'], status)
+                    yesterday_matches.pop(yesterday_matches.index(match))
+                    
+        results = self.bbc.get_results(today, yesterday)          
         for match in yesterday_matches:
             for result in results:
                 if self.check_match_results(match.home_team, match.away_team, result):
