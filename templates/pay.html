@@ -105,7 +105,7 @@
                 <th><a href="{{ url_for('silver') }}" class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded-full">Silver</a></th>
                 <th><a href="{{ url_for('gold') }}" class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded-full">Gold</a></th>
                 <th><a href="{{ url_for('platinum') }}" class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">Platinum</a></th>
-                <th><a href="{{ url_for('about') }}">FAQ</a></th>
+                <th><a href="https://median.co/share/rnkapp#androidphone" class="bg-purple-100 text-purple-800 text-xs font-bold px-2 py-1 rounded-full">Mobile App</a></th>
             </tr>
         </table>
     </footer>
@@ -123,78 +123,5 @@
     <!-- Script JS -->
     <script src="{{ url_for('static', filename='plugin.js') }}"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-    <script>
-        function setPlan(name, amount){
-            $('#plan').html(name)
-            $('#amount').val(amount)
-        }
-
-        // Menu Toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const menuClose = document.getElementById('menuClose');
-        const slideInMenu = document.getElementById('slideInMenu');
-
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            slideInMenu.classList.toggle('translate-x-full');
-        });
-
-        menuClose.addEventListener('click', () => {
-            slideInMenu.classList.add('translate-x-full');
-        });
-
-        document.body.addEventListener('click', (e) => {
-            if (!slideInMenu.classList.contains('translate-x-full') && !slideInMenu.contains(e.target)) {
-                slideInMenu.classList.add('translate-x-full');
-            }
-        });
-
-        // Responsive Menu
-        window.addEventListener('resize', () => {
-            const menuItems = document.getElementById('menuItems');
-            if (window.innerWidth >= 1024) {
-                menuItems.style.display = 'flex';
-                menuToggle.style.display = 'none';
-            } else {
-                menuItems.style.display = 'none';
-                menuToggle.style.display = 'block';
-            }
-        });
-        window.dispatchEvent(new Event('resize'));
-
-        // Tips Fetching
-        document.addEventListener("DOMContentLoaded", () => {
-            const buttons = document.querySelectorAll(".date-btn");
-            buttons.forEach(button => {
-                button.addEventListener("click", () => {
-                    const selectedDate = button.getAttribute("data-date");
-                    // fetchTips(selectedDate); // Implement this function if needed
-                });
-            });
-        });
-
-        // Disable Developer Tools
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('keydown', e => {
-            if ((e.ctrlKey && e.shiftKey && e.key === 'I') || e.key === 'F12') {
-                e.preventDefault();
-            }
-        });
-
-        // Collapsible Sections
-        document.querySelectorAll('.collapsible').forEach(coll => {
-            coll.addEventListener('click', function() {
-                document.querySelectorAll('.collapsible').forEach(other => {
-                    if (other !== this) {
-                        other.classList.remove('active');
-                        other.nextElementSibling.style.display = 'none';
-                    }
-                });
-                this.classList.toggle('active');
-                const content = this.nextElementSibling;
-                content.style.display = content.style.display === 'block' ? 'none' : 'block';
-            });
-        });
-    </script>
 </body>
 </html>
