@@ -132,8 +132,8 @@ class Helper():
             if len(composite_betslips) > 0:
                 balance, bonus = self.betika.get_balance()
                 usable = balance + bonus
-                stake = int((usable/2)/len(composite_betslips)) 
-                stake = int(usable) if stake == 0 else stake
+                stake = (usable/len(composite_betslips))/2
+                stake = int(usable) if stake == 0 else int(stake)
                 if stake > 0:
                     for cb in composite_betslips:
                         ttl_odd = cb['total_odd']
