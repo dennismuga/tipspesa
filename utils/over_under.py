@@ -32,7 +32,7 @@ class OverUnder():
                         cur_odd_value = float(odd.get('odd_value'))      
                         last_odd_value = float(last_odd.get('odd_value'))  
                         
-                        if '3.5' in odd.get('odd_key') or '3.5' in last_odd.get('odd_key'):
+                        if '3.5' in odd.get('odd_key') or '3.5' in last_odd.get('odd_key') or '4.5' in last_odd.get('odd_key'):
                             continue
                             
                         if cur_odd_value >=1.19 and cur_odd_value <= 1.41 and last_odd_value>=1.41 and cur_odd_value < last_odd_value and (last_index > 5 or odd.get('odd_key') != 'over 1.5'):
