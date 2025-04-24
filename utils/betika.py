@@ -154,5 +154,17 @@ class Betika():
             matches_ids.add((parent_match_id, match_time))
         
         return matches_ids 
+    
+    def withdraw(self, amount):
+        url = f'{self.base_url}/v1/withdraw'
+        payload = {
+            "amount": amount,
+            "app_name": self.src,
+            "token": BETIKA_TOKEN
+        }
+
+        response = self.post_data(url, payload)
+        print(response)
+    
 
     

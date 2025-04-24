@@ -1,4 +1,4 @@
-name: Predict, Save & Autobet Upcoming Matches
+name: Predict, Save, Withdraw & Autobet Upcoming Matches
 
 on:    
   workflow_dispatch: # Manually trigger the workflow
@@ -34,6 +34,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Withdraw
+        run: python withdraw.py
 
       - name: Predict & Autobet
         run: python predict.py
