@@ -53,6 +53,18 @@ class OverUnder():
                             break
                         else:
                             i += 1
+                            
+                        if 'under' in bet_pick:
+                            for odd_2 in odds:
+                                if odd_2.get('odd_key') == 'over 1.5':
+                                    sub_type_id = int(d.get('sub_type_id'))
+                                    bet_pick = odd_2.get('odd_key')
+                                    odd_value = float(odd_2.get('odd_value'))   
+                                    special_bet_value = odd_2.get('special_bet_value')
+                                    outcome_id = odd_2.get('outcome_id')
+                                    break 
+                                else:
+                                    bet_pick = None                                              
                         
             if bet_pick:
                 match = {
