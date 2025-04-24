@@ -7,8 +7,8 @@ class Withdraw():
 
     def __call__(self):
         balance, bonus = self.betika.get_balance()
-        amount = balance/2 
-        if amount >= 50:
+        amount = int(balance/2) 
+        if amount >= 50 and amount <= 300000:
             self.betika.withdraw(amount)
 
 if __name__ == "__main__":
