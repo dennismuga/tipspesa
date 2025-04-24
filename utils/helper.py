@@ -99,6 +99,7 @@ class Helper():
             composite_betslips = [] 
             total_odd = 1
             min_odd = 6
+            min_matches = 5
             for match in matches:   
                 if not any(betslip["parent_match_id"] == match.get("parent_match_id") for betslip in betslips):
                     betslip = {
@@ -117,7 +118,7 @@ class Helper():
                         'total_odd': total_odd,
                         'betslips': betslips
                     }
-                    if total_odd >= min_odd:
+                    if len(betslips) == min_matches: #total_odd >= min_odd:
                         composite_betslips.append(composite_betslip)
                         betslips = []
                         total_odd = 1
@@ -132,7 +133,7 @@ class Helper():
             if len(composite_betslips) > 0:
                 balance, bonus = self.betika.get_balance()
                 usable = balance + bonus
-                stake = (usable/len(composite_betslips))
+                stake = (usable/len(composite_betslips))/2
                 stake = int(usable) if stake == 0 else int(stake)
                 if stake > 0:
                     for cb in composite_betslips:
