@@ -97,14 +97,14 @@ def filter_matches(day, size, status=''):
         if not is_duplicate:
             filtered_matches.append(match)
     
-    filtered_matches = filtered_matches[-5:] if size == 5 and len(filtered_matches) >= 1 else filtered_matches
+    filtered_matches = filtered_matches[-3:] if size == 3 and len(filtered_matches) >= 1 else filtered_matches
     filtered_matches = filtered_matches[:size] if len(filtered_matches) >= 1 else filtered_matches
     return filtered_matches, len(matches)
 
 @app.route('/', methods=['GET'])
 def free():
-    yesterday_matches, total = filter_matches('-1', 5)
-    today_matches, total = filter_matches('', 5)
+    yesterday_matches, total = filter_matches('-1', 3)
+    today_matches, total = filter_matches('', 3)
     plan = Plan('Free Tips', 0, 3, 'pink', 1, today_matches, yesterday_matches)
     return render_template('plans.html', plan=plan, total=total)
 
@@ -114,8 +114,8 @@ def bronze():
         return subscribe()
     
     else:        
-        yesterday_matches, total = filter_matches('-1', 3)
-        today_matches, total = filter_matches('', 3)
+        yesterday_matches, total = filter_matches('-1', 4)
+        today_matches, total = filter_matches('', 4)
         plan = Plan('Bronze Plan', 20, 5, 'purple', 2, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total=total)
 
@@ -125,8 +125,8 @@ def silver():
         return subscribe()
     
     else:        
-        yesterday_matches, total = filter_matches('-1', 5)
-        today_matches, total = filter_matches('', 5)
+        yesterday_matches, total = filter_matches('-1', 6)
+        today_matches, total = filter_matches('', 6)
         plan = Plan('Silver Plan', 30, 10, 'blue', 3, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total=total)
 
@@ -147,8 +147,8 @@ def platinum():
         return subscribe()
     
     else:                
-        yesterday_matches, total = filter_matches('-1', 9)
-        today_matches, total = filter_matches('', 9)
+        yesterday_matches, total = filter_matches('-1', 8)
+        today_matches, total = filter_matches('', 8)
         plan = Plan('Platinum Plan', 70, 20, 'green', 5, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total=total)
 
