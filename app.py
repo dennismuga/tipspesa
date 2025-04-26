@@ -114,8 +114,8 @@ def bronze():
         return subscribe()
     
     else:        
-        yesterday_matches, total = filter_matches('-1', 4)
-        today_matches, total = filter_matches('', 4)
+        yesterday_matches, total = filter_matches('-1', 5)
+        today_matches, total = filter_matches('', 5)
         plan = Plan('Bronze Plan', 20, 5, 'purple', 2, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total=total)
 

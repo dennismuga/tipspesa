@@ -108,13 +108,13 @@ class OverUnder():
                         if odd.get('odd_key') == 'over 1.5':
                             for odd_2 in odds:
                                 if odd_2.get('odd_key') == 'under 4.5':
-                                    if odd_2.get('odd_value') > odd.get('odd_value'):                                    
+                                    if float(odd_2.get('odd_value')) > float(odd.get('odd_value')):                                    
                                         bet_pick = odd.get('odd_key')
                                         odd_value = float(odd.get('odd_value'))   
                                         special_bet_value = odd.get('special_bet_value')
                                         outcome_id = odd.get('outcome_id')
                                         break
-                                    elif odd_2.get('odd_value') < odd.get('odd_value'):                                    
+                                    elif float(odd_2.get('odd_value')) < float(odd.get('odd_value')):                                    
                                         bet_pick = odd_2.get('odd_key')
                                         odd_value = float(odd_2.get('odd_value'))   
                                         special_bet_value = odd_2.get('special_bet_value')
@@ -124,7 +124,7 @@ class OverUnder():
                         elif odd.get('odd_key') == 'over 2.5':
                             for odd_2 in odds:
                                 if odd_2.get('odd_key') == 'under 3.5':
-                                    if odd_2.get('odd_value') > odd.get('odd_value'):                                    
+                                    if float(odd_2.get('odd_value')) > float(odd.get('odd_value'))+0.1:                                    
                                         bet_pick = odd.get('odd_key')
                                         odd_value = float(odd.get('odd_value'))   
                                         special_bet_value = odd.get('special_bet_value')
