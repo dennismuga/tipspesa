@@ -118,18 +118,19 @@ class Helper():
                         'total_odd': total_odd,
                         'betslips': betslips
                     }
-                    if len(betslips) == min_matches: #total_odd >= min_odd:
+                    if total_odd >= min_odd*1.3: #len(betslips) == min_matches: #total_odd >= min_odd:
                         composite_betslips.append(composite_betslip)
                         betslips = []
                         total_odd = 1
                         composite_betslip = None  
                        
             if composite_betslip:
-                if len(composite_betslips) ==0 :
-                    composite_betslips.append(composite_betslip)
-                else:
-                    composite_betslips[0]['betslips'].extend(composite_betslip['betslips'])
-                    composite_betslips[0]['total_odd'] *= composite_betslip['total_odd'] 
+                composite_betslips.append(composite_betslip)
+                # if len(composite_betslips) == 0 :
+                #     composite_betslips.append(composite_betslip)
+                # else:
+                #     composite_betslips[0]['betslips'].extend(composite_betslip['betslips'])
+                #     composite_betslips[0]['total_odd'] *= composite_betslip['total_odd'] 
             if len(composite_betslips) > 0:                
                 balance, bonus = self.betika.get_balance()
                 usable = balance + bonus
@@ -139,11 +140,10 @@ class Helper():
                     composite_betslips.sort(key=lambda cb: cb['total_odd'], reverse=True)
                     for cb in composite_betslips:
                         ttl_odd = cb['total_odd']
-                        if ttl_odd >= min_odd*1.4:
-                            slips = cb['betslips']
-                            print(slips, ttl_odd, stake)
-                            self.betika.place_bet(slips, ttl_odd, stake)
-                            time.sleep(2)
+                        slips = cb['betslips']
+                        print(slips, ttl_odd, stake)
+                        self.betika.place_bet(slips, ttl_odd, stake)
+                        time.sleep(2)
                             
         except Exception as e:
             print(f"Error in auto_bet: {e}")
