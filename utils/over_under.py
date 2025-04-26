@@ -124,7 +124,7 @@ class OverUnder():
                         elif odd.get('odd_key') == 'over 2.5':
                             for odd_2 in odds:
                                 if odd_2.get('odd_key') == 'under 3.5':
-                                    if float(odd_2.get('odd_value')) > float(odd.get('odd_value'))+0.1:                                    
+                                    if float(odd_2.get('odd_value')) > float(odd.get('odd_value'))+0.2:                                    
                                         bet_pick = odd.get('odd_key')
                                         odd_value = float(odd.get('odd_value'))   
                                         special_bet_value = odd.get('special_bet_value')
