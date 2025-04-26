@@ -124,13 +124,13 @@ class Helper():
                         total_odd = 1
                         composite_betslip = None  
                        
-            if composite_betslip:
-                composite_betslips.append(composite_betslip)
-                # if len(composite_betslips) == 0 :
-                #     composite_betslips.append(composite_betslip)
-                # else:
-                #     composite_betslips[0]['betslips'].extend(composite_betslip['betslips'])
-                #     composite_betslips[0]['total_odd'] *= composite_betslip['total_odd'] 
+            # if composite_betslip:
+            #     composite_betslips.append(composite_betslip)
+            #     # if len(composite_betslips) == 0 :
+            #     #     composite_betslips.append(composite_betslip)
+            #     # else:
+            #     #     composite_betslips[0]['betslips'].extend(composite_betslip['betslips'])
+            #     #     composite_betslips[0]['total_odd'] *= composite_betslip['total_odd'] 
             if len(composite_betslips) > 0:                
                 balance, bonus = self.betika.get_balance()
                 usable = balance + bonus
