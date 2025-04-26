@@ -124,7 +124,8 @@ class Betika():
         }
         
         response = self.post_data(url, payload)
-        return response.get("link")
+        #return response.get("link")
+        return response.get("code")
 
     def get_matches(self, limit, page, live=False):
         url = f'{self.live_url if live else self.base_url}/v1/uo/matches?sport_id=14&sort_id=1&esports=false&is_srl=false&limit={limit}&page={page}'
