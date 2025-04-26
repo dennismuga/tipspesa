@@ -114,7 +114,7 @@ class OverUnder():
                                         special_bet_value = odd.get('special_bet_value')
                                         outcome_id = odd.get('outcome_id')
                                         break
-                                    elif float(odd_2.get('odd_value')) < float(odd.get('odd_value')):                                    
+                                    elif float(odd_2.get('odd_value')) < float(odd.get('odd_value'))-0.2:                                    
                                         bet_pick = odd_2.get('odd_key')
                                         odd_value = float(odd_2.get('odd_value'))   
                                         special_bet_value = odd_2.get('special_bet_value')
