@@ -98,7 +98,7 @@ class Helper():
             composite_betslip = None
             composite_betslips = [] 
             total_odd = 1
-            min_odd = 6
+            min_odd = 3.0
             min_matches = 5
             for match in matches:   
                 if not any(betslip["parent_match_id"] == match.get("parent_match_id") for betslip in betslips):
@@ -130,19 +130,21 @@ class Helper():
                 else:
                     composite_betslips[0]['betslips'].extend(composite_betslip['betslips'])
                     composite_betslips[0]['total_odd'] *= composite_betslip['total_odd'] 
-            if len(composite_betslips) > 0:
+            if len(composite_betslips) > 0:                
                 balance, bonus = self.betika.get_balance()
                 usable = balance + bonus
                 stake = int((usable/len(composite_betslips))/2)
-                stake = 1 if (stake == 0 and usable>0) else stake
+                stake = 1 if (stake == 0 and int(usable)>0) else stake
                 if stake > 0:
+                    composite_betslips.sort(key=lambda cb: cb['total_odd'], reverse=True)
                     for cb in composite_betslips:
                         ttl_odd = cb['total_odd']
-                        slips = cb['betslips']
-                        print(slips, ttl_odd, stake)
-                        self.betika.place_bet(slips, ttl_odd, stake)
-                        time.sleep(2)
-                        
+                        if ttl_odd >= min_odd*1.4:
+                            slips = cb['betslips']
+                            print(slips, ttl_odd, stake)
+                            self.betika.place_bet(slips, ttl_odd, stake)
+                            time.sleep(2)
+                            
         except Exception as e:
             print(f"Error in auto_bet: {e}")
             
