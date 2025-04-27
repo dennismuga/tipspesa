@@ -107,14 +107,14 @@ class OverUnder():
                     for odd in odds:                        
                         if odd.get('odd_key') == 'over 1.5':
                             for odd_2 in odds:
-                                if odd_2.get('odd_key') == 'under 5.5':
+                                if odd_2.get('odd_key') == 'under 5.5': #predict over 1.5
                                     if float(odd_2.get('odd_value')) > float(odd.get('odd_value'))+0.1:                                    
                                         bet_pick = odd.get('odd_key')
                                         odd_value = float(odd.get('odd_value'))   
                                         special_bet_value = odd.get('special_bet_value')
                                         outcome_id = odd.get('outcome_id')
                                         break
-                                    elif float(odd_2.get('odd_value')) < float(odd.get('odd_value'))-0.2:                                    
+                                    elif float(odd_2.get('odd_value')) < float(odd.get('odd_value'))-0.2:   #predict under 5.5                                  
                                         bet_pick = odd_2.get('odd_key')
                                         odd_value = float(odd_2.get('odd_value'))   
                                         special_bet_value = odd_2.get('special_bet_value')
@@ -123,18 +123,26 @@ class OverUnder():
                                           
                         if odd.get('odd_key') == 'over 2.5' and not bet_pick:
                             for odd_2 in odds:
-                                if odd_2.get('odd_key') == 'under 4.5':
+                                if odd_2.get('odd_key') == 'under 4.5': #predict over 2.5
                                     if float(odd_2.get('odd_value')) > float(odd.get('odd_value'))+0.1:                                    
                                         bet_pick = odd.get('odd_key')
                                         odd_value = float(odd.get('odd_value'))   
                                         special_bet_value = odd.get('special_bet_value')
                                         outcome_id = odd.get('outcome_id')   
                                         break        
-                                    elif float(odd_2.get('odd_value'))<1.24 and float(odd_2.get('odd_value')) < float(odd.get('odd_value'))-0.2:                                    
+                                    elif float(odd_2.get('odd_value'))<1.24 and float(odd_2.get('odd_value')) < float(odd.get('odd_value'))-0.2:   #predict under 4.5                                 
                                         bet_pick = odd_2.get('odd_key')
                                         odd_value = float(odd_2.get('odd_value'))   
                                         special_bet_value = odd_2.get('special_bet_value')
                                         outcome_id = odd_2.get('outcome_id')
+                                        if float(odd_2.get('odd_value'))<1.19: #predict under 3.5    
+                                            for odd_3 in odds:
+                                                if odd_3.get('odd_key') == 'under 3.5':
+                                                    bet_pick = odd_3.get('odd_key')
+                                                    odd_value = float(odd_3.get('odd_value'))   
+                                                    special_bet_value = odd_3.get('special_bet_value')
+                                                    outcome_id = odd_3.get('outcome_id')
+                                                    break                                        
                                         break  
                         
             if bet_pick:
