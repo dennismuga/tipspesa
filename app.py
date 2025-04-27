@@ -38,10 +38,10 @@ login_manager.login_view = 'free'
 db = PostgresCRUD()
 helper = Helper()
 
-matches_p = 9
-matches_g = 8
-matches_s = 7
-matches_b = 6
+matches_p = 14
+matches_g = 12
+matches_s = 10
+matches_b = 8
 matches_f = 4
         
 def update_stats():
