@@ -259,16 +259,16 @@
         <table class="footer-table">
             <tr style="border-bottom: none;">
                 <th><a href="{{ url_for('free') }}" class="bg-pink-100 text-pink-800 text-xs font-bold px-2 py-1 rounded-full">Free Tips</a></th>
-                {% if total > 5 %}
+                {% if total_odds > min_odds.free %}
                 <th><a href="{{ url_for('bronze') }}" class="bg-purple-100 text-purple-800 text-xs font-bold px-2 py-1 rounded-full">Bronze</a></th>
                 {% endif %}
-                {% if total >= 8 %}
+                {% if total_odds > min_odds.bronze %}
                 <th><a href="{{ url_for('silver') }}" class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded-full">Silver</a></th>
                 {% endif %}
-                {% if total >= 10 %}
+                {% if total_odds > min_odds.silver %}
                 <th><a href="{{ url_for('gold') }}" class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded-full">Gold</a></th>
                 {% endif %}
-                {% if total >= 12 %}
+                {% if total_odds > min_odds.gold %}
                 <th><a href="{{ url_for('platinum') }}" class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">Platinum</a></th>
                 {% endif %}
                 <!-- <th><a href="{{ url_for('about') }}" class="text-white">FAQ</a></th> -->

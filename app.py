@@ -6,7 +6,7 @@ from flask_session import Session
 from redis import Redis
 from dotenv import load_dotenv
 
-from utils.entities import Plan
+from utils.entities import MinOdds, Plan
 from utils.helper import Helper
 from utils.pesapal import Pesapal
 from utils.postgres_crud import PostgresCRUD
@@ -37,12 +37,7 @@ login_manager.login_view = 'free'
 
 db = PostgresCRUD()
 helper = Helper()
-
-matches_p = 14
-matches_g = 12
-matches_s = 10
-matches_b = 8
-matches_f = 4
+min_odds = MinOdds()
         
 def update_stats():
     try:
@@ -55,13 +50,6 @@ def predict_and_bet():
         PredictAndBet()()
     except Exception as e:
         print(f"Error in background task: {e}")
-
-# Initialize scheduler
-# scheduler = BackgroundScheduler()
-
-# # Schedule the task to run every 120 seconds
-# scheduler.add_job(func=update_stats, trigger="interval", seconds=60)
-# scheduler.add_job(func=predict_and_bet, trigger="interval", seconds=120)
         
 def subscribe():     
     phone = request.form['phone']
@@ -92,9 +80,10 @@ def page_not_found(e):
     # Redirect to a specific endpoint, like 'plans', or a custom 404 page
     return redirect(url_for('free'), 302)
 
-def filter_matches(day, size, status=''):
+def filter_matches(day, min_odd, status=''):
     matches = helper.fetch_matches(day, '=', status, limit=16)
     filtered_matches = []
+    total_odds = 1
     for match in matches:
         # Check if home_team or away_team is already in matches_platinum
         is_duplicate = any(
@@ -102,17 +91,24 @@ def filter_matches(day, size, status=''):
         )
         if not is_duplicate:
             filtered_matches.append(match)
+            total_odds *= match.odd
     
-    filtered_matches = filtered_matches[-matches_f:] if size == matches_f and len(filtered_matches) >= 1 else filtered_matches
-    filtered_matches = filtered_matches[:size] if len(filtered_matches) >= 1 else filtered_matches
-    return filtered_matches, len(matches)
+    filtered_matches = filtered_matches[::-1] if min_odd == min_odds.free else filtered_matches
+    to_return = []
+    cur_odds = 1
+    for match in filtered_matches:
+        if cur_odds < min_odd:
+            to_return.append(match)      
+            cur_odds *= match.odd  
+        
+    return to_return, total_odds
 
 @app.route('/', methods=['GET'])
 def free():
-    yesterday_matches, total = filter_matches('-1', matches_f+2)
-    today_matches, total = filter_matches('', matches_f)
-    plan = Plan('Free Tips', 0, 3, 'pink', 1, today_matches, yesterday_matches)
-    return render_template('plans.html', plan=plan, total=total)
+    yesterday_matches, total_odds = filter_matches('-1', min_odds.free)
+    today_matches, total_odds = filter_matches('', min_odds.free)
+    plan = Plan('Free Tips', 0, min_odds.free, 'pink', 1, today_matches, yesterday_matches)  
+    return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
 
 @app.route('/bronze', methods=['GET', 'POST'])
 def bronze():
@@ -120,10 +116,10 @@ def bronze():
         return subscribe()
     
     else:        
-        yesterday_matches, total = filter_matches('-1', matches_b+2)
-        today_matches, total = filter_matches('', matches_b)
-        plan = Plan('Bronze Plan', 20, 5, 'purple', 2, today_matches, yesterday_matches)
-        return render_template('plans.html', plan=plan, total=total)
+        yesterday_matches, total_odds = filter_matches('-1', min_odds.bronze)
+        today_matches, total_odds = filter_matches('', min_odds.bronze)
+        plan = Plan('Bronze Plan', 20, min_odds.bronze, 'purple', 2, today_matches, yesterday_matches)
+        return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
 
 @app.route('/silver', methods=['GET', 'POST'])
 def silver():
@@ -131,10 +127,10 @@ def silver():
         return subscribe()
     
     else:        
-        yesterday_matches, total = filter_matches('-1', matches_s+2)
-        today_matches, total = filter_matches('', matches_s)
-        plan = Plan('Silver Plan', 30, 10, 'blue', 3, today_matches, yesterday_matches)
-        return render_template('plans.html', plan=plan, total=total)
+        yesterday_matches, total_odds = filter_matches('-1', min_odds.silver)
+        today_matches, total_odds = filter_matches('', min_odds.silver)
+        plan = Plan('Silver Plan', 30, min_odds.silver, 'blue', 3, today_matches, yesterday_matches)
+        return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
 
 @app.route('/gold', methods=['GET', 'POST'])
 def gold():
@@ -142,10 +138,10 @@ def gold():
         return subscribe()
     
     else:        
-        yesterday_matches, total = filter_matches('-1', matches_g+2)
-        today_matches, total = filter_matches('', matches_g)
-        plan = Plan('Gold Plan', 50, 15, 'yellow', 4, today_matches, yesterday_matches)
-        return render_template('plans.html', plan=plan, total=total)
+        yesterday_matches, total_odds = filter_matches('-1', min_odds.gold)
+        today_matches, total_odds = filter_matches('', min_odds.gold)
+        plan = Plan('Gold Plan', 50, min_odds.gold, 'yellow', 4, today_matches, yesterday_matches)
+        return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
                 
 @app.route('/platinum', methods=['GET', 'POST'])
 def platinum():
@@ -153,14 +149,14 @@ def platinum():
         return subscribe()
     
     else:                
-        yesterday_matches, total = filter_matches('-1', matches_p+2)
-        today_matches, total = filter_matches('', matches_p)
-        plan = Plan('Platinum Plan', 70, 20, 'green', 5, today_matches, yesterday_matches)
-        return render_template('plans.html', plan=plan, total=total)
+        yesterday_matches, total_odds = filter_matches('-1', min_odds.platinum)
+        today_matches, total_odds = filter_matches('', min_odds.platinum)
+        plan = Plan('Platinum Plan', 70, min_odds.platinum, 'green', 5, today_matches, yesterday_matches)
+        return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
 
 @app.route('/betika-share-code/<plan>', methods=['GET'])
 def betika_share_code(plan):
-    matches, total = filter_matches('', int(plan), '')
+    matches, total_odds = filter_matches('', int(plan), '')
     return helper.get_share_code(matches)
 
 @app.route('/about', methods=['GET'])
@@ -202,9 +198,4 @@ def privacy_policy():
  
 if __name__ == '__main__':
     debug_mode = os.getenv('IS_DEBUG', 'False') in ['True', '1', 't']
-    
-    # Start the scheduler
-    # scheduler.start()
-    
-    # Run the Flask app
     app.run(debug=debug_mode)

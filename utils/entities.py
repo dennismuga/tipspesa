@@ -16,7 +16,7 @@ class Plan():
         self.color = color 
         self.stars = stars
         self.matches = sorted(matches, key=lambda match: match.kickoff) 
-        matches_yesterday = [match for match in matches_yesterday if match.status != 'LOST']
+        #matches_yesterday = [match for match in matches_yesterday if match.status != 'LOST']
         self.matches_yesterday = sorted(matches_yesterday, key=lambda match: match.kickoff)
 
 class Match():     
@@ -121,3 +121,12 @@ class Odds():
         self.draw_odds = draw_odds
         self.away_odds = away_odds 
         self.created_at = created_at
+        
+class MinOdds():
+    def __init__(self):
+        self.free = 2.5
+        self.bronze = 5.0
+        self.silver = 10.0 
+        self.gold = 15.0
+        self.platinum = 20.0
+    
