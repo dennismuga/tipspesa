@@ -297,12 +297,12 @@
             $.ajax({
                 url: url,
                 type: 'GET',
-                success: function (data) {
-                    if (data == '')
-                        html = '<span class="text-red-500">Betika share is not available. Try again later.</span>';
-                    else
-                        link = 'https://betika.com/share/' + data;
-                        html = '<a href="' +link+ '" target="_blank">' +link+ '</a> &nbsp <a><span class="fa fa-copy" style="color: green; font-size: 16px;" onclick="copyToClipboard(\'' +data+ '\')"></span></a>';
+                success: function (code) {
+                    if (code){
+                        link = 'https://betika.com/share/' + code;
+                        html = '<a href="' +link+ '" target="_blank">' +link+ '</a> &nbsp <a><span class="fa fa-copy" style="color: green; font-size: 16px;" onclick="copyToClipboard(\'' +code+ '\')"></span></a>';
+                    }else
+                        html = '<span class="text-red-500">Betika code is not available. Try again later.</span>';
                     $('#betika_share').html(html);
                 },
                 error: function (error) {
