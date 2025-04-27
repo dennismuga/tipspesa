@@ -135,7 +135,7 @@ class OverUnder():
                                         odd_value = float(odd_2.get('odd_value'))   
                                         special_bet_value = odd_2.get('special_bet_value')
                                         outcome_id = odd_2.get('outcome_id')
-                                        if float(odd_2.get('odd_value'))<1.19: #predict under 3.5    
+                                        if float(odd_2.get('odd_value'))<1.14: #predict under 3.5    
                                             for odd_3 in odds:
                                                 if odd_3.get('odd_key') == 'under 3.5':
                                                     bet_pick = odd_3.get('odd_key')
