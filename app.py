@@ -154,9 +154,9 @@ def platinum():
         plan = Plan('Platinum Plan', 70, min_odds.platinum, 'green', 5, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
 
-@app.route('/betika-share-code/<plan>', methods=['GET'])
-def betika_share_code(plan):
-    matches, total_odds = filter_matches('', int(plan), '')
+@app.route('/betika-share-code/<odds>', methods=['GET'])
+def betika_share_code(odds):
+    matches, total_odds = filter_matches('', float(odds), '')
     return helper.get_share_code(matches)
 
 @app.route('/about', methods=['GET'])
