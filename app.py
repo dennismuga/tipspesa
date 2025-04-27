@@ -37,6 +37,12 @@ login_manager.login_view = 'free'
 
 db = PostgresCRUD()
 helper = Helper()
+
+matches_p = 9
+matches_g = 8
+matches_s = 7
+matches_b = 6
+matches_f = 4
         
 def update_stats():
     try:
@@ -97,14 +103,14 @@ def filter_matches(day, size, status=''):
         if not is_duplicate:
             filtered_matches.append(match)
     
-    filtered_matches = filtered_matches[-3:] if size == 3 and len(filtered_matches) >= 1 else filtered_matches
+    filtered_matches = filtered_matches[-matches_f:] if size == matches_f and len(filtered_matches) >= 1 else filtered_matches
     filtered_matches = filtered_matches[:size] if len(filtered_matches) >= 1 else filtered_matches
     return filtered_matches, len(matches)
 
 @app.route('/', methods=['GET'])
 def free():
-    yesterday_matches, total = filter_matches('-1', 3)
-    today_matches, total = filter_matches('', 3)
+    yesterday_matches, total = filter_matches('-1', matches_f)
+    today_matches, total = filter_matches('', matches_f)
     plan = Plan('Free Tips', 0, 3, 'pink', 1, today_matches, yesterday_matches)
     return render_template('plans.html', plan=plan, total=total)
 
@@ -114,8 +120,8 @@ def bronze():
         return subscribe()
     
     else:        
-        yesterday_matches, total = filter_matches('-1', 5)
-        today_matches, total = filter_matches('', 5)
+        yesterday_matches, total = filter_matches('-1', matches_b)
+        today_matches, total = filter_matches('', matches_b)
         plan = Plan('Bronze Plan', 20, 5, 'purple', 2, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total=total)
 
@@ -125,8 +131,8 @@ def silver():
         return subscribe()
     
     else:        
-        yesterday_matches, total = filter_matches('-1', 6)
-        today_matches, total = filter_matches('', 6)
+        yesterday_matches, total = filter_matches('-1', matches_s)
+        today_matches, total = filter_matches('', matches_s)
         plan = Plan('Silver Plan', 30, 10, 'blue', 3, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total=total)
 
@@ -136,8 +142,8 @@ def gold():
         return subscribe()
     
     else:        
-        yesterday_matches, total = filter_matches('-1', 7)
-        today_matches, total = filter_matches('', 7)
+        yesterday_matches, total = filter_matches('-1', matches_g)
+        today_matches, total = filter_matches('', matches_g)
         plan = Plan('Gold Plan', 50, 15, 'yellow', 4, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total=total)
                 
@@ -147,8 +153,8 @@ def platinum():
         return subscribe()
     
     else:                
-        yesterday_matches, total = filter_matches('-1', 8)
-        today_matches, total = filter_matches('', 8)
+        yesterday_matches, total = filter_matches('-1', matches_p)
+        today_matches, total = filter_matches('', matches_p)
         plan = Plan('Platinum Plan', 70, 20, 'green', 5, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total=total)
 

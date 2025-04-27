@@ -147,8 +147,8 @@ class PostgresCRUD:
         with self.conn.cursor() as cur:
             query = f"""
             SELECT * FROM matches
-            WHERE DATE(kickoff) {comparator} CURRENT_DATE {day} {status}
-            ORDER BY odd DESC, prediction ASC
+            WHERE kickoff::time > '08:00:00' AND kickoff::date {comparator} CURRENT_DATE {day} {status}
+            ORDER BY odd DESC, kickoff DESC
             LIMIT {limit}
             """
             cur.execute(query)

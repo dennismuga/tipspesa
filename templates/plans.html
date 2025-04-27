@@ -165,16 +165,14 @@
 
                     <table class="results-table">
                         <tr>
-                            {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'
-                            %}
+                            {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips' %}
                             <th>Kickoff</th>
                             <th>Fixture</th>
                             <th>Tip</th>
                             <th>Odd</th>
                             {% else %}
                             <th colspan="4">
-                                Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{
-                                plan.name }} now<br />
+                                Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{ plan.name }} now<br />
                                 Once Paid, Tips will be displayed here. <br />
                                 NO MORE Annoying Ads!!! <br />
                                 <a href="#" data-toggle="modal" data-target="#loginModal"
