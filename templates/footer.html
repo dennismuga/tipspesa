@@ -1,0 +1,61 @@
+<style>    
+    footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1a202c; /* Tailwind bg-gray-900 */
+            padding: 0.8rem; /* Tailwind p-2 */
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Tailwind shadow-md */
+            z-index: 10;
+        }
+        .footer-table {
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
+        .footer-table > tr {
+            border-bottom: none;
+        }
+        .footer-table > tr > td {
+            width: auto;
+        }
+</style>
+<!-- Footer -->
+<footer>
+    <table class="footer-table">
+        <tr>
+            <th><a href="{{ url_for('free') }}" class="text-{{ 'green-400' if plan.odds==min_odds.free else 'white' }} text-xs font-bold">
+                <i class="fas fa-leaf"></i><br />
+                Free
+            </a></th>
+            {% if total_odds > min_odds.free %}
+            <th><a href="{{ url_for('bronze') }}" class="text-{{ 'yellow-400' if plan.odds==min_odds.bronze else 'white' }} text-xs font-bold">
+                <i class="fa fa-graduation-cap"></i><br />
+                Bronze
+            </a></th>
+            {% endif %}
+            {% if total_odds > min_odds.bronze %}
+            <th><a href="{{ url_for('silver') }}" class="text-{{ 'yellow-400' if plan.odds==min_odds.silver else 'white' }} text-xs font-bold">
+                <i class="fas fa-trophy"></i><br />
+                Silver
+            </a></th>
+            {% endif %}
+            {% if total_odds > min_odds.silver %}
+            <th><a href="{{ url_for('gold') }}" class="text-{{ 'yellow-400' if plan.odds==min_odds.gold else 'white' }} text-xs font-bold">
+                <i class="fas fa-star"></i><br />
+                Gold
+            </a></th>
+            {% endif %}
+        </tr>
+    </table>
+</footer>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='plugin.js') }}"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>  

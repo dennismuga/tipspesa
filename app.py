@@ -107,7 +107,7 @@ def filter_matches(day, min_odd, status=''):
 def free():
     yesterday_matches, total_odds = filter_matches('-1', min_odds.free)
     today_matches, total_odds = filter_matches('', min_odds.free)
-    plan = Plan('Free Tips', 0, min_odds.free, 'pink', 1, today_matches, yesterday_matches)  
+    plan = Plan('Free Tips', 0, min_odds.free, 'pink', 0, today_matches, yesterday_matches)  
     return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
 
 @app.route('/bronze', methods=['GET', 'POST'])
@@ -118,7 +118,7 @@ def bronze():
     else:        
         yesterday_matches, total_odds = filter_matches('-1', min_odds.bronze)
         today_matches, total_odds = filter_matches('', min_odds.bronze)
-        plan = Plan('Bronze Plan', 20, min_odds.bronze, 'purple', 2, today_matches, yesterday_matches)
+        plan = Plan('Bronze Plan', 20, min_odds.bronze, 'purple', 1, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
 
 @app.route('/silver', methods=['GET', 'POST'])
@@ -129,7 +129,7 @@ def silver():
     else:        
         yesterday_matches, total_odds = filter_matches('-1', min_odds.silver)
         today_matches, total_odds = filter_matches('', min_odds.silver)
-        plan = Plan('Silver Plan', 30, min_odds.silver, 'blue', 3, today_matches, yesterday_matches)
+        plan = Plan('Silver Plan', 30, min_odds.silver, 'blue', 2, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
 
 @app.route('/gold', methods=['GET', 'POST'])
@@ -140,7 +140,7 @@ def gold():
     else:        
         yesterday_matches, total_odds = filter_matches('-1', min_odds.gold)
         today_matches, total_odds = filter_matches('', min_odds.gold)
-        plan = Plan('Gold Plan', 50, min_odds.gold, 'yellow', 4, today_matches, yesterday_matches)
+        plan = Plan('Gold Plan', 50, min_odds.gold, 'yellow', 3, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
                 
 # @app.route('/platinum', methods=['GET', 'POST'])
