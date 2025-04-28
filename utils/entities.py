@@ -126,7 +126,7 @@ class MinOdds():
     def __init__(self):
         self.free = 2.5
         self.bronze = 5.0
-        self.silver = 10.0 
-        self.gold = 15.0
+        self.silver = 7.5 
+        self.gold = 12.5
         self.platinum = 20.0
     
