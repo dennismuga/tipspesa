@@ -152,7 +152,7 @@
                     <div class="flex justify-between items-center">
                         <span
                             class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full">{{
-                            plan.name ~ (' Premium' if plan.name != 'Free Tips' else '') }}</span>
+                            plan.name ~ (' Premium' if plan.name != 'Free Tips' else '') }} - {{ plan.odds }}+ odds</span>
                         <div class="text-yellow-400">
                             {% for i in range(plan.stars) %}
                             <i class="fas fa-star"></i>
@@ -166,7 +166,7 @@
                     <table class="results-table">
                         <tr>
                             {% if True %}
-                            <!-- iif (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
+                            <!-- if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
                             <th>Fixture</th>
                             <th>Tip</th>
                             <th>Odd</th>
@@ -189,7 +189,7 @@
                         {% for match in plan.matches %}
                         {% set ns.total_odds = ns.total_odds * match.odd %}
                         {% if True %}
-                        <!-- iif (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
+                        <!-- if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
                         <tr>
                             <td>{{ match.kickoff.strftime('%H:%M') }}</td>
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
@@ -202,7 +202,7 @@
                         {% endif %}
                         {% endfor %}
                         {% if True %}
-                        <!-- iif (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
+                        <!-- if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
                         <tr>
                             <td id="betika_share" colspan="4">
                                 <button onclick="getBetikaShare()" class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2">
@@ -270,10 +270,6 @@
                 {% if total_odds > min_odds.silver %}
                 <th><a href="{{ url_for('gold') }}" class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded-full">Gold</a></th>
                 {% endif %}
-                {% if total_odds > min_odds.gold %}
-                <th><a href="{{ url_for('platinum') }}" class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">Platinum</a></th>
-                {% endif %}
-                <!-- <th><a href="{{ url_for('about') }}" class="text-white">FAQ</a></th> -->
             </tr>
         </table>
     </footer>
