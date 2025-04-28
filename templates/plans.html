@@ -56,7 +56,7 @@
                     <div class="flex justify-between items-center">
                         <span
                             class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full">{{
-                            plan.name ~ (' Premium' if plan.name != 'Free Tips' else '') }} - {{ plan.odds }}+ odds</span>
+                            plan.name ~ (' Plan Premium' if plan.name != 'Free' else ' Tips') }} - {{ plan.odds }}+ odds</span>
                         <div class="text-yellow-400">
                             {% for i in range(plan.stars) %}
                             <i class="fas fa-star"></i>
@@ -77,13 +77,13 @@
                             <th>Odd</th>
                             {% else %}
                             <th colspan="4">
-                                Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{ plan.name }} now<br />
+                                Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{ plan.name }} Plan now<br />
                                 Once Paid, Tips will be displayed here. <br />
                                 NO MORE Annoying Ads!!! <br />
                                 <a href="#" data-toggle="modal" data-target="#loginModal"
                                     onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
                                     <button class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
-                                        BUY {{ plan.name }}<br />
+                                        BUY {{ plan.name }} Plan<br />
                                         @ KSh. {{ plan.amount }}
                                     </button>
                                 </a>
