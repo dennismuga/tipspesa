@@ -75,7 +75,6 @@
                             <th>Fixture</th>
                             <th>Tip</th>
                             <th>Odd</th>
-                            <th></th>
                             {% else %}
                             <th colspan="4">
                                 Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{ plan.name }} Plan now<br />
@@ -103,8 +102,7 @@
                                 {{ match.prediction }}
                                 {{ 'goals' if match.sub_type_id == 18 else ' bookings' if match.sub_type_id == 139 else ' corners' if match.sub_type_id == 166 else '' }}
                             </td>
-                            <td>{{ match.odd }}</td>
-<td>
+                            <td>{{ match.odd }} &nbsp
 {% if match.status == 'WON' %}
                                 <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
                             {% elif match.status == 'LOST' %}
