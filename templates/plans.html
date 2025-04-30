@@ -182,8 +182,7 @@
                 type: 'GET',
                 success: function (code) {
                     if (code){
-                        link = 'https://betika.com/share/' + code;
-                        html = '<a href="' +link+ '" target="_blank">' +link+ '</a> &nbsp <a><span class="fa fa-copy" style="color: green; font-size: 16px;" onclick="copyToClipboard(\'' +code+ '\')"></span></a>';
+                        html = '<a href="#" onclick="copyToClipboard(\'' +code+ '\')" style="color: green;">' +code+ ' &nbsp <span class="fa fa-copy"></span></a>';
                     }else
                         html = '<span class="text-red-500">Betika code is not available. Try again later.</span>';
                     $('#betika_share').html(html);
