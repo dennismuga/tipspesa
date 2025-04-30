@@ -82,9 +82,9 @@ class Results:
 
 def main():
     """Run forever, processing matches every 1 minute."""
-    matches = self.helper.fetch_matches('', '=', '', limit=100)
-    logger.info('Fetched %d matches to process', len(matches))
     results_processor = Results()
+    matches = results_processor.helper.fetch_matches('', '=', '', limit=100)
+    logger.info('Fetched %d matches to process', len(matches))
     while True:
         logger.info('Starting new cycle')
         try:
