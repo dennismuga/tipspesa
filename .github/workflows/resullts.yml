@@ -5,7 +5,7 @@ on:
   workflow_dispatch: # Manually trigger the workflow
 
   schedule:
-  - cron: '0 0/3 * * *'  # Runs once every 3 mins
+  - cron: '*/3 * * * *'  # Runs once every 3 mins
 
 jobs:
   execute:
