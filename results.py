@@ -54,13 +54,11 @@ class Results:
             logger.error('Error processing match %s: %s', match.match_id, e)
             return match.match_id, None, None, 'Error: %s' % e
 
-    def __call__(self) -> List[Tuple[str, int, int, str]]:
+    def __call__(self, matches) -> List[Tuple[str, int, int, str]]:
         """
         Fetch matches and process them concurrently.
         Returns list of (match_id, home_score, away_score, status) for each match.
         """
-        matches = self.helper.fetch_matches('', '=', '', limit=100)
-        logger.info('Fetched %d matches to process', len(matches))
 
         results = []
         # Use ThreadPoolExecutor for concurrent processing
@@ -84,11 +82,13 @@ class Results:
 
 def main():
     """Run forever, processing matches every 1 minute."""
+    matches = self.helper.fetch_matches('', '=', '', limit=100)
+    logger.info('Fetched %d matches to process', len(matches))
     results_processor = Results()
     while True:
         logger.info('Starting new cycle')
         try:
-            results = results_processor()
+            results = results_processor(matches)
             logger.info('Cycle completed with %d matches processed', len(results))
         except Exception as e:
             logger.error('Error in cycle: %s', e)
