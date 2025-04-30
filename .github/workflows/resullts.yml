@@ -1,11 +1,11 @@
-name: Withdraw, Predict, & Autobet
+name: Update Results
 # This workflow is triggered on a schedule and manually
 
 on:    
   workflow_dispatch: # Manually trigger the workflow
 
   schedule:
-  - cron: '0 5 * * *'  # Runs once every day at 5:00 AM UTC (8:00 AM EAT +3)
+  - cron: '0 0/3 * * *'  # Runs once every 3 mins
 
 jobs:
   execute:
@@ -36,9 +36,5 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Withdraw
-        run: python withdraw.py
-
-      - name: Predict & Autobet
-        run: python predict.py
-
+      - name: Update Results
+        run: python results.py

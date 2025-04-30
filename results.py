@@ -1,9 +1,6 @@
 
-from datetime import datetime, timedelta
-
-from utils.bbc import BBC
+from utils.betika import Betika
 from utils.helper import Helper
-from utils.livescore import LiveScore
 from utils.postgres_crud import PostgresCRUD
 
 class Results:
@@ -11,25 +8,10 @@ class Results:
         main class
     """
     def __init__(self):
-        self.livescore = LiveScore()
-        self.bbc = BBC()
+        self.betika = Betika()
         self.helper = Helper()
         self.db = PostgresCRUD()
-    
-    def check_match_results(self, home_team, away_team, result):
-        # Split match team names into words
-        home_words = home_team.lower().split()
-        away_words = away_team.lower().split()
         
-        # Check if any word from match.home_team is in result['home_team']
-        home_match = any(len(word) > 3 and word in result['home_team'].lower() for word in home_words)
-    
-        # Check if any word (len > 3) from match.away_team is in result['away_team']
-        away_match = any(len(word) > 3 and word in result['away_team'].lower() for word in away_words)
-        
-        # Return True only if both conditions are met
-        return home_match and away_match
-    
     def get_status(self, home_score, away_score, bet_pick):
         if bet_pick == 'over 1.5' and home_score + away_score < 2:
             return 'LOST'
@@ -47,28 +29,17 @@ class Results:
             return 'WON'
          
     def __call__(self):
-        # Get yesterday's date & Format as YYYYMMDD
-        today = datetime.now()
-        yesterday = today - timedelta(days=1)        
-
-        yesterday_matches = self.helper.fetch_matches('-1', '=', '', limit=100)  
-        
-        results = self.livescore.get_results(yesterday)        
-        for match in yesterday_matches:
-            for result in results:
-                if self.check_match_results(match.home_team, match.away_team, result):
-                    status = self.get_status(int(result['home_score']), int(result['away_score']), match.bet_pick)
-                    print(result, status)
-                    self.db.update_match_results(match.match_id, result['home_score'], result['away_score'], status)
-                    yesterday_matches.pop(yesterday_matches.index(match))
-                    
-        results = self.bbc.get_results(today, yesterday)          
-        for match in yesterday_matches:
-            for result in results:
-                if self.check_match_results(match.home_team, match.away_team, result):
-                    status = self.get_status(int(result['home_score']), int(result['away_score']), match.bet_pick)
-                    print(result, status)
-                    self.db.update_match_results(match.match_id, result['home_score'], result['away_score'], status)
+        matches = self.helper.fetch_matches('', '=', '', limit=100)  
+             
+        for match in matches:
+            match_details = self.betika.get_match_details(match.parent_match_id, live=True)
+            meta = match_details["meta"]
+            current_score = meta["current_score"] if "current_score" in meta else None
+            if current_score:
+                scores = current_score.split(':')
+                status = self.get_status(int(scores[0]), int(scores[1]), match.bet_pick)
+                print(scores, status)
+                self.db.update_match_results(match.match_id, scores[0], scores[1], status)
 
 if __name__ == "__main__":
     Results()()
