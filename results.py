@@ -1,18 +1,23 @@
-
+import time
+import concurrent.futures
+import logging
+from typing import List, Tuple
 from utils.betika import Betika
 from utils.helper import Helper
 from utils.postgres_crud import PostgresCRUD
 
+# Set up logging for GitHub Actions
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 class Results:
-    """
-        main class
-    """
     def __init__(self):
         self.betika = Betika()
         self.helper = Helper()
         self.db = PostgresCRUD()
-        
-    def get_status(self, home_score, away_score, bet_pick):
+
+    def get_status(self, home_score: int, away_score: int, bet_pick: str) -> str:
+        """Determine the match status based on scores and bet pick."""
         if bet_pick == 'over 1.5' and home_score + away_score < 2:
             return 'LOST'
         if bet_pick == 'over 2.5' and home_score + away_score < 3:
@@ -25,21 +30,70 @@ class Results:
             return 'LOST'
         if bet_pick == 'under 5.5' and home_score + away_score > 5:
             return 'LOST'
-        else:
-            return 'WON'
-         
-    def __call__(self):
-        matches = self.helper.fetch_matches('', '=', '', limit=100)  
-             
-        for match in matches:
+        return 'WON'
+
+    def process_match(self, match: object) -> Tuple[str, int, int, str]:
+        """
+        Process a single match: fetch details, calculate status, and update DB.
+        Returns (match_id, home_score, away_score, status) for logging.
+        """
+        try:
             match_details = self.betika.get_match_details(match.parent_match_id, live=True)
-            meta = match_details["meta"]
-            current_score = meta["current_score"] if "current_score" in meta else None
+            meta = match_details.get("meta", {})
+            current_score = meta.get("current_score")
             if current_score:
                 scores = current_score.split(':')
-                status = self.get_status(int(scores[0]), int(scores[1]), match.bet_pick)
-                print(scores, status)
-                self.db.update_match_results(match.match_id, scores[0], scores[1], status)
+                home_score, away_score = int(scores[0]), int(scores[1])
+                status = self.get_status(home_score, away_score, match.bet_pick)
+                self.db.update_match_results(match.match_id, home_score, away_score, status)
+                return match.match_id, home_score, away_score, status
+            else:
+                logger.info('No current score for match %s vs %s', match.home_team, match.away_team)
+                return match.match_id, None, None, None
+        except Exception as e:
+            logger.error('Error processing match %s: %s', match.match_id, e)
+            return match.match_id, None, None, 'Error: %s' % e
+
+    def __call__(self) -> List[Tuple[str, int, int, str]]:
+        """
+        Fetch matches and process them concurrently.
+        Returns list of (match_id, home_score, away_score, status) for each match.
+        """
+        matches = self.helper.fetch_matches('', '=', '', limit=100)
+        logger.info('Fetched %d matches to process', len(matches))
+
+        results = []
+        # Use ThreadPoolExecutor for concurrent processing
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            # Map process_match to each match concurrently
+            futures = [executor.submit(self.process_match, match) for match in matches]
+            # Collect results as they complete
+            for future in concurrent.futures.as_completed(futures):
+                try:
+                    result = future.result()
+                    results.append(result)
+                except Exception as e:
+                    logger.error('Error in concurrent processing: %s', e)
+                    results.append((None, None, None, 'Error: %s' % e))
+
+        # Log results
+        for match_id, home_score, away_score, status in results:
+            if home_score is not None and away_score is not None:
+                logger.info('Match %s: Scores %d:%d, Status %s', match_id, home_score, away_score, status)
+        return results
+
+def main():
+    """Run forever, processing matches every 1 minute."""
+    results_processor = Results()
+    while True:
+        logger.info('Starting new cycle')
+        try:
+            results = results_processor()
+            logger.info('Cycle completed with %d matches processed', len(results))
+        except Exception as e:
+            logger.error('Error in cycle: %s', e)
+        logger.info('Sleeping for 1 minute')
+        time.sleep(60)
 
 if __name__ == "__main__":
-    Results()()
+    main()
