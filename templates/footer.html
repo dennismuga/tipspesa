@@ -53,6 +53,13 @@
 
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='plugin.js') }}"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>  
+<script src="https://cdn.jsdelivr.net/npm/pulltorefreshjs@0.1.22/dist/pulltorefresh.min.js"></script>
 <script>
   PullToRefresh.init({
     mainElement: 'body', // Element to apply pull-to-refresh
@@ -61,10 +68,3 @@
     }
   });
 </script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
-<script src="{{ url_for('static', filename='plugin.js') }}"></script>
-<script src="{{ url_for('static', filename='script.js') }}"></script>  
-<script src="https://cdn.jsdelivr.net/npm/pulltorefreshjs@0.1.22/dist/pulltorefresh.min.js"></script>
