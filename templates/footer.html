@@ -27,7 +27,8 @@
         <tr>
             <th><a href="{{ url_for('free') }}" class="text-{{ 'green-400' if plan.odds==min_odds.free else 'white' }} text-xs font-bold">
                 <i class="fas fa-leaf"></i><br />
-                Free
+                Free <br />
+                2+ Odds
             </a></th>
             {% if total_odds > min_odds.free %}
             <th><a href="{{ url_for('bronze') }}" class="text-{{ 'yellow-400' if plan.odds==min_odds.bronze else 'white' }} text-xs font-bold">
