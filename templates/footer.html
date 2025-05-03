@@ -53,7 +53,7 @@
             {% endif %}
             {% if total_odds > min_odds.gold %}
             <th><a href="{{ url_for('risky') }}" class="text-{{ 'green-400' if plan.odds==min_odds.risky else 'white' }} text-xs font-bold">
-                <i class="fas fa-star"></i><br />
+                <i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="fas fa-star"></i><br />
                 Risky <br />
                 40+ Odds
             </a></th>
