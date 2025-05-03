@@ -142,7 +142,18 @@ def gold():
         today_matches, total_odds = filter_matches('', min_odds.gold)
         plan = Plan('Gold', 50, min_odds.gold, 'yellow', 3, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
-                
+    
+@app.route('/risky', methods=['GET', 'POST'])
+def gold():
+    if request.method == 'POST': 
+        return subscribe()
+    
+    else:        
+        yesterday_matches, total_odds = filter_matches('-1', min_odds.risky)
+        today_matches, total_odds = filter_matches('', min_odds.risky)
+        plan = Plan('Risky', 70, min_odds.risky, 'green', 5, today_matches, yesterday_matches)
+        return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
+                            
 # @app.route('/platinum', methods=['GET', 'POST'])
 # def platinum():
 #     if request.method == 'POST': 
