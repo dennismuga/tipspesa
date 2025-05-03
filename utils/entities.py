@@ -128,5 +128,5 @@ class MinOdds():
         self.bronze = 5.0
         self.silver = 10.0 
         self.gold = 20.0
-       # self.platinum = 12.5
+        self.risky = 40.0
     
