@@ -32,19 +32,19 @@
             {% if total_odds > min_odds.free %}
             <th><a href="{{ url_for('bronze') }}" class="text-{{ 'yellow-400' if plan.odds==min_odds.bronze else 'white' }} text-xs font-bold">
                 <i class="fa fa-graduation-cap"></i><br />
-                Bronze
+                5+ Odds
             </a></th>
             {% endif %}
             {% if total_odds > min_odds.bronze %}
             <th><a href="{{ url_for('silver') }}" class="text-{{ 'yellow-400' if plan.odds==min_odds.silver else 'white' }} text-xs font-bold">
                 <i class="fas fa-trophy"></i><br />
-                Silver
+                10+ Odds
             </a></th>
             {% endif %}
             {% if total_odds > min_odds.silver %}
             <th><a href="{{ url_for('gold') }}" class="text-{{ 'yellow-400' if plan.odds==min_odds.gold else 'white' }} text-xs font-bold">
                 <i class="fas fa-star"></i><br />
-                Gold
+                20+ Odds
             </a></th>
             {% endif %}
         </tr>
