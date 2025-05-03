@@ -144,7 +144,7 @@ def gold():
         return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
     
 @app.route('/risky', methods=['GET', 'POST'])
-def gold():
+def risky():
     if request.method == 'POST': 
         return subscribe()
     
