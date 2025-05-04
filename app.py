@@ -107,7 +107,7 @@ def filter_matches(day, min_odd, status=''):
 def free():
     yesterday_matches, total_odds = filter_matches('-1', min_odds.free)
     today_matches, total_odds = filter_matches('', min_odds.free)
-    plan = Plan('Free', 0, min_odds.free, 'pink', 0, today_matches, yesterday_matches)  
+    plan = Plan('Free', 0, min_odds.free, 'green', 0, today_matches, yesterday_matches)  
     return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
 
 @app.route('/bronze', methods=['GET', 'POST'])
@@ -151,7 +151,7 @@ def risky():
     else:        
         yesterday_matches, total_odds = filter_matches('-1', min_odds.risky)
         today_matches, total_odds = filter_matches('', min_odds.risky)
-        plan = Plan('Risky', 70, min_odds.risky, 'green', 5, today_matches, yesterday_matches)
+        plan = Plan('Risky', 70, min_odds.risky, 'pink', 5, today_matches, yesterday_matches)
         return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
                             
 # @app.route('/platinum', methods=['GET', 'POST'])
