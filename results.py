@@ -30,7 +30,12 @@ class Results:
             return 'LOST'
         if bet_pick == 'under 5.5' and home_score + away_score > 5:
             return 'LOST'
+        if '-' in bet_pick:
+            bet_pick = bet_pick.split('-')
+            if (home_score+away_score) not in range(int(bet_pick[0]), int(bet_pick[1])+1):
+                return 'LOST'
         return 'WON'
+    
 
     def process_match(self, match: object) -> Tuple[str, int, int, str]:
         """
