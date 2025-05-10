@@ -45,15 +45,21 @@ class Results:
         try:
             match_details = self.betika.get_match_details(match.parent_match_id, live=True)
             meta = match_details.get("meta", {})
+            match_time = meta.get("match_time") #22:50
             current_score = meta.get("current_score")
-            if current_score:
+            if match_time and current_score:
+                match_time = int(match_time.split(':')[0])
                 scores = current_score.split(':')
-                home_score, away_score = int(scores[0]), int(scores[1])
-                status = self.get_status(home_score, away_score, match.bet_pick)
-                self.db.update_match_results(match.match_id, home_score, away_score, status)
-                return match.match_id, home_score, away_score, status
+                home_score, away_score = int(scores[0]), int(scores[1])           
+                if match_time >= 90:
+                    status = self.get_status(home_score, away_score, match.bet_pick)    
+                    self.db.update_match_results(match.match_id, home_score, away_score, status)
+                    return match.match_id, home_score, away_score, status
+                else:
+                    # logger.info('Match %s vs %s still playing at %smin', match.home_team, match.away_team, match_time)
+                    return match.match_id, None, None, None
             else:
-                logger.info('No current score for match %s vs %s', match.home_team, match.away_team)
+                # logger.info('No current score for match %s vs %s', match.home_team, match.away_team)
                 return match.match_id, None, None, None
         except Exception as e:
             logger.error('Error processing match %s: %s', match.match_id, e)
