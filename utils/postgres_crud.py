@@ -148,7 +148,7 @@ class PostgresCRUD:
             query = f"""
             SELECT * FROM matches
             WHERE kickoff::time > '08:00:00' AND kickoff::date {comparator} CURRENT_DATE {day} {status}
-            ORDER BY odd DESC, kickoff DESC, id ASC
+            ORDER BY odd DESC, kickoff DESC, match_id ASC
             LIMIT {limit}
             """
             cur.execute(query)
