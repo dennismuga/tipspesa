@@ -26,7 +26,7 @@ class MultiGoal():
             for d in data:                
                 if int(d.get('sub_type_id')) == 548:  
                     for odd in d.get('odds'):   
-                        if float(odd.get('odd_value')) >= 1.30 and float(odd.get('odd_value')) <= 1.37:
+                        if float(odd.get('odd_value')) >= 1.28 and float(odd.get('odd_value')) <= 1.38 and odd.get('odd_key') not in ['2-4','2-5','2-6']:
                             sub_type_id = d.get('sub_type_id')
                             bet_pick = odd.get('odd_key')
                             odd_value = float(odd.get('odd_value'))   
