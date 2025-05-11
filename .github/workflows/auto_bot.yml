@@ -40,5 +40,5 @@ jobs:
         run: python withdraw.py
 
       - name: Predict & Autobet
-        run: python predict_2.py
+        run: python predict.py
 

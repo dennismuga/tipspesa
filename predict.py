@@ -3,7 +3,7 @@ import concurrent.futures
 
 from utils.corners import Corners
 from utils.helper import Helper
-from utils.over_under import OverUnder
+from utils.multi_goal import MultiGoal
 
 
 class Predict:
@@ -11,7 +11,7 @@ class Predict:
         main class
     """
     def __init__(self):
-        self.over_under = OverUnder()
+        self.multi_goal = MultiGoal()
         self.corners = Corners()
         self.helper = Helper()
                   
@@ -20,8 +20,7 @@ class Predict:
         predicted_matches = []
         # Use ThreadPoolExecutor to spawn a thread for each match
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            threads = [executor.submit(self.over_under.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids]
-            # threads += [executor.submit(self.corners.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids]
+            threads = [executor.submit(self.multi_goal.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids]
 
             # Wait for all threads to finish
             concurrent.futures.wait(threads)
