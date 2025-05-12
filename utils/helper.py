@@ -117,7 +117,7 @@ class Helper():
                         'total_odd': total_odd,
                         'betslips': betslips
                     }
-                    if total_odd >= min_odd*1.3: #len(betslips) == min_matches: #total_odd >= min_odd:
+                    if total_odd >= min_odd*1.33: #len(betslips) == min_matches: #total_odd >= min_odd:
                         composite_betslips.append(composite_betslip)
                         betslips = []
                         total_odd = 1
