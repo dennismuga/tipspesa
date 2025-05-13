@@ -51,7 +51,7 @@ class Results:
                 match_time = int(match_time.split(':')[0])
                 scores = current_score.split(':')
                 home_score, away_score = int(scores[0]), int(scores[1])           
-                status = self.get_status(home_score, away_score, match.bet_pick) if match_time >= 90 else '...'   
+                status = self.get_status(home_score, away_score, match.bet_pick) if match_time >= 90 else 'ACTIVE'   
                 self.db.update_match_results(match.match_id, home_score, away_score, status)
                 return match.match_id, home_score, away_score, status
             else:
