@@ -109,9 +109,9 @@
                             {% elif match.status == 'LOST' %}
                                 <span class="fa fa-times-circle" style="color: red; font-size: 16px;"></span>
                             {% elif match.status == 'ACTIVE' %}
-                                <span class="fa fa-circle" style="color: orange; font-size: 16px;"></span>
+                                <span class="fa fa-spinner" style="color: gray; font-size: 16px;"></span>
                             {% endif %}
-</td>
+                            </td>
                         </tr>
                         {% endif %}
                         {% endfor %}
