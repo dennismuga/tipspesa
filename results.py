@@ -51,13 +51,9 @@ class Results:
                 match_time = int(match_time.split(':')[0])
                 scores = current_score.split(':')
                 home_score, away_score = int(scores[0]), int(scores[1])           
-                if match_time >= 90:
-                    status = self.get_status(home_score, away_score, match.bet_pick)    
-                    self.db.update_match_results(match.match_id, home_score, away_score, status)
-                    return match.match_id, home_score, away_score, status
-                else:
-                    # logger.info('Match %s vs %s still playing at %smin', match.home_team, match.away_team, match_time)
-                    return match.match_id, None, None, None
+                status = self.get_status(home_score, away_score, match.bet_pick) if match_time >= 90 else ''   
+                self.db.update_match_results(match.match_id, home_score, away_score, status)
+                return match.match_id, home_score, away_score, status
             else:
                 # logger.info('No current score for match %s vs %s', match.home_team, match.away_team)
                 return match.match_id, None, None, None
