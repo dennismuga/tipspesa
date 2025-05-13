@@ -104,11 +104,13 @@
                             </td>
                             
                             <td>{{ (match.home_results ~ '-' ~ match.away_results) if match.home_results else match.odd }} &nbsp
-{% if match.status == 'WON' %}
+                            {% if match.status == 'WON' %}
                                 <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
                             {% elif match.status == 'LOST' %}
                                 <span class="fa fa-times-circle" style="color: red; font-size: 16px;"></span>
-{% endif %}
+                            {% else %}
+                                {{ match.status }}
+                            {% endif %}
 </td>
                         </tr>
                         {% endif %}
