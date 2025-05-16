@@ -24,7 +24,7 @@ class MultiGoal():
                     if int(d.get('sub_type_id')) == 548:  
                         for odd in d.get('odds'):   
                             is_odd = bool(int(float(odd.get('odd_value').replace('.',''))%2))
-                            if float(odd.get('odd_value')) > 1.28 and float(odd.get('odd_value')) < 1.38 and is_odd and odd.get('odd_key') not in ['1-3']:
+                            if float(odd.get('odd_value')) > 1.28 and float(odd.get('odd_value')) < 1.38 and is_odd and odd.get('odd_key') not in ['1-3', '3-6']:
                                 match = {
                                             'parent_match_id': parent_match_id,
                                             'match_id': meta.get('match_id'),
