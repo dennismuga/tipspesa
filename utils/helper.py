@@ -99,7 +99,7 @@ class Helper():
             composite_betslips = [] 
             total_odd = 1
             min_odd = 3.0
-            for match in matches:   
+            for match in sorted(matches, key=lambda x: x['start_time']):   
                 if not any(betslip["parent_match_id"] == match.get("parent_match_id") for betslip in betslips):
                     betslip = {
                         "sub_type_id": match.get("sub_type_id"),
