@@ -1,5 +1,5 @@
 
-import json, pytz, requests, time
+import json, pytz, random, requests, time
 from datetime import datetime
 
 from utils.betika import Betika
@@ -165,5 +165,16 @@ class Helper():
             return link if link else ''              
         except Exception as e:
             print(f"Error in get share code: {e}")
+            
+            
+    def get_code(self):
+        # Define the allowed digits
+        digits = [1, 2, 5, 6, 8, 9]
+
+        # Generate a 6-digit code
+        code = ''.join(str(random.choice(digits)) for _ in range(6))
+
+        print(code)
+        return code
     
     
