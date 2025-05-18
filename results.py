@@ -106,6 +106,7 @@ def main():
         except Exception as e:
             logger.error('Error in cycle: %s', e)
         logger.info('Sleeping for 1 minute')
+        logger.info('--------------------------------------------------------------')
         time.sleep(60)
 
 if __name__ == "__main__":
