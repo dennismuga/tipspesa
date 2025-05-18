@@ -198,7 +198,7 @@
 
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(function() {
-                alert('Betika share code copied to clipboard! \nPaste the Code at Betika App `Load Betslip` to import');
+                console.log('Betika share code copied to clipboard! \nPaste the Code at Betika App `Load Betslip` to import');
             }, function(err) {
                 console.error('Could not copy text: ', err);
             });
