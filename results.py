@@ -84,11 +84,13 @@ class Results:
             for future in concurrent.futures.as_completed(futures):
                 try:
                     result = future.result()
-                    results.append(result)
+                    match_id, home_score, away_score, status = result
+                    if home_score is not None and away_score is not None:
+                        results.append(result)
                 except Exception as e:
                     logger.error('Error in concurrent processing: %s', e)
                     results.append((None, None, None, 'Error: %s' % e))
-                    
+
         return results
 
 def main():
@@ -100,7 +102,7 @@ def main():
         logger.info('Starting new cycle')
         try:
             results = results_processor(matches)
-            logger.info('Cycle completed with %d matches processed', len(results))
+            logger.info('Cycle completed with %d matches updated', len(results))
         except Exception as e:
             logger.error('Error in cycle: %s', e)
         logger.info('Sleeping for 1 minute')
