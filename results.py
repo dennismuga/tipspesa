@@ -44,6 +44,10 @@ class Results:
         """
         try:
             match_details = self.betika.get_match_details(match.parent_match_id, live=True)
+            if not match_details:
+                logger.info('No match details for match %s', match.match_id)
+                return match.match_id, None, None, 'No match details'
+
             meta = match_details.get("meta", {})
             match_time = meta.get("match_time") #22:50
             current_score = meta.get("current_score")
@@ -51,7 +55,8 @@ class Results:
                 match_time = int(match_time.split(':')[0])
                 scores = current_score.split(':')
                 home_score, away_score = int(scores[0]), int(scores[1])           
-                status = self.get_status(home_score, away_score, match.bet_pick) if match_time >= 90 else 'ACTIVE'   
+                status = self.get_status(home_score, away_score, match.bet_pick)
+                status = status if match_time >= 90 or ('over' in match.bet_pick and status == 'WON') else 'ACTIVE'   
                 self.db.update_match_results(match.match_id, home_score, away_score, status)
                 return match.match_id, home_score, away_score, status
             else:
