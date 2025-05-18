@@ -109,7 +109,7 @@
                             {% elif match.status == 'LOST' %}
                                 <span class="fa fa-times-circle" style="color: red; font-size: 16px;"></span>
                             {% else %}
-                                {{ match.status }}
+                                {{ match.status if match.status else '' }}
                             {% endif %}
                             </td>
                         </tr>
