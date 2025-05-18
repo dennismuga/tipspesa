@@ -57,6 +57,9 @@ class Results:
                 home_score, away_score = int(scores[0]), int(scores[1])           
                 status = self.get_status(home_score, away_score, match.bet_pick)
                 status = status if match_time >= 90 or ('over' in match.bet_pick and status == 'WON') else 'ACTIVE'   
+                if home_score is not None and away_score is not None:
+                    logger.info('%s vs %s - %d:%d - %s', match.home_team, match.away_team, home_score, away_score, status)
+                
                 self.db.update_match_results(match.match_id, home_score, away_score, status)
                 return match.match_id, home_score, away_score, status
             else:
@@ -85,11 +88,7 @@ class Results:
                 except Exception as e:
                     logger.error('Error in concurrent processing: %s', e)
                     results.append((None, None, None, 'Error: %s' % e))
-
-        # Log results
-        for match_id, home_score, away_score, status in results:
-            if home_score is not None and away_score is not None:
-                logger.info('Match %s: Scores %d:%d, Status %s', match_id, home_score, away_score, status)
+                    
         return results
 
 def main():
