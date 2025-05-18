@@ -58,7 +58,7 @@ class Results:
                 status = self.get_status(home_score, away_score, match.bet_pick)
                 status = status if match_time >= 90 or ('over' in match.bet_pick and status == 'WON') else 'ACTIVE'   
                 if home_score is not None and away_score is not None:
-                    logger.info('%s vs %s - %d:%d - %s', match.home_team, match.away_team, home_score, away_score, status)
+                    logger.info('%s vs %s[%s] = %d:%d - %s', match.home_team, match.away_team, match.bet_pick, home_score, away_score, status)
                 
                 self.db.update_match_results(match.match_id, home_score, away_score, status)
                 return match.match_id, home_score, away_score, status
