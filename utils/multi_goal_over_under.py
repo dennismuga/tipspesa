@@ -66,7 +66,7 @@ class MultiGoalOverUnder():
                                                 'outcome_id': under_3_5.get('outcome_id')
                                             }
                                 else:
-                                    if float(over_1_5.get('odd_value')) >= 1.2 and float(over_1_5.get('odd_value')) < float(under_3_5.get('odd_value')):
+                                    if float(over_1_5.get('odd_value')) >= 1.24 and float(over_1_5.get('odd_value')) <= 1.29 and float(over_1_5.get('odd_value')) < float(under_3_5.get('odd_value')):
                                         match = {
                                                 'parent_match_id': parent_match_id,
                                                 'match_id': meta.get('match_id'),
@@ -100,7 +100,7 @@ class MultiGoalOverUnder():
                                                 'outcome_id': under_4_5.get('outcome_id')
                                             }
                                 else:
-                                    if float(over_2_5.get('odd_value')) >= 1.2 and float(over_2_5.get('odd_value')) < float(under_4_5.get('odd_value')):
+                                    if float(over_2_5.get('odd_value')) >= 1.24 and float(over_2_5.get('odd_value')) < float(under_4_5.get('odd_value')):
                                         match = {
                                                 'parent_match_id': parent_match_id,
                                                 'match_id': meta.get('match_id'),
