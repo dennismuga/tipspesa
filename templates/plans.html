@@ -108,8 +108,8 @@
                                 <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
                             {% elif match.status == 'LOST' %}
                                 <span class="fa fa-times-circle" style="color: red; font-size: 16px;"></span>
-                            {% elif match.status == 'ACTIVE' %}
-                                <span class="fa fa-spinner" style="color: gray; font-size: 16px;"></span>
+                            {% else %}
+                                match.status
                             {% endif %}
                             </td>
                         </tr>
