@@ -98,6 +98,7 @@ class Helper():
             composite_betslip = None
             composite_betslips = [] 
             total_odd = 1
+            min_matches = 5
             min_odd = 3.0
             for match in sorted(matches, key=lambda x: x['start_time']):   
                 if not any(betslip["parent_match_id"] == match.get("parent_match_id") for betslip in betslips):
@@ -117,7 +118,8 @@ class Helper():
                         'total_odd': total_odd,
                         'betslips': betslips
                     }
-                    if total_odd >= min_odd*1.31: #len(betslips) == min_matches: #total_odd >= min_odd:
+                    #if total_odd >= min_odd*1.31: 
+                    if len(betslips) == min_matches: #total_odd >= min_odd:
                         composite_betslips.append(composite_betslip)
                         betslips = []
                         total_odd = 1
