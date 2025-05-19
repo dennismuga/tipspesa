@@ -5,7 +5,7 @@ on:
   workflow_dispatch: # Manually trigger the workflow
 
   schedule:
-  - cron: '0 5 * * *'  # Runs once every day at 5:00 AM UTC (8:00 AM EAT +3)
+  - cron: '0 4,16 * * *'  # Runs once every day at 4:00 AM & 16 PM UTC (7:00 AM & 19:00 PM EAT +3)
 
 jobs:
   execute:
