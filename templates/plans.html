@@ -202,8 +202,10 @@
                                     match.sub_type_id == 166 else '' }}
                                 </td>
                                 {% if match.status == 'WON' %}
-                                <td>{{ match.home_results ~ '-' ~ match.away_results }}</td>
-                                <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
+                                <td>
+                                    {{ match.home_results ~ '-' ~ match.away_results }} <br />
+                                    <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
+                                </td>
                                 {% elif match.status == 'LOST' %}
                                 <td>
                                     {{ match.home_results ~ '-' ~ match.away_results }} <br />
