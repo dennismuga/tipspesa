@@ -35,7 +35,10 @@ class Predict:
                 except Exception as e:
                     print(f"Error processing match: {e}")
 
-            self.helper.auto_bet(predicted_matches)
+            self.helper.auto_bet(predicted_matches, 6)
+            self.helper.auto_bet(predicted_matches, 10)
+            self.helper.auto_bet(predicted_matches, 15)
+            self.helper.auto_bet(predicted_matches, 20)
 
 if __name__ == "__main__":
     Predict()()
