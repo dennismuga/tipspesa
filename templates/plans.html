@@ -141,39 +141,38 @@
                 </div>
             </section>
 
-<!-- CSS for Tabs -->
-<style>
-    .tab-nav {
-        border-bottom: 2px solid #e5e7eb;
-    }
+            <!-- CSS for Tabs -->
+            <style>
+                .tab-nav {
+                    border-bottom: 2px solid #e5e7eb;
+                }
 
-    .tab-button {
-        transition: all 0.3s ease;
-    }
+                .tab-button {
+                    transition: all 0.3s ease;
+                }
 
-    .tab-button.active {
-        background-color: #10b981;
-        /* Green to match text-green-600 */
-        color: white;
-    }
+                .tab-button.active {
+                    background-color: #10b981;
+                    /* Green to match text-green-600 */
+                    color: white;
+                }
 
-    .tab-button:hover {
-        background-color: #10b981;
-        /* Light green on hover */
-    }
+                .tab-button:hover {
+                    background-color: #10b981;
+                    /* Light green on hover */
+                }
 
-    .tab-content {
-        display: block;
-    }
+                .tab-content {
+                    display: block;
+                }
 
-    .tab-content.hidden {
-        display: none;
-    }
-
-</style>
+                .tab-content.hidden {
+                    display: none;
+                }
+            </style>
             <!-- Dynamic Tabs for Matches in plans.history -->
             <section class="p-2">
-                <div class="bg-white p-2 rounded-lg shadow-md">                   
+                <div class="bg-white p-2 rounded-lg shadow-md">
                     <!-- Tab Navigation -->
                     <div class="tab-nav flex justify-center mb-4">
                         {% for history in plan.history %}
@@ -192,7 +191,6 @@
                                 <th>Fixture</th>
                                 <th>Tip</th>
                                 <th>Result</th>
-                                <th></th>
                             </tr>
                             {% for match in history.matches %}
                             <tr>
@@ -207,10 +205,11 @@
                                 <td>{{ match.home_results ~ '-' ~ match.away_results }}</td>
                                 <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
                                 {% elif match.status == 'LOST' %}
-                                <td>{{ match.home_results ~ '-' ~ match.away_results }}</td>
-                                <td><span class="fa fa-times-circle" style="color: red; font-size: 16px;"></span></td>
+                                <td>
+                                    {{ match.home_results ~ '-' ~ match.away_results }} <br />
+                                    <span class="fa fa-times-circle" style="color: red; font-size: 16px;"></span>
+                                </td>
                                 {% else %}
-                                <td></td>
                                 <td></td>
                                 {% endif %}
                             </tr>
