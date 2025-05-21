@@ -56,7 +56,7 @@ class Results:
                 scores = current_score.split(':')
                 home_score, away_score = int(scores[0]), int(scores[1])           
                 status = self.get_status(home_score, away_score, match.bet_pick)
-                status = status if mins >= 90 or ('over' in match.bet_pick and status == 'WON') else f"{mins if mins > 0 else match_time}'"
+                status = status if mins >= 90 or ('over' in match.bet_pick and status == 'WON') else f"{mins if mins > 0 else 45}'"
                 if home_score is not None and away_score is not None:
                     logger.info('%s vs %s [%s] = %d:%d - %s', match.home_team, match.away_team, match.bet_pick, home_score, away_score, status)
                 
