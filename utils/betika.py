@@ -73,7 +73,10 @@ class Betika():
         print(response)
 
         data = response.get('data')
-        return data.get('balance'), data.get('bonus')        
+        if data:
+            return data.get('balance'), data.get('bonus') 
+        else:
+            return 0, 0
       
     def get_events(self, limit, page, live=False):
         url = f'{self.live_url if live else self.base_url}/v1/uo/matches?sport_id=14&sort_id=2&esports=false&is_srl=false&limit={limit}&page={page}'
