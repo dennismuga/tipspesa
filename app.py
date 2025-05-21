@@ -5,8 +5,9 @@ from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_session import Session
 from redis import Redis
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
 
-from utils.entities import MinOdds, Plan
+from utils.entities import MinOdds, MinMatches, Plan
 from utils.helper import Helper
 from utils.pesapal import Pesapal
 from utils.postgres_crud import PostgresCRUD
@@ -38,6 +39,7 @@ login_manager.login_view = 'free'
 db = PostgresCRUD()
 helper = Helper()
 min_odds = MinOdds()
+min_matches = MinMatches()
         
 def update_stats():
     try:
@@ -80,35 +82,57 @@ def page_not_found(e):
     # Redirect to a specific endpoint, like 'plans', or a custom 404 page
     return redirect(url_for('free'), 302)
 
-def filter_matches(day, min_odd, status=''):
-    matches = helper.fetch_matches(day, '=', status, limit=16)
+def filter_matches(day, match_count, end, status=''):
+    matches = helper.fetch_matches(day, '=', status, limit=51)
     filtered_matches = []
     total_odds = 1
+    
     for match in matches:
-        # Check if home_team or away_team is already in matches_platinum
+        # Check if home_team or away_team is already in filtered_matches
         is_duplicate = any(
-            match.home_team in m.home_team and match.away_team in m.away_team for m in filtered_matches
+            match.home_team == m.home_team and match.away_team == m.away_team 
+            for m in filtered_matches
         )
         if not is_duplicate:
             filtered_matches.append(match)
             total_odds *= match.odd
     
-    filtered_matches = filtered_matches[::-1] if min_odd == min_odds.free else filtered_matches
-    to_return = []
-    cur_odds = 1
-    for match in filtered_matches:
-        if cur_odds < min_odd:
-            to_return.append(match)      
-            cur_odds *= match.odd  
-        
-    return to_return, total_odds
+    total_matches = len(filtered_matches)  # Count unique matches
+    # Ensure start and end are within bounds
+    end = min(total_matches, end)
+    start = max(0, end - match_count)
+    to_return = filtered_matches[start:end]  # Correct slicing
+    
+    return to_return, total_matches
 
+def get_matches(count, index):
+    three_days_ago, total_matches = filter_matches('-3', min_matches.platinum, 51)
+    two_days_ago, total_matches = filter_matches('-2', min_matches.platinum, 51)
+    yesterday_matches, total_matches = filter_matches('-1', min_matches.platinum, 51)
+    today_matches, total_matches = filter_matches('', count, index)
+    history = [
+        {
+            'day': (datetime.now() - timedelta(days=3)).strftime("%A"),
+            'matches': sorted(three_days_ago, key=lambda match: match.kickoff) 
+        },
+        {
+            'day': (datetime.now() - timedelta(days=2)).strftime("%A"),
+            'matches': sorted(two_days_ago, key=lambda match: match.kickoff) 
+        },
+        {
+            'day': 'Yesterday',
+            'matches': sorted(yesterday_matches, key=lambda match: match.kickoff) 
+        }
+    ]
+    
+    return total_matches, today_matches, history
+    
+    
 @app.route('/', methods=['GET'])
 def free():
-    yesterday_matches, total_odds = filter_matches('-1', 100)
-    today_matches, total_odds = filter_matches('', min_odds.free)
-    plan = Plan('Free', 0, min_odds.free, 'green', 0, today_matches, yesterday_matches)  
-    return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
+    total_matches, today_matches, history = get_matches(min_matches.free, 4)
+    plan = Plan('Free', 0, min_odds.free, 'green', 1, today_matches, history)  
+    return render_template('plans.html', plan=plan, total_matches=total_matches, min_matches=min_matches, min_odds=min_odds)
 
 @app.route('/bronze', methods=['GET', 'POST'])
 def bronze():
@@ -116,10 +140,9 @@ def bronze():
         return subscribe()
     
     else:        
-        yesterday_matches, total_odds = filter_matches('-1', 100)
-        today_matches, total_odds = filter_matches('', min_odds.bronze)
-        plan = Plan('Bronze', 20, min_odds.bronze, 'purple', 1, today_matches, yesterday_matches)
-        return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
+        total_matches, today_matches, history = get_matches(min_matches.bronze, 12)
+        plan = Plan('Bronze', 20, min_odds.bronze, 'purple', 2, today_matches, history)
+        return render_template('plans.html', plan=plan, total_matches=total_matches, min_matches=min_matches, min_odds=min_odds)
 
 @app.route('/silver', methods=['GET', 'POST'])
 def silver():
@@ -127,10 +150,9 @@ def silver():
         return subscribe()
     
     else:        
-        yesterday_matches, total_odds = filter_matches('-1', 100)
-        today_matches, total_odds = filter_matches('', min_odds.silver)
-        plan = Plan('Silver', 30, min_odds.silver, 'blue', 2, today_matches, yesterday_matches)
-        return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
+        total_matches, today_matches, history = get_matches(min_matches.silver, 23)
+        plan = Plan('Silver', 30, min_odds.silver, 'blue', 3, today_matches, history)
+        return render_template('plans.html', plan=plan, total_matches=total_matches, min_matches=min_matches, min_odds=min_odds)
 
 @app.route('/gold', methods=['GET', 'POST'])
 def gold():
@@ -138,33 +160,20 @@ def gold():
         return subscribe()
     
     else:        
-        yesterday_matches, total_odds = filter_matches('-1', 100)
-        today_matches, total_odds = filter_matches('', min_odds.gold)
-        plan = Plan('Gold', 50, min_odds.gold, 'yellow', 3, today_matches, yesterday_matches)
-        return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
+        total_matches, today_matches, history = get_matches(min_matches.gold, 37)
+        plan = Plan('Gold', 50, min_odds.gold, 'yellow', 4, today_matches, history)
+        return render_template('plans.html', plan=plan, total_matches=total_matches, min_matches=min_matches, min_odds=min_odds)
     
-@app.route('/risky', methods=['GET', 'POST'])
-def risky():
+@app.route('/platinum', methods=['GET', 'POST'])
+def platinum():
     if request.method == 'POST': 
         return subscribe()
     
     else:        
-        yesterday_matches, total_odds = filter_matches('-1', 100)
-        today_matches, total_odds = filter_matches('', min_odds.risky)
-        plan = Plan('Platinum', 70, min_odds.risky, 'pink', 5, today_matches, yesterday_matches)
-        return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
-                            
-# @app.route('/platinum', methods=['GET', 'POST'])
-# def platinum():
-#     if request.method == 'POST': 
-#         return subscribe()
-    
-#     else:                
-#         yesterday_matches, total_odds = filter_matches('-1', min_odds.platinum)
-#         today_matches, total_odds = filter_matches('', min_odds.platinum)
-#         plan = Plan('Platinum Plan', 70, min_odds.platinum, 'green', 5, today_matches, yesterday_matches)
-#         return render_template('plans.html', plan=plan, total_odds=total_odds, min_odds=min_odds)
-
+        total_matches, today_matches, history = get_matches(min_matches.platinum, 51)
+        plan = Plan('Platinum', 70, min_odds.platinum, 'pink', 5, today_matches, history)
+        return render_template('plans.html', plan=plan, total_matches=total_matches, min_matches=min_matches, min_odds=min_odds)
+             
 @app.route('/betika-share-code/<odds>', methods=['GET'])
 def betika_share_code(odds):
     matches, total_odds = filter_matches('', float(odds), '')

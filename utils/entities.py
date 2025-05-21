@@ -9,15 +9,15 @@ class User(UserMixin):
         self.active = active
 
 class Plan():
-    def __init__(self, name, amount, odds, color, stars, matches, matches_yesterday):
+    def __init__(self, name, amount, odds, color, stars, matches, history):
         self.name = name 
         self.amount = amount
         self.odds = odds
         self.color = color 
         self.stars = stars
         self.matches = sorted(matches, key=lambda match: match.kickoff) 
-        #matches_yesterday = [match for match in matches_yesterday if match.status != 'LOST']
-        self.matches_yesterday = sorted(matches_yesterday, key=lambda match: match.kickoff)
+        self.history = history
+        # self.matches_yesterday = sorted(matches_yesterday, key=lambda match: match.kickoff)
 
 class Match():     
     def __init__(self):
@@ -128,5 +128,14 @@ class MinOdds():
         self.bronze = 5.0
         self.silver = 10.0 
         self.gold = 20.0
-        self.risky = 40.0
+        self.platinum = 40.0
+
+
+class MinMatches():
+    def __init__(self):
+        self.free = 4
+        self.bronze = 7
+        self.silver = 10 
+        self.gold = 13
+        self.platinum = 17
     

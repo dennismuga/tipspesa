@@ -4,7 +4,8 @@
 {% include 'head.html' %}
 
 <body>
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form method="POST" class="form-horizontal">
@@ -34,7 +35,7 @@
 
     <!-- Header -->
     <header class="sticky top-0 bg-gray-900 shadow-md z-10 text-white p-2">
-        <div class="container mx-auto flex">    
+        <div class="container mx-auto flex">
             <a href="https://tipspesa.vercel.app/" class="flex">
                 <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="h-12">
             </a>
@@ -56,12 +57,13 @@
                     <div class="flex justify-between items-center">
                         <span
                             class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full">{{
-                            plan.name ~ (' Plan Premium' if plan.name != 'Free' else ' Tips') }} - {{ plan.odds }}+ odds</span>
+                            plan.name ~ (' Plan Premium' if plan.name != 'Free' else ' Tips') }} - {{ plan.odds }}+
+                            odds</span>
                         <div class="text-yellow-400">
                             {% for i in range(plan.stars) %}
                             <i class="fas fa-star"></i>
                             {% endfor %}
-                            {% for i in range(3-plan.stars) %}
+                            {% for i in range(5-plan.stars) %}
                             <i class="fas fa-star text-white"></i>
                             {% endfor %}
                         </div>
@@ -77,12 +79,14 @@
                             <th>Odd</th>
                             {% else %}
                             <th colspan="4">
-                                Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{ plan.name }} Plan now<br />
+                                Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{
+                                plan.name }} Plan now<br />
                                 Once Paid, Tips will be displayed here. <br />
                                 NO MORE Annoying Ads!!! <br />
                                 <a href="#" data-toggle="modal" data-target="#loginModal"
                                     onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
-                                    <button class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
+                                    <button
+                                        class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
                                         BUY {{ plan.name }} Plan<br />
                                         @ KSh. {{ plan.amount }}
                                     </button>
@@ -100,17 +104,20 @@
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                             <td>
                                 {{ match.prediction }}
-                                {{ 'goals' if match.sub_type_id == 18 else ' multi-goals' if match.sub_type_id == 548 else ' bookings' if match.sub_type_id == 139 else ' corners' if match.sub_type_id == 166 else '' }}
+                                {{ 'goals' if match.sub_type_id == 18 else ' multi-goals' if match.sub_type_id == 548
+                                else ' bookings' if match.sub_type_id == 139 else ' corners' if match.sub_type_id == 166
+                                else '' }}
                             </td>
-                            
-                            <td>{{ (match.home_results ~ '-' ~ match.away_results) if match.status else match.odd }} <br />
-                            {% if match.status == 'WON' %}
+
+                            <td>{{ (match.home_results ~ '-' ~ match.away_results) if match.status else match.odd }}
+                                <br />
+                                {% if match.status == 'WON' %}
                                 <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
-                            {% elif match.status == 'LOST' %}
+                                {% elif match.status == 'LOST' %}
                                 <span class="fa fa-times-circle" style="color: red; font-size: 16px;"></span>
-                            {% else %}
+                                {% else %}
                                 {{ match.status if match.status else '' }}
-                            {% endif %}
+                                {% endif %}
                             </td>
                         </tr>
                         {% endif %}
@@ -119,7 +126,8 @@
                         <!-- if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
                         <tr>
                             <td id="betika_share" colspan="4">
-                                <button onclick="getBetikaShare()" class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2">
+                                <button onclick="getBetikaShare()"
+                                    class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2">
                                     Get Betika Code
                                 </button>
                             </td>
@@ -128,51 +136,119 @@
                         <tr>
                             <th colspan="3">Today Total Odds</th>
                             <th>{{ ns.total_odds | round(2) }}</th>
-                        </tr>                        
+                        </tr>
                     </table>
                 </div>
             </section>
 
-            <!-- Yesterday Tips -->
+<!-- CSS for Tabs -->
+<style>
+    .tab-nav {
+        border-bottom: 2px solid #e5e7eb;
+    }
+
+    .tab-button {
+        transition: all 0.3s ease;
+    }
+
+    .tab-button.active {
+        background-color: #10b981;
+        /* Green to match text-green-600 */
+        color: white;
+    }
+
+    .tab-button:hover {
+        background-color: #d1fae5;
+        /* Light green on hover */
+    }
+
+    .tab-content {
+        display: block;
+    }
+
+    .tab-content.hidden {
+        display: none;
+    }
+
+</style>
+            <!-- Dynamic Tabs for Matches in plans.history -->
             <section class="p-2">
-                <div class="bg-white p-2 rounded-lg shadow-md">
-                    <h2 class="text-2xl font-bold text-green-600 mb-1 text-center">Yesterday Tips</h2>
-                    {% if plan.matches_yesterday | length > 0 %}
-                    <table class="results-table">
-                        <tr>
-                            <th>Fixture</th>
-                            <th>Tip</th>                                
-                            <th>Result</th>
-                            <th></th>
-                        </tr>
-                        {% for match in plan.matches_yesterday %}
-                        <tr>
-                            <td>{{ match.home_team }} vs {{ match.away_team }}</td>
-                            <td>                                    
-                                {{ match.prediction }}
-                                {{ 'goals' if match.sub_type_id == 18 else ' multi-goals' if match.sub_type_id == 548 else ' bookings' if match.sub_type_id == 139 else ' corners' if match.sub_type_id == 166 else '' }}
-                            </td>
-                            {% if match.status == 'WON' %}
+                <div class="bg-white p-2 rounded-lg shadow-md">                   
+                    <!-- Tab Navigation -->
+                    <div class="tab-nav flex justify-center mb-4">
+                        {% for history in plan.history %}
+                        <button
+                            class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg {% if loop.last %}active{% endif %}"
+                            data-tab="{{ history.day | lower }}">{{ history.day }}</button>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Tab Content -->
+                    {% for history in plan.history %}
+                    <div id="{{ history.day | lower }}" class="tab-content {% if not loop.last %}hidden{% endif %}">
+                        {% if history.matches | length > 0 %}
+                        <table class="results-table w-full border-collapse">
+                            <tr>
+                                <th>Fixture</th>
+                                <th>Tip</th>
+                                <th>Result</th>
+                                <th></th>
+                            </tr>
+                            {% for match in history.matches %}
+                            <tr>
+                                <td>{{ match.home_team }} vs {{ match.away_team }}</td>
+                                <td>
+                                    {{ match.prediction }}
+                                    {{ 'goals' if match.sub_type_id == 18 else ' multi-goals' if match.sub_type_id ==
+                                    548 else ' bookings' if match.sub_type_id == 139 else ' corners' if
+                                    match.sub_type_id == 166 else '' }}
+                                </td>
+                                {% if match.status == 'WON' %}
                                 <td>{{ match.home_results ~ '-' ~ match.away_results }}</td>
                                 <td><span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span></td>
-                            {% elif match.status == 'LOST' %}
+                                {% elif match.status == 'LOST' %}
                                 <td>{{ match.home_results ~ '-' ~ match.away_results }}</td>
                                 <td><span class="fa fa-times-circle" style="color: red; font-size: 16px;"></span></td>
-                            {% else %}
+                                {% else %}
                                 <td></td>
-                            {% endif %}
-                        </tr>
-                        {% endfor %}
-                    </table>
-                    {% endif %}
+                                <td></td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        {% else %}
+                        <p class="text-center text-gray-500">No {{ history.day }} tips available.</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
                 </div>
             </section>
         </div>
     </div>
 
     {% include 'footer.html' %}
-  
+
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.tab-content');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    button.classList.add('active');
+
+                    // Hide all tab contents
+                    contents.forEach(content => content.classList.add('hidden'));
+                    // Show the selected tab content
+                    const tabId = button.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.remove('hidden');
+                });
+            });
+        });
+
         function setPlan(name, amount) {
             $('#plan').html(name)
             $('#amount').val(amount)
@@ -184,9 +260,9 @@
                 url: url,
                 type: 'GET',
                 success: function (code) {
-                    if (code){
-                        html = '<button onclick="copyToClipboard(\'' +code+ '\')" class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2">' +code+ ' <br /><small>Click to copy this Betika Code</small></button>';
-                    }else
+                    if (code) {
+                        html = '<button onclick="copyToClipboard(\'' + code + '\')" class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2">' + code + ' <br /><small>Click to copy this Betika Code</small></button>';
+                    } else
                         html = '<span class="text-red-500">Betika code is not available. Try again later.</span>';
                     $('#betika_share').html(html);
                 },
@@ -197,9 +273,9 @@
         }
 
         function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(function() {
+            navigator.clipboard.writeText(text).then(function () {
                 console.log('Betika share code copied to clipboard! \nPaste the Code at Betika App `Load Betslip` to import');
-            }, function(err) {
+            }, function (err) {
                 console.error('Could not copy text: ', err);
             });
         }
