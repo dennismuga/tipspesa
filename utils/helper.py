@@ -92,13 +92,13 @@ class Helper():
         
         return matches_ids
      
-    def auto_bet(self, matches):
+    def auto_bet(self, matches, min_matches=6):
         try:
             betslips = []
             composite_betslip = None
             composite_betslips = [] 
             total_odd = 1
-            min_matches = 5
+            
             min_odd = 3.0
             for match in sorted(matches, key=lambda x: x['start_time']):   
                 if not any(betslip["parent_match_id"] == match.get("parent_match_id") for betslip in betslips):
@@ -124,7 +124,10 @@ class Helper():
                         betslips = []
                         total_odd = 1
                         composite_betslip = None  
-                       
+                        
+            if len(betslips) > min_matches/2:
+                composite_betslips.append(composite_betslip)
+                
             if len(composite_betslips) > 0:                
                 balance, bonus = self.betika.get_balance()
                 usable = balance + bonus
