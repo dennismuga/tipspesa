@@ -256,7 +256,7 @@
         }
 
         function getBetikaShare() {
-            url = "{{ url_for('betika_share_code', odds=plan.odds) }}";
+            url = "{{ url_for('betika_share_code', plan_name=plan.name) }}";
             $.ajax({
                 url: url,
                 type: 'GET',
