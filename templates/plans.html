@@ -249,10 +249,10 @@
                         link = 'https://betika.com/share/' +code
                         html = `
                             <button 
-                                onclick="copyToClipboard('`+link+`')"                
+                                onclick="openBetikaLink('`+code+`')"                
                                 class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2"
                             >` +link+ `<br />
-                                <small>Click to Copy</small>
+                                <small>Click to AutoBet</small>
                             </button>
                         `
                         ;
@@ -272,6 +272,30 @@
             }, function (err) {
                 console.error('Could not copy text: ', err);
             });
+        }
+
+        function openBetikaLink(shareCode) {
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    let deepLink = `https://betika.com/share/${shareCode}`; // Default fallback
+    let fallbackUrl = `https://betika.com/share/${shareCode}`;
+
+    if (isAndroid) {
+        deepLink = `intent://share/${shareCode}#Intent;scheme=betika;package=com.app.betika.android;end`;
+    } else if (isIOS) {
+        deepLink = `betika://share/${shareCode}`; // Replace with actual iOS deep link scheme
+    }
+
+    // Try to open the Betika app
+    window.location = deepLink;
+
+    // Fallback to browser if app doesn't open
+    setTimeout(() => {
+        if (document.hidden || !document.hasFocus()) {
+            return; // App likely opened
+        }
+        window.location.href = fallbackUrl; // Open in browser
+    }, 1000);
         }
 
         
