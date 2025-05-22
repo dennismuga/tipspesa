@@ -126,7 +126,14 @@
                         {% if True %}
                         <!-- if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
                         <tr>
-                            <td id="betika_share" colspan="4"></td>
+                            <td id="betika_share" colspan="4">
+                                <button
+                                    class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2"
+                                    >
+                                    <span class="fa fa-spinner"></span><br />
+                                    Loading Betika Share Code...
+                                </button>
+                            </td>
                         </tr>
                         {% endif %}
                         <tr>
