@@ -246,11 +246,10 @@
                     if (code) {
                         link = 'https://betika.com/share/' +code
                         html = `
-                            <a 
-                                href="`+link+`" 
-                                target="_blank" 
+                            <button 
+                                onclick=copyToClipboard("`+link+`"                
                                 class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2"
-                            >` +link+ `</a>
+                            >` +link+ `</button>
                         `
                         ;
                     } else
