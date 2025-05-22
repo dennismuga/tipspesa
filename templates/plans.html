@@ -277,37 +277,30 @@
         function openBetikaLink(shareCode) {
             const isAndroid = /Android/i.test(navigator.userAgent);
             const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-            let deepLink = `https://betika.com/share/${shareCode}`; // Default to browser
-            let fallbackUrl = `https://betika.com/share/${shareCode}`;
+            let deepLink = `https://betika.com/share/${shareCode}`;
+            const fallbackUrl = `https://betika.com/share/${shareCode}`;
 
-            // Validate share code
+            if (isAndroid) {
+                deepLink = `intent://share/${shareCode}#Intent;scheme=betika;package=com.app.betika.android;end`;
+            } else if (isIOS) {
+                deepLink = `https://betika.com/share/${shareCode}`; // Universal link or browser
+                // Use betika://share/${shareCode} if iOS app and scheme confirmed
+            }
+
             if (!/^[a-zA-Z0-9]+$/.test(shareCode)) {
                 console.error("Invalid share code");
                 return;
             }
 
-            if (isAndroid) {
-                deepLink = `intent://share/${shareCode}#Intent;scheme=betika;package=com.app.betika.android;end`;
-                fallbackUrl = "https://play.google.com/store/apps/details?id=com.app.betika.android";
-            } else if (isIOS) {
-                // Assume iOS app may not be available; try universal link or custom scheme
-                deepLink = `https://betika.com/share/${shareCode}`; // Possible universal link
-                // Alternatively, use betika://share/${shareCode} if confirmed
-                fallbackUrl = `https://betika.com/share/${shareCode}`; // Browser fallback
-            }
-
-            // Try to open the Betika app
             window.location = deepLink;
 
-            // Fallback to browser or Play Store if app doesn't open
             setTimeout(() => {
                 if (document.hidden || !document.hasFocus()) {
-                    return; // App likely opened
+                    return;
                 }
-                window.location.href = fallbackUrl; // Open in browser or Play Store
+                window.location.href = fallbackUrl;
             }, 1000);
         }
-
         
         document.addEventListener('DOMContentLoaded', () => {
             getBetikaShare()
