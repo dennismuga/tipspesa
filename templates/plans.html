@@ -125,12 +125,7 @@
                         {% if True %}
                         <!-- if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
                         <tr>
-                            <td id="betika_share" colspan="4">
-                                <button onclick="getBetikaShare()"
-                                    class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2">
-                                    Get Betika Code
-                                </button>
-                            </td>
+                            <td id="betika_share" colspan="4"></td>
                         </tr>
                         {% endif %}
                         <tr>
@@ -242,7 +237,15 @@
                 type: 'GET',
                 success: function (code) {
                     if (code) {
-                        html = '<button onclick="copyToClipboard(\'' + code + '\')" class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2">' + code + ' <br /><small>Click to copy this Betika Code</small></button>';
+                        link = 'https://betika.com/share/' +code
+                        html = `
+                            <a 
+                                href="`+link+`" 
+                                target="_blank" 
+                                class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2"
+                            >` +link+ `</a>
+                        `
+                        ;
                     } else
                         html = '<span class="text-red-500">Betika code is not available. Try again later.</span>';
                     $('#betika_share').html(html);
@@ -263,6 +266,7 @@
 
         
         document.addEventListener('DOMContentLoaded', () => {
+            getBetikaShare()
             const buttons = document.querySelectorAll('.tab-button');
             const contents = document.querySelectorAll('.tab-content');
 
