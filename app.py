@@ -184,7 +184,7 @@ def betika_share_code(plan_name):
         today_matches, history = get_matches(min_matches.free, 4)
     if plan_name == 'Bronze':
         today_matches, history = get_matches(min_matches.bronze, 12)
-    if plan_name == 'Free':
+    if plan_name == 'Silver':
         today_matches, history = get_matches(min_matches.silver, 23)
     if plan_name == 'Gold':
         today_matches, history = get_matches(min_matches.gold, 37)
