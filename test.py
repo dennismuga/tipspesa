@@ -1,5 +1,6 @@
 
 import uuid
+from utils.betika import Betika
 from utils.helper import Helper
 #from utils.jenga import Jenga
 
@@ -22,6 +23,7 @@ if __name__ == "__main__":
     # except Exception as e:
     #     print(f"Error: {str(e)}")
     
-    helper = Helper()
-    
-    code = helper.get_code()
+    betika = Betika()    
+    betika.login('0712428185', '123456789D')
+    print(betika.profile_id)
+    print(betika.token)

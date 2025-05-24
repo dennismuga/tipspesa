@@ -17,12 +17,20 @@ class Predict:
         self.multi_goal = MultiGoal()
         self.multi_goal_over_under = MultiGoalOverUnder()
         self.corners = Corners()
-        self.helper = Helper()
         self.gemini = Gemini()
         self.db = PostgresCRUD()
-                  
+    
+    def bet(self, profile, predicted_matches):
+        phone = profile[0]
+        password = profile[1]
+        helper = Helper(phone, password)
+        helper.auto_bet(predicted_matches, 6)
+        helper.auto_bet(predicted_matches, 10)
+        helper.auto_bet(predicted_matches, 15)
+        helper.auto_bet(predicted_matches, 20)
+                    
     def __call__(self):
-        upcoming_match_ids = self.helper.get_upcoming_match_ids()
+        upcoming_match_ids = Helper().get_upcoming_match_ids()
         predicted_matches = []
         # Use ThreadPoolExecutor to spawn a thread for each match
         with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -38,24 +46,24 @@ class Predict:
                         predicted_matches.append(match)
                 except Exception as e:
                     print(f"Error processing match: {e}")
+            if len(predicted_matches) > 0:
+                query = self.gemini.prepare_query(predicted_matches)
+                response = self.gemini.get_response(query).replace('```json', '').strip('```')
+                filtered_matches = json.loads(response)
+                beta_matches = [
+                    {  **match, "overall_prob": int(f_m["probability"]) }
+                    for match in predicted_matches
+                    for f_m in filtered_matches
+                    if match["parent_match_id"] == f_m["match_id"] and int(f_m["probability"]) >= 75
+                ]
+                print(beta_matches)
+                for match in beta_matches:
+                    self.db.insert_match(match)
+                    
+                threads = [executor.submit(self.bet, profile, predicted_matches) for profile in self.db.get_active_profiles()]
 
-            query = self.gemini.prepare_query(predicted_matches)
-            response = self.gemini.get_response(query).replace('```json', '').strip('```')
-            filtered_matches = json.loads(response)
-            beta_matches = [
-                {  **match, "overall_prob": int(f_m["probability"]) }
-                for match in predicted_matches
-                for f_m in filtered_matches
-                if match["parent_match_id"] == f_m["match_id"] and int(f_m["probability"]) >= 75
-            ]
-            print(beta_matches)
-            for match in beta_matches:
-                self.db.insert_match(match)
+                # Wait for all threads to finish
+                concurrent.futures.wait(threads)
                 
-            self.helper.auto_bet(predicted_matches, 6)
-            self.helper.auto_bet(predicted_matches, 10)
-            self.helper.auto_bet(predicted_matches, 15)
-            self.helper.auto_bet(predicted_matches, 20)
-
 if __name__ == "__main__":
     Predict()()

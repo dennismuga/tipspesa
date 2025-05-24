@@ -508,6 +508,21 @@ class PostgresCRUD:
         except Exception as e:
             print(f"Error fetching active odds: {e}")
             return []
+    
+    def get_active_profiles(self):
+        self.ensure_connection()
+        try:
+            with self.conn.cursor() as cursor:
+                query = """
+                    SELECT phone, password
+                    FROM profiles
+                    WHERE is_active IS TRUE
+                """
+                cursor.execute(query)
+                return cursor.fetchall()
+        except Exception as e:
+            print(f"Error fetching active profiles: {e}")
+            return []
 
     
                   

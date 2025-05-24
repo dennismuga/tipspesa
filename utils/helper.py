@@ -7,9 +7,12 @@ from utils.entities import Match
 from utils.postgres_crud import PostgresCRUD
 
 class Helper():   
-    def __init__(self):
+    def __init__(self, phone=None, password=None):
         self.betika = Betika()
         self.db = PostgresCRUD()
+        if phone and password:
+            self.betika.login(phone, password)
+            
 
     def fetch_data(self, url, timeout=10):
         """
@@ -99,7 +102,6 @@ class Helper():
             composite_betslips = [] 
             total_odd = 1
             
-            min_odd = 3.0
             for match in sorted(matches, key=lambda x: x['start_time']):   
                 if not any(betslip["parent_match_id"] == match.get("parent_match_id") for betslip in betslips):
                     betslip = {

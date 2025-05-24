@@ -1,11 +1,9 @@
 
-import json, os
+import cloudscraper, json, os
 from dotenv import load_dotenv
 import requests
 
 load_dotenv()   
-BETIKA_PROFILE_ID = os.getenv("BETIKA_PROFILE_ID")
-BETIKA_TOKEN = os.getenv("BETIKA_TOKEN")
 
 class Betika():
     def __init__(self):
@@ -13,9 +11,13 @@ class Betika():
         self.live_url = "https://live.betika.com"
         self.headers = {
             "Content-Type": "application/json",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
-            }
+            "User-Agent": "PostmanRuntime/7.44.0",
+            "Cache-Control": "no-cache",
+            "Host": "api.betika.com"
+        }
         self.src = "MOBILE_WEB"
+        self.profile_id = None
+        self.token = None
               
     def get_data(self, url):   
         try:
@@ -37,6 +39,7 @@ class Betika():
         try:
             # Sending the POST request
             response = requests.post(url, data=json.dumps(payload), headers=self.headers)
+            print(response.text)
             return response.json()
             
         except requests.exceptions.HTTPError as http_err:
@@ -58,14 +61,29 @@ class Betika():
             "src": self.src
         }
         
-        response = self.post_data(url, payload)
-        print(response)
+        # Create a cloudscraper session
+        scraper = cloudscraper.create_scraper()
+
+        try:
+            response = scraper.post(url, json=payload, headers=self.headers)
+            if "application/json" in response.headers.get("Content-Type", "").lower():
+                response_json = response.json()
+                print(response_json)
+                if response_json:
+                    self.profile_id = response_json.get('data').get('user').get('id')
+                    self.token = response_json.get('token')                
+            else:
+                print("Response is not JSON. Likely an HTML error page.")
+        except requests.exceptions.RequestException as e:
+            print(f"Error: {e}")
+        except ValueError as e:
+            print(f"JSON Parsing Error: {e}")
     
     def get_balance(self):
         url = f'{self.base_url}/v1/balance'
         payload = {
-            "profile_id": str(BETIKA_PROFILE_ID),
-            "token": BETIKA_TOKEN,
+            "profile_id": str(self.profile_id),
+            "token": self.token,
             "src": self.src
         }
 
@@ -106,10 +124,10 @@ class Betika():
         url = f'{self.base_url}/v2/bet'
         payload = {
             "betslip": betslips,
-            "profile_id": str(BETIKA_PROFILE_ID),
+            "profile_id": str(self.profile_id),
             "src": self.src,
             "stake": str(stake),
-            "token": BETIKA_TOKEN,
+            "token": self.token,
             "total_odd": str(total_odd),
         }
 
@@ -122,8 +140,8 @@ class Betika():
             "betslip": betslips,
             "product_type": "PREMATCH",
             "src": self.src,
-            "profile_id": str(BETIKA_PROFILE_ID),
-            "token": BETIKA_TOKEN
+            "profile_id": str(self.profile_id),
+            "token": self.token
         }
         
         response = self.post_data(url, payload)
@@ -164,7 +182,7 @@ class Betika():
         payload = {
             "amount": amount,
             "app_name": self.src,
-            "token": BETIKA_TOKEN
+            "token": self.token
         }
 
         response = self.post_data(url, payload)

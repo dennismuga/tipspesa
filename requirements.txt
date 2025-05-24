@@ -1,4 +1,5 @@
 apscheduler
+cloudscraper
 Flask
 Flask-Login
 flask-session
