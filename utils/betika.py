@@ -68,7 +68,6 @@ class Betika():
             response = scraper.post(url, json=payload, headers=self.headers)
             if "application/json" in response.headers.get("Content-Type", "").lower():
                 response_json = response.json()
-                print(response_json)
                 if response_json:
                     self.profile_id = response_json.get('data').get('user').get('id')
                     self.token = response_json.get('token')                
