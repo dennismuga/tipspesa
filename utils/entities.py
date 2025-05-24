@@ -137,5 +137,5 @@ class MinMatches():
         self.bronze = 7
         self.silver = 10 
         self.gold = 13
-        self.platinum = 17
+        self.platinum = 16
     

@@ -105,9 +105,9 @@ def filter_matches(day, match_count, end, status=''):
     return to_return
 
 def get_matches(count, index):
-    three_days_ago = filter_matches('-3', min_matches.platinum, 51)
-    two_days_ago = filter_matches('-2', min_matches.platinum, 51)
-    yesterday_matches = filter_matches('-1', min_matches.platinum, 51)
+    three_days_ago = filter_matches('-3', min_matches.platinum, 50)
+    two_days_ago = filter_matches('-2', min_matches.platinum, 50)
+    yesterday_matches = filter_matches('-1', min_matches.platinum, 50)
     today_matches = filter_matches('', count, index)
     history = [
         {
@@ -172,7 +172,7 @@ def platinum():
         return subscribe()
     
     else:        
-        today_matches, history = get_matches(min_matches.platinum, 51)
+        today_matches, history = get_matches(min_matches.platinum, 50)
         today_matches = today_matches if len(today_matches) > min_matches.gold else []
         plan = Plan('Platinum', 70, min_odds.platinum, 'pink', 5, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds)
@@ -189,7 +189,7 @@ def betika_share_code(plan_name):
     if plan_name == 'Gold':
         today_matches, history = get_matches(min_matches.gold, 37)
     if plan_name == 'Platinum':
-        today_matches, history = get_matches(min_matches.platinum, 51)
+        today_matches, history = get_matches(min_matches.platinum, 50)
         
     return helper.get_share_code(today_matches)
 
