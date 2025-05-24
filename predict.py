@@ -24,7 +24,7 @@ class Predict:
         phone = profile[0]
         password = profile[1]
         helper = Helper(phone, password)
-        helper.auto_bet(predicted_matches, 6)
+        helper.auto_bet(predicted_matches, 5)
         helper.auto_bet(predicted_matches, 10)
         helper.auto_bet(predicted_matches, 15)
         helper.auto_bet(predicted_matches, 20)

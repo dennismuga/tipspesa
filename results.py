@@ -19,7 +19,7 @@ class Results:
     def get_status(self, home_score: int, away_score: int, bet_pick: str) -> str:
         """Determine the match status based on scores and bet pick."""
         if bet_pick == 'over 1.5' and home_score + away_score < 2:
-            return 'LOST'
+            return ''
         if bet_pick == 'over 2.5' and home_score + away_score < 3:
             return 'LOST'
         if bet_pick == 'over 3.5' and home_score + away_score < 4:
@@ -27,7 +27,7 @@ class Results:
         if bet_pick == 'under 3.5' and home_score + away_score > 3:
             return 'LOST'
         if bet_pick == 'under 4.5' and home_score + away_score > 4:
-            return 'LOST'
+            return ''
         if bet_pick == 'under 5.5' and home_score + away_score > 5:
             return 'LOST'
         if '-' in bet_pick:
