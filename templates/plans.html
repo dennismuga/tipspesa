@@ -117,7 +117,9 @@
                                 {% elif match.status == 'LOST' %}
                                 <span class="fa fa-times-circle" style="color: red; font-size: 16px;"></span>
                                 {% else %}
-                                {{ match.status if match.status else match.probability ~ '%' }}
+                                <small>
+                                {{ match.status if match.status else match.overall_prob ~ '%' }}
+                                </small>
                                 {% endif %}
                             </td>
                         </tr>
