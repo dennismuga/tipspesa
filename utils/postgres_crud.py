@@ -146,11 +146,16 @@ class PostgresCRUD:
         self.ensure_connection()           
         with self.conn.cursor() as cur:
             query = f"""
-            SELECT * FROM matches
-            WHERE kickoff::time > '12:00:00' 
-                AND kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
-            ORDER BY kickoff, odd, match_id
-            LIMIT {limit}
+            WITH m AS(
+                SELECT * FROM matches
+                WHERE kickoff::time > '12:00:00' 
+                    AND kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
+                ORDER BY overall_prob DESC, odd DESC
+                LIMIT {limit}
+            )
+            SELECT * 
+            FROM m
+            ORDER BY overall_prob, odd, kickoff, match_id
             """
             cur.execute(query)
             return cur.fetchall()
