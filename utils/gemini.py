@@ -11,7 +11,8 @@ class Gemini():
         
     def get_response(self, query):
         return self.client.models.generate_content(
-            model="gemini-2.0-flash", contents=str(query)
+            model= os.getenv('GEMINI_MODEL'), 
+            contents=str(query)
         ).text
         
     def prepare_query(self, matches):
