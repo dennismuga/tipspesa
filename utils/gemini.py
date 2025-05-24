@@ -1,4 +1,5 @@
-import os
+import json, os
+from datetime import datetime
 from dotenv import load_dotenv
 from google import genai
 
@@ -12,3 +13,49 @@ class Gemini():
         return self.client.models.generate_content(
             model="gemini-2.0-flash", contents=str(query)
         ).text
+        
+    def prepare_query(self, matches):
+        # Convert matches to trimmed format using list comprehension
+        trimmed_matches = [
+            {
+                "match_id": match["parent_match_id"],
+                "home_team": match["home_team"],
+                "away_team": match["away_team"],
+                "prediction": match["prediction"],
+                "match_date": datetime.strptime(match["start_time"], '%Y-%m-%d %H:%M:%S').date().isoformat() 
+            }
+            for match in matches
+        ]
+
+        # Define the query structure as a dictionary for cleaner JSON handling
+        query_dict = {
+            "instruction": "Analyze the following matches and return the probability percentage of the outcome as predicted. Respond with ONLY the JSON array, with no additional text, prose, or explanation. The output must strictly adhere to the provided JSON schema for the 'expected_output_schema'.",
+            "matches": trimmed_matches,
+            "expected_output_schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "match_id": {
+                            "type": "string",
+                            "description": "Unique identifier for the match, as provided in the input."
+                        },
+                        "prediction": {
+                            "type": "string",
+                            "enum": ["over 1.5 goals", "under 1.5 goals"],
+                            "description": "The predicted outcome for 1.5 goals."
+                        },
+                        "probability": {
+                            "type": "string",
+                            "pattern": "^(100|[1-9][0-9]?|[0-9])$",
+                            "description": "The probability percentage (0-100) as a string."
+                        }
+                    },
+                    "required": ["match_id", "prediction", "probability"]
+                }
+            }
+        }
+
+        # Convert to JSON string with proper formatting
+        query = json.dumps(query_dict, indent=4)
+        return query
