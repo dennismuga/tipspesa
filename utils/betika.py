@@ -39,7 +39,6 @@ class Betika():
         try:
             # Sending the POST request
             response = requests.post(url, data=json.dumps(payload), headers=self.headers)
-            print(response.text)
             return response.json()
             
         except requests.exceptions.HTTPError as http_err:
