@@ -82,10 +82,11 @@ def page_not_found(e):
     # Redirect to a specific endpoint, like 'plans', or a custom 404 page
     return redirect(url_for('free'), 302)
 
-def filter_matches(day, match_count, end, status=''):
+def filter_matches(day, match_count, end_index, status=''):
     matches = helper.fetch_matches(day, '=', status, limit=51)
     filtered_matches = []
     total_odds = 1
+    to_return = []
     
     for match in matches:
         # Check if home_team or away_team is already in filtered_matches
@@ -97,18 +98,18 @@ def filter_matches(day, match_count, end, status=''):
             filtered_matches.append(match)
             total_odds *= match.odd
     
-    # Ensure start and end are within bounds
-    end = min(len(filtered_matches), end)
-    start = max(0, end - match_count)
-    to_return = filtered_matches[start:end]  # Correct slicing
-    
+    #if len(filtered_matches) > end_index - match_count:   #only get a package if it contains new matches not in other packages
+    end_index = min(len(filtered_matches), end_index)
+    start = max(0, end_index - match_count)
+    to_return = filtered_matches[start:end_index]  # Correct slicing
+        
     return to_return
 
-def get_matches(count, index):
+def get_matches(count, end_index):
     three_days_ago = filter_matches('-3', 50, 50)
     two_days_ago = filter_matches('-2', 50, 50)
     yesterday_matches = filter_matches('-1', 50, 50)
-    today_matches = filter_matches('', count, index)
+    today_matches = filter_matches('', count, end_index)
     history = [
         {
             'day': (datetime.now() - timedelta(days=3)).strftime("%A"),
@@ -139,7 +140,7 @@ def bronze():
         return subscribe()
     
     else:        
-        today_matches, history = get_matches(min_matches.bronze, 12)
+        today_matches, history = get_matches(min_matches.bronze, 11)
         today_matches = today_matches if len(today_matches) > min_matches.free else []
         plan = Plan('Bronze', 20, min_odds.bronze, 'purple', 2, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds)
@@ -150,7 +151,7 @@ def silver():
         return subscribe()
     
     else:        
-        today_matches, history = get_matches(min_matches.silver, 23)
+        today_matches, history = get_matches(min_matches.silver, 21)
         today_matches = today_matches if len(today_matches) > min_matches.bronze else []
         plan = Plan('Silver', 30, min_odds.silver, 'blue', 3, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds)
@@ -161,7 +162,7 @@ def gold():
         return subscribe()
     
     else:        
-        today_matches, history = get_matches(min_matches.gold, 37)
+        today_matches, history = get_matches(min_matches.gold, 34)
         today_matches = today_matches if len(today_matches) > min_matches.silver else []
         plan = Plan('Gold', 50, min_odds.gold, 'yellow', 4, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds)
