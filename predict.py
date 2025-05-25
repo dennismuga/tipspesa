@@ -3,6 +3,7 @@ import concurrent.futures
 import json
 
 from utils.corners import Corners
+from utils.corners_beta import CornersBeta
 from utils.gemini import Gemini
 from utils.helper import Helper
 from utils.multi_goal import MultiGoal
@@ -19,6 +20,7 @@ class Predict:
         self.corners = Corners()
         self.gemini = Gemini()
         self.db = PostgresCRUD()
+        self.corners_beta = CornersBeta()
     
     def bet(self, profile, predicted_matches):
         phone = profile[0]
@@ -50,17 +52,21 @@ class Predict:
                 query = self.gemini.prepare_query(predicted_matches)
                 response = self.gemini.get_response(query).replace('```json', '').strip('```')
                 filtered_matches = json.loads(response)
-                beta_matches = [
+                alpha_matches = [
                     {  **match, "overall_prob": int(f_m["probability"]) }
                     for match in predicted_matches
                     for f_m in filtered_matches
                     if match["parent_match_id"] == f_m["match_id"] and int(f_m["probability"]) >= 75
                 ]
-                print(beta_matches)
-                for match in beta_matches:
+                print(alpha_matches)
+                beta_matches = []
+                for match in alpha_matches:
+                    match = self.corners_beta.predict_match(match)
+                    print(match)  
+                    beta_matches.append(match)                  
                     self.db.insert_match(match)
                     
-                threads = [executor.submit(self.bet, profile, predicted_matches) for profile in self.db.get_active_profiles()]
+                threads = [executor.submit(self.bet, profile, beta_matches) for profile in self.db.get_active_profiles()]
 
                 # Wait for all threads to finish
                 concurrent.futures.wait(threads)
