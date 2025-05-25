@@ -28,8 +28,6 @@ jobs:
           echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
           echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
-          echo "BETIKA_PROFILE_ID=${{ secrets.BETIKA_PROFILE_ID }}" >> $GITHUB_ENV
-          echo "BETIKA_TOKEN=${{ secrets.BETIKA_TOKEN }}" >> $GITHUB_ENV
 
       - name: setup python
         uses: actions/setup-python@v4
