@@ -105,9 +105,9 @@ def filter_matches(day, match_count, end, status=''):
     return to_return
 
 def get_matches(count, index):
-    three_days_ago = filter_matches('-3', min_matches.platinum, 50)
-    two_days_ago = filter_matches('-2', min_matches.platinum, 50)
-    yesterday_matches = filter_matches('-1', min_matches.platinum, 50)
+    three_days_ago = filter_matches('-3', 50, 50)
+    two_days_ago = filter_matches('-2', 50, 50)
+    yesterday_matches = filter_matches('-1', 50, 50)
     today_matches = filter_matches('', count, index)
     history = [
         {
