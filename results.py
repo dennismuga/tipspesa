@@ -49,10 +49,10 @@ class Results:
                 return match.match_id, None, None, 'No match details'
 
             meta = match_details.get("meta", {})
-            event_status = meta.get("match_time")
+            event_status = meta.get("event_status")
             match_time = meta.get("match_time") #22:50
             current_score = meta.get("current_score")
-            if match_time and current_score and event_status in ["1st set", "2nd set"]:
+            if match_time and current_score and event_status in ["1st half", "2nd half"]:
                 mins = int(match_time.split(':')[0])
                 scores = current_score.split(':')
                 home_score, away_score = int(scores[0]), int(scores[1])           
