@@ -49,14 +49,15 @@ class Results:
                 return match.match_id, None, None, 'No match details'
 
             meta = match_details.get("meta", {})
+            event_status = meta.get("match_time")
             match_time = meta.get("match_time") #22:50
             current_score = meta.get("current_score")
-            if match_time and current_score:
+            if match_time and current_score and event_status in ["1st set", "2nd set"]:
                 mins = int(match_time.split(':')[0])
                 scores = current_score.split(':')
                 home_score, away_score = int(scores[0]), int(scores[1])           
                 status = self.get_status(home_score, away_score, match.bet_pick)
-                status = status if mins >= 90 or ('over' in match.bet_pick and status == 'WON') else f"{mins if mins > 0 else 'HT'}'"
+                status = status if mins >= 90 or ('over' in match.bet_pick and status == 'WON') else f"{mins}'"
                 if home_score is not None and away_score is not None:
                     logger.info('%s vs %s [%s] = %d:%d - %s', match.home_team, match.away_team, match.bet_pick, home_score, away_score, status)
                 
