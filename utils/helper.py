@@ -130,9 +130,8 @@ class Helper():
             if len(betslips) > min_matches/2:
                 composite_betslips.append(composite_betslip)
                 
-            if len(composite_betslips) > 0:                
-                balance, bonus = self.betika.get_balance()
-                usable = balance + bonus
+            if len(composite_betslips) > 0:              
+                usable = self.betika.balance + self.betika.bonus
                 stake = int((usable/len(composite_betslips))/2)
                 stake = 1 if (stake == 0 and int(usable)>0) else stake
                 if stake > 0:

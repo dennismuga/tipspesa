@@ -17,6 +17,8 @@ class Betika():
         }
         self.src = "MOBILE_WEB"
         self.profile_id = None
+        self.balance = 0.0
+        self.bonus = 0.0
         self.token = None
               
     def get_data(self, url):   
@@ -69,6 +71,8 @@ class Betika():
                 response_json = response.json()
                 if response_json:
                     self.profile_id = response_json.get('data').get('user').get('id')
+                    self.balance = float(response_json.get('data').get('user').get('balance'))
+                    self.bonus = float(response_json.get('data').get('user').get('bonus'))
                     self.token = response_json.get('token')                
             else:
                 print("Response is not JSON. Likely an HTML error page.")
