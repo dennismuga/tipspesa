@@ -148,8 +148,7 @@ class PostgresCRUD:
             query = f"""
             WITH m AS(
                 SELECT * FROM matches
-                WHERE kickoff::time > '12:00:00' 
-                    AND kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
+                WHERE kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
                 ORDER BY overall_prob DESC, odd DESC
                 LIMIT {limit}
             )
