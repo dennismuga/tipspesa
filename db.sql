@@ -1,8 +1,26 @@
+-- Table structure for table subscribers
+CREATE TABLE IF NOT EXISTS matches (
+	match_id TEXT PRIMARY KEY,
+	kickoff TIMESTAMP,
+	home_team TEXT,
+	away_team TEXT,
+	prediction TEXT,
+	odd DOUBLE PRECISION,
+	home_results INT,
+	status TEXT,
+	away_results INT,
+	overall_prob DOUBLE PRECISION,
+	sub_type_id INT,
+	parent_match_id INT,
+	bet_pick TEXT,
+	outcome_id INT,
+	special_bet_value TEXT
+);
 
 -- Table structure for table subscribers
 CREATE TABLE IF NOT EXISTS subscribers (
   id TEXT PRIMARY KEY,
-  phone VARCHAR(20),
+  phone TEXT,
   expires_at TIMESTAMP,
   created_at TIMESTAMP,
   updated_at TIMESTAMP,
