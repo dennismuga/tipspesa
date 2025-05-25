@@ -16,7 +16,7 @@ class CornersBeta():
             if data:
                 for d in data:
                     sub_type_id = int(d.get('sub_type_id'))
-                    if sub_type_id in [166]:   
+                    if sub_type_id in [166]:   # 166 = corners
                         odds = d.get('odds') 
                         for odd in odds:    
                             bet_pick = odd.get('odd_key')  
@@ -25,7 +25,7 @@ class CornersBeta():
                             special_bet_value = odd.get('special_bet_value')      
                             outcome_id = odd.get('outcome_id')
                             
-                            if odd_value < 1.5:
+                            if odd_value < 1.5 and 'over' in bet_pick:
                                 match["bet_pick"] = bet_pick
                                 match["prediction"] = bet_pick
                                 match["sub_type_id"] = sub_type_id
