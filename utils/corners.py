@@ -69,7 +69,7 @@ class Corners():
                                         overall_prob = 98 if odd_value < 1.32 else overall_prob
                                         
                                     if odd_value <= 1.38:
-                                        if odd_value < 1.2:
+                                        if odd_value < 1.2 and 'over' in bet_pick:
                                             v = float(bet_pick.replace('over ',''))
                                             bet_pick = f'over {v+1}'
                                             special_bet_value = f'total={v+1}'
@@ -91,6 +91,6 @@ class Corners():
                                                 'outcome_id': outcome_id
                                             }
                                             print(match)
-                                            self.db.insert_match(match)
+                                            #self.db.insert_match(match)
         return match 
            

@@ -34,8 +34,8 @@ class Predict:
         predicted_matches = []
         # Use ThreadPoolExecutor to spawn a thread for each match
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            #threads = [executor.submit(self.multi_goal.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids]
             threads = [executor.submit(self.multi_goal_over_under.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids]
+            # threads.extend([executor.submit(self.cotners.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids])
 
             # Wait for all threads to finish
             concurrent.futures.wait(threads)

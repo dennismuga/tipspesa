@@ -22,7 +22,7 @@ class Gemini():
                 "match_id": match["parent_match_id"],
                 "home_team": match["home_team"],
                 "away_team": match["away_team"],
-                "prediction": match["prediction"],
+                "prediction": {match["prediction"]} + " goals" if match["sub_type_id"] == 18 else " corners" if match["sub_type_id"] == 166 else "",
                 "match_date": datetime.strptime(match["start_time"], '%Y-%m-%d %H:%M:%S').date().isoformat() 
             }
             for match in matches
