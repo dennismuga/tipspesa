@@ -37,7 +37,7 @@ class Predict:
         # Use ThreadPoolExecutor to spawn a thread for each match
         with concurrent.futures.ThreadPoolExecutor() as executor:
             threads = [executor.submit(self.multi_goal_over_under.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids]
-            # threads.extend([executor.submit(self.cotners.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids])
+            threads.extend([executor.submit(self.corners_beta.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids])
 
             # Wait for all threads to finish
             concurrent.futures.wait(threads)
@@ -59,14 +59,10 @@ class Predict:
                     if match["parent_match_id"] == f_m["match_id"] and int(f_m["probability"]) >= 75
                 ]
                 print(alpha_matches)
-                beta_matches = []
                 for match in alpha_matches:
-                    match = self.corners_beta.predict_match(match)
-                    print(match)  
-                    beta_matches.append(match)                  
                     self.db.insert_match(match)
                     
-                threads = [executor.submit(self.bet, profile, beta_matches) for profile in self.db.get_active_profiles()]
+                threads = [executor.submit(self.bet, profile, alpha_matches) for profile in self.db.get_active_profiles()]
 
                 # Wait for all threads to finish
                 concurrent.futures.wait(threads)

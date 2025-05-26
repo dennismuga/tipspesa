@@ -5,7 +5,7 @@ on:
   workflow_dispatch: # Manually trigger the workflow
 
   schedule:
-    - cron: '0 */6 * * *'  # Runs every 6 hours (e.g., 00:00, 06:00, 12:00, 18:00 UTC)
+    - cron: '0 */1 * * *'  # Runs every hour
 
 # Ensures only one workflow instance runs at a time by canceling the previous run
 concurrency:

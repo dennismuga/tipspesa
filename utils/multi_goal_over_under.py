@@ -2,7 +2,6 @@ from datetime import datetime
 
 from utils.betika import Betika
 from utils.helper import Helper
-from utils.postgres_crud import PostgresCRUD
 
 class MultiGoalOverUnder():
     def __init__(self):
