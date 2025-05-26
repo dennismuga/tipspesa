@@ -87,8 +87,8 @@ class CornersBeta():
                             #                 'outcome_id': under_9_5.get('outcome_id')
                             #             }
                                     
-                        if over_7_5 and under_9_5:
-                            if float(over_7_5.get('odd_value')) < float(under_9_5.get('odd_value')):
+                        if over_7_5 and under_10_5:
+                            if float(over_7_5.get('odd_value')) < float(under_10_5.get('odd_value')):
                                 if float(over_7_5.get('odd_value')) < 1.5:
                                     match = {
                                             'parent_match_id': parent_match_id,
@@ -105,25 +105,25 @@ class CornersBeta():
                                             'outcome_id': over_7_5.get('outcome_id')
                                         }
                                     
-                            # else:
-                            #     if float(under_9_5.get('odd_value')) < 1.5:
-                            #         match = {
-                            #                 'parent_match_id': parent_match_id,
-                            #                 'match_id': meta.get('match_id'),
-                            #                 'start_time': start_time,
-                            #                 'home_team': meta.get('home_team'),
-                            #                 'away_team': meta.get('away_team'),
-                            #                 'overall_prob': 0,                            
-                            #                 'sub_type_id': subtypes.get('sub_type_id'),
-                            #                 'prediction': under_9_5.get('odd_key'),
-                            #                 'bet_pick': under_9_5.get('odd_key'),
-                            #                 'odd': float(under_9_5.get('odd_value')),
-                            #                 'special_bet_value': under_9_5.get('special_bet_value'),
-                            #                 'outcome_id': under_9_5.get('outcome_id')
-                            #             }
+                             else:
+                                 if float(under_10_5.get('odd_value')) < 1.5:
+                                     match = {
+                                             'parent_match_id': parent_match_id,
+                                             'match_id': meta.get('match_id'),
+                                             'start_time': start_time,
+                                             'home_team': meta.get('home_team'),
+                                             'away_team': meta.get('away_team'),
+                                             'overall_prob': 0,                            
+                                             'sub_type_id': subtypes.get('sub_type_id'),
+                                             'prediction': under_10_5.get('odd_key'),
+                                             'bet_pick': under_10_5.get('odd_key'),
+                                             'odd': float(under_10_5.get('odd_value')),
+                                             'special_bet_value': under_10_5.get('special_bet_value'),
+                                             'outcome_id': under_10_5.get('outcome_id')
+                                         }
                                     
-                        if over_8_5 and under_10_5:
-                            if float(over_8_5.get('odd_value')) < float(under_10_5.get('odd_value')):
+                        if over_8_5 and under_11_5:
+                            if float(over_8_5.get('odd_value')) < float(under_11_5.get('odd_value')):
                                 if float(over_8_5.get('odd_value')) < 1.5:
                                     match = {
                                             'parent_match_id': parent_match_id,
@@ -139,25 +139,25 @@ class CornersBeta():
                                             'special_bet_value': over_8_5.get('special_bet_value'),
                                             'outcome_id': over_8_5.get('outcome_id')
                                         }
-                            # else:
-                            #     if float(under_10_5.get('odd_value')) < 1.5:
-                            #         match = {
-                            #                 'parent_match_id': parent_match_id,
-                            #                 'match_id': meta.get('match_id'),
-                            #                 'start_time': start_time,
-                            #                 'home_team': meta.get('home_team'),
-                            #                 'away_team': meta.get('away_team'),
-                            #                 'overall_prob': 0,                            
-                            #                 'sub_type_id': subtypes.get('sub_type_id'),
-                            #                 'prediction': under_10_5.get('odd_key'),
-                            #                 'bet_pick': under_10_5.get('odd_key'),
-                            #                 'odd': float(under_10_5.get('odd_value')),
-                            #                 'special_bet_value': under_10_5.get('special_bet_value'),
-                            #                 'outcome_id': under_10_5.get('outcome_id')
-                            #             }
+                             else:
+                                 if float(under_11_5.get('odd_value')) < 1.5:
+                                     match = {
+                                             'parent_match_id': parent_match_id,
+                                             'match_id': meta.get('match_id'),
+                                             'start_time': start_time,
+                                             'home_team': meta.get('home_team'),
+                                             'away_team': meta.get('away_team'),
+                                             'overall_prob': 0,                            
+                                             'sub_type_id': subtypes.get('sub_type_id'),
+                                             'prediction': under_11_5.get('odd_key'),
+                                             'bet_pick': under_11_5.get('odd_key'),
+                                             'odd': float(under_11_5.get('odd_value')),
+                                             'special_bet_value': under_11_5.get('special_bet_value'),
+                                             'outcome_id': under_11_5.get('outcome_id')
+                                         }
                                     
-                        if over_9_5 and under_11_5:
-                            if float(over_8_5.get('odd_value')) < float(under_11_5.get('odd_value')):
+                        if over_9_5 and under_12_5:
+                            if float(over_8_5.get('odd_value')) < float(under_12_5.get('odd_value')):
                                 pass
                                 # if float(over_8_5.get('odd_value')) < 1.5:
                                 #     match = {
@@ -175,7 +175,7 @@ class CornersBeta():
                                 #             'outcome_id': over_9_5.get('outcome_id')
                                 #         }
                             else:
-                                if float(under_11_5.get('odd_value')) < 1.5:
+                                if float(under_12_5.get('odd_value')) < 1.5:
                                     match = {
                                             'parent_match_id': parent_match_id,
                                             'match_id': meta.get('match_id'),
@@ -184,11 +184,11 @@ class CornersBeta():
                                             'away_team': meta.get('away_team'),
                                             'overall_prob': 0,                            
                                             'sub_type_id': subtypes.get('sub_type_id'),
-                                            'prediction': under_11_5.get('odd_key'),
-                                            'bet_pick': under_11_5.get('odd_key'),
-                                            'odd': float(under_11_5.get('odd_value')),
-                                            'special_bet_value': under_11_5.get('special_bet_value'),
-                                            'outcome_id': under_11_5.get('outcome_id')
+                                            'prediction': under_12_5.get('odd_key'),
+                                            'bet_pick': under_12_5.get('odd_key'),
+                                            'odd': float(under_12_5.get('odd_value')),
+                                            'special_bet_value': under_12_5.get('special_bet_value'),
+                                            'outcome_id': under_12_5.get('outcome_id')
                                         }
                             
                         if match:                
