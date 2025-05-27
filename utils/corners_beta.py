@@ -106,9 +106,9 @@ class CornersBeta():
                                             'outcome_id': over_7_5.get('outcome_id')
                                         }
                                     
-                             else:
-                                 if float(under_10_5.get('odd_value')) < 1.5:
-                                     match = {
+                            else:
+                                if float(under_10_5.get('odd_value')) < 1.5:
+                                    match = {
                                              'parent_match_id': parent_match_id,
                                              'match_id': meta.get('match_id'),
                                              'start_time': start_time,
