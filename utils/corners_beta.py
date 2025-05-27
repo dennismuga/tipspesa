@@ -88,8 +88,8 @@ class CornersBeta():
                             #                 'outcome_id': under_9_5.get('outcome_id')
                             #             }
                                     
-                        if over_7_5 and under_10_5:
-                            if float(over_7_5.get('odd_value')) < float(under_10_5.get('odd_value')):
+                        if over_7_5 and under_9_5:
+                            if float(over_7_5.get('odd_value')) < float(under_9_5.get('odd_value')):
                                 if float(over_7_5.get('odd_value')) < 1.5:
                                     match = {
                                             'parent_match_id': parent_match_id,
