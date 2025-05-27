@@ -140,8 +140,8 @@ class CornersBeta():
                                             'special_bet_value': over_8_5.get('special_bet_value'),
                                             'outcome_id': over_8_5.get('outcome_id')
                                         }
-                             else:
-                                 if float(under_11_5.get('odd_value')) < 1.5:
+                            else: 
+                                if float(under_11_5.get('odd_value')) < 1.5:
                                      match = {
                                              'parent_match_id': parent_match_id,
                                              'match_id': meta.get('match_id'),
