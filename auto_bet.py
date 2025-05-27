@@ -27,12 +27,11 @@ class Autobet:
         password = profile[1]
         profile_id = profile[2]
         matches = self.db.fetch_unplaced_matches(profile_id)
-        print(matches)
         helper = Helper(phone, password)
-        helper.auto_bet(matches, 5)
-        helper.auto_bet(matches, 10)
-        helper.auto_bet(matches, 15)
-        helper.auto_bet(matches, 20)
+        helper.auto_bet(profile_id, matches, 5)
+        helper.auto_bet(profile_id, matches, 10)
+        helper.auto_bet(profile_id, matches, 15)
+        helper.auto_bet(profile_id, matches, 20)
                     
     def __call__(self):
         # Use ThreadPoolExecutor to spawn a thread for each profile

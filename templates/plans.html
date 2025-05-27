@@ -118,7 +118,7 @@
                                 <span class="fa fa-minus-circle" style="color: grey; font-size: 16px;"></span>
                                 {% else %}
                                 <small>
-                                {{ match.status if match.status else match.overall_prob ~ '%' }}
+                                    {{ match.status if match.status else match.overall_prob ~ '%' }}
                                 </small>
                                 {% endif %}
                             </td>
@@ -130,8 +130,7 @@
                         <tr>
                             <td id="betika_share" colspan="4">
                                 <button
-                                    class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2"
-                                    >
+                                    class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2">
                                     <span class="fa fa-spinner"></span><br />
                                     Loading Betika Share Code...
                                 </button>
@@ -255,16 +254,16 @@
                 type: 'GET',
                 success: function (code) {
                     if (code) {
-                        link = 'https://betika.com/share/' +code
+                        link = 'https://betika.com/share/' + code
                         html = `
                             <button 
-                                onclick="openBetikaLink('`+code+`')"                
+                                onclick="openBetikaLink('`+ code + `')"                
                                 class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2"
-                            >` +link+ `<br />
+                            >` + link + `<br />
                                 Click to Auto Place Bet
                             </button>
                         `
-                        ;
+                            ;
                     } else
                         html = '<span class="text-red-500">Betika code is not available. Try again later.</span>';
                     $('#betika_share').html(html);
@@ -284,39 +283,39 @@
         }
 
         function openBetikaLink(shareCode) {
-    const isAndroid = /Android/i.test(navigator.userAgent);
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    let deepLink = `https://betika.com/share/${shareCode}`; // Default to browser
-    let fallbackUrl = `https://betika.com/share/${shareCode}`;
+            const isAndroid = /Android/i.test(navigator.userAgent);
+            const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+            let deepLink = `https://betika.com/share/${shareCode}`; // Default to browser
+            let fallbackUrl = `https://betika.com/share/${shareCode}`;
 
-    // Validate share code
-    if (!/^[a-zA-Z0-9]+$/.test(shareCode)) {
-        console.error("Invalid share code");
-        return;
-    }
+            // Validate share code
+            if (!/^[a-zA-Z0-9]+$/.test(shareCode)) {
+                console.error("Invalid share code");
+                return;
+            }
 
-    if (isAndroid) {
-        deepLink = `intent://share/${shareCode}#Intent;scheme=betika;package=com.app.betika.android;end`;
-        fallbackUrl = "https://play.google.com/store/apps/details?id=com.app.betika.android";
-    } else if (isIOS) {
-        // Assume iOS app may not be available; try universal link or custom scheme
-        deepLink = `https://betika.com/share/${shareCode}`; // Possible universal link
-        // Alternatively, use betika://share/${shareCode} if confirmed
-        fallbackUrl = `https://betika.com/share/${shareCode}`; // Browser fallback
-    }
+            if (isAndroid) {
+                deepLink = `intent://share/${shareCode}#Intent;scheme=betika;package=com.app.betika.android;end`;
+                fallbackUrl = "https://play.google.com/store/apps/details?id=com.app.betika.android";
+            } else if (isIOS) {
+                // Assume iOS app may not be available; try universal link or custom scheme
+                deepLink = `https://betika.com/share/${shareCode}`; // Possible universal link
+                // Alternatively, use betika://share/${shareCode} if confirmed
+                fallbackUrl = `https://betika.com/share/${shareCode}`; // Browser fallback
+            }
 
-    // Try to open the Betika app
-    window.location = deepLink;
+            // Try to open the Betika app
+            window.location = deepLink;
 
-    // Fallback to browser or Play Store if app doesn't open
-    setTimeout(() => {
-        if (document.hidden || !document.hasFocus()) {
-            return; // App likely opened
+            // Fallback to browser or Play Store if app doesn't open
+            setTimeout(() => {
+                if (document.hidden || !document.hasFocus()) {
+                    return; // App likely opened
+                }
+                window.location.href = fallbackUrl; // Open in browser or Play Store
+            }, 1000);
         }
-        window.location.href = fallbackUrl; // Open in browser or Play Store
-    }, 1000);
-}
-        
+
         document.addEventListener('DOMContentLoaded', () => {
             getBetikaShare()
             const buttons = document.querySelectorAll('.tab-button');
@@ -338,7 +337,7 @@
             });
         });
 
-        
+
     </script>
 </body>
 

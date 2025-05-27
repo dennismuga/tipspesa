@@ -182,7 +182,6 @@ class PostgresCRUD:
             )
             ORDER BY kickoff
             """
-            cur.execute(query)
             cur.execute(query, (profile_id,)) 
             for datum in cur.fetchall():
                 match = {
