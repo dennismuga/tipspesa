@@ -38,6 +38,7 @@ class CornersBeta():
                 under_9_5 = None
                 under_10_5 = None
                 under_11_5 = None
+                under_12_5 = None
                 for subtypes in data:  
                     odds = subtypes.get('odds')
                     if int(subtypes.get('sub_type_id')) == 18:                                      
