@@ -135,6 +135,7 @@ class Betika():
 
         response = self.post_data(url, payload)
         print(response)
+        return response
      
     def share_bet(self, betslips):
         url = f'{self.base_url}/v2/share/encode'

@@ -83,5 +83,14 @@ CREATE TABLE IF NOT EXISTS odds (
 CREATE TABLE IF NOT EXISTS profiles (
   phone TEXT PRIMARY KEY,
   password TEXT,
+  profile_id INT
   is_active BOOLEAN DEFAULT 'TRUE'
+);
+
+-- Table structure for table betslips
+CREATE TABLE IF NOT EXISTS betslips (
+  id SERIAL PRIMARY KEY,
+  code TEXT,
+  parent_match_id INT,
+  profile_id INT
 );

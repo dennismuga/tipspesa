@@ -1,83 +1,46 @@
 
-import time
+import concurrent.futures
+import json
 
-from utils.betika import Betika
+from utils.corners import Corners
+from utils.corners_beta import CornersBeta
+from utils.gemini import Gemini
+from utils.helper import Helper
+from utils.multi_goal import MultiGoal
+from utils.multi_goal_over_under import MultiGoalOverUnder
 from utils.postgres_crud import PostgresCRUD
 
-class AutoBet():
-    def __init__(self) -> None:
-        self.betika = Betika()     
+class Autobet:
+    """
+        main class
+    """
+    def __init__(self):
+        self.multi_goal = MultiGoal()
+        self.multi_goal_over_under = MultiGoalOverUnder()
+        self.corners = Corners()
+        self.gemini = Gemini()
         self.db = PostgresCRUD()
+        self.corners_beta = CornersBeta()
     
-    def compose_bet_slip(self, parent_match_id, sub_type_id, bet_pick, odd_value, outcome_id, special_bet_value):
-        return {
-            "sub_type_id": str(sub_type_id),
-            "bet_pick": bet_pick, #team
-            "odd_value": odd_value,
-            "outcome_id": str(outcome_id),  
-            "sport_id": "14",
-            "special_bet_value": special_bet_value,
-            "parent_match_id": str(parent_match_id),
-            "bet_type": 7
-        }
-    
-    def auto_bet(self):
-        betslips = []
-        max_games = 11
-        total_odd = 1
-        composite_betslip = None
-        composite_betslips = []
-        for prediction in self.db.get_predictions():
-            parent_match_id = prediction['parent_match_id']
-            sub_type_id = prediction['sub_type_id']
-            bet_pick = prediction['bet_pick']
-            bet_pick = 'YES' if bet_pick == 'GG' else bet_pick
-            special_bet_value = prediction['special_bet_value']
-            outcome_id = prediction['outcome_id']
-            url = f'https://api.betika.com/v1/uo/match?parent_match_id={parent_match_id}'
-            match_details = self.betika.get_data(url)
-            data = match_details.get('data')
-            if data:
-                for d in data:
-                    if sub_type_id == int(d.get('sub_type_id')):   
-                        odds = d.get('odds')
-                        for odd in odds:
-                            if bet_pick == odd.get('odd_key'): 
-                                odd_value = odd.get('odd_value') 
-                                betslip = self.compose_bet_slip(parent_match_id, sub_type_id, bet_pick, odd_value, outcome_id, special_bet_value)
-                                betslips.append(betslip)
-                                total_odd *= float(odd_value)                                            
-                                composite_betslip = {
-                                    'total_odd': total_odd,
-                                    'betslips': betslips
-                                }
-                                if len(betslips) == max_games:
-                                    print(total_odd)
-                                    composite_betslips.append(composite_betslip)
-                                    betslips = []
-                                    total_odd = 1
-                                    composite_betslip = None 
-
-        if composite_betslip:
-            if len(composite_betslip['betslips']) >= max_games/2:
-                print(total_odd)
-                composite_betslips.append(composite_betslip)
-        if len(composite_betslips) > 0:                        
-            balance, bonus = self.betika.get_balance()
-            placeable = balance #*0.75
-            stake = int(placeable/len(composite_betslips))
-            stake = 1 if stake == 0 and placeable >=1 else stake
-            if stake > 0:
-                for cb in composite_betslips:
-                    ttl_odd = cb['total_odd']
-                    slips = cb['betslips']
-                    print(f'TOTAL ODD: {ttl_odd}')
-                    #self.betika.place_bet(slips, ttl_odd, stake)
-                    time.sleep(5)
-
+    def bet(self, profile):
+        phone = profile[0]
+        password = profile[1]
+        profile_id = profile[2]
+        matches = self.db.fetch_unplaced_matches(profile_id)
+        print(matches)
+        helper = Helper(phone, password)
+        helper.auto_bet(matches, 5)
+        helper.auto_bet(matches, 10)
+        helper.auto_bet(matches, 15)
+        helper.auto_bet(matches, 20)
+                    
     def __call__(self):
-        # self.auto_predict()
-        self.auto_bet()
+        # Use ThreadPoolExecutor to spawn a thread for each profile
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            threads = [executor.submit(self.bet, profile) for profile in self.db.get_active_profiles()]
 
-if __name__ == '__main__':
-    AutoBet()()
+            # Wait for all threads to finish
+            concurrent.futures.wait(threads)
+                
+if __name__ == "__main__":
+    Autobet()()

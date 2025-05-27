@@ -159,6 +159,66 @@ class PostgresCRUD:
             cur.execute(query)
             return cur.fetchall()
     
+    def fetch_unplaced_matches(self, profile_id): 
+        self.ensure_connection()  
+        matches = []         
+        with self.conn.cursor() as cur:
+            query = """
+            WITH m AS(
+                SELECT kickoff, home_team, away_team, odd, parent_match_id, sub_type_id, bet_pick, special_bet_value, outcome_id 
+                FROM matches
+                WHERE kickoff > (CURRENT_TIMESTAMP + INTERVAL '3 hours')
+                ORDER BY overall_prob DESC, odd DESC
+            ),
+            placed AS(
+              SELECT parent_match_id 
+              FROM betslips 
+              WHERE profile_id = %s
+            )
+            SELECT * 
+            FROM m
+            WHERE parent_match_id NOT IN(
+              SELECT parent_match_id FROM placed
+            )
+            ORDER BY kickoff
+            """
+            cur.execute(query)
+            cur.execute(query, (profile_id,)) 
+            for datum in cur.fetchall():
+                match = {
+                    'start_time': datum[0],
+                    'home_team': datum[1],
+                    'away_team': datum[2],
+                    'odd': datum[3],
+                    'parent_match_id': datum[4],
+                    'sub_type_id': datum[5],
+                    'bet_pick': datum[6],
+                    'special_bet_value': datum[7],
+                    'outcome_id': datum[8]
+                }
+                matches.append(match)
+        return matches
+    
+    def add_bet_slip(self, profile_id, slips, code):
+        """
+        Add multiple bet slips for a profile.
+        Each slip should be a dict with a 'parent_match_id' key.
+        """
+        self.ensure_connection()
+        try:
+            with self.conn.cursor() as cur:
+                query = """
+                    INSERT INTO betslips(code, profile_id, parent_match_id)
+                    VALUES(%s, %s, %s)
+                """
+                values = [
+                    (code, profile_id, slip['parent_match_id']) for slip in slips
+                ]
+                cur.executemany(query, values)
+                self.conn.commit()
+        except Exception as e:
+            print(f"Error adding bet slips: {e}")
+    
     def update_match_results(self, match_id, home_results, away_results, status):        
         self.ensure_connection()
         with self.conn.cursor() as cur:
@@ -513,7 +573,7 @@ class PostgresCRUD:
         try:
             with self.conn.cursor() as cursor:
                 query = """
-                    SELECT phone, password
+                    SELECT phone, password, profile_id
                     FROM profiles
                     WHERE is_active IS TRUE
                 """

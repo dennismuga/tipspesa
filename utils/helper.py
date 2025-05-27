@@ -95,7 +95,7 @@ class Helper():
         
         return matches_ids
      
-    def auto_bet(self, matches, min_matches=6):
+    def auto_bet(self, profile_id, matches, min_matches=6):
         try:
             betslips = []
             composite_betslip = None
@@ -140,7 +140,8 @@ class Helper():
                         ttl_odd = cb['total_odd']
                         slips = cb['betslips']
                         print(slips, ttl_odd, stake)
-                        self.betika.place_bet(slips, ttl_odd, stake)
+                        code = self.betika.place_bet(slips, ttl_odd, stake)
+                        self.db.add_bet_slip(profile_id, slips, code)
                         time.sleep(2)
                             
         except Exception as e:

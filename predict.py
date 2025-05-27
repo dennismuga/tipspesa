@@ -21,16 +21,7 @@ class Predict:
         self.gemini = Gemini()
         self.db = PostgresCRUD()
         self.corners_beta = CornersBeta()
-    
-    def bet(self, profile, predicted_matches):
-        phone = profile[0]
-        password = profile[1]
-        helper = Helper(phone, password)
-        helper.auto_bet(predicted_matches, 5)
-        helper.auto_bet(predicted_matches, 10)
-        helper.auto_bet(predicted_matches, 15)
-        helper.auto_bet(predicted_matches, 20)
-                    
+                        
     def __call__(self):
         upcoming_match_ids = Helper().get_upcoming_match_ids()
         predicted_matches = []
@@ -58,14 +49,7 @@ class Predict:
                     for f_m in filtered_matches
                     if match["parent_match_id"] == f_m["match_id"] and int(f_m["probability"]) >= 75
                 ]
-                print(alpha_matches)
-                for match in alpha_matches:
-                    self.db.insert_match(match)
-                    
-                threads = [executor.submit(self.bet, profile, alpha_matches) for profile in self.db.get_active_profiles()]
-
-                # Wait for all threads to finish
-                concurrent.futures.wait(threads)
+                print(alpha_matches)                
                 
 if __name__ == "__main__":
     Predict()()

@@ -39,6 +39,9 @@ jobs:
       - name: Withdraw
         run: python withdraw.py
 
-      - name: Predict & Autobet
+      - name: Predict
         run: python predict.py
+
+      - name: Autobet
+        run: python auto_bet.py
 
