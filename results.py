@@ -79,7 +79,7 @@ class Results:
                 home_score = home_corners if match.sub_type_id == 166 else home_score
                 away_score = away_corners if match.sub_type_id == 166 else away_score
                 status = self.get_status(home_score, away_score, match.sub_type_id, match.bet_pick)
-                status = status if mins >= 90 or ('over' in match.bet_pick and status == 'WON') else f"{mins}'"
+                status = status if mins >= 93 or ('over' in match.bet_pick and status == 'WON') else f"{mins}'"
                 if home_score is not None and away_score is not None:
                     logger.info('%s vs %s [%s] = %d:%d - %s', match.home_team, match.away_team, match.bet_pick, home_score, away_score, status)
                 
