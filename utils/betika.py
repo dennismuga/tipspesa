@@ -108,13 +108,16 @@ class Betika():
             home = datum.get('home_team')
             away = datum.get('away_team')
             parent_match_id = datum.get('parent_match_id')
-
-            event = {
-                "home_team": home,
-                "away_team": away,
-                "parent_match_id": parent_match_id
-            }
-            events.append(event)
+            is_esport = datum.get("is_esport")
+            is_srl = datum.get("is_srl")
+            
+            if not is_esport and not is_srl:
+                event = {
+                    "home_team": home,
+                    "away_team": away,
+                    "parent_match_id": parent_match_id
+                }
+                events.append(event)
 
         total = int(response.get('meta').get('total'))
         current_page = int(response.get('meta').get('current_page'))

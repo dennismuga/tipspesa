@@ -92,7 +92,7 @@ class PostgresCRUD:
                     match['away_team'].replace("'","''"),
                     match['prediction'],
                     match['odd'],
-                    round(match['overall_prob']),
+                    match['overall_prob'],
                     match['parent_match_id'],
                     match['sub_type_id'],
                     match['bet_pick'],
@@ -100,7 +100,7 @@ class PostgresCRUD:
                     match['outcome_id'],
                     match['prediction'],
                     match['odd'],
-                    round(match['overall_prob'])
+                    match['overall_prob']
                 ) for match in matches
             ]
             cursor.executemany(query, values)
