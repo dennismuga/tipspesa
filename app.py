@@ -82,7 +82,7 @@ def page_not_found(e):
     # Redirect to a specific endpoint, like 'plans', or a custom 404 page
     return redirect(url_for('free'), 302)
 
-def filter_matches(day, match_count, end_index, status=' AND odd>=1.25'):
+def filter_matches(day, match_count, end_index, status=''):
     matches = helper.fetch_matches(day, '=', status, limit=51)
     filtered_matches = []
     total_odds = 1
