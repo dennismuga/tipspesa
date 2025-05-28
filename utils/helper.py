@@ -141,7 +141,8 @@ class Helper():
                         slips = cb['betslips']
                         print(slips, ttl_odd, stake)
                         code = self.betika.place_bet(slips, ttl_odd, stake)
-                        self.db.add_bet_slip(profile_id, slips, code)
+                        if code:
+                            self.db.add_bet_slip(profile_id, slips, code)
                         time.sleep(2)
                             
         except Exception as e:

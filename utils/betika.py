@@ -138,7 +138,10 @@ class Betika():
 
         response = self.post_data(url, payload)
         print(response)
-        return response
+        if "params" in response:
+            return response.get("params").get("bet_request_id").get("short_bet_id")
+        else:
+            return None
      
     def share_bet(self, betslips):
         url = f'{self.base_url}/v2/share/encode'
