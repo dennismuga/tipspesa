@@ -43,13 +43,14 @@ class Predict:
                 query = self.gemini.prepare_query(predicted_matches)
                 response = self.gemini.get_response(query).replace('```json', '').strip('```')
                 filtered_matches = json.loads(response)
-                alpha_matches = [
+                beta_matches = [
                     {  **match, "overall_prob": int(f_m["probability"]) }
                     for match in predicted_matches
                     for f_m in filtered_matches
                     if match["parent_match_id"] == f_m["match_id"] and int(f_m["probability"]) >= 75
                 ]
-                print(alpha_matches)                
+                print(beta_matches) 
+                self.db.insert_matches(beta_matches)               
                 
 if __name__ == "__main__":
     Predict()()

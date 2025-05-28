@@ -72,20 +72,7 @@ class PostgresCRUD:
                                    over_3_5_away_perc, analysis, prediction, overall_prob, analysis))
             self.conn.commit()
     
-    def insert_match(self, match):
-        kickoff = match['start_time']
-        home_team = match['home_team'].replace("'","''")
-        away_team = match['away_team'].replace("'","''")
-        prediction = match['prediction']
-        odd = match['odd']
-        overall_prob = round(match['overall_prob'])
-        parent_match_id = match['parent_match_id']
-        sub_type_id = match['sub_type_id']
-        bet_pick = match['bet_pick']
-        special_bet_value = match['special_bet_value']
-        outcome_id = match['outcome_id']
-        match_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, f"{match['match_id']}{prediction}"))
-                
+    def insert_matches(self, matches):                
         self.ensure_connection()
         with self.conn.cursor() as cursor:
             query = """
@@ -96,7 +83,27 @@ class PostgresCRUD:
                     odd = %s,
                     overall_prob = %s     
                 """
-            cursor.execute(query, (match_id, kickoff, home_team, away_team, prediction, odd, overall_prob, parent_match_id, sub_type_id, bet_pick, special_bet_value, outcome_id, prediction, odd, overall_prob))
+                
+            values = [
+                (
+                    str(uuid.uuid5(uuid.NAMESPACE_DNS, f"{match['match_id']}{match['prediction']}")),
+                    match['start_time'],
+                    match['home_team'].replace("'","''"),
+                    match['away_team'].replace("'","''"),
+                    match['prediction'],
+                    match['odd'],
+                    round(match['overall_prob']),
+                    match['parent_match_id'],
+                    match['sub_type_id'],
+                    match['bet_pick'],
+                    match['special_bet_value'],
+                    match['outcome_id'],
+                    match['prediction'],
+                    match['odd'],
+                    round(match['overall_prob'])
+                ) for match in matches
+            ]
+            cursor.executemany(query, values)
             self.conn.commit()
             
     def fetch_open_matches(self):

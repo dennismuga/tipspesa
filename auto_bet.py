@@ -1,6 +1,5 @@
 
 import concurrent.futures
-import json
 
 from utils.corners import Corners
 from utils.corners_beta import CornersBeta
