@@ -18,6 +18,15 @@ class Results:
 
     def get_status(self, home_score, away_score, subtype_id, bet_pick):
         """Determine the match status based on scores and bet pick."""
+        
+        # Handle double chances
+        if subtype_id == 10:
+            if ('or draw' in bet_pick and away_score > home_score) or \
+                ('draw or' in bet_pick and home_score > away_score) or \
+                ('draw' not in bet_pick and home_score == away_score):
+                    return ''   
+        
+        # Handle overs/unders goals      
         if subtype_id == 18:
             if (bet_pick == 'over 1.5' and home_score + away_score < 2) or \
                 (bet_pick == 'over 2.5' and home_score + away_score < 3) or \
@@ -44,8 +53,7 @@ class Results:
             if (home_score+away_score) not in range(int(bet_pick[0]), int(bet_pick[1])+1):
                 return 'LOST'
             
-        return 'WON'
-    
+        return 'WON'    
 
     def process_match(self, match: object) -> Tuple[str, int, int, str]:
         """
