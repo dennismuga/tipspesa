@@ -97,7 +97,7 @@ class PredictAi:
             query = self.prepare_query(parent_match_id)
             response = self.gemini.get_response(query).replace('```json', '').strip('```')
             filtered_match = json.loads(response)
-            return filtered_match if (filtered_match["odd"]>=1.2 and filtered_match["overall_prob"]>=75) else None
+            return filtered_match if (filtered_match["odd"]>=1.25 and filtered_match["overall_prob"]>=75) else None
         except Exception as e:
             return None
                  

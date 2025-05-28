@@ -135,7 +135,7 @@ class MinMatches():
     def __init__(self):
         self.free = 4
         self.bronze = 7
-        self.silver = 12 
-        self.gold = 16
-        self.platinum = 19
+        self.silver = 10 
+        self.gold = 13
+        self.platinum = 16
     
