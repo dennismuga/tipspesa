@@ -28,29 +28,43 @@ class Predict:
         # Use ThreadPoolExecutor to spawn a thread for each match
         with concurrent.futures.ThreadPoolExecutor() as executor:
             threads = [executor.submit(self.multi_goal_over_under.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids]
-            threads.extend([executor.submit(self.corners_beta.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids])
+            threads_2 = [executor.submit(self.corners_beta.predict_match, parent_match_id) for parent_match_id in upcoming_match_ids]
 
             # Wait for all threads to finish
-            concurrent.futures.wait(threads)
+            concurrent.futures.wait(threads + threads_2)  # Wait for both threads and threads_2
+
+            # Process threads (multi_goal_over_under predictions)
             for thread in threads:
                 try:
                     match = thread.result()
                     if match:
                         predicted_matches.append(match)
                 except Exception as e:
-                    print(f"Error processing match: {e}")
+                    print(f"Error processing match from multi_goal_over_under: {e}")
+
+            # Process threads_2 (corners_beta predictions)
+            for thread in threads_2:
+                try:
+                    match = thread.result()
+                    if match:
+                        # Check if parent_match_id already exists in predicted_matches
+                        if not any(m["parent_match_id"] == match["parent_match_id"] for m in predicted_matches):
+                            predicted_matches.append(match)
+                except Exception as e:
+                    print(f"Error processing match from corners_beta: {e}")
+
             if len(predicted_matches) > 0:
                 query = self.gemini.prepare_query(predicted_matches)
                 response = self.gemini.get_response(query).replace('```json', '').strip('```')
                 filtered_matches = json.loads(response)
                 beta_matches = [
-                    {  **match, "overall_prob": int(f_m["probability"]) }
+                    { **match, "overall_prob": int(f_m["probability"]) }
                     for match in predicted_matches
                     for f_m in filtered_matches
                     if match["parent_match_id"] == f_m["match_id"] and int(f_m["probability"]) >= 75
                 ]
-                print(beta_matches) 
-                self.db.insert_matches(beta_matches)               
+                print(beta_matches)
+                self.db.insert_matches(beta_matches)           
                 
 if __name__ == "__main__":
     Predict()()
