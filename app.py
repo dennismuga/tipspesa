@@ -140,7 +140,7 @@ def bronze():
         return subscribe()
     
     else:        
-        today_matches, history = get_matches(min_matches.bronze, 11)
+        today_matches, history = get_matches(min_matches.bronze, min_matches.free+min_matches.bronze)
         today_matches = today_matches if len(today_matches) > min_matches.free else []
         plan = Plan('Bronze', 20, min_odds.bronze, 'purple', 2, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds)
@@ -151,7 +151,7 @@ def silver():
         return subscribe()
     
     else:        
-        today_matches, history = get_matches(min_matches.silver, 21)
+        today_matches, history = get_matches(min_matches.silver, min_matches.free+min_matches.bronze+min_matches.silver)
         today_matches = today_matches if len(today_matches) > min_matches.bronze else []
         plan = Plan('Silver', 30, min_odds.silver, 'blue', 3, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds)
@@ -162,7 +162,7 @@ def gold():
         return subscribe()
     
     else:        
-        today_matches, history = get_matches(min_matches.gold, 34)
+        today_matches, history = get_matches(min_matches.gold, min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold)
         today_matches = today_matches if len(today_matches) > min_matches.silver else []
         plan = Plan('Gold', 50, min_odds.gold, 'yellow', 4, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds)
@@ -173,7 +173,7 @@ def platinum():
         return subscribe()
     
     else:        
-        today_matches, history = get_matches(min_matches.platinum, 50)
+        today_matches, history = get_matches(min_matches.platinum, min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum)
         today_matches = today_matches if len(today_matches) > min_matches.gold else []
         plan = Plan('Platinum', 70, min_odds.platinum, 'pink', 5, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds)
