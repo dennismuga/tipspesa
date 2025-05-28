@@ -109,7 +109,7 @@ def get_matches(count, end_index):
     three_days_ago = filter_matches('-3', 50, 50)
     two_days_ago = filter_matches('-2', 50, 50)
     yesterday_matches = filter_matches('-1', 50, 50)
-    today_matches = filter_matches('', count, end_index)
+    today_matches = filter_matches('', count, end_index, status=' AND odd>=1.25')
     history = [
         {
             'day': (datetime.now() - timedelta(days=3)).strftime("%A"),
