@@ -76,7 +76,8 @@
                             <!-- if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
                             <th>Time</th>
                             <th>Fixture</th>
-                            <th colspan="2">Tip</th>
+                            <th>Market</th>
+                            <th>Tip</th>
                             <th>Odd</th>
                             {% else %}
                             <th colspan="5">
@@ -196,7 +197,8 @@
                         <table class="results-table w-full border-collapse">
                             <tr>
                                 <th>Fixture</th>
-                                <th colspan="2">Tip</th>
+                                <th>Market</th>
+                                <th>Tip</th>
                                 <th>Result</th>
                             </tr>
                             {% for match in history.matches %}
