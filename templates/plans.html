@@ -76,11 +76,10 @@
                             <!-- if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
                             <th>Time</th>
                             <th>Fixture</th>
-                            <th>Market</th>
                             <th>Tip</th>
                             <th>Odd</th>
                             {% else %}
-                            <th colspan="5">
+                            <th colspan="4">
                                 Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{
                                 plan.name }} Plan now<br />
                                 Once Paid, Tips will be displayed here. <br />
@@ -104,8 +103,10 @@
                         <tr>
                             <td>{{ match.kickoff.strftime('%H:%M') }}</td>
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
-                            <td>{{ match.prediction }}</td>
-                            <td>{{ match.bet_pick }}</td>
+                            <td>
+                                {{ match.prediction }} <br />
+                                {{ match.bet_pick }}
+                            </td>
                             <td>{{ (match.home_results ~ '-' ~ match.away_results) if match.status else match.odd }}
                                 <br />
                                 {% if match.status == 'WON' %}
@@ -124,7 +125,7 @@
                         {% if True %}
                         <!-- if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
                         <tr>
-                            <td id="betika_share" colspan="5">
+                            <td id="betika_share" colspan="4">
                                 <button
                                     class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2">
                                     <span class="fa fa-spinner"></span><br />
@@ -134,11 +135,11 @@
                         </tr>
                         {% endif %}
                         <tr>
-                            <th colspan="4">Today Total Odds</th>
+                            <th colspan="3">Today Total Odds</th>
                             <th>{{ ns.total_odds | round(2) }}</th>
                         </tr>
                         {% else %}
-                        <th colspan="5">
+                        <th colspan="4">
                             Sorry, Our A.I could not find viable matches for {{
                             plan.name }} Plan today. Kindly check back Later!
                         </th>
@@ -197,15 +198,16 @@
                         <table class="results-table w-full border-collapse">
                             <tr>
                                 <th>Fixture</th>
-                                <th>Market</th>
                                 <th>Tip</th>
                                 <th>Result</th>
                             </tr>
                             {% for match in history.matches %}
                             <tr>
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
-                                <td>{{ match.prediction }}</td>
-                                <td>{{ match.bet_pick }}</td>
+                                <td>
+                                    {{ match.prediction }} <br />
+                                    {{ match.bet_pick }}
+                                </td>
                                 {% if match.status == 'WON' %}
                                 <td>
                                     {{ match.home_results ~ '-' ~ match.away_results }} <br />
