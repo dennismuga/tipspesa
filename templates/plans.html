@@ -104,8 +104,8 @@
                             <td>{{ match.kickoff.strftime('%H:%M') }}</td>
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                             <td>
-                                {{ match.prediction }} <br />
-                                {{ match.bet_pick }}
+                                {{ match.prediction | capitalize  }} <br />
+                                {{ match.bet_pick | upper }}
                             </td>
                             <td>{{ (match.home_results ~ '-' ~ match.away_results) if match.status else match.odd }}
                                 <br />
@@ -205,8 +205,8 @@
                             <tr>
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                                 <td>
-                                    {{ match.prediction }} <br />
-                                    {{ match.bet_pick }}
+                                    {{ match.prediction | capitalize  }} <br />
+                                    {{ match.bet_pick | upper }}
                                 </td>
                                 {% if match.status == 'WON' %}
                                 <td>
