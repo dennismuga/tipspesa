@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, time
 
 from utils.betika import Betika
 from utils.helper import Helper
@@ -22,7 +22,7 @@ class MultiGoalOverUnder():
         meta = match_details.get('meta')   
         start_time = meta.get('start_time') 
         
-        if datetime.now().date() == datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S").date():
+        if (datetime.now().date() == datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S").date() and datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S").time() > time(12, 0)):
             data = match_details.get('data')
             match = None
             if data:

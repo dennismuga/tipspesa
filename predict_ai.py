@@ -1,6 +1,5 @@
 
-import concurrent.futures
-from datetime import datetime
+from datetime import datetime, time
 import json
 
 from utils.betika import Betika
@@ -27,7 +26,7 @@ class PredictAi:
         meta = match_details.get('meta')   
         start_time = meta.get('start_time') 
         
-        if datetime.now().date() == datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S").date():   
+        if (datetime.now().date() == datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S").date() and datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S").time() > time(12, 0)):
             # Define the query structure as a dictionary for cleaner JSON handling
             query_dict = {
                 "instruction": "Analyze the following match and return the probability percentage of the highest most probable outcome from the available markets in data array. Respond with ONLY the JSON object, with no additional text, prose, or explanation. The output must strictly adhere to the provided JSON schema for the 'expected_output_schema'.",
@@ -95,9 +94,15 @@ class PredictAi:
     def predict_match(self, parent_match_id):   
         try:     
             query = self.prepare_query(parent_match_id)
-            response = self.gemini.get_response(query).replace('```json', '').strip('```')
-            filtered_match = json.loads(response)
-            return filtered_match if (filtered_match["odd"]>=1.15 and filtered_match["overall_prob"]>=75 and 'under ' not in filtered_match["bet_pick"] and ' or ' not in filtered_match["bet_pick"] ) else None
+            if query:
+                response = self.gemini.get_response(query).replace('```json', '').strip('```')
+                print(response)
+                filtered_match = json.loads(response)
+                predicted_match = filtered_match if (filtered_match["odd"]>=1.15 and filtered_match["overall_prob"]>=75 and 'under ' not in filtered_match["bet_pick"] and ' or ' not in filtered_match["bet_pick"] ) else None
+                unsure_match = filtered_match if (filtered_match["odd"]>=1.15 and filtered_match["overall_prob"]>=75 and 'under ' and ' or ' in filtered_match["bet_pick"] ) else None
+                return self.corners.predict_match(predicted_match) if unsure_match else predicted_match
+            else:
+                return None
         except Exception as e:
             return None
                  
