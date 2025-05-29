@@ -110,8 +110,9 @@ class Betika():
             parent_match_id = datum.get('parent_match_id')
             is_esport = datum.get("is_esport")
             is_srl = datum.get("is_srl")
+            category = datum.get("category")
             
-            if not is_esport and not is_srl:
+            if not is_esport and not is_srl and 'Simulated' not in category:
                 event = {
                     "home_team": home,
                     "away_team": away,
