@@ -108,13 +108,11 @@ class PredictAi:
                  
     def __call__(self):
         upcoming_match_ids = Helper().get_upcoming_match_ids()
-        predicted_matches = []
         
         for parent_match_id in upcoming_match_ids:
             predicted_match = self.predict_match(parent_match_id)
             if predicted_match:
                 print(predicted_match)
-                predicted_matches.append(predicted_match)  
                 self.db.insert_matches([predicted_match]) 
                 
 if __name__ == "__main__":
