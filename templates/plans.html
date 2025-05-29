@@ -104,10 +104,8 @@
                             <td>{{ match.kickoff.strftime('%H:%M') }}</td>
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                             <td>
-                                {{ match.prediction }}
-                                {{ 'goals' if match.sub_type_id == 18 else ' multi-goals' if match.sub_type_id == 548
-                                else ' bookings' if match.sub_type_id == 139 else ' corners' if match.sub_type_id == 166
-                                else '' }}
+                                {{ match.prediction }} <br />
+                                {{ match.bet_pick }}
                             </td>
 
                             <td>{{ (match.home_results ~ '-' ~ match.away_results) if match.status else match.odd }}

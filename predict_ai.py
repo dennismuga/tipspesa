@@ -65,11 +65,11 @@ class PredictAi:
                         },
                         "prediction": {
                             "type": "string",
-                            "description": "The predicted outcome value as provided in the input data[i]['odds'][i]['odd_key']"
+                            "description": "The subtype name as provided in the input data[i]['name']"
                         },
                         "bet_pick": {
                             "type": "string",
-                            "description": "The predicted outcome value as provided in the input data[i]['odds'][i]['odd_key']"
+                            "description": "The predicted outcome display value as provided in the input data[i]['odds'][i]['odd_key']"
                         },
                         "odd": {
                             "type": "float",
