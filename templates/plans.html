@@ -76,7 +76,7 @@
                             <!-- if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
                             <th>Time</th>
                             <th>Fixture</th>
-                            <th>Tip</th>
+                            <th colspan="2">Tip</th>
                             <th>Odd</th>
                             {% else %}
                             <th colspan="4">
@@ -103,11 +103,8 @@
                         <tr>
                             <td>{{ match.kickoff.strftime('%H:%M') }}</td>
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
-                            <td>
-                                {{ match.prediction }} <br />
-                                {{ match.bet_pick }}
-                            </td>
-
+                            <td>{{ match.prediction }}</td>
+                            <td>{{ match.bet_pick }}</td>
                             <td>{{ (match.home_results ~ '-' ~ match.away_results) if match.status else match.odd }}
                                 <br />
                                 {% if match.status == 'WON' %}
@@ -126,7 +123,7 @@
                         {% if True %}
                         <!-- if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
                         <tr>
-                            <td id="betika_share" colspan="4">
+                            <td id="betika_share" colspan="5">
                                 <button
                                     class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2">
                                     <span class="fa fa-spinner"></span><br />
