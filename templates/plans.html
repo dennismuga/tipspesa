@@ -196,18 +196,14 @@
                         <table class="results-table w-full border-collapse">
                             <tr>
                                 <th>Fixture</th>
-                                <th>Tip</th>
+                                <th colspan="2">Tip</th>
                                 <th>Result</th>
                             </tr>
                             {% for match in history.matches %}
                             <tr>
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
-                                <td>
-                                    {{ match.prediction }}
-                                    {{ 'goals' if match.sub_type_id == 18 else ' multi-goals' if match.sub_type_id ==
-                                    548 else ' bookings' if match.sub_type_id == 139 else ' corners' if
-                                    match.sub_type_id == 166 else '' }}
-                                </td>
+                                <td>{{ match.prediction }}</td>
+                                <td>{{ match.bet_pick }}</td>
                                 {% if match.status == 'WON' %}
                                 <td>
                                     {{ match.home_results ~ '-' ~ match.away_results }} <br />
