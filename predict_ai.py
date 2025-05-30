@@ -98,7 +98,7 @@ class PredictAi:
                 response = self.gemini.get_response(query).replace('```json', '').strip('```')
                 print(response)
                 filtered_match = json.loads(response)
-                predicted_match = filtered_match if (filtered_match["sub_type_id"] in [24,29,105,548] and filtered_match["odd"]>=1.1 and filtered_match["overall_prob"]>=75 and 'under ' not in filtered_match["bet_pick"] and ' or ' not in filtered_match["bet_pick"] ) else None
+                predicted_match = filtered_match if ((filtered_match["sub_type_id"] in [24,29,105,548] or (filtered_match["sub_type_id"]==18 and filtered_match["odd"]>=1.2)) and filtered_match["odd"]>=1.1 and filtered_match["overall_prob"]>=75 and 'under ' not in filtered_match["bet_pick"] and ' or ' not in filtered_match["bet_pick"] ) else None
                 unsure_match = filtered_match if (filtered_match["odd"]>=1.1 and filtered_match["overall_prob"]>=75 and filtered_match["sub_type_id"] == 10 ) else None
                 return self.corners.predict_match(predicted_match) if unsure_match else predicted_match
             else:
