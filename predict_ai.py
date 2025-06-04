@@ -99,7 +99,8 @@ class PredictAi:
                 print(response)
                 filtered_match = json.loads(response)
                 predicted_match = filtered_match if filtered_match["odd"] >=1.1 and filtered_match["overall_prob"]>=75 else None
-                predicted_match = None if ' or ' in filtered_match["bet_pick"] and ' draw ' not in predicted_match["bet_pick"] else predicted_match
+                predicted_match = None if ' or ' in predicted_match["bet_pick"] and ' draw ' not in predicted_match["bet_pick"] else predicted_match
+                predicted_match = None if predicted_match["bet_pick"] == 'under 3.5' else predicted_match
                 # predicted_match = filtered_match if ((filtered_match["sub_type_id"] in [24,29,105,548] or (filtered_match["sub_type_id"]==18)) and filtered_match["overall_prob"]>=75 and 'under ' not in filtered_match["bet_pick"] and ' or ' not in filtered_match["bet_pick"] ) else None
                 unsure_match = filtered_match if (filtered_match["overall_prob"]>=75 and filtered_match["sub_type_id"] == 10 ) else None
                 return self.corners.predict_match(predicted_match) if unsure_match else predicted_match
