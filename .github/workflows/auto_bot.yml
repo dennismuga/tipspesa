@@ -39,8 +39,8 @@ jobs:
       # - name: Withdraw
       #   run: python withdraw.py
 
-      - name: Predict
-        run: python predict.py
+      #- name: Predict
+      #  run: python predict.py
 
       - name: Predict Ai
         run: python predict_ai.py
