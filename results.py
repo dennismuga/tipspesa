@@ -28,7 +28,8 @@ class Results:
         
         # Handle overs/unders goals      
         if subtype_id == 18:
-            if (bet_pick == 'over 1.5' and home_score + away_score < 2) or \
+            if (bet_pick == 'over 0.5' and home_score + away_score < 1) or \
+                (bet_pick == 'over 1.5' and home_score + away_score < 2) or \
                 (bet_pick == 'over 2.5' and home_score + away_score < 3) or \
                 (bet_pick == 'over 3.5' and home_score + away_score < 4) or \
                 (bet_pick == 'under 3.5' and home_score + away_score > 3) or \
