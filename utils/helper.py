@@ -95,7 +95,7 @@ class Helper():
         
         return matches_ids
      
-    def auto_bet(self, profile_id, matches, min_matches=6):
+    def auto_bet(self, profile_id, matches, min_matches=4):
         try:
             betslips = []
             composite_betslip = None
