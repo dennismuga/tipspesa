@@ -27,9 +27,10 @@ class Autobet:
         profile_id = profile[2]
         matches = self.db.fetch_unplaced_matches(profile_id)
         helper = Helper(phone, password)
-        helper.auto_bet(profile_id, matches, 5)
-        helper.auto_bet(profile_id, matches, 10)
-        helper.auto_bet(profile_id, matches, 15)
+        helper.auto_bet(profile_id, matches, 4)
+        helper.auto_bet(profile_id, matches, 8)
+        helper.auto_bet(profile_id, matches, 12)
+        helper.auto_bet(profile_id, matches, 16)
         helper.auto_bet(profile_id, matches, 20)
                     
     def __call__(self):
