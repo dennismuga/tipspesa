@@ -131,7 +131,7 @@ def get_matches(count, end_index):
     
 @app.route('/', methods=['GET'])
 def free():
-    today_matches, history = get_matches(min_matches.free, 4)
+    today_matches, history = get_matches(min_matches.free, min_matches.free)
     plan = Plan('Free', 0, min_odds.free, 'green', 1, today_matches, history)  
     return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds)
 
