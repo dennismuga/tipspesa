@@ -98,9 +98,9 @@ class PredictAi:
                 response = self.gemini.get_response(query).replace('```json', '').strip('```')
                 print(response)
                 filtered_match = json.loads(response)
-                predicted_match = filtered_match if filtered_match["odd"] >=1.2 and filtered_match["overall_prob"]>=65 else None
+                predicted_match = filtered_match if filtered_match["odd"] >=1.2 and filtered_match["overall_prob"]>=80 else None
                 
-                if int(predicted_match["sub_type_id"]) in [1, 29] or int(predicted_match["outcome_id"]) in [10]:
+                if int(predicted_match["sub_type_id"]) in [1, 29] or int(predicted_match["outcome_id"]) in [10, 13]:
                     predicted_match = None
                 
                 return predicted_match
