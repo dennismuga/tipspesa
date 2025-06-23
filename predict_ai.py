@@ -101,7 +101,8 @@ class PredictAi:
                 predicted_match = filtered_match if filtered_match["odd"] >=1.2 and filtered_match["overall_prob"]>=65 else None
                 
                 if int(predicted_match["sub_type_id"]) in [1, 29] or int(predicted_match["outcome_id"]) in [10]:
-                    predicted_match = None
+                    pass
+                    #predicted_match = None
                 
                 return predicted_match
             else:
