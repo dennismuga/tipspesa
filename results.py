@@ -20,14 +20,14 @@ class Results:
         """Determine the match status based on scores and bet pick."""
         
         # Handle double chances
-        if subtype_id == 10:
+        if int(subtype_id) == 10:
             if ('or draw' in bet_pick and away_score > home_score) or \
                 ('draw or' in bet_pick and home_score > away_score) or \
                 ('draw' not in bet_pick and home_score == away_score):
                     return ''   
         
         # Handle overs/unders goals      
-        if subtype_id == 18:
+        if int(subtype_id) == 18:
             if (bet_pick == 'over 0.5' and home_score + away_score < 1) or \
                 (bet_pick == 'over 1.5' and home_score + away_score < 2) or \
                 (bet_pick == 'over 2.5' and home_score + away_score < 3) or \
@@ -38,7 +38,7 @@ class Results:
                     return ''
         
         # Handle corner bets
-        if subtype_id == 166:
+        if int(subtype_id) == 166:
             if (bet_pick == 'over 6.5' and home_score + away_score < 7) or \
                 (bet_pick == 'over 7.5' and home_score + away_score < 8) or \
                 (bet_pick == 'over 8.5' and home_score + away_score < 9) or \
@@ -80,7 +80,7 @@ class Results:
                 home_score = home_corners if match.sub_type_id == 166 else home_score
                 away_score = away_corners if match.sub_type_id == 166 else away_score
                 status = self.get_status(home_score, away_score, match.sub_type_id, match.bet_pick)
-                status = status if mins >= 93 or ('over' in match.bet_pick and status == 'WON') else f"{mins}'"
+                status = status if mins >= 90 or ('over' in match.bet_pick and status == 'WON') else f"{mins}'"
                 if home_score is not None and away_score is not None:
                     logger.info('%s vs %s [%s] = %d:%d - %s', match.home_team, match.away_team, match.bet_pick, home_score, away_score, status)
                 
