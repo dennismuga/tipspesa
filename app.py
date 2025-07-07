@@ -1,11 +1,12 @@
 
 import os
+
+from datetime import datetime, timedelta
+from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_session import Session
 from redis import Redis
-from dotenv import load_dotenv
-from datetime import datetime, timedelta
 
 from utils.entities import MinOdds, MinMatches, Plan
 from utils.helper import Helper
