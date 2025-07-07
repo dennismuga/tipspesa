@@ -81,13 +81,13 @@ class Helper():
             
         return matches
     
-    def get_upcoming_match_ids(self):    
+    def get_upcoming_match_ids(self, live=False):    
         total = 1001
         limit = 1000
         page = 1
         matches_ids = set()
         while limit*page < total:
-            total, page, events = self.betika.get_events(limit, page)
+            total, page, events = self.betika.get_events(limit, page, live)
             
             for event in events:
                 parent_match_id = event.get('parent_match_id')

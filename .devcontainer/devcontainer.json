@@ -10,7 +10,8 @@
                 "github.vscode-github-actions",
                 "ms-python.pylint",
                 "mechatroner.rainbow-csv",
-                "eamodio.gitlens"
+                "eamodio.gitlens",
+                "Postman.postman-for-vscode"
             ],
             "settings": {
                 "terminal.integrated.defaultProfile.linux#": "/bin/bash"
