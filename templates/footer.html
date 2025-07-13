@@ -32,7 +32,7 @@
                 {{ min_matches.free }} Matches<br />
                 ~2+ Odds
             </a></th>
-            {% if total_matches >= min_matches.free %}
+            {% if total_matches > min_matches.free %}
             <th><a href="{{ url_for('bronze') }}" class="text-{{ 'yellow-400' if plan.odds==min_odds.bronze else 'white' }} text-xs font-bold">
                 {% for i in range(2) %}
                 <i class="fas fa-star"></i>
@@ -41,7 +41,7 @@
                 ~5+ Odds
             </a></th>
             {% endif %}
-            {% if total_matches >= min_matches.bronze %}
+            {% if total_matches > min_matches.bronze %}
             <th><a href="{{ url_for('silver') }}" class="text-{{ 'yellow-400' if plan.odds==min_odds.silver else 'white' }} text-xs font-bold">
                 {% for i in range(3) %}
                 <i class="fas fa-star"></i>
@@ -50,7 +50,7 @@
                 ~10+ Odds
             </a></th>
             {% endif %}
-            {% if total_matches >= min_matches.silver %}
+            {% if total_matches > min_matches.silver %}
             <th><a href="{{ url_for('gold') }}" class="text-{{ 'yellow-400' if plan.odds==min_odds.gold else 'white' }} text-xs font-bold">
                 {% for i in range(4) %}
                 <i class="fas fa-star"></i>
@@ -59,7 +59,7 @@
                 ~20+ Odds
             </a></th>
             {% endif %}
-            {% if total_matches >= min_matches.gold %}
+            {% if total_matches > min_matches.gold %}
             <th><a href="{{ url_for('platinum') }}" class="text-{{ 'yellow-400' if plan.odds==min_odds.platinum else 'white' }} text-xs font-bold">
                 {% for i in range(5) %}
                 <i class="fas fa-star"></i>

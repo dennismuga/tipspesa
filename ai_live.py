@@ -98,8 +98,7 @@ class AiLive:
         try:     
             query = self.prepare_query(parent_match_id)
             if query:
-                response = self.gemini.get_response(query).replace('```json', '').strip('```')
-                print(response)
+                response = self.gemini.call_gemini_api(query).replace('```json', '').strip('```')
                 filtered_match = json.loads(response)
                 predicted_match = filtered_match if filtered_match["odd"] >=1.15 and filtered_match["overall_prob"]>=84 else None
                                 
