@@ -57,7 +57,7 @@ class PredictAi:
                         "overall_prob": {
                             "type": "integer",
                             "pattern": "^(100|[1-9][0-9]?|[0-9])$",
-                            "description": "The probability percentage (0-100) as a integer."
+                            "description": "The probability percentage (0-100) as an integer."
                         },
                         "sub_type_id": {
                             "type": "string",
@@ -95,10 +95,9 @@ class PredictAi:
         try:     
             query = self.prepare_query(parent_match_id)
             if query:
-                response = self.gemini.get_response(query).replace('```json', '').strip('```')
-                print(response)
+                response = self.gemini.call_gemini_api(query).replace('```json', '').strip('```')
                 filtered_match = json.loads(response)
-                predicted_match = filtered_match if filtered_match["odd"] >=1.15 and filtered_match["overall_prob"]>=84 else None
+                predicted_match = filtered_match if filtered_match["odd"] >=1.15 and filtered_match["overall_prob"]>=84 else None                
                 
                 if int(predicted_match["sub_type_id"]) in [1, 18, 29, 105] or int(predicted_match["outcome_id"]) in [10, 11, 13]:
                     predicted_match = None
