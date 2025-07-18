@@ -91,6 +91,17 @@ class PredictAi:
             query = json.dumps(query_dict, indent=4)
             return query
     
+    def clean_match(self, match):
+        if match:
+            if int(match["sub_type_id"]) == 68: #1ST HALF - TOTAL
+                match["prediction"] = "TOTAL"
+                match["sub_type_id"] = "18" 
+                match["bet_pick"] = "over 2.5"
+                match["special_bet_value"] = "total=2.5"                  
+                match["odd"] = 1 + (float(match["odd"]) - 1)*2           
+        
+        return match
+
     def predict_match(self, parent_match_id):   
         try:     
             query = self.prepare_query(parent_match_id)
@@ -99,10 +110,10 @@ class PredictAi:
                 filtered_match = json.loads(response)
                 predicted_match = filtered_match if filtered_match["odd"] >=1.15 and filtered_match["overall_prob"]>=84 else None                
                 
-                # if int(predicted_match["sub_type_id"]) in [1, 18, 29, 105] or int(predicted_match["outcome_id"]) in [10, 11, 13]:
-                #     predicted_match = None
+                if int(predicted_match["sub_type_id"]) in [105] or int(predicted_match["outcome_id"]) in [10, 11, 13]:
+                    predicted_match = None
                 
-                return predicted_match
+                return self.clean_match(predicted_match)
             else:
                 return None
         except Exception as e:
