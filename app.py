@@ -149,7 +149,7 @@ def bronze():
     else:        
         today_matches, history = get_matches(min_matches.bronze, min_matches.free+min_matches.bronze)
         today_matches = today_matches if len(today_matches) > min_matches.free else []
-        plan = Plan('Bronze', 10, min_odds.bronze, 'purple', 2, today_matches, history)
+        plan = Plan('Bronze', 20, min_odds.bronze, 'purple', 2, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches())
 
 @app.route('/silver', methods=['GET', 'POST'])
@@ -160,7 +160,7 @@ def silver():
     else:        
         today_matches, history = get_matches(min_matches.silver, min_matches.free+min_matches.bronze+min_matches.silver)
         today_matches = today_matches if len(today_matches) > min_matches.bronze else []
-        plan = Plan('Silver', 20, min_odds.silver, 'blue', 3, today_matches, history)
+        plan = Plan('Silver', 30, min_odds.silver, 'blue', 3, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches())
 
 @app.route('/gold', methods=['GET', 'POST'])
@@ -171,7 +171,7 @@ def gold():
     else:        
         today_matches, history = get_matches(min_matches.gold, min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold)
         today_matches = today_matches if len(today_matches) > min_matches.silver else []
-        plan = Plan('Gold', 30, min_odds.gold, 'yellow', 4, today_matches, history)
+        plan = Plan('Gold', 50, min_odds.gold, 'yellow', 4, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches())
     
 @app.route('/platinum', methods=['GET', 'POST'])
@@ -182,7 +182,7 @@ def platinum():
     else:        
         today_matches, history = get_matches(min_matches.platinum, min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum)
         today_matches = today_matches if len(today_matches) > min_matches.gold else []
-        plan = Plan('Platinum', 50, min_odds.platinum, 'pink', 5, today_matches, history)
+        plan = Plan('Platinum', 70, min_odds.platinum, 'pink', 5, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches())
              
 @app.route('/betika-share-code/<plan_name>', methods=['GET'])
