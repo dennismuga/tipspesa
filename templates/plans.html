@@ -72,27 +72,10 @@
                     <table class="results-table">
                         {% if plan.matches %}
                         <tr>
-                            {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free' %}
                             <th>Time</th>
                             <th>Fixture</th>
                             <th>Tip</th>
                             <th>Odd</th>
-                            {% else %}
-                            <th colspan="4">
-                                Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{
-                                plan.name }} Plan now<br />
-                                Once Paid, Tips will be displayed here. <br />
-                    
-                                <a href="#" data-toggle="modal" data-target="#loginModal"
-                                    onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
-                                    <button
-                                        class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
-                                        BUY {{ plan.name }} Plan<br />
-                                        @ KSh. {{ plan.amount }}
-                                    </button>
-                                </a>
-                            </th>
-                            {% endif %}
                         </tr>
                         {% set ns = namespace(total_odds=1) %}
                         {% for match in plan.matches %}
@@ -129,6 +112,23 @@
                                     Loading Betika Share Code...
                                 </button>
                             </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <th colspan="4">
+                                Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{
+                                plan.name }} Plan now<br />
+                                Once Paid, Tips will be displayed here. <br />
+                    
+                                <a href="#" data-toggle="modal" data-target="#loginModal"
+                                    onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
+                                    <button
+                                        class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
+                                        BUY {{ plan.name }} Plan<br />
+                                        @ KSh. {{ plan.amount }}
+                                    </button>
+                                </a>
+                            </th>
                         </tr>
                         {% endif %}
                         <tr>
