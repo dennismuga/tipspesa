@@ -72,8 +72,7 @@
                     <table class="results-table">
                         {% if plan.matches %}
                         <tr>
-                            {% if True %}
-                            <!-- if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
+                            {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free' %}
                             <th>Time</th>
                             <th>Fixture</th>
                             <th>Tip</th>
@@ -98,8 +97,7 @@
                         {% set ns = namespace(total_odds=1) %}
                         {% for match in plan.matches %}
                         {% set ns.total_odds = ns.total_odds * match.odd %}
-                        {% if True %}
-                        <!-- if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
+                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free' %}
                         <tr>
                             <td>{{ match.kickoff.strftime('%H:%M') }}</td>
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
@@ -122,8 +120,7 @@
                         </tr>
                         {% endif %}
                         {% endfor %}
-                        {% if True %}
-                        <!-- if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free Tips'  -->
+                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free' %}
                         <tr>
                             <td id="betika_share" colspan="4">
                                 <button
