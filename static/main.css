@@ -6,9 +6,10 @@ body {
 /* WhatsApp Float */
 .whatsapp-float {
     position: fixed;
-    bottom: 64px;
+    bottom: 48px;
     right: 2px;
     z-index: 1000;
+    width: 50px;
 }
 
 .whatsapp-float a {
