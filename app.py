@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_session import Session
+import pytz
 from redis import Redis
 
 from utils.entities import MinOdds, MinMatches, Plan
@@ -150,7 +151,8 @@ def bronze():
         today_matches, history = get_matches(min_matches.bronze, min_matches.free+min_matches.bronze)
         today_matches = today_matches if len(today_matches) > min_matches.free else []
         plan = Plan('Bronze', 10, min_odds.bronze, 'purple', 2, today_matches, history)
-        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches())
+        current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
+        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), current_time=current_time)
 
 @app.route('/silver', methods=['GET', 'POST'])
 def silver():
@@ -161,7 +163,8 @@ def silver():
         today_matches, history = get_matches(min_matches.silver, min_matches.free+min_matches.bronze+min_matches.silver)
         today_matches = today_matches if len(today_matches) > min_matches.bronze else []
         plan = Plan('Silver', 20, min_odds.silver, 'blue', 3, today_matches, history)
-        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches())
+        current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
+        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), current_time=current_time)
 
 @app.route('/gold', methods=['GET', 'POST'])
 def gold():
@@ -172,8 +175,9 @@ def gold():
         today_matches, history = get_matches(min_matches.gold, min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold)
         today_matches = today_matches if len(today_matches) > min_matches.silver else []
         plan = Plan('Gold', 30, min_odds.gold, 'yellow', 4, today_matches, history)
-        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches())
-    
+        current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
+        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), current_time=current_time)
+
 @app.route('/platinum', methods=['GET', 'POST'])
 def platinum():
     if request.method == 'POST': 
@@ -183,8 +187,9 @@ def platinum():
         today_matches, history = get_matches(min_matches.platinum, min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum)
         today_matches = today_matches if len(today_matches) > min_matches.gold else []
         plan = Plan('Platinum', 50, min_odds.platinum, 'pink', 5, today_matches, history)
-        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches())
-             
+        current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
+        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), current_time=current_time)
+
 @app.route('/betika-share-code/<plan_name>', methods=['GET'])
 def betika_share_code(plan_name):
     today_matches = []

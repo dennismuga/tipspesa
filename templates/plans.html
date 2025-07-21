@@ -97,7 +97,7 @@
                         {% set ns = namespace(total_odds=1) %}
                         {% for match in plan.matches %}
                         {% set ns.total_odds = ns.total_odds * match.odd %}
-                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free' %}
+                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free' or current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
                         <tr>
                             <td>{{ match.kickoff.strftime('%H:%M') }}</td>
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
