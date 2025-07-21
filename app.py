@@ -217,7 +217,7 @@ def save_pesapal_response():
     db.update_transaction(order_tracking_id, payment_method, payment_account, confirmation_code, status)
 
     if status == 'Completed':
-        plan = 'Bronze Plan' if amount == 10 else 'Silver Plan' if amount == 20 else 'Gold Plan' if amount == 30 else 'Platinum Plan' if amount == 50 else 'Free Tips'
+        plan = 'Bronze' if amount == 10 else 'Silver' if amount == 20 else 'Gold' if amount == 30 else 'Platinum' if amount == 50 else 'Free'
         db.update_user_expiry(order_tracking_id, plan)
 
 @app.route('/pesapal-callback', methods=['GET', 'POST'])
