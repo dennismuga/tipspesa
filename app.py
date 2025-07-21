@@ -2,6 +2,7 @@
 import os
 
 from datetime import datetime, timedelta
+import uuid
 from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_user, logout_user
@@ -10,6 +11,7 @@ from redis import Redis
 
 from utils.entities import MinOdds, MinMatches, Plan
 from utils.helper import Helper
+from utils.jenga import Jenga
 from utils.pesapal import Pesapal
 from utils.postgres_crud import PostgresCRUD
 from v2.predict_and_bet import PredictAndBet
@@ -68,10 +70,19 @@ def subscribe():
 
     login_user(user)
 
-    order_details = Pesapal().submit_order_request(phone[-9:], amount)
-    order_tracking_id = order_details.get('order_tracking_id')
-    db.insert_transaction(order_tracking_id, current_user.id, amount)
-    return render_template('pay.html', order_tracking_id=order_tracking_id)
+    jenga = Jenga()
+    token = jenga.get_access_token()
+    merchant_code = jenga.merchant_code
+    order_reference = str(uuid.uuid4()).replace('-', '')
+    # Ensure amount is an integer
+    currency = 'KES'
+    callback_url = url_for('jenga_payment_redirect', _external=True)
+    order_amount = int(amount)
+    signature = f"{merchant_code}{order_reference}{currency}{order_amount}{callback_url}"
+    db.insert_transaction(order_reference, current_user.id, order_amount)
+    return render_template('jenga-pay.html', token=token, merchant_code=merchant_code, 
+                           order_reference=order_reference, currency=currency, order_amount=order_amount,
+                           callback_url=callback_url, signature=signature)
 
 # Callback to reload the user object
 @login_manager.user_loader
@@ -149,7 +160,7 @@ def bronze():
     else:        
         today_matches, history = get_matches(min_matches.bronze, min_matches.free+min_matches.bronze)
         today_matches = today_matches if len(today_matches) > min_matches.free else []
-        plan = Plan('Bronze', 20, min_odds.bronze, 'purple', 2, today_matches, history)
+        plan = Plan('Bronze', 10, min_odds.bronze, 'purple', 2, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches())
 
 @app.route('/silver', methods=['GET', 'POST'])
@@ -160,7 +171,7 @@ def silver():
     else:        
         today_matches, history = get_matches(min_matches.silver, min_matches.free+min_matches.bronze+min_matches.silver)
         today_matches = today_matches if len(today_matches) > min_matches.bronze else []
-        plan = Plan('Silver', 30, min_odds.silver, 'blue', 3, today_matches, history)
+        plan = Plan('Silver', 20, min_odds.silver, 'blue', 3, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches())
 
 @app.route('/gold', methods=['GET', 'POST'])
@@ -171,7 +182,7 @@ def gold():
     else:        
         today_matches, history = get_matches(min_matches.gold, min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold)
         today_matches = today_matches if len(today_matches) > min_matches.silver else []
-        plan = Plan('Gold', 50, min_odds.gold, 'yellow', 4, today_matches, history)
+        plan = Plan('Gold', 30, min_odds.gold, 'yellow', 4, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches())
     
 @app.route('/platinum', methods=['GET', 'POST'])
@@ -182,7 +193,7 @@ def platinum():
     else:        
         today_matches, history = get_matches(min_matches.platinum, min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum)
         today_matches = today_matches if len(today_matches) > min_matches.gold else []
-        plan = Plan('Platinum', 70, min_odds.platinum, 'pink', 5, today_matches, history)
+        plan = Plan('Platinum', 50, min_odds.platinum, 'pink', 5, today_matches, history)
         return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches())
              
 @app.route('/betika-share-code/<plan_name>', methods=['GET'])
@@ -237,7 +248,25 @@ def terms_and_conditions():
 @app.route('/privacy-policy')
 def privacy_policy():    
     return render_template('privacy-policy.html')
- 
+
+@app.route('/jenga-payment-redirect', methods=['GET'])
+def jenga_payment_redirect():
+    transaction_id = request.args.get('transactionId')
+    status = request.args.get('status')
+    desc = request.args.get('desc')
+    amount = request.args.get('amount')
+    order_reference = request.args.get('orderReference')
+    plan = 'free'
+    print(f"Transaction ID: {transaction_id}, Status: {status}, Amount: {amount}, Order Reference: {order_reference}")
+    
+    db.update_transaction(order_reference, desc, desc, transaction_id, status)
+
+    if status == 'paid':
+        plan = 'Bronze' if amount == 10 else 'Silver' if amount == 20 else 'Gold' if amount == 30 else 'Platinum' if amount == 50 else 'Free'
+        db.update_user_expiry(order_reference, plan)
+
+    return redirect(url_for(plan.lower()))
+
 if __name__ == '__main__':
     debug_mode = os.getenv('IS_DEBUG', 'False') in ['True', '1', 't']
     app.run(debug=debug_mode)

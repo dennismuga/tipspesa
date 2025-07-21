@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <!-- Main Content -->
+    <div class="main-content bg-white">
+        <form id="submitcheckout" action="https://v3-uat.jengapgw.io/processPayment" method="POST">
+            <input type="hidden" id="token" name="token" />
+            <input type="hidden" id="merchantCode" name="merchantCode" />
+            <input type="hidden" id="currency" name="currency" />
+            <input type="hidden" id="orderAmount" name="orderAmount" />
+            <input type="hidden" id="orderReference" name="orderReference" />
+            <input type="hidden" id="productType" name="productType" />
+            <input type="hidden" id="productDescription" name="productDescription" />
+            <input type="hidden" id="paymentTimeLimit" name="paymentTimeLimit" />
+            <input type="hidden" id="customerFirstName" name="customerFirstName" />
+            <input type="hidden" id="customerLastName" name="customerLastName" />
+            <input type="hidden" id="customerPostalCodeZip" name="customerPostalCodeZip" />
+            <input type="hidden" id="customerAddress" name="customerAddress" />
+            <input type="hidden" id="customerEmail" name="customerEmail" />
+            <input type="hidden" id="customerPhone" name="customerPhone" />
+            <input type="hidden" id="extraData" name="extraData" />
+            <input type="hidden" id="callbackUrl" name="callbackUrl" />
+            <input type="hidden" id="countryCode" name="countryCode" />
+            <input type="hidden" id="secondaryReference" name="secondaryReference" />
+            <input type="hidden" id="signature" name="signature" />
+        </form>
+    </div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Set the values for the hidden inputs
+        document.getElementById("token").value = "{{ token }}";
+        document.getElementById("merchantCode").value = "{{ merchant_code }}";
+        document.getElementById("orderReference").value = "{{ order_reference }}";
+        document.getElementById("currency").value = "{{ currency }}";
+        document.getElementById("orderAmount").value = "{{ order_amount }}";
+        document.getElementById("callbackUrl").value = "{{ callback_url }}";
+        document.getElementById("signature").value = "{{ signature }}";
+
+        // Set other required fields
+        document.getElementById("productType").value = "Service";
+        document.getElementById("productDescription").value = "Premium Tips Subscription";
+        document.getElementById("paymentTimeLimit").value = "15mins";
+        document.getElementById("customerFirstName").value = "JOHN";
+        document.getElementById("customerLastName").value = "DOE";
+        document.getElementById("customerPhone").value = "254712345678"; 
+        document.getElementById("customerPostalCodeZip").value = "00100";
+        document.getElementById("customerAddress").value = "Nairobi";
+        document.getElementById("customerEmail").value = "john.doe@example.com";
+        document.getElementById("countryCode").value = "KE";
+        // document.getElementById("extraData").value = "{{ extra_data }}";
+        // document.getElementById("secondaryReference").value = "{{ secondary_reference }}";
+
+        // Submit the form
+        document.getElementById('submitcheckout').submit();
+    });
+</script>
+
+</html>
