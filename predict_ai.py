@@ -27,7 +27,7 @@ class PredictAi:
         meta = match_details.get('meta')   
         start_time = meta.get('start_time') 
         
-        if (datetime.now().date() == datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S").date() and datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S").time() > time(12, 0)):
+        if datetime.now().date() == datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S").date():
             # Define the query structure as a dictionary for cleaner JSON handling
             query_dict = {
                 "instruction": "Analyze the following match and return the probability percentage of the highest most probable outcome from the available markets in data array. Respond with ONLY the JSON object, with no additional text, prose, or explanation. The output must strictly adhere to the provided JSON schema for the 'expected_output_schema'.",
@@ -109,7 +109,7 @@ class PredictAi:
             if query:
                 response = self.gemini.get_response(query).replace('```json', '').strip('```')
                 filtered_match = json.loads(response)
-                predicted_match = filtered_match if filtered_match["odd"] >=1.0 and filtered_match["overall_prob"]>=75 else None                
+                predicted_match = filtered_match if filtered_match["odd"] >1.10 and filtered_match["overall_prob"]>=75 else None                
                 
                 if int(predicted_match["sub_type_id"]) in [105] or int(predicted_match["outcome_id"]) in [10, 11, 13]:
                     predicted_match = None
@@ -132,3 +132,4 @@ class PredictAi:
                 
 if __name__ == "__main__":
     PredictAi()()
+    
