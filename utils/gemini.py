@@ -1,5 +1,4 @@
-import json, os, requests
-from datetime import datetime, time
+import os, requests
 from dotenv import load_dotenv
 from google import genai
 
