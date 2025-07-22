@@ -1,5 +1,5 @@
 import json, os, requests
-from datetime import datetime
+from datetime import datetime, time
 from dotenv import load_dotenv
 from google import genai
 
@@ -15,14 +15,12 @@ class Gemini():
                 model= os.getenv('GEMINI_MODEL'), 
                 contents=str(query)
             )
-            print(response)
             return response.text
         
         except Exception as e:
             print(f"Error in predict_match: {e}")
             return None
     
-
     def call_gemini_api(self, query):
         try:
             url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"

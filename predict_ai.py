@@ -106,9 +106,9 @@ class PredictAi:
         try:     
             query = self.prepare_query(parent_match_id)
             if query:
-                response = self.gemini.call_gemini_api(query).replace('```json', '').strip('```')
+                response = self.gemini.get_response(query).replace('```json', '').strip('```')
                 filtered_match = json.loads(response)
-                predicted_match = filtered_match if filtered_match["odd"] >=1.10 and filtered_match["overall_prob"]>=75 else None                
+                predicted_match = filtered_match if filtered_match["odd"] >=1.0 and filtered_match["overall_prob"]>=75 else None                
                 
                 if int(predicted_match["sub_type_id"]) in [105] or int(predicted_match["outcome_id"]) in [10, 11, 13]:
                     predicted_match = None
@@ -127,6 +127,7 @@ class PredictAi:
             if predicted_match:
                 print(predicted_match)
                 self.db.insert_matches([predicted_match]) 
+                time.sleep(6)
                 
 if __name__ == "__main__":
     PredictAi()()
