@@ -465,7 +465,7 @@ class PostgresCRUD:
         self.ensure_connection()
         with self.conn.cursor() as cur:
             query = """
-                SELECT id, phone, password, expires_at > NOW() AS active
+                SELECT id, phone, password, DATE(expires_at) > CURRENT_DATE AS active
                 FROM subscribers
                 WHERE 1=1
             """
