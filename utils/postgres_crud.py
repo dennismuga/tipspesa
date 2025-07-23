@@ -449,16 +449,16 @@ class PostgresCRUD:
             cursor.execute(query, (id, phone))
             self.conn.commit()      
     
-    def update_user_expiry(self, order_tracking_id, plan):         
+    def update_user_expiry(self, order_tracking_id, plan, days=1):         
         self.ensure_connection()
         with self.conn.cursor() as cur:
             query = """
                 UPDATE subscribers
-                SET password=%s, expires_at = NOW() + INTERVAL '1 days' 
+                SET password=%s, expires_at = NOW() + INTERVAL '%s days' 
                 WHERE id = (SELECT subscriber_id FROM transactions WHERE id = %s)
             """
-            
-            cur.execute(query, (plan, order_tracking_id)) 
+
+            cur.execute(query, (plan, days, order_tracking_id)) 
             self.conn.commit()  
 
     def get_user(self, user_id=None, phone=None):

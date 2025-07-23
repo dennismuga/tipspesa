@@ -11,13 +11,29 @@
                 <form method="POST" class="form-horizontal">
                     <div class="modal-header text-center">
                         <h5 class="text-center"><b id="plan"></b> Premium Tips Subscription</h5>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label class="col-4 text-end control-label col-form-label">Phone No.:</label>
+                            <label class="col-4 text-end control-label col-form-label">Subscription Period:</label>
                             <div class="col-8">
-                                <input type="hidden" id="amount" name="amount">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="amount" id="daily" value="daily" required>
+                                    <label class="form-check-label" for="daily">Daily</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="amount" id="weekly" value="weekly" required>
+                                    <label class="form-check-label" for="weekly">Weekly</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="amount" id="monthly" value="monthly" required>
+                                    <label class="form-check-label" for="monthly">Monthly</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-4 text-end control-label col-form-label">Your Phone No.:</label>
+                            <div class="col-8">
                                 <input required="required" type="text" name="phone" id="phone"
                                     class="form-control input-sm" minlength="9" placeholder="e.g 0712345678">
                             </div>
@@ -45,7 +61,8 @@
     <!-- Main Content -->
     <div class="main-content bg-white">
         <div class="whatsapp-float">
-            <a href="https://wa.me/+254759697757" class="text-white text-xs font-bold" target="_blank" title="Chat with us on WhatsApp">
+            <a href="https://wa.me/+254759697757" class="text-white text-xs font-bold" target="_blank"
+                title="Chat with us on WhatsApp">
                 <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp">
             </a>
         </div>
@@ -80,12 +97,13 @@
                         {% set ns = namespace(total_odds=1) %}
                         {% for match in plan.matches %}
                         {% set ns.total_odds = ns.total_odds * match.odd %}
-                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free' or current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
+                        {% if (current_user.active and current_user.plan == plan.name) or plan.name == 'Free' or
+                        current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
                         <tr>
                             <td>{{ match.kickoff.strftime('%H:%M') }}</td>
                             <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                             <td>
-                                {{ match.prediction | capitalize  }} <br />
+                                {{ match.prediction | capitalize }} <br />
                                 {{ match.bet_pick | upper }}
                             </td>
                             <td>{{ (match.home_results ~ '-' ~ match.away_results) if match.status else match.odd }}
@@ -119,7 +137,7 @@
                                 Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{
                                 plan.name }} Plan now<br />
                                 Once Paid, Tips will be displayed here. <br />
-                    
+
                                 <a href="#" data-toggle="modal" data-target="#loginModal"
                                     onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
                                     <button
@@ -202,7 +220,7 @@
                             <tr>
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                                 <td>
-                                    {{ match.prediction | capitalize  }} <br />
+                                    {{ match.prediction | capitalize }} <br />
                                     {{ match.bet_pick | upper }}
                                 </td>
                                 {% if match.status == 'WON' %}
@@ -236,7 +254,9 @@
     <script>
         function setPlan(name, amount) {
             $('#plan').html(name)
-            $('#amount').val(amount)
+            $('#daily').val(amount)
+            $('#weekly').val(amount*5)
+            $('#monthly').val(amount*15)
         }
 
         function getBetikaShare() {
