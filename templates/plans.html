@@ -121,8 +121,7 @@
                         </tr>
                         {% endif %}
                         {% endfor %}
-                        {% if (current_user.active and (current_user.plan == 'Platinum' and plan.name in ['Platinum', 'Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Gold' and plan.name in ['Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Silver' and plan.name in ['Silver', 'Bronze']) or (current_user.plan == 'Bronze' and plan.name == 'Bronze')) or plan.name == 'Free' or
-                        current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
+                        {% if (current_user.active and (current_user.plan == 'Platinum' and plan.name in ['Platinum', 'Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Gold' and plan.name in ['Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Silver' and plan.name in ['Silver', 'Bronze']) or (current_user.plan == 'Bronze' and plan.name == 'Bronze')) or plan.name == 'Free' %}
                         <tr>
                             <td id="betika_share" colspan="4">
                                 <button
