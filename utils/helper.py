@@ -131,7 +131,7 @@ class Helper():
                 composite_betslips.append(composite_betslip)
                 
             if len(composite_betslips) > 0:              
-                usable = self.betika.balance + self.betika.bonus
+                usable = self.betika.balance #+ self.betika.bonus
                 stake = int((usable/len(composite_betslips))/2)
                 stake = 1 if (stake == 0 and int(usable)>0) else stake
                 if stake > 0:
@@ -144,6 +144,8 @@ class Helper():
                         if code:
                             self.db.add_bet_slip(profile_id, slips, code)
                         time.sleep(2)
+                else:
+                    print("Insufficient balance to place bets.")
                             
         except Exception as e:
             print(f"Error in auto_bet: {e}")
