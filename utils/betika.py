@@ -140,7 +140,7 @@ class Betika():
         response = self.post_data(url, payload)
         print(response)
         if "params" in response:
-            return response.get("params").get("bet_request_id").get("short_bet_id")
+            return response.get("params").get("short_bet_id")
         else:
             return None
      
