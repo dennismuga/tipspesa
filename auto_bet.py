@@ -1,12 +1,7 @@
 
 import concurrent.futures
 
-from utils.corners import Corners
-from utils.corners_beta import CornersBeta
-from utils.gemini import Gemini
 from utils.helper import Helper
-from utils.multi_goal import MultiGoal
-from utils.multi_goal_over_under import MultiGoalOverUnder
 from utils.postgres_crud import PostgresCRUD
 
 class Autobet:
@@ -14,12 +9,7 @@ class Autobet:
         main class
     """
     def __init__(self):
-        self.multi_goal = MultiGoal()
-        self.multi_goal_over_under = MultiGoalOverUnder()
-        self.corners = Corners()
-        self.gemini = Gemini()
         self.db = PostgresCRUD()
-        self.corners_beta = CornersBeta()
     
     def bet(self, profile):
         phone = profile[0]
