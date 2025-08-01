@@ -133,6 +133,7 @@ class Helper():
             if len(composite_betslips) > 0:              
                 usable = self.betika.balance #+ self.betika.bonus
                 stake = int((usable/len(composite_betslips))/2)
+                stake = max(5, stake)
                 stake = 1 if (stake == 0 and int(usable)>0) else stake
                 if stake > 0:
                     composite_betslips.sort(key=lambda cb: cb['total_odd'], reverse=True)
@@ -188,3 +189,4 @@ class Helper():
         return code
     
     
+
