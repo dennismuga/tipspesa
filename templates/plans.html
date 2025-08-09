@@ -269,13 +269,12 @@
                         link = 'https://betika.com/share/' + code
                         html = `
                             <button 
-                                onclick="openBetikaLink('`+ code + `')"                
+                                onclick="copyToClipboard('`+ code + `')"                
                                 class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2"
                             >Betika code: ` + code + `<br />
-                                Click to Load Betslip
+                                Click to Copy
                             </button>
-                        `
-                            ;
+                        `;
                     } else
                         html = '<span class="text-red-500">Betika code is not available. Try again later.</span>';
                     $('#betika_share').html(html);
