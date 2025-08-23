@@ -130,12 +130,11 @@ class MinOdds():
         self.gold = 20
         self.platinum = 40
 
-
 class MinMatches():
     def __init__(self):
-        self.free = 3
-        self.bronze = 6
-        self.silver = 8 
-        self.gold = 10
-        self.platinum = 12
+        self.free = 4
+        self.bronze = 7
+        self.silver = 10 
+        self.gold = 12
+        self.platinum = 15
     
