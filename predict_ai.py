@@ -99,7 +99,7 @@ class PredictAi:
                 match["sub_type_id"] = "18" 
                 match["bet_pick"] = "over 2.5"
                 match["special_bet_value"] = "total=2.5"                  
-                match["odd"] = 1 + (float(match["odd"]) - 1)*2           
+                match["odd"] = 1 + (float(match["odd"]) - 1) * 2           
         
         return match
 
@@ -111,7 +111,7 @@ class PredictAi:
                 filtered_match = json.loads(response)
                 predicted_match = filtered_match if filtered_match["odd"] >1.1 and filtered_match["overall_prob"]>=85 else None                
                 
-                if int(predicted_match["sub_type_id"]) in [1, 45, 105] or int(predicted_match["outcome_id"]) in [10, 11, 13]:
+                if int(predicted_match["sub_type_id"]) in [1, 14, 45, 105] or int(predicted_match["outcome_id"]) in [10, 11, 13]:
                     predicted_match = None
                 
                 return self.clean_match(predicted_match)
