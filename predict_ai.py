@@ -99,7 +99,7 @@ class PredictAi:
                 match["sub_type_id"] = "18" 
                 match["bet_pick"] = "over 2.5"
                 match["special_bet_value"] = "total=2.5"                  
-                match["odd"] = 1 + (float(match["odd"]) - 1) * 2           
+                match["odd"] = 1 + (float(match["odd"]) - 1) * 3           
         
         return match
 
