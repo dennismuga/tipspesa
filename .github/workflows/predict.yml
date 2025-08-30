@@ -5,7 +5,7 @@ on:
   workflow_dispatch: # Manually trigger the workflow
 
   schedule:
-    - cron: '0 3,9 * * *'  # Runs at 3:00am and 9:00am UTC (6:00am and 12:00pm EAT)
+    - cron: '0 9,12 * * *'  # Runs at 9:00am and 12:00pm UTC (12:00pm and 15:00pm EAT)
 
 jobs:
   execute:
@@ -38,5 +38,8 @@ jobs:
 
       - name: Predict Ai
         run: python predict_ai.py
+
+      - name: Auto Bet
+        run: python auto_bet.py
 
 
