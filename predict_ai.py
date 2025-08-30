@@ -94,7 +94,7 @@ class PredictAi:
     
     def clean_match(self, match):
         if match:
-            if match["bet_pick"] == "over 1.5" or int(match["sub_type_id"]) == 68: #1ST HALF - TOTAL
+            if int(match["sub_type_id"]) == 68: #1ST HALF - TOTAL
                 match["prediction"] = "TOTAL"
                 match["sub_type_id"] = "18" 
                 match["bet_pick"] = "over 2.5"
