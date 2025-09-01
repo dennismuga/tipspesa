@@ -95,7 +95,7 @@ class Helper():
         
         return matches_ids
      
-    def auto_bet(self, profile_id, matches, min_matches=4):
+    def auto_bet(self, profile_id, matches, min_matches=1):
         try:
             betslips = []
             composite_betslip = None
@@ -133,7 +133,7 @@ class Helper():
             if len(composite_betslips) > 0:              
                 usable = self.betika.balance #+ self.betika.bonus
                 stake = int((usable/len(composite_betslips))/2)
-                stake = max(20, stake)
+                stake = max(1, stake)
                 stake = 1 if (stake == 0 and int(usable)>0) else stake
                 if stake > 0:
                     composite_betslips.sort(key=lambda cb: cb['total_odd'], reverse=True)
@@ -189,6 +189,7 @@ class Helper():
         return code
     
     
+
 
 
 
