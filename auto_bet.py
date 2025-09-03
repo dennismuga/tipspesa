@@ -19,9 +19,9 @@ class Autobet:
         helper = Helper(phone, password)
         helper.auto_bet(profile_id, matches, 1)
         helper.auto_bet(profile_id, matches, 2)
-        # helper.auto_bet(profile_id, matches, 12)
-        # helper.auto_bet(profile_id, matches, 16)
-        # helper.auto_bet(profile_id, matches, 20)
+        helper.auto_bet(profile_id, matches, 3)
+        helper.auto_bet(profile_id, matches, 4)
+        helper.auto_bet(profile_id, matches, 5)
                     
     def __call__(self):
         # Use ThreadPoolExecutor to spawn a thread for each profile
@@ -33,5 +33,6 @@ class Autobet:
                 
 if __name__ == "__main__":
     Autobet()()
+
 
 
