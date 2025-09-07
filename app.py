@@ -3,7 +3,7 @@ import os
 
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, send_from_directory, url_for
 from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_session import Session
 import pytz
@@ -244,7 +244,15 @@ def terms_and_conditions():
 @app.route('/privacy-policy')
 def privacy_policy():    
     return render_template('privacy-policy.html')
- 
+
+# Define the directory where your static files are located
+STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+
+@app.route('/.well-known/app-ads.txt')
+def serve_app_ads_txt():
+    return send_from_directory(STATIC_DIR, 'app-ads.txt', mimetype='text/plain')
+
 if __name__ == '__main__':
     debug_mode = os.getenv('IS_DEBUG', 'False') in ['True', '1', 't']
     app.run(debug=debug_mode)
+
