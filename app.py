@@ -245,14 +245,18 @@ def terms_and_conditions():
 def privacy_policy():    
     return render_template('privacy-policy.html')
 
-# Define the directory where your static files are located
-STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
-
-@app.route('/.well-known/app-ads.txt')
+# The route to serve app-ads.txt from the root URL.
+@app.route('/app-ads.txt')
 def serve_app_ads_txt():
-    return send_from_directory(STATIC_DIR, 'app-ads.txt', mimetype='text/plain')
+    """
+    Serves the app-ads.txt file from the root URL of the domain.
+    This is the most common and recommended method according to the standard.
+    """
+    # Use app.send_static_file to serve the file directly from the static folder
+    return app.send_static_file('app-ads.txt')
 
 if __name__ == '__main__':
     debug_mode = os.getenv('IS_DEBUG', 'False') in ['True', '1', 't']
     app.run(debug=debug_mode)
+
 
