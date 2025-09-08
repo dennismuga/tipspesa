@@ -8,16 +8,17 @@ class Gemini():
         self.client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
         
     def get_response(self, query):
-        try:
-            response = self.client.models.generate_content(
-                model= "gemini-2.5-flash", # os.getenv('GEMINI_MODEL'), 
-                contents=str(query)
-            )
-            return response.text
-        
-        except Exception as e:
-            print(f"Error in Gemini.get_response: {e}")
-            return None
+        while True:
+            try:
+                response = self.client.models.generate_content(
+                    model= "gemini-2.5-flash", # os.getenv('GEMINI_MODEL'), 
+                    contents=str(query)
+                )
+                return response.text
+            
+            except Exception as e:
+                print(f"Error in Gemini.get_response: {e}")
+                self.client = genai.Client('AIzaSyDdp3DT8Q8xBc39dsuIrxQMs7vrcMa17Fs') # Fallback API key
     
     def call_gemini_api(self, query):
         try:
