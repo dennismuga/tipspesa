@@ -31,7 +31,6 @@
                 <i class="fas fa-star"></i>
                 {% endfor %}<br />
                 {{ min_matches.free }} Matches<br />
-                ~2+ Odds
             </a></th>
             {% if total_matches > min_matches.free %}
             <th><a href="{{ url_for('bronze') }}" class="text-{{ 'yellow-400' if plan.odds==min_odds.bronze else 'white' }} text-xs font-bold">
@@ -39,7 +38,6 @@
                 <i class="fas fa-star"></i>
                 {% endfor %}<br />
                 {{ min_matches.bronze }} Matches<br />
-                ~5+ Odds
             </a></th>
             {% endif %}
             {% if total_matches > min_matches.bronze %}
@@ -48,7 +46,6 @@
                 <i class="fas fa-star"></i>
                 {% endfor %}<br />
                 {{ min_matches.silver }} Matches<br />
-                ~10+ Odds
             </a></th>
             {% endif %}
             {% if total_matches > min_matches.silver %}
@@ -57,7 +54,6 @@
                 <i class="fas fa-star"></i>
                 {% endfor %}<br />
                 {{ min_matches.gold }} Matches<br />
-                ~20+ Odds
             </a></th>
             {% endif %}
             {% if total_matches > min_matches.gold %}
@@ -66,7 +62,6 @@
                 <i class="fas fa-star"></i>
                 {% endfor %}<br />
                 {{ min_matches.platinum }} Matches<br />
-                ~40+ Odds
             </a></th>
             {% endif %}
             <!-- <th>
@@ -87,4 +82,5 @@
     crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='plugin.js') }}"></script>
 <script src="{{ url_for('static', filename='script.js') }}"></script>  
+
 
