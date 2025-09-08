@@ -4,7 +4,6 @@ import json
 import time
 
 from utils.betika import Betika
-from utils.corners import Corners
 from utils.gemini import Gemini
 from utils.helper import Helper
 from utils.postgres_crud import PostgresCRUD
@@ -14,7 +13,6 @@ class PredictAi:
         main class
     """
     def __init__(self):
-        self.corners = Corners()
         self.gemini = Gemini()
         self.db = PostgresCRUD()
         self.betika = Betika()

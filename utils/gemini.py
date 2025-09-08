@@ -2,10 +2,9 @@ import os, requests
 from dotenv import load_dotenv
 from google import genai
 
-load_dotenv()
-
 class Gemini():
-    def __init__(self):
+    def __init__(self):        
+        load_dotenv()
         self.client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
         
     def get_response(self, query):
@@ -17,7 +16,7 @@ class Gemini():
             return response.text
         
         except Exception as e:
-            print(f"Error in predict_match: {e}")
+            print(f"Error in Gemini.get_response: {e}")
             return None
     
     def call_gemini_api(self, query):
