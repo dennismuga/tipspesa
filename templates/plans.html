@@ -132,7 +132,7 @@
                         </button>
                     </div>
                     {% for slip in slips %}
-                    <div id="slip_{{ slip.id }}" class="tab-content">
+                    <div id="slip_{{ slip.id }}" class="tab-content {% if slip.id != 1 %}hidden{% endif %}">
                         <table class="results-table">
                             {% if slip.matches %}
                             <tr>
