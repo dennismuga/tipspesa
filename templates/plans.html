@@ -3,6 +3,33 @@
 
 {% include 'head.html' %}
 
+
+<!-- CSS for Tabs -->
+<style>
+    .tab-button {
+        transition: all 0.3s ease;
+    }
+
+    .tab-button.active {
+        background-color: #10b981;
+        /* Green to match text-green-600 */
+        color: white;
+    }
+
+    .tab-button:hover {
+        background-color: #10b981;
+        /* Light green on hover */
+    }
+
+    .tab-content {
+        display: block;
+    }
+
+    .tab-content.hidden {
+        display: none;
+    }
+</style>
+
 <body>
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
         aria-hidden="true">
@@ -18,15 +45,18 @@
                             <label class="col-4 text-end control-label col-form-label">Subscription Period:</label>
                             <div class="col-8">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="amount" id="daily" value="daily" required>
+                                    <input class="form-check-input" type="radio" name="amount" id="daily" value="daily"
+                                        required>
                                     <label class="form-check-label" for="daily">Daily</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="amount" id="weekly" value="weekly" required>
+                                    <input class="form-check-input" type="radio" name="amount" id="weekly"
+                                        value="weekly" required>
                                     <label class="form-check-label" for="weekly">Weekly</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="amount" id="monthly" value="monthly" required>
+                                    <input class="form-check-input" type="radio" name="amount" id="monthly"
+                                        value="monthly" required>
                                     <label class="form-check-label" for="monthly">Monthly</label>
                                 </div>
                             </div>
@@ -74,7 +104,8 @@
                     <div class="flex justify-between items-center">
                         <span
                             class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full">{{
-                            plan.name ~ (' Plan Premium' if plan.name != 'Free' else ' Tips') }} - {{ plan.matches | length }} matches</span>
+                            plan.name ~ (' Plan Premium' if plan.name != 'Free' else ' Tips') }} - {{ plan.matches |
+                            length }} matches</span>
                         <div class="text-yellow-400">
                             {% for i in range(plan.stars) %}
                             <i class="fas fa-star"></i>
@@ -85,116 +116,110 @@
                         </div>
                     </div>
 
-                    <table class="results-table">
-                        {% if plan.matches %}
-                        <tr>
-                            <th>Time</th>
-                            <th>Fixture</th>
-                            <th>Tip</th>
-                            <th>Odd</th>
-                        </tr>
-                        {% set ns = namespace(total_odds=1) %}
-                        {% for match in plan.matches %}
-                        {% set ns.total_odds = ns.total_odds * match.odd %}
-                        {% if True or (current_user.active and (current_user.plan == 'Platinum' and plan.name in ['Platinum', 'Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Gold' and plan.name in ['Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Silver' and plan.name in ['Silver', 'Bronze']) or (current_user.plan == 'Bronze' and plan.name == 'Bronze')) or plan.name == 'Free' or
-                        current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
-                        <tr>
-                            <td>{{ match.kickoff.strftime('%H:%M') }}</td>
-                            <td>{{ match.home_team }} vs {{ match.away_team }}</td>
-                            <td>
-                                {{ match.prediction | capitalize }} <br />
-                                {{ match.bet_pick | upper }}
-                            </td>
-                            <td>{{ (match.home_results ~ '-' ~ match.away_results) if match.status else match.odd }}
-                                <br />
-                                {% if match.status == 'WON' %}
-                                <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
-                                {% elif match.status == 'LOST' %}
-                                <span class="fa fa-minus-circle" style="color: grey; font-size: 16px;"></span>
-                                {% else %}
-                                <small>
-                                    {{ match.status if match.status else match.overall_prob ~ '%' }}
-                                </small>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% endif %}
-                        {% endfor %}
-                        {% if True or (current_user.active and (current_user.plan == 'Platinum' and plan.name in ['Platinum', 'Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Gold' and plan.name in ['Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Silver' and plan.name in ['Silver', 'Bronze']) or (current_user.plan == 'Bronze' and plan.name == 'Bronze')) or plan.name == 'Free' %}
-                        <tr>
-                            <!--
-                            <td id="betika_share" colspan="4">
-                                <button
-                                    class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2">
-                                    <span class="fa fa-spinner"></span><br />
-                                    Loading Betika Share Code...
-                                </button>
-                            </td>
-                            -->
-                        </tr>
-                        {% else %}
-                        <tr>
-                            <th colspan="4">
-                                Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{
-                                plan.name }} Plan now<br />
-                                Once Paid, Tips will be displayed here. <br />
-
-                                <a href="#" data-toggle="modal" data-target="#loginModal"
-                                    onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
+                    <!-- Tab Navigation -->
+                    <div class="tab-nav flex justify-center mb-4">
+                        <button
+                            class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg active"
+                            data-tab="slip_1">Slip I
+                        </button>
+                        <button
+                            class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg active"
+                            data-tab="slip_2">Slip II
+                        </button>
+                        <button
+                            class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg active"
+                            data-tab="slip_3">Slip III
+                        </button>
+                    </div>
+                    <div id="slip_1" class="tab-content">
+                        <table class="results-table">
+                            {% if plan.matches %}
+                            <tr>
+                                <th>Time</th>
+                                <th>Fixture</th>
+                                <th>Tip</th>
+                                <th>Odd</th>
+                            </tr>
+                            {% set ns = namespace(total_odds=1) %}
+                            {% for match in plan.matches %}
+                            {% set ns.total_odds = ns.total_odds * match.odd %}
+                            {% if True or (current_user.active and (current_user.plan == 'Platinum' and plan.name in
+                            ['Platinum', 'Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Gold' and plan.name in
+                            ['Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Silver' and plan.name in ['Silver',
+                            'Bronze']) or (current_user.plan == 'Bronze' and plan.name == 'Bronze')) or plan.name == 'Free'
+                            or
+                            current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
+                            <tr>
+                                <td>{{ match.kickoff.strftime('%H:%M') }}</td>
+                                <td>{{ match.home_team }} vs {{ match.away_team }}</td>
+                                <td>
+                                    {{ match.prediction | capitalize }} <br />
+                                    {{ match.bet_pick | upper }}
+                                </td>
+                                <td>{{ (match.home_results ~ '-' ~ match.away_results) if match.status else match.odd }}
+                                    <br />
+                                    {% if match.status == 'WON' %}
+                                    <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
+                                    {% elif match.status == 'LOST' %}
+                                    <span class="fa fa-minus-circle" style="color: grey; font-size: 16px;"></span>
+                                    {% else %}
+                                    <small>
+                                        {{ match.status if match.status else match.overall_prob ~ '%' }}
+                                    </small>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                            {% if True or (current_user.active and (current_user.plan == 'Platinum' and plan.name in
+                            ['Platinum', 'Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Gold' and plan.name in
+                            ['Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Silver' and plan.name in ['Silver',
+                            'Bronze']) or (current_user.plan == 'Bronze' and plan.name == 'Bronze')) or plan.name == 'Free'
+                            %}
+                            <tr>
+                                <!--
+                                <td id="betika_share" colspan="4">
                                     <button
-                                        class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
-                                        BUY {{ plan.name }} Plan<br />
-                                        @ KSh. {{ plan.amount }}
+                                        class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2">
+                                        <span class="fa fa-spinner"></span><br />
+                                        Loading Betika Share Code...
                                     </button>
-                                </a>
+                                </td>
+                                -->
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <th colspan="4">
+                                    Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{
+                                    plan.name }} Plan now<br />
+                                    Once Paid, Tips will be displayed here. <br />
+
+                                    <a href="#" data-toggle="modal" data-target="#loginModal"
+                                        onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
+                                        <button
+                                            class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
+                                            BUY {{ plan.name }} Plan<br />
+                                            @ KSh. {{ plan.amount }}
+                                        </button>
+                                    </a>
+                                </th>
+                            </tr>
+                            {% endif %}
+                            <tr>
+                                <th colspan="3">Total {{ plan.name }} Odds</th>
+                                <th>{{ ns.total_odds | round(2) }}</th>
+                            </tr>
+                            {% else %}
+                            <th colspan="4">
+                                Sorry, Our A.I could not find viable matches for {{
+                                plan.name }} Plan today. Kindly check back Later!
                             </th>
-                        </tr>
-                        {% endif %}
-                        <tr>
-                            <th colspan="3">Total {{ plan.name }} Odds</th>
-                            <th>{{ ns.total_odds | round(2) }}</th>
-                        </tr>
-                        {% else %}
-                        <th colspan="4">
-                            Sorry, Our A.I could not find viable matches for {{
-                            plan.name }} Plan today. Kindly check back Later!
-                        </th>
-                        {% endif %}
-                    </table>
+                            {% endif %}
+                        </table>
+                    </div>
                 </div>
             </section>
 
-            <!-- CSS for Tabs -->
-            <style>
-                /*
-                .tab-nav {
-                    border-bottom: 2px solid #e5e7eb;
-                }
-                */
-
-                .tab-button {
-                    transition: all 0.3s ease;
-                }
-
-                .tab-button.active {
-                    background-color: #10b981;
-                    /* Green to match text-green-600 */
-                    color: white;
-                }
-
-                .tab-button:hover {
-                    background-color: #10b981;
-                    /* Light green on hover */
-                }
-
-                .tab-content {
-                    display: block;
-                }
-
-                .tab-content.hidden {
-                    display: none;
-                }
-            </style>
             <!-- Dynamic Tabs for Matches in plans.history -->
             <section class="p-2">
                 <div class="bg-white p-2 rounded-lg shadow-md">
@@ -256,8 +281,8 @@
         function setPlan(name, amount) {
             $('#plan').html(name)
             $('#daily').val(amount)
-            $('#weekly').val(amount*5)
-            $('#monthly').val(amount*15)
+            $('#weekly').val(amount * 5)
+            $('#monthly').val(amount * 15)
         }
 
         function getBetikaShare() {
@@ -352,7 +377,7 @@
             setTimeout(() => {
                 median.admob.showInterstitialIfReady();
             }, 20000);
-                        
+
         });
 
     </script>
@@ -360,7 +385,3 @@
 
 
 </html>
-
-
-
-
