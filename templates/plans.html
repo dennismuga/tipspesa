@@ -117,19 +117,12 @@
                     </div>
                     <br />
                     <!-- Tab Navigation -->
-                    <div class="tab-nav flex justify-center mb-4">
+                    <div class="tab-nav flex justify-center mb-4">                        
+                        {% for slip in slips %}
                         <button
-                            class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg active"
-                            data-tab="slip_1">BetSlip I
-                        </button>
-                        <button
-                            class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg"
-                            data-tab="slip_2">BetSlip II
-                        </button>
-                        <button
-                            class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg"
-                            data-tab="slip_3">BetSlip III
-                        </button>
+                            class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg {% if slip.id == 1 %}active{% endif %}"
+                            data-tab="slip_{{ slip.id }}">Slip {{ slip.id }}</button>
+                        {% endfor %}
                     </div>
                     {% for slip in slips %}
                     <div id="slip_{{ slip.id }}" class="tab-content {% if slip.id != 1 %}hidden{% endif %}">
@@ -377,8 +370,8 @@
                         buttons[0].classList.add('active');
                         contents[0].classList.remove('hidden');
                     }else{
-                        buttons[5].classList.add('active');
-                        contents[5].classList.remove('hidden');
+                        buttons[6].classList.add('active');
+                        contents[6].classList.remove('hidden');
                         median.admob.showInterstitial();
                     }
                 });

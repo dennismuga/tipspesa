@@ -152,6 +152,10 @@ def index():
         {
             'id': 3,
             'matches': today_matches[20:29] 
+        },
+        {
+            'id': 4,
+            'matches': today_matches[29:39] 
         }
     ]
     return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), slips=slips) 
