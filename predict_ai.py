@@ -109,7 +109,8 @@ class PredictAi:
                 filtered_match = json.loads(response)
                 predicted_match = filtered_match if filtered_match["odd"] >= 1.10 and filtered_match["overall_prob"] >= 80 else None
 
-                if int(predicted_match["sub_type_id"]) in [1, 14, 45, 105] or int(predicted_match["outcome_id"]) in [10, 11, 13] or "&" in predicted_match["bet_pick"]:
+                #if int(predicted_match["sub_type_id"]) in [1, 14, 45, 105] or
+                if int(predicted_match["sub_type_id"]) in [45, 105] or int(predicted_match["outcome_id"]) in [10, 11, 13] or "&" in predicted_match["bet_pick"]:
                     predicted_match = None
                 
                 return self.clean_match(predicted_match)
