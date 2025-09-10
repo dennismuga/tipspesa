@@ -347,9 +347,12 @@
                     document.getElementById(tabId).classList.remove('hidden');
                 });
             });
-            
-            // median.admob.showInterstitialOnNextPageLoadIfReady();
-            
+
+            //show interstitial ad 30 seconds after page load
+            setTimeout(() => {
+                median.admob.showInterstitialIfReady();
+            }, 30000);
+                        
         });
 
     </script>

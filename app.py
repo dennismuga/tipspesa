@@ -256,7 +256,6 @@ def privacy_policy():
 def serve_app_ads_txt():
     """
     Serves the app-ads.txt file from the root URL of the domain.
-    This is the most common and recommended method according to the standard.
     """
     # Use app.send_static_file to serve the file directly from the static folder
     return app.send_static_file('app-ads.txt')
