@@ -372,15 +372,21 @@
                     // Show the selected tab content
                     const tabId = button.getAttribute('data-tab');
                     document.getElementById(tabId).classList.remove('hidden');
+
+                    showInterstitialAd();
                 });
             });
 
-            //show interstitial ad 20 seconds after page load
-            setTimeout(() => {
-                median.admob.showInterstitialIfReady();
-            }, 20000);
+            // //show interstitial ad 20 seconds after page load
+            // setTimeout(() => {
+            //     median.admob.showInterstitialIfReady();
+            // }, 20000);
 
         });
+
+        function showInterstitialAd() {
+            median.admob.showInterstitial();
+        }
 
     </script>
 </body>
