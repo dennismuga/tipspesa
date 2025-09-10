@@ -229,14 +229,14 @@
                     <div class="tab-nav flex justify-center mb-4">
                         {% for history in plan.history %}
                         <button
-                            class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg {% if history.day == 'yesterday' %}active{% endif %}"
+                            class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg {% if history.day == 'Yesterday' %}active{% endif %}"
                             data-tab="{{ history.day | lower }}">{{ history.day }}</button>
                         {% endfor %}
                     </div>
 
                     <!-- Tab Content -->
                     {% for history in plan.history %}
-                    <div id="{{ history.day | lower }}" class="tab-content {% if history.day != 'yesterday' %}hidden{% endif %}">
+                    <div id="{{ history.day | lower }}" class="tab-content {% if history.day != 'Yesterday' %}hidden{% endif %}">
                         {% if history.matches | length > 0 %}
                         <table class="results-table w-full border-collapse">
                             <tr>
