@@ -74,8 +74,7 @@
                     <div class="flex justify-between items-center">
                         <span
                             class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full">{{
-                            plan.name ~ (' Plan Premium' if plan.name != 'Free' else ' Tips') }} ~{{ plan.odds }}+
-                            odds ({{ plan.matches | length }} matches)</span>
+                            plan.name ~ (' Plan Premium' if plan.name != 'Free' else ' Tips') }} - {{ plan.matches | length }} matches</span>
                         <div class="text-yellow-400">
                             {% for i in range(plan.stars) %}
                             <i class="fas fa-star"></i>
@@ -251,7 +250,7 @@
         </div>
     </div>
 
-    {% include 'footer.html' %}
+    <!-- {% include 'footer.html' %} -->
 
     <script>
         function setPlan(name, amount) {
