@@ -140,7 +140,21 @@ def get_total_matches():
 def index():
     today_matches, history = get_matches(100, 100)
     plan = Plan('Free', 0, min_odds.free, 'green', 5, today_matches, history)  
-    return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches()) 
+    slips = [
+        {
+            'id': 1,
+            'matches': today_matches[0:9] 
+        },
+        {
+            'id': 2,
+            'matches': today_matches[10:19] 
+        },
+        {
+            'id': 3,
+            'matches': today_matches[20:29] 
+        }
+    ]
+    return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), slips=slips) 
 
 @app.route('/free', methods=['GET'])
 def free():

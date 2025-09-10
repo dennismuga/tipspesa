@@ -120,20 +120,21 @@
                     <div class="tab-nav flex justify-center mb-4">
                         <button
                             class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg active"
-                            data-tab="slip_1">Slip I
+                            data-tab="slip_1">BetSlip I
                         </button>
                         <button
-                            class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg active"
-                            data-tab="slip_2">Slip II
+                            class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg"
+                            data-tab="slip_2">BetSlip II
                         </button>
                         <button
-                            class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg active"
-                            data-tab="slip_3">Slip III
+                            class="tab-button px-4 py-2 mx-1 font-semibold text-gray-700 bg-gray-200 rounded-t-lg"
+                            data-tab="slip_3">BetSlip III
                         </button>
                     </div>
-                    <div id="slip_1" class="tab-content">
+                    {% for slip in slips %}
+                    <div id="slip_{{ slip.id }}" class="tab-content">
                         <table class="results-table">
-                            {% if plan.matches %}
+                            {% if slip.matches %}
                             <tr>
                                 <th>Time</th>
                                 <th>Fixture</th>
@@ -141,7 +142,7 @@
                                 <th>Odd</th>
                             </tr>
                             {% set ns = namespace(total_odds=1) %}
-                            {% for match in plan.matches %}
+                            {% for match in slip.matches %}
                             {% set ns.total_odds = ns.total_odds * match.odd %}
                             {% if True or (current_user.active and (current_user.plan == 'Platinum' and plan.name in
                             ['Platinum', 'Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Gold' and plan.name in
@@ -206,17 +207,18 @@
                             </tr>
                             {% endif %}
                             <tr>
-                                <th colspan="3">Total {{ plan.name }} Odds</th>
+                                <th colspan="3">Total Odds</th>
                                 <th>{{ ns.total_odds | round(2) }}</th>
                             </tr>
                             {% else %}
                             <th colspan="4">
-                                Sorry, Our A.I could not find viable matches for {{
-                                plan.name }} Plan today. Kindly check back Later!
+                                Sorry, Our A.I could not find viable matches for Slip {{
+                                slip.id }} today. Kindly check back Later!
                             </th>
                             {% endif %}
                         </table>
                     </div>
+                    {% endfor}
                 </div>
             </section>
 
