@@ -5,19 +5,25 @@ from openai import OpenAI
 class Grok():
     def __init__(self):     
         load_dotenv()   
-        XAI_API_KEY = os.getenv("XAI_API_KEY")
         self.client = OpenAI(
-            api_key=XAI_API_KEY,
-            base_url="https://api.x.ai/v1",
+            api_key=os.getenv("GITHUB_TOKEN"),
+            base_url="https://models.github.ai/inference",
         )
         
-    def chat(self, message):
-        completion = self.client.chat.completions.create(
-            model="grok-2-latest",
-            messages=[
-                {"role": "user", "content": message}                
-            ],
-        )
-
-        response = completion.choices[0].message.content
-        return response
+    def get_response(self, query):
+        # print(query)
+        try:
+            response = self.client.chat.completions.create(
+                #model="xai/grok-3",
+                model="deepseek/DeepSeek-R1-0528",
+                #model="openai/gpt-5",
+                messages=[
+                    {"role": "user", "content": query}                
+                ],
+            )
+            content = response.choices[0].message.content
+            print(content)
+            return content
+        except Exception as e:
+            print(f"Error in Grok.get_response: {e}")
+            return None

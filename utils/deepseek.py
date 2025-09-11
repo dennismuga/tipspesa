@@ -7,14 +7,21 @@ load_dotenv()
 class DeepSeek():
     def __init__(self):  
         self.client = OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")
-        
-    def chat(self, message):
-        completion = self.client.chat.completions.create(
-            model="deepseek-chat",
-            messages=[
-                {"role": "user", "content": message}                
-            ],
-        )
+                
+    def get_response(self, query):
+        while True:
+            try:
+                response = self.client.chat.completions.create(
+                    model="deepseek-chat",
+                    messages=[
+                        {"role": "system", "content": "You are a helpful assistant"},
+                        {"role": "user", "content": "Hello"},
+                    ],
+                    stream=False
+                )
 
-        response = completion.choices[0].message.content
-        return response
+                return response.choices[0].message.content
+            
+            except Exception as e:
+                print(f"Error in DeepSeek.get_response: {e}")
+                return None
