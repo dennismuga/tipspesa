@@ -9,14 +9,13 @@ class Grok():
             api_key=os.getenv("GITHUB_TOKEN"),
             base_url="https://models.github.ai/inference",
         )
+        self.model = "xai/grok-3"
+        self.model="deepseek/DeepSeek-R1-0528"
         
     def get_response(self, query):
-        # print(query)
         try:
             response = self.client.chat.completions.create(
-                #model="xai/grok-3",
-                model="deepseek/DeepSeek-R1-0528",
-                #model="openai/gpt-5",
+                model = self.model,
                 messages=[
                     {"role": "user", "content": query}                
                 ],
