@@ -4,13 +4,18 @@ from openai import OpenAI
 
 class Grok():
     def __init__(self):     
-        load_dotenv()   
+        load_dotenv()  
+        self.endpoint = "https://models.github.ai/inference"
+        
         self.client = OpenAI(
-            api_key=os.getenv("GITHUB_TOKEN"),
-            base_url="https://models.github.ai/inference",
+            api_key = os.getenv("GITHUB_TOKEN"),
+            base_url = self.endpoint,
         )
-        self.model = "xai/grok-3"
-        self.model="deepseek/DeepSeek-R1-0528"
+        
+        self.model = "xai/grok-3-mini"
+        # self.model = "deepseek/DeepSeek-R1-0528"
+        # self.model = "openai/gpt-5" 
+        self.model = "openai/gpt-4.1"
         
     def get_response(self, query):
         try:
