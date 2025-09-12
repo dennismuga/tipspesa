@@ -138,7 +138,7 @@ def get_total_matches():
 
 @app.route('/', methods=['GET'])
 def index():
-    today_matches, history = get_matches(100, 100)
+    today_matches, history = get_matches(40, 40)
     plan = Plan('Free', 0, min_odds.free, 'green', 5, today_matches, history)  
     slips = [
         {
