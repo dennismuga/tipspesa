@@ -143,19 +143,19 @@ def index():
     slips = [
         {
             'id': 1,
-            'matches': today_matches[0:9] 
+            'matches': today_matches[0:10] 
         },
         {
             'id': 2,
-            'matches': today_matches[10:19] 
+            'matches': today_matches[10:30] 
         },
         {
             'id': 3,
-            'matches': today_matches[20:29] 
+            'matches': today_matches[30:40] 
         },
         {
             'id': 4,
-            'matches': today_matches[29:39] 
+            'matches': today_matches[40:50] 
         }
     ]
     return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), slips=slips) 
