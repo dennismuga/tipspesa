@@ -157,12 +157,12 @@ class PostgresCRUD:
                 SELECT * FROM matches
                 WHERE kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
                 -- AND DATE_PART('hour', kickoff) > 12
-                ORDER BY overall_prob DESC, odd DESC
+                ORDER BY odd DESC, overall_prob DESC
                 LIMIT {limit}
             )
             SELECT * 
             FROM m
-            ORDER BY KICKOFF, overall_prob, odd, match_id
+            ORDER BY kickoff, overall_prob DESC, odd DESC, match_id
             """
             cur.execute(query)
             return cur.fetchall()
