@@ -108,7 +108,7 @@ def filter_matches(day, match_count, end_index, status=''):
     return to_return
 
 def get_matches(count, end_index):
-    total = min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
+    total = 40 #min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
     three_days_ago = filter_matches('-3', total, total)
     two_days_ago = filter_matches('-2', total, total)
     yesterday_matches = filter_matches('-1', total, total)
@@ -281,5 +281,6 @@ def serve_app_ads_txt():
 if __name__ == '__main__':
     debug_mode = os.getenv('IS_DEBUG', 'False') in ['True', '1', 't']
     app.run(debug=debug_mode)
+
 
 
