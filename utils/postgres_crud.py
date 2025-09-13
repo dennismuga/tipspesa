@@ -156,7 +156,7 @@ class PostgresCRUD:
             WITH m AS(
                 SELECT * FROM matches
                 WHERE kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
-                ORDER BY odd DESC, overall_prob DESC
+                ORDER BY overall_prob DESC, odd DESC
                 LIMIT {limit}
             )
             SELECT * 
