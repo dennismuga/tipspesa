@@ -2,8 +2,10 @@
 import os
 
 from datetime import datetime, timedelta
+from typing import List, Tuple, Dict, Any
+
 from dotenv import load_dotenv
-from flask import Flask, redirect, render_template, request, send_from_directory, url_for
+from flask import Flask, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_session import Session
 import pytz
@@ -141,36 +143,18 @@ def get_total_matches():
     today_matches = filter_matches('', total, total)
     return len(today_matches)    
 
+def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 7) -> List[Dict[str, Any]]:
+    """Create slips from today's matches with specified size."""
+    return [
+        {"id": i + 1, "matches": today_matches[i * slip_size:(i + 1) * slip_size]}
+        for i in range((len(today_matches) + slip_size - 1) // slip_size)
+    ]
+
 @app.route('/', methods=['GET'])
 def index():
     today_matches, history = get_matches(42, 42)
     plan = Plan('Free', 0, min_odds.free, 'green', 5, today_matches, history)  
-    slips = [
-        {
-            'id': 1,
-            'matches': today_matches[0:7] 
-        },
-        {
-            'id': 2,
-            'matches': today_matches[7:14] 
-        },
-        {
-            'id': 3,
-            'matches': today_matches[14:21] 
-        },
-        {
-            'id': 4,
-            'matches': today_matches[21:28] 
-        },
-        {
-            'id': 5,
-            'matches': today_matches[28:35] 
-        },
-        {
-            'id': 6,
-            'matches': today_matches[35:42] 
-        }
-    ]
+    slips = create_slips(today_matches)
     return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), slips=slips) 
 
 @app.route('/free', methods=['GET'])
