@@ -156,7 +156,6 @@ class PostgresCRUD:
             WITH m AS(
                 SELECT * FROM matches
                 WHERE kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
-                -- AND DATE_PART('hour', kickoff) > 12
                 ORDER BY odd DESC, overall_prob DESC
                 LIMIT {limit}
             )

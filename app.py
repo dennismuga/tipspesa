@@ -85,7 +85,7 @@ def page_not_found(e):
     return redirect(url_for('free'), 302)
 
 def filter_matches(day, match_count, end_index, status=''):
-    matches = helper.fetch_matches(day, '=', status, limit=51)
+    matches = helper.fetch_matches(day, '=', status, limit=30)
     filtered_matches = []
     total_odds = 1
     to_return = []
