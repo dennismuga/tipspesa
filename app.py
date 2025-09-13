@@ -108,7 +108,7 @@ def filter_matches(day, match_count, end_index, status=''):
     return to_return
 
 def get_matches(count, end_index):
-    total = 50 #min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
+    total = 30 #min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
     four_days_ago = filter_matches('-4', total, total)
     three_days_ago = filter_matches('-3', total, total)
     two_days_ago = filter_matches('-2', total, total)
@@ -143,28 +143,28 @@ def get_total_matches():
 
 @app.route('/', methods=['GET'])
 def index():
-    today_matches, history = get_matches(50, 50)
+    today_matches, history = get_matches(30, 30)
     plan = Plan('Free', 0, min_odds.free, 'green', 5, today_matches, history)  
     slips = [
         {
             'id': 1,
-            'matches': today_matches[0:10] 
+            'matches': today_matches[0:6] 
         },
         {
             'id': 2,
-            'matches': today_matches[10:20] 
+            'matches': today_matches[6:12] 
         },
         {
             'id': 3,
-            'matches': today_matches[20:30] 
+            'matches': today_matches[12:18] 
         },
         {
             'id': 4,
-            'matches': today_matches[30:40] 
+            'matches': today_matches[18:24] 
         },
         {
             'id': 5,
-            'matches': today_matches[40:50] 
+            'matches': today_matches[24:30] 
         }
     ]
     return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), slips=slips) 
