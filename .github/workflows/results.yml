@@ -4,8 +4,8 @@ name: Update Results
 on:    
   workflow_dispatch: # Manually trigger the workflow
 
-  schedule:
-    - cron: '0 5,11,17 * * *'  # Runs every 6hrs hour
+  # schedule:
+  #   - cron: '0 5,11,17 * * *'  # Runs every 6hrs hour
 
 # Ensures only one workflow instance runs at a time by canceling the previous run
 concurrency:
