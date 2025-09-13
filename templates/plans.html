@@ -150,17 +150,17 @@
                                     {{ match.prediction | capitalize }} <br />
                                     {{ match.bet_pick | upper }}
                                 </td>
-                                <td>{{ (match.home_results ~ '-' ~ match.away_results) if match.status else match.odd }}
-                                    <br />
-                                    {% if match.status == 'WON' %}
-                                    <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
-                                    {% elif match.status == 'LOST' %}
-                                    <span class="fa fa-minus-circle" style="color: grey; font-size: 16px;"></span>
-                                    {% else %}
+                                <td>                                    
                                     <small>
-                                        {{ match.status if match.status else match.overall_prob ~ '%' }}
+                                        {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
+                                        {{ (match.home_results ~ '-' ~ match.away_results) if match.status else '' }}
+                                        {% if match.status == 'WON' %}
+                                        <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
+                                        {% elif match.status == 'LOST' %}
+                                        <span class="fa fa-minus-circle" style="color: grey; font-size: 16px;"></span>
+                                        
+                                        {% endif %}
                                     </small>
-                                    {% endif %}
                                 </td>
                             </tr>
                             {% endif %}
@@ -244,19 +244,19 @@
                                     {{ match.prediction | capitalize }} <br />
                                     {{ match.bet_pick | upper }}
                                 </td>
-                                {% if match.status == 'WON' %}
-                                <td>
-                                    {{ match.home_results ~ '-' ~ match.away_results }} <br />
-                                    <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
-                                </td>
-                                {% elif match.status == 'LOST' %}
-                                <td>
-                                    {{ match.home_results ~ '-' ~ match.away_results }} <br />
-                                    <span class="fa fa-minus-circle" style="color: gray; font-size: 16px;"></span>
-                                </td>
-                                {% else %}
-                                <td></td>
-                                {% endif %}
+                                   
+                                <td>                             
+                                    <small>
+                                        {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
+                                        {{ (match.home_results ~ '-' ~ match.away_results) if match.status else '' }}
+                                        {% if match.status == 'WON' %}
+                                        <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
+                                        {% elif match.status == 'LOST' %}
+                                        <span class="fa fa-minus-circle" style="color: grey; font-size: 16px;"></span>
+                                        
+                                        {% endif %}
+                                    </small>
+                                </td>  
                             </tr>
                             {% endfor %}
                         </table>
