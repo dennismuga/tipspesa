@@ -85,7 +85,7 @@ def page_not_found(e):
     return redirect(url_for('free'), 302)
 
 def filter_matches(day, match_count, end_index, status=''):
-    matches = helper.fetch_matches(day, '=', status, limit=30)
+    matches = helper.fetch_matches(day, '=', status, limit=42)
     filtered_matches = []
     total_odds = 1
     to_return = []
@@ -108,7 +108,7 @@ def filter_matches(day, match_count, end_index, status=''):
     return to_return
 
 def get_matches(count, end_index):
-    total = 30 #min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
+    total = 42 #min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
     four_days_ago = filter_matches('-4', total, total)
     three_days_ago = filter_matches('-3', total, total)
     two_days_ago = filter_matches('-2', total, total)
@@ -143,28 +143,32 @@ def get_total_matches():
 
 @app.route('/', methods=['GET'])
 def index():
-    today_matches, history = get_matches(30, 30)
+    today_matches, history = get_matches(42, 42)
     plan = Plan('Free', 0, min_odds.free, 'green', 5, today_matches, history)  
     slips = [
         {
             'id': 1,
-            'matches': today_matches[0:6] 
+            'matches': today_matches[0:7] 
         },
         {
             'id': 2,
-            'matches': today_matches[6:12] 
+            'matches': today_matches[7:14] 
         },
         {
             'id': 3,
-            'matches': today_matches[12:18] 
+            'matches': today_matches[14:21] 
         },
         {
             'id': 4,
-            'matches': today_matches[18:24] 
+            'matches': today_matches[21:28] 
         },
         {
             'id': 5,
-            'matches': today_matches[24:30] 
+            'matches': today_matches[28:35] 
+        },
+        {
+            'id': 6,
+            'matches': today_matches[35:42] 
         }
     ]
     return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), slips=slips) 
