@@ -120,7 +120,7 @@
                     <div class="tab-nav flex justify-center mb-4">                        
                         {% for slip in slips %}
                         <button
-                            class="tab-button px-3 py-2 mx-1 font-semibold text-gray-700 text-xs bg-gray-200 rounded-t-lg {% if slip.id == 1 %}active{% endif %}"
+                            class="tab-button px-2 py-2 mx-1 font-semibold text-gray-700 text-xs bg-gray-200 rounded-t-lg {% if slip.id == 1 %}active{% endif %}"
                             data-tab="slip_{{ slip.id }}">Slip {{ slip.id }}</button>
                         {% endfor %}
                     </div>
@@ -371,8 +371,8 @@
                         buttons[0].classList.add('active');
                         contents[0].classList.remove('hidden');
                     }else{
-                        buttons[6].classList.add('active');
-                        contents[6].classList.remove('hidden');
+                        buttons[9].classList.add('active');
+                        contents[9].classList.remove('hidden');
                         median.admob.showInterstitialIfReady();
                     }
                 });
