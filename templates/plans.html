@@ -370,8 +370,9 @@
                         buttons[0].classList.add('active');
                         contents[0].classList.remove('hidden');
                     }else{
-                        buttons[9].classList.add('active');
-                        contents[9].classList.remove('hidden');
+                        last = buttons.length - 1;
+                        buttons[last].classList.add('active');
+                        contents[last].classList.remove('hidden');
                         median.admob.showInterstitialIfReady();
                     }
                 });
