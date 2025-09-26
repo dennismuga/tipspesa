@@ -167,17 +167,18 @@ class PostgresCRUD:
             cur.execute(query)
             return cur.fetchall()
     
-    def fetch_unplaced_matches(self, profile_id): 
+    def fetch_unplaced_matches(self, profile_id, limit=50): 
         self.ensure_connection()  
         matches = []         
         with self.conn.cursor() as cur:
-            query = """
+            query = f"""
             WITH m AS(
                 SELECT kickoff, home_team, away_team, odd, parent_match_id, sub_type_id, bet_pick, special_bet_value, outcome_id 
                 FROM matches
                 WHERE kickoff > (CURRENT_TIMESTAMP + INTERVAL '3 hours')
                 AND overall_prob >= 80
                 ORDER BY odd DESC, overall_prob DESC
+                LIMIT {limit}
             ),
             placed AS(
               SELECT parent_match_id 
@@ -596,4 +597,5 @@ class PostgresCRUD:
 # Example usage:
 if __name__ == "__main__":
     crud = PostgresCRUD()
+
 
