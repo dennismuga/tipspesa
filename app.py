@@ -111,12 +111,17 @@ def filter_matches(day, match_count, end_index, status=''):
 
 def get_matches(count, end_index):
     total = 42 #min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
+    five_days_ago = filter_matches('-5', total, total)
     four_days_ago = filter_matches('-4', total, total)
     three_days_ago = filter_matches('-3', total, total)
     two_days_ago = filter_matches('-2', total, total)
     yesterday_matches = filter_matches('-1', total, total)
     today_matches = filter_matches('', count, end_index)
     history = [
+        {
+            'day': (datetime.now() - timedelta(days=5)).strftime("%A"),
+            'matches': sorted(five_days_ago, key=lambda match: match.kickoff) 
+        },
         {
             'day': (datetime.now() - timedelta(days=4)).strftime("%A"),
             'matches': sorted(four_days_ago, key=lambda match: match.kickoff) 
@@ -278,5 +283,6 @@ def serve_app_ads_txt():
 if __name__ == '__main__':
     debug_mode = os.getenv('IS_DEBUG', 'False') in ['True', '1', 't']
     app.run(debug=debug_mode)
+
 
 
