@@ -179,6 +179,7 @@ class PostgresCRUD:
                 WHERE kickoff > (CURRENT_TIMESTAMP + INTERVAL '3 hours')
                 AND overall_prob >= 80
                 AND outcome_id NOT IN (11)
+                AND bet_pick NOT ('over 1.5')
                 ORDER BY odd DESC, overall_prob DESC
                 LIMIT {limit}
             ),
@@ -599,6 +600,7 @@ class PostgresCRUD:
 # Example usage:
 if __name__ == "__main__":
     crud = PostgresCRUD()
+
 
 
 
