@@ -178,8 +178,9 @@ class PostgresCRUD:
                 FROM matches
                 WHERE kickoff > (CURRENT_TIMESTAMP + INTERVAL '3 hours')
                 AND overall_prob >= 80
+                AND sub_type_id NOT IN (1)
                 AND outcome_id NOT IN (11)
-                AND bet_pick NOT ('over 1.5')
+                AND bet_pick NOT IN ('over 1.5')
                 ORDER BY odd DESC, overall_prob DESC
                 LIMIT {limit}
             ),
