@@ -157,6 +157,7 @@ class PostgresCRUD:
                 SELECT * FROM matches
                 WHERE kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
                 AND overall_prob >= 80 
+                AND sub_type_id NOT IN (1)
                 AND outcome_id NOT IN (11)
                 AND bet_pick NOT IN ('over 1.5', 'under 4.5')
                 ORDER BY odd DESC, overall_prob DESC
