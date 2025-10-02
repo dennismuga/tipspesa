@@ -182,6 +182,7 @@ class PostgresCRUD:
                 AND overall_prob >= 75
                 AND sub_type_id NOT IN (1)
                 AND outcome_id NOT IN (11)
+                AND outcome_id IN (9,10)
                 AND bet_pick NOT IN ('over 1.5', 'under 4.5')
                 ORDER BY odd DESC, overall_prob DESC
                 LIMIT {limit}
@@ -603,6 +604,7 @@ class PostgresCRUD:
 # Example usage:
 if __name__ == "__main__":
     crud = PostgresCRUD()
+
 
 
 
