@@ -160,7 +160,7 @@ def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 10) -> Li
         {
             "id": i + 1, 
             "matches": today_matches[i * slip_size:(i + 1) * slip_size],
-            "betika_share_code": helper.get_share_code(today_matches[i * slip_size:(i + 1) * slip_size])
+            "betika_share_code": helper.get_share_code(today_matches[i * slip_size:(i + 1) * slip_size]).upper()
         } for i in range((len(today_matches) + slip_size - 1) // slip_size)
     ]
 
@@ -319,6 +319,7 @@ def serve_app_ads_txt():
 if __name__ == '__main__':
     debug_mode = os.getenv('IS_DEBUG', 'False') in ['True', '1', 't']
     app.run(debug=debug_mode)
+
 
 
 
