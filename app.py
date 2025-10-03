@@ -151,8 +151,11 @@ def get_total_matches():
 def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 10) -> List[Dict[str, Any]]:
     """Create slips from today's matches with specified size."""
     return [
-        {"id": i + 1, "matches": today_matches[i * slip_size:(i + 1) * slip_size]}
-        for i in range((len(today_matches) + slip_size - 1) // slip_size)
+        {
+            "id": i + 1, 
+            "matches": today_matches[i * slip_size:(i + 1) * slip_size],
+            "betika_share_code": helper.get_share_code(today_matches[i * slip_size:(i + 1) * slip_size])
+        } for i in range((len(today_matches) + slip_size - 1) // slip_size)
     ]
 
 @app.route('/', methods=['GET'])

@@ -171,15 +171,11 @@
                             'Bronze']) or (current_user.plan == 'Bronze' and plan.name == 'Bronze')) or plan.name == 'Free'
                             %}
                             <tr>
-                                <!--
-                                <td id="betika_share" colspan="4">
-                                    <button
-                                        class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2">
-                                        <span class="fa fa-spinner"></span><br />
-                                        Loading Betika Share Code...
-                                    </button>
+                                {% if slip.betika_share_code %}
+                                <td id="betika_share" colspan="4" onclick="copyToClipboard('{{ slip.betika_share_code }}')">
+                                    Betika Share Code: <b>{{ slip.betika_share_code }}</b>
                                 </td>
-                                -->
+                                {% endif %}                               
                             </tr>
                             {% else %}
                             <tr>
