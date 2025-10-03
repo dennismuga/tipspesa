@@ -87,7 +87,7 @@ def page_not_found(e):
     return redirect(url_for('free'), 302)
 
 def filter_matches(day, match_count, end_index, status=''):
-    matches = helper.fetch_matches(day, '=', status, limit=42)
+    matches = helper.fetch_matches(day, '=', status, limit=50)
     filtered_matches = []
     total_odds = 1
     to_return = []
@@ -110,7 +110,7 @@ def filter_matches(day, match_count, end_index, status=''):
     return to_return
 
 def get_matches(count, end_index):
-    total = 42 #min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
+    total = 50 #min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
     five_days_ago = filter_matches('-5', total, total)
     four_days_ago = filter_matches('-4', total, total)
     three_days_ago = filter_matches('-3', total, total)
@@ -148,7 +148,7 @@ def get_total_matches():
     today_matches = filter_matches('', total, total)
     return len(today_matches)    
 
-def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 7) -> List[Dict[str, Any]]:
+def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 10) -> List[Dict[str, Any]]:
     """Create slips from today's matches with specified size."""
     return [
         {"id": i + 1, "matches": today_matches[i * slip_size:(i + 1) * slip_size]}
@@ -157,7 +157,7 @@ def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 7) -> Lis
 
 @app.route('/', methods=['GET'])
 def index():
-    today_matches, history = get_matches(42, 42)
+    today_matches, history = get_matches(50, 50)
     plan = Plan('Free', 0, min_odds.free, 'green', 5, today_matches, history)  
     slips = create_slips(today_matches)
     return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), slips=slips) 
