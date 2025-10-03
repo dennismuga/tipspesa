@@ -1,29 +1,22 @@
+from utils.paystack import Transactions
+from utils.postgres_crud import PostgresCRUD
 
-import uuid
-from utils.betika import Betika
-from utils.helper import Helper
-#from utils.jenga import Jenga
+db = PostgresCRUD()
 
 # Example usage
 if __name__ == "__main__":
-    # try:
-    #     # Initialize Jenga instance
-    #     jenga = Jenga()
-
-    #     # Test STK Push
-    #     response = jenga.generate_payment_link(
-    #         order_ref="ORDER12345",
-    #         amount=10,
-    #         phone_number="0759697757",
-    #         customer_name="John Doe",
-    #         customer_email="john@example.com",
-    #         description="Test payment for demo"
-    #     )
-    #     print("STK Push Response:", response)
-    # except Exception as e:
-    #     print(f"Error: {str(e)}")
-    
-    betika = Betika()    
-    betika.login('0712428185', '123456789D')
-    print(betika.profile_id)
-    print(betika.token)
+    # transactions = Transactions()
+    # transactions.initialize(amount=10)
+    reference = 'ulrudvrrbc'
+    transaction_details = Transactions().verify(reference=reference)
+    if transaction_details and transaction_details.get('status'):
+        status = transaction_details.get('data').get('status')
+        channel = transaction_details.get('data').get('channel')
+        domain = transaction_details.get('data').get('domain')
+        receipt_number = transaction_details.get('data').get('receipt_number')   
+        amount = transaction_details.get('data').get('amount')      
+        db.update_transaction(reference, channel, domain, receipt_number, status)
+        
+        if status == 'success':
+            days = 30 if amount==1000 else 7 if amount==300 else 1
+            db.update_user_expiry(reference,'Premium', days)  

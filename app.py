@@ -13,6 +13,7 @@ from redis import Redis
 
 from utils.entities import MinOdds, MinMatches, Plan
 from utils.helper import Helper
+from utils.paystack import Transactions
 from utils.pesapal import Pesapal
 from utils.postgres_crud import PostgresCRUD
 from v2.predict_and_bet import PredictAndBet
@@ -71,10 +72,13 @@ def subscribe():
 
     login_user(user)
 
-    order_details = Pesapal().submit_order_request(phone[-9:], amount)
-    order_tracking_id = order_details.get('order_tracking_id')
-    db.insert_transaction(order_tracking_id, current_user.id, amount)
-    return render_template('pay.html', order_tracking_id=order_tracking_id)
+    order_details = Transactions().initialize(email=f'{phone}@tipspesa.app', amount=amount)
+    if order_details.get('status'):
+        authorization_url = order_details.get('data').get('authorization_url')
+        access_code = order_details.get('data').get('access_code')
+        reference = order_details.get('data').get('reference')
+        db.insert_transaction(reference, current_user.id, amount)
+        return redirect(authorization_url)
 
 # Callback to reload the user object
 @login_manager.user_loader
@@ -158,12 +162,39 @@ def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 10) -> Li
         } for i in range((len(today_matches) + slip_size - 1) // slip_size)
     ]
 
-@app.route('/', methods=['GET'])
-def index():
-    today_matches, history = get_matches(50, 50)
-    plan = Plan('Free', 0, min_odds.free, 'green', 5, today_matches, history)  
-    slips = create_slips(today_matches)
-    return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), slips=slips) 
+@app.route('/', methods=['GET', 'POST'])
+def index():    
+    if request.method == 'POST': 
+        return subscribe()
+    else:
+        today_matches, history = get_matches(50, 50)
+        plan = Plan('Free', 0, min_odds.free, 'green', 5, today_matches, history)  
+        slips = create_slips(today_matches)
+        current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
+        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), slips=slips, current_time=current_time) 
+
+@app.route('/paystack-callback', methods=['GET', 'POST'])
+def paystack_callback():  
+    reference = request.args.get('reference')
+    transaction_details = Transactions().verify(reference=reference)
+    if transaction_details.get('status'):
+        status = transaction_details.get('data').get('status')
+        channel = transaction_details.get('data').get('channel')
+        bank = transaction_details.get('data').get('authorization').get('bank')
+        receipt_number = transaction_details.get('data').get('receipt_number')   
+        amount = transaction_details.get('data').get('amount')/100      
+        db.update_transaction(reference, channel, bank, receipt_number, status)
+        
+        if status == 'success':
+            days = 30 if amount==1000 else 7 if amount==300 else 1
+            db.update_user_expiry(reference,'Premium', days)        
+        
+    return redirect(url_for('index'))
+
+
+
+
+
 
 @app.route('/free', methods=['GET'])
 def free():

@@ -44,20 +44,20 @@
                         <div class="form-group row">
                             <label class="col-4 text-end control-label col-form-label">Subscription Period:</label>
                             <div class="col-8">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="amount" id="daily" value="daily"
+                                <div class="form-check form-check">
+                                    <input class="form-check-input" type="radio" name="amount" id="daily" value="50"
                                         required>
-                                    <label class="form-check-label" for="daily">Daily</label>
+                                    <label class="form-check-label" for="daily">Daily @KSh. 50</label>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="amount" id="weekly"
-                                        value="weekly" required>
-                                    <label class="form-check-label" for="weekly">Weekly</label>
+                                <div class="form-check form-check">
+                                    <input class="form-check-input" type="radio" name="amount" id="weekly" value="300"
+                                        required>
+                                    <label class="form-check-label" for="weekly">Weekly @KSh. 300</label>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="amount" id="monthly"
-                                        value="monthly" required>
-                                    <label class="form-check-label" for="monthly">Monthly</label>
+                                <div class="form-check form-check">
+                                    <input class="form-check-input" type="radio" name="amount" id="monthly" value="1000"
+                                        required>
+                                    <label class="form-check-label" for="monthly">Monthly @KSh. 1,000</label>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +103,8 @@
                     style="background-image: url({{ url_for('static', filename='Subbackground.png') }}); background-size: cover;">
                     <div class="flex justify-between items-center">
                         <span
-                            class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full">Today Premium Tips - {{ plan.matches |
+                            class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full">Today
+                            Premium Tips - {{ plan.matches |
                             length }} matches</span>
                         <div class="text-yellow-400">
                             {% for i in range(plan.stars) %}
@@ -116,7 +117,7 @@
                     </div>
                     <br />
                     <!-- Tab Navigation -->
-                    <div class="tab-nav flex justify-center mb-4">                        
+                    <div class="tab-nav flex justify-center mb-4">
                         {% for slip in slips %}
                         <button
                             class="tab-button px-2 py-2 mx-1 font-semibold text-gray-700 text-xs bg-gray-200 rounded-t-lg {% if slip.id == 1 %}active{% endif %}"
@@ -136,12 +137,8 @@
                             {% set ns = namespace(total_odds=1) %}
                             {% for match in slip.matches %}
                             {% set ns.total_odds = ns.total_odds * match.odd %}
-                            {% if True or (current_user.active and (current_user.plan == 'Platinum' and plan.name in
-                            ['Platinum', 'Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Gold' and plan.name in
-                            ['Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Silver' and plan.name in ['Silver',
-                            'Bronze']) or (current_user.plan == 'Bronze' and plan.name == 'Bronze')) or plan.name == 'Free'
-                            or
-                            current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
+                            {% if current_user.active or slip.id==1 %}
+                            <!-- current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %} -->
                             <tr>
                                 <td>{{ match.kickoff.strftime('%H:%M') }}</td>
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
@@ -149,7 +146,7 @@
                                     {{ match.prediction | capitalize }} <br />
                                     {{ match.bet_pick | upper }}
                                 </td>
-                                <td>                                    
+                                <td>
                                     <small>
                                         {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.status else '' }}
@@ -158,39 +155,32 @@
                                         {% elif match.status == 'LOST' %}
                                         <span class="fa fa-minus-circle" style="color: grey; font-size: 16px;"></span>
                                         {% else %}
-                                            {{ '[' ~ match.status ~ ']' if match.status else '' }}
+                                        {{ '[' ~ match.status ~ ']' if match.status else '' }}
                                         {% endif %}
                                     </small>
                                 </td>
                             </tr>
                             {% endif %}
                             {% endfor %}
-                            {% if True or (current_user.active and (current_user.plan == 'Platinum' and plan.name in
-                            ['Platinum', 'Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Gold' and plan.name in
-                            ['Gold', 'Silver', 'Bronze']) or (current_user.plan == 'Silver' and plan.name in ['Silver',
-                            'Bronze']) or (current_user.plan == 'Bronze' and plan.name == 'Bronze')) or plan.name == 'Free'
-                            %}
+                            {% if current_user.active or slip.id==1 %}
                             <tr>
                                 {% if slip.betika_share_code %}
-                                <td id="betika_share" colspan="4" onclick="copyToClipboard('{{ slip.betika_share_code }}')">
+                                <td id="betika_share" colspan="4"
+                                    onclick="copyToClipboard('{{ slip.betika_share_code }}')">
                                     Betika Share Code: <b>{{ slip.betika_share_code }}</b><br />
                                     <small><i>Tap to Copy</i></small>
                                 </td>
-                                {% endif %}                               
+                                {% endif %}
                             </tr>
                             {% else %}
                             <tr>
                                 <th colspan="4">
-                                    Get sure {{ plan.odds }}+ odds daily and earn consistently. Click BUY to purchase our {{
-                                    plan.name }} Plan now<br />
-                                    Once Paid, Tips will be displayed here. <br />
-
-                                    <a href="#" data-toggle="modal" data-target="#loginModal"
-                                        onclick="setPlan('{{ plan.name }}', {{ plan.amount }})">
+                                    <a href="#" data-toggle="modal" data-target="#loginModal">
                                         <button
-                                            class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
-                                            BUY {{ plan.name }} Plan<br />
-                                            @ KSh. {{ plan.amount }}
+                                            class="bg-yellow-100 text-yellow-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
+                                            Click to UNLOCK All betslips now<br />
+                                            @ KSh. 50 <br />
+                                            Once Paid, All betslips will be displayed.
                                         </button>
                                     </a>
                                 </th>
@@ -226,7 +216,8 @@
 
                     <!-- Tab Content -->
                     {% for history in plan.history %}
-                    <div id="{{ history.day | lower }}" class="tab-content {% if history.day != 'Yesterday' %}hidden{% endif %}">
+                    <div id="{{ history.day | lower }}"
+                        class="tab-content {% if history.day != 'Yesterday' %}hidden{% endif %}">
                         {% if history.matches | length > 0 %}
                         <table class="results-table w-full border-collapse">
                             <tr>
@@ -241,8 +232,8 @@
                                     {{ match.prediction | capitalize }} <br />
                                     {{ match.bet_pick | upper }}
                                 </td>
-                                   
-                                <td>                             
+
+                                <td>
                                     <small>
                                         {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.status else '' }}
@@ -250,10 +241,10 @@
                                         <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
                                         {% elif match.status == 'LOST' %}
                                         <span class="fa fa-minus-circle" style="color: grey; font-size: 16px;"></span>
-                                        
+
                                         {% endif %}
                                     </small>
-                                </td>  
+                                </td>
                             </tr>
                             {% endfor %}
                         </table>
@@ -267,41 +258,17 @@
         </div>
     </div>
 
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='plugin.js') }}"></script>
+
     <!--  include 'footer.html'  -->
 
     <script>
-        function setPlan(name, amount) {
-            $('#plan').html(name)
-            $('#daily').val(amount)
-            $('#weekly').val(amount * 5)
-            $('#monthly').val(amount * 15)
-        }
-
-        function getBetikaShare() {
-            url = "{{ url_for('betika_share_code', plan_name=plan.name) }}";
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success: function (code) {
-                    if (code) {
-                        link = 'https://betika.com/share/' + code
-                        html = `
-                            <button 
-                                onclick="copyToClipboard('`+ code + `')"                
-                                class="bg-green-800 text-yellow-500 text-md font-bold px-2 py-1 rounded-lg mt-2"
-                            >Betika code: ` + code + `<br />
-                                Click to Copy
-                            </button>
-                        `;
-                    } else
-                        html = '<span class="text-red-500">Betika code is not available. Try again later.</span>';
-                    $('#betika_share').html(html);
-                },
-                error: function (error) {
-                    console.error('Error fetching Betika share code:', error);
-                }
-            });
-        }
 
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(function () {
@@ -309,40 +276,6 @@
             }, function (err) {
                 console.error('Could not copy text: ', err);
             });
-        }
-
-        function openBetikaLink(shareCode) {
-            const isAndroid = /Android/i.test(navigator.userAgent);
-            const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-            let deepLink = `https://betika.com/share/${shareCode}`; // Default to browser
-            let fallbackUrl = `https://betika.com/share/${shareCode}`;
-
-            // Validate share code
-            if (!/^[a-zA-Z0-9]+$/.test(shareCode)) {
-                console.error("Invalid share code");
-                return;
-            }
-
-            if (isAndroid) {
-                deepLink = `intent://share/${shareCode}#Intent;scheme=betika;package=com.app.betika.android;end`;
-                fallbackUrl = "https://play.google.com/store/apps/details?id=com.app.betika.android";
-            } else if (isIOS) {
-                // Assume iOS app may not be available; try universal link or custom scheme
-                deepLink = `https://betika.com/share/${shareCode}`; // Possible universal link
-                // Alternatively, use betika://share/${shareCode} if confirmed
-                fallbackUrl = `https://betika.com/share/${shareCode}`; // Browser fallback
-            }
-
-            // Try to open the Betika app
-            window.location = deepLink;
-
-            // Fallback to browser or Play Store if app doesn't open
-            setTimeout(() => {
-                if (document.hidden || !document.hasFocus()) {
-                    return; // App likely opened
-                }
-                window.location.href = fallbackUrl; // Open in browser or Play Store
-            }, 1000);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -363,10 +296,10 @@
                     const tabId = button.getAttribute('data-tab');
                     document.getElementById(tabId).classList.remove('hidden');
 
-                    if (!tabId.includes('slip_')){
+                    if (!tabId.includes('slip_')) {
                         buttons[0].classList.add('active');
                         contents[0].classList.remove('hidden');
-                    }else{
+                    } else {
                         last = buttons.length - 1;
                         buttons[last].classList.add('active');
                         contents[last].classList.remove('hidden');
@@ -393,6 +326,3 @@
 
 
 </html>
-
-
-
