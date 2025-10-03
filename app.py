@@ -72,7 +72,7 @@ def subscribe():
 
     login_user(user)
 
-    order_details = Transactions().initialize(email=f'{phone}@tipspesa.app', amount=amount)
+    order_details = Transactions().initialize(email=phone, amount=amount)
     if order_details.get('status'):
         authorization_url = order_details.get('data').get('authorization_url')
         access_code = order_details.get('data').get('access_code')
