@@ -156,7 +156,7 @@ class PostgresCRUD:
             WITH m AS(
                 SELECT * FROM matches
                 WHERE kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
-                AND overall_prob >= 75 
+                AND overall_prob >= 80 
                 AND sub_type_id NOT IN (1)
                 AND outcome_id NOT IN (11)
                 AND bet_pick NOT IN ('over 1.5', 'under 4.5')
@@ -179,7 +179,7 @@ class PostgresCRUD:
                 SELECT kickoff, home_team, away_team, odd, parent_match_id, sub_type_id, bet_pick, special_bet_value, outcome_id 
                 FROM matches
                 WHERE kickoff > (CURRENT_TIMESTAMP + INTERVAL '3 hours')
-                AND overall_prob >= 75
+                AND overall_prob >= 80
                 AND sub_type_id NOT IN (1)
                 AND outcome_id NOT IN (11)
                 AND outcome_id IN (9,10)
@@ -604,6 +604,7 @@ class PostgresCRUD:
 # Example usage:
 if __name__ == "__main__":
     crud = PostgresCRUD()
+
 
 
 
