@@ -29,15 +29,9 @@ class Transactions(Paystack):
             # Make the POST request
             response = requests.post(url, headers=self.headers, json=data)
 
-            # Check if the request was successful
-            if response.status_code == 200:
-                response_json = response.json()
-                print(response_json)
-                return response_json
-            else:
-                print(f"Request failed with status code: {response.status_code}")
-                print(response.text)  # Print the full response text for debugging
-                return None
+            response_json = response.json()
+            print(response_json)
+            return response_json
             
         except Exception as e:
             print(e)
@@ -51,14 +45,9 @@ class Transactions(Paystack):
             response = requests.get(url, headers=self.headers)
 
             # Check if the request was successful
-            if response.status_code == 200:
-                response_json = response.json()
-                print(response_json)
-                return response_json
-            else:
-                print(f"Request failed with status code: {response.status_code}")
-                print(response.text)  # Print the full response text for debugging
-                return None
+            response_json = response.json()
+            print(response_json)
+            return response_json
             
         except Exception as e:
             print(e)

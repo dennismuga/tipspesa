@@ -79,6 +79,8 @@ def subscribe():
         reference = order_details.get('data').get('reference')
         db.insert_transaction(reference, current_user.id, amount)
         return redirect(authorization_url)
+    else:
+        return redirect(url_for('index'))
 
 # Callback to reload the user object
 @login_manager.user_loader
