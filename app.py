@@ -189,7 +189,7 @@ def paystack_callback():
         db.update_transaction(reference, channel, bank, receipt_number, status)
         
         if status == 'success':
-            days = 30 if amount==1000 else 7 if amount==300 else 1
+            days = 30 if amount==500 else 7 if amount==150 else 1
             db.update_user_expiry(reference,'Premium', days)        
         
     return redirect(url_for('index'))
