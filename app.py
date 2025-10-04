@@ -45,6 +45,7 @@ db = PostgresCRUD()
 helper = Helper()
 min_odds = MinOdds()
 min_matches = MinMatches()
+paystack_transaction = Transactions()
         
 def update_stats():
     try:
@@ -60,7 +61,7 @@ def predict_and_bet():
         
 def subscribe():     
     phone = request.form['phone']
-    amount = request.form['amount']
+    amount = int(request.form['amount'])
     user = db.get_user(phone=phone)
         
     if not user:
@@ -72,7 +73,7 @@ def subscribe():
 
     login_user(user)
 
-    order_details = Transactions().initialize(email=phone, amount=amount)
+    order_details = paystack_transaction.initialize(email=phone, amount=amount)
     if order_details.get('status'):
         authorization_url = order_details.get('data').get('authorization_url')
         access_code = order_details.get('data').get('access_code')
@@ -178,7 +179,7 @@ def index():
 @app.route('/paystack-callback', methods=['GET', 'POST'])
 def paystack_callback():  
     reference = request.args.get('reference')
-    transaction_details = Transactions().verify(reference=reference)
+    transaction_details = paystack_transaction.verify(reference=reference)
     if transaction_details.get('status'):
         status = transaction_details.get('data').get('status')
         channel = transaction_details.get('data').get('channel')
