@@ -156,6 +156,7 @@ class PostgresCRUD:
             WITH m AS(
                 SELECT * FROM matches
                 WHERE kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
+                AND (status != 'LOST' OR status IS NULL)
                 AND overall_prob >= 80 
                 AND sub_type_id NOT IN (1)
                 AND outcome_id NOT IN (11)
