@@ -159,8 +159,9 @@ class PostgresCRUD:
                 INNER JOIN source_model ON source_model.parent_match_id=matches.parent_match_id
                 WHERE matches.kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
                 AND model IN ('xai/grok-3', 'xai/grok-3-mini')
+                AND (overall_prob >= 82 OR odd > 2)
                 --AND (status != 'LOST' OR status IS NULL)
-                AND overall_prob >= 65 
+                --AND overall_prob >= 65 
                 --AND sub_type_id NOT IN (1)
                 --AND outcome_id NOT IN (11)
                 --AND bet_pick NOT IN ('over 1.5', 'under 3.5', 'under 4.5', 'yes')

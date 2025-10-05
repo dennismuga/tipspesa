@@ -46,7 +46,15 @@ helper = Helper()
 min_odds = MinOdds()
 min_matches = MinMatches()
 paystack_transaction = Transactions()
-        
+
+def free_pass():
+    free_user = db.get_user(phone='0105565532')
+    if not current_user:
+        login_user(free_user)
+    if current_user.is_authenticated and current_user != free_user:
+        logout_user()
+        login_user(free_user)
+            
 def update_stats():
     try:
         Stats()()
@@ -166,7 +174,8 @@ def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 5) -> Lis
     ]
 
 @app.route('/', methods=['GET', 'POST'])
-def index():    
+def index():   
+    free_pass() 
     if request.method == 'POST': 
         return subscribe()
     else:
