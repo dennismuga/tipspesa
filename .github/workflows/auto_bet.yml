@@ -4,8 +4,8 @@ name: Withdraw, & Autobet
 on:    
   workflow_dispatch: # Manually trigger the workflow
 
-  schedule:
-      - cron: '0 8 * * *'  # Runs at 8:00am UTC (11:00 EAT)
+  # schedule:
+  #     - cron: '0 8 * * *'  # Runs at 8:00am UTC (11:00 EAT)
 
 jobs:
   execute:
