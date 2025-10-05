@@ -84,7 +84,6 @@ def subscribe():
     order_details = paystack_transaction.initialize(email=phone, amount=amount)
     if order_details.get('status'):
         authorization_url = order_details.get('data').get('authorization_url')
-        access_code = order_details.get('data').get('access_code')
         reference = order_details.get('data').get('reference')
         db.insert_transaction(reference, current_user.id, amount)
         return redirect(authorization_url)
@@ -214,100 +213,9 @@ def free():
     plan = Plan('Free', 0, min_odds.free, 'green', 1, today_matches, history)  
     return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches())
 
-@app.route('/bronze', methods=['GET', 'POST'])
-def bronze():
-    if request.method == 'POST': 
-        return subscribe()
-    
-    else:        
-        today_matches, history = get_matches(min_matches.bronze, min_matches.free+min_matches.bronze)
-        today_matches = today_matches if len(today_matches) > min_matches.free else []
-        plan = Plan('Bronze', 20, min_odds.bronze, 'purple', 2, today_matches, history)
-        current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
-        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), current_time=current_time)
-
-@app.route('/silver', methods=['GET', 'POST'])
-def silver():
-    if request.method == 'POST': 
-        return subscribe()
-    
-    else:        
-        today_matches, history = get_matches(min_matches.silver, min_matches.free+min_matches.bronze+min_matches.silver)
-        today_matches = today_matches if len(today_matches) > min_matches.bronze else []
-        plan = Plan('Silver', 30, min_odds.silver, 'blue', 3, today_matches, history)
-        current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
-        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), current_time=current_time)
-
-@app.route('/gold', methods=['GET', 'POST'])
-def gold():
-    if request.method == 'POST': 
-        return subscribe()
-    
-    else:        
-        today_matches, history = get_matches(min_matches.gold, min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold)
-        today_matches = today_matches if len(today_matches) > min_matches.silver else []
-        plan = Plan('Gold', 50, min_odds.gold, 'yellow', 4, today_matches, history)
-        current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
-        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), current_time=current_time)
-
-@app.route('/platinum', methods=['GET', 'POST'])
-def platinum():
-    if request.method == 'POST': 
-        return subscribe()
-    
-    else:        
-        today_matches, history = get_matches(min_matches.platinum, min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum)
-        today_matches = today_matches if len(today_matches) > min_matches.gold else []
-        plan = Plan('Platinum', 70, min_odds.platinum, 'pink', 5, today_matches, history)
-        current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
-        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), current_time=current_time)
-
-@app.route('/betika-share-code/<plan_name>', methods=['GET'])
-def betika_share_code(plan_name):
-    today_matches = []
-    if plan_name == 'Free':
-        today_matches, history = get_matches(min_matches.free, 4)
-    if plan_name == 'Bronze':
-        today_matches, history = get_matches(min_matches.bronze, 12)
-    if plan_name == 'Silver':
-        today_matches, history = get_matches(min_matches.silver, 23)
-    if plan_name == 'Gold':
-        today_matches, history = get_matches(min_matches.gold, 37)
-    if plan_name == 'Platinum':
-        today_matches, history = get_matches(min_matches.platinum, 50)
-        
-    return helper.get_share_code(today_matches)
-
 @app.route('/about', methods=['GET'])
 def about():
     return render_template('about.html')
-    
-def save_pesapal_response():   
-    order_tracking_id = request.args.get('OrderTrackingId')
-    transaction = Pesapal().get_transaction_status(order_tracking_id)
-    order_tracking_id = transaction.get('order_tracking_id')
-    payment_method = transaction.get('payment_method')
-    payment_account = transaction.get('payment_account')
-    confirmation_code = transaction.get('confirmation_code')
-    status = transaction.get('payment_status_description')
-    amount = int(transaction.get('amount'))
-    db.update_transaction(order_tracking_id, payment_method, payment_account, confirmation_code, status)
-
-    if status == 'Completed':
-        plan = 'Bronze' if amount in [20, 100, 300] else 'Silver' if amount in [30, 150, 450] else 'Gold' if amount in [50, 250, 750] else 'Platinum' if amount in [70, 350, 250] else 'Free'
-        days = 7 if amount in [100, 150, 250, 350] else 30 if amount in [300, 450, 750, 1050] else 1
-
-        db.update_user_expiry(order_tracking_id, plan, days)
-
-@app.route('/pesapal-callback', methods=['GET', 'POST'])
-def pesapal_callback():  
-    save_pesapal_response()
-    return redirect(url_for('free'))
-
-@app.route('/pesapal-ipn', methods=['GET', 'POST'])
-def pesapal_ipn():  
-    save_pesapal_response()
-    return redirect(url_for('free'))
     
 @app.route('/terms-and-conditions')
 def terms_and_conditions():    
