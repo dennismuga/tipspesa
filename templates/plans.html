@@ -165,7 +165,7 @@
                             {% if current_user.active or slip.id==1 %}
                             <tr>
                                 {% if slip.betika_share_code %}
-                                <td id="betika_share" class="text-xs" colspan="4">
+                                <td id="betika_share" class="text-sm" colspan="4">
                                     Betika Share Code </br>
                                     <b class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded-full"
                                         onclick="copyToClipboard('{{ slip.betika_share_code }}')">{{
