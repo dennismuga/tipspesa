@@ -117,7 +117,7 @@ def filter_matches(day, match_count, end_index, status=''):
     return to_return
 
 def get_matches(count, end_index):
-    total = 50 #min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
+    total = 24 #min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
     five_days_ago = filter_matches('-5', total, total)
     four_days_ago = filter_matches('-4', total, total)
     three_days_ago = filter_matches('-3', total, total)
@@ -155,7 +155,7 @@ def get_total_matches():
     today_matches = filter_matches('', total, total)
     return len(today_matches)    
 
-def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 10) -> List[Dict[str, Any]]:
+def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 4) -> List[Dict[str, Any]]:
     """Create slips from today's matches with specified size."""
     return [
         {
