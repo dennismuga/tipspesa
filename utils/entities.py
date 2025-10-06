@@ -9,10 +9,9 @@ class User(UserMixin):
         self.active = active
 
 class Plan():
-    def __init__(self, name, amount, odds, color, stars, matches, history):
+    def __init__(self, name, amount, color, stars, matches, history):
         self.name = name 
         self.amount = amount
-        self.odds = odds
         self.color = color 
         self.stars = stars
         self.matches = sorted(matches, key=lambda match: match.kickoff) 
@@ -122,23 +121,5 @@ class Odds():
         self.away_odds = away_odds 
         self.created_at = created_at
         
-class MinOdds():
-    def __init__(self):
-        self.free = 2
-        self.bronze = 5
-        self.silver = 10
-        self.gold = 20
-        self.platinum = 40
-
-class MinMatches():
-    def __init__(self):
-        self.free = 5
-        self.bronze = 10
-        self.silver = 15
-        self.gold = 20
-        self.platinum = 25
-    
-
-
 
 

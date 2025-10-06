@@ -11,13 +11,10 @@ from flask_session import Session
 import pytz
 from redis import Redis
 
-from utils.entities import MinOdds, MinMatches, Plan
+from utils.entities import Plan
 from utils.helper import Helper
 from utils.paystack import Transactions
-from utils.pesapal import Pesapal
 from utils.postgres_crud import PostgresCRUD
-from v2.predict_and_bet import PredictAndBet
-from v2.stats import Stats
 
 # Load environment variables from .env file
 load_dotenv()
@@ -43,8 +40,6 @@ login_manager.login_view = 'free'
 
 db = PostgresCRUD()
 helper = Helper()
-min_odds = MinOdds()
-min_matches = MinMatches()
 paystack_transaction = Transactions()
 
 def free_pass():
@@ -54,18 +49,6 @@ def free_pass():
     if current_user.is_authenticated and current_user != free_user:
         logout_user()
         login_user(free_user)
-            
-def update_stats():
-    try:
-        Stats()()
-    except Exception as e:
-        print(f"Error in background task: {e}")
-
-def predict_and_bet():
-    try:
-        PredictAndBet()()
-    except Exception as e:
-        print(f"Error in background task: {e}")
         
 def subscribe():     
     phone = request.form['phone']
@@ -98,10 +81,10 @@ def load_user(user_id):
 @app.errorhandler(404)
 def page_not_found(e):
     # Redirect to a specific endpoint, like 'plans', or a custom 404 page
-    return redirect(url_for('free'), 302)
+    return redirect(url_for('index'))
 
-def filter_matches(day, comparator='=', match_count=30, end_index=30, status=''):
-    matches = helper.fetch_matches(day, comparator, status, limit=50)
+def filter_matches(day, comparator='=', status='', limit=30):
+    matches = helper.fetch_matches(day, comparator, status, limit)
     filtered_matches = []
     total_odds = 1
     to_return = []
@@ -115,22 +98,17 @@ def filter_matches(day, comparator='=', match_count=30, end_index=30, status='')
         if not is_duplicate:
             filtered_matches.append(match)
             total_odds *= match.odd
-    
-    #if len(filtered_matches) > end_index - match_count:   #only get a package if it contains new matches not in other packages
-    end_index = min(len(filtered_matches), end_index)
-    start = max(0, end_index - match_count)
-    to_return = filtered_matches[start:end_index]  # Correct slicing
-        
-    return to_return
+            
+    return filtered_matches
 
 def get_matches(count, end_index):
-    total = 30 #min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
-    five_days_ago = filter_matches('-5', '=', total, total)
-    four_days_ago = filter_matches('-4', '=', total, total)
-    three_days_ago = filter_matches('-3', '=', total, total)
-    two_days_ago = filter_matches('-2', '=', total, total)
-    yesterday_matches = filter_matches('-1', '=', total, total)
-    today_matches = filter_matches('', '>=', count, end_index)
+    total = 30
+    five_days_ago = filter_matches('-5')
+    four_days_ago = filter_matches('-4')
+    three_days_ago = filter_matches('-3')
+    two_days_ago = filter_matches('-2')
+    yesterday_matches = filter_matches('-1')
+    today_matches = filter_matches('', '>=')
     history = [
         {
             'day': (datetime.now() - timedelta(days=5)).strftime("%A"),
@@ -154,13 +132,7 @@ def get_matches(count, end_index):
         }
     ]
     
-    return today_matches, history
-    
- 
-def get_total_matches():
-    total = min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
-    today_matches = filter_matches('', '>=', total, total)
-    return len(today_matches)    
+    return today_matches, history  
 
 def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 5) -> List[Dict[str, Any]]:
     """Create slips from today's matches with specified size."""
@@ -179,12 +151,12 @@ def index():
         return subscribe()
     else:
         today_matches, history = get_matches(50, 50)
-        plan = Plan('Free', 0, min_odds.free, 'green', 5, today_matches, history)  
+        plan = Plan('Free', 0, 'green', 5, today_matches, history)  
         slips = create_slips(today_matches)
         current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
         today = (current_time).strftime("%A")
         tomorrow = (current_time + timedelta(days=1)).strftime("%A")
-        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), slips=slips, 
+        return render_template('plans.html', plan=plan, slips=slips, 
                                current_time=current_time, today=today, tomorrow=tomorrow) 
 
 @app.route('/paystack-callback', methods=['GET', 'POST'])
@@ -204,17 +176,6 @@ def paystack_callback():
             db.update_user_expiry(reference,'Premium', days)        
         
     return redirect(url_for('index'))
-
-
-
-
-
-
-@app.route('/free', methods=['GET'])
-def free():
-    today_matches, history = get_matches(min_matches.free, min_matches.free)
-    plan = Plan('Free', 0, min_odds.free, 'green', 1, today_matches, history)  
-    return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches())
 
 @app.route('/about', methods=['GET'])
 def about():
