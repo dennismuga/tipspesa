@@ -100,8 +100,8 @@ def page_not_found(e):
     # Redirect to a specific endpoint, like 'plans', or a custom 404 page
     return redirect(url_for('free'), 302)
 
-def filter_matches(day, match_count, end_index, status=''):
-    matches = helper.fetch_matches(day, '=', status, limit=50)
+def filter_matches(day, comparator='=', match_count=30, end_index=30, status=''):
+    matches = helper.fetch_matches(day, comparator, status, limit=50)
     filtered_matches = []
     total_odds = 1
     to_return = []
@@ -125,12 +125,12 @@ def filter_matches(day, match_count, end_index, status=''):
 
 def get_matches(count, end_index):
     total = 30 #min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
-    five_days_ago = filter_matches('-5', total, total)
-    four_days_ago = filter_matches('-4', total, total)
-    three_days_ago = filter_matches('-3', total, total)
-    two_days_ago = filter_matches('-2', total, total)
-    yesterday_matches = filter_matches('-1', total, total)
-    today_matches = filter_matches('', count, end_index)
+    five_days_ago = filter_matches('-5', '=', total, total)
+    four_days_ago = filter_matches('-4', '=', total, total)
+    three_days_ago = filter_matches('-3', '=', total, total)
+    two_days_ago = filter_matches('-2', '=', total, total)
+    yesterday_matches = filter_matches('-1', '=', total, total)
+    today_matches = filter_matches('', '>=', count, end_index)
     history = [
         {
             'day': (datetime.now() - timedelta(days=5)).strftime("%A"),
@@ -159,7 +159,7 @@ def get_matches(count, end_index):
  
 def get_total_matches():
     total = min_matches.free+min_matches.bronze+min_matches.silver+min_matches.gold+min_matches.platinum
-    today_matches = filter_matches('', total, total)
+    today_matches = filter_matches('', '>=', total, total)
     return len(today_matches)    
 
 def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 5) -> List[Dict[str, Any]]:
@@ -182,7 +182,10 @@ def index():
         plan = Plan('Free', 0, min_odds.free, 'green', 5, today_matches, history)  
         slips = create_slips(today_matches)
         current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
-        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), slips=slips, current_time=current_time) 
+        today = (current_time).strftime("%A")
+        tomorrow = (current_time + timedelta(days=1)).strftime("%A")
+        return render_template('plans.html', plan=plan, min_matches=min_matches, min_odds=min_odds, total_matches=get_total_matches(), slips=slips, 
+                               current_time=current_time, today=today, tomorrow=tomorrow) 
 
 @app.route('/paystack-callback', methods=['GET', 'POST'])
 def paystack_callback():  
