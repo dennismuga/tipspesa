@@ -158,7 +158,7 @@ class PostgresCRUD:
                 FROM matches
                 INNER JOIN source_model ON source_model.parent_match_id=matches.parent_match_id
                 WHERE matches.kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
-                AND model IN ('xai/grok-3', 'xai/grok-3-mini')
+                AND model IN ('xai/grok-3', 'xai/grok-3-mini', 'openai/gpt-4.1')
                 AND (overall_prob >= 82 OR odd > 2)
                 --AND (status != 'LOST' OR status IS NULL)
                 --AND overall_prob >= 65 
