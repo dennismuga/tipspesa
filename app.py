@@ -146,7 +146,7 @@ def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 5) -> Lis
 
 @app.route('/', methods=['GET', 'POST'])
 def index():   
-    free_pass() 
+    #free_pass() 
     if request.method == 'POST': 
         return subscribe()
     else:
@@ -201,6 +201,7 @@ def serve_app_ads_txt():
 if __name__ == '__main__':
     debug_mode = os.getenv('IS_DEBUG', 'False') in ['True', '1', 't']
     app.run(debug=debug_mode)
+
 
 
 
