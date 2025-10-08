@@ -79,6 +79,51 @@
         </div>
     </div>
 
+    
+    <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="POST" class="form-horizontal">
+                    <input type="hidden" name="match_id" id="match_id">
+                    <div class="modal-header text-center">
+                        <h5 class="text-center">Update Results</h5>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-4 text-end control-label col-form-label" id="home_team" for="home_team_goals"></label>
+                            <div class="col-8">
+                                <input required="required" type="number" name="home_team_goals" id="home_team_goals"
+                                    class="form-control input-sm" placeholder="Home Team Goals">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-4 text-end control-label col-form-label" id="away_team" for="away_team_goals"></label>
+                            <div class="col-8">
+                                <input required="required" type="number" name="away_team_goals" id="away_team_goals"
+                                    class="form-control input-sm" placeholder="Away Team Goals">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-4 text-end control-label col-form-label" for="status">Status</label>
+                            <div class="col-8">
+                                <input required="required" type="text" name="status" id="status"
+                                    class="form-control input-sm" placeholder="Status (WON, LOST, PENDING)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" id="action" name="action" value="update_results"
+                            class="btn btn-success">Update Results</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Header -->
     <header class="sticky top-0 bg-gray-900 shadow-md z-10 text-white p-2">
         <div class="container mx-auto flex">
@@ -138,7 +183,11 @@
                             {% for match in slip.matches %}
                             {% set ns.total_odds = ns.total_odds * match.odd %}
                             {% if current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
-                            <tr>
+                            <tr 
+                                {% if current_user.phone == 'admin@tipspesa.com' %}
+                                onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}')"
+                                {% endif %}
+                            >
                                 <td>
                                     {{ 'Today' if match.kickoff.strftime('%A')==today else 'Tomorrow' if match.kickoff.strftime('%A')==tomorrow else match.kickoff.strftime('%A')  }} <br />
                                     {{ match.kickoff.strftime('%H:%M') }}
@@ -281,6 +330,15 @@
             }, function (err) {
                 console.error('Could not copy text: ', err);
             });
+        }
+
+        function editMatch(id, home_team, away_team) {
+            // Set the values in the modal
+            document.getElementById('match_id').value = id;
+            document.getElementById('home_team').innerText = home_team + ' Goals';
+            document.getElementById('away_team').innerText = away_team + ' Goals';
+            // Show the modal
+            $('#resultModal').modal('show');
         }
 
         document.addEventListener('DOMContentLoaded', () => {

@@ -147,7 +147,15 @@ def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 6) -> Lis
 def index():   
     #free_pass() 
     if request.method == 'POST': 
-        return subscribe()
+        if request.form.get('action') == 'login':
+            return subscribe()
+        elif request.form.get('action') == 'update_results':
+            match_id = request.form['match_id']
+            home_team_goals = request.form['home_team_goals']
+            away_team_goals = request.form['away_team_goals']
+            status = request.form['status']
+            db.update_match_results(match_id, home_team_goals, away_team_goals, status)
+            return redirect(url_for('index'))
     else:
         today_matches, history = get_matches(50, 50)
         plan = Plan('Free', 0, 'green', 5, today_matches, history)  
