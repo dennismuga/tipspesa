@@ -83,7 +83,7 @@ def page_not_found(e):
     # Redirect to a specific endpoint, like 'plans', or a custom 404 page
     return redirect(url_for('index'))
 
-def filter_matches(day, comparator='=', status='', limit=30):
+def filter_matches(day, comparator='=', status='', limit=36):
     matches = helper.fetch_matches(day, comparator, status, limit)
     filtered_matches = []
     total_odds = 1
@@ -102,7 +102,6 @@ def filter_matches(day, comparator='=', status='', limit=30):
     return filtered_matches
 
 def get_matches(count, end_index):
-    total = 30
     five_days_ago = filter_matches('-5')
     four_days_ago = filter_matches('-4')
     three_days_ago = filter_matches('-3')
@@ -134,7 +133,7 @@ def get_matches(count, end_index):
     
     return today_matches, history  
 
-def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 5) -> List[Dict[str, Any]]:
+def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 6) -> List[Dict[str, Any]]:
     """Create slips from today's matches with specified size."""
     return [
         {
