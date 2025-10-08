@@ -154,7 +154,7 @@ def index():
             home_team_goals = request.form['home_team_goals']
             away_team_goals = request.form['away_team_goals']
             status = request.form['status']
-            db.update_match_results(match_id, home_team_goals, away_team_goals, status)
+            db.update_match_results(match_id, home_team_goals, away_team_goals, status.upper())
             return redirect(url_for('index'))
     else:
         today_matches, history = get_matches(50, 50)
