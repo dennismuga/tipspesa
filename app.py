@@ -145,7 +145,7 @@ def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 6) -> Lis
 
 @app.route('/', methods=['GET', 'POST'])
 def index():   
-    free_pass() 
+    #free_pass() 
     if request.method == 'POST': 
         return subscribe()
     else:
