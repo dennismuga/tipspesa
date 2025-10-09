@@ -79,7 +79,7 @@
         </div>
     </div>
 
-    
+
     <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -92,14 +92,16 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label class="col-7 text-end control-label col-form-label" id="home_team" for="home_team_goals"></label>
+                            <label class="col-7 text-end control-label col-form-label" id="home_team"
+                                for="home_team_goals"></label>
                             <div class="col-5">
                                 <input required="required" type="number" name="home_team_goals" id="home_team_goals"
                                     class="form-control input-sm" placeholder="Home Team Goals">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-7 text-end control-label col-form-label" id="away_team" for="away_team_goals"></label>
+                            <label class="col-7 text-end control-label col-form-label" id="away_team"
+                                for="away_team_goals"></label>
                             <div class="col-5">
                                 <input required="required" type="number" name="away_team_goals" id="away_team_goals"
                                     class="form-control input-sm" placeholder="Away Team Goals">
@@ -182,23 +184,28 @@
                             {% set ns = namespace(total_odds=1) %}
                             {% for match in slip.matches %}
                             {% set ns.total_odds = ns.total_odds * match.odd %}
-                            {% if current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
                             <tr>
                                 <td>
-                                    {{ 'Today' if match.kickoff.strftime('%A')==today else 'Tomorrow' if match.kickoff.strftime('%A')==tomorrow else match.kickoff.strftime('%A')  }} <br />
+                                    {{ 'Today' if match.kickoff.strftime('%A')==today else 'Tomorrow' if
+                                    match.kickoff.strftime('%A')==tomorrow else match.kickoff.strftime('%A') }} <br />
                                     {{ match.kickoff.strftime('%H:%M') }}
                                 </td>
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
+                                {% if current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d %H:%M:%S') >
+                                match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
                                 <td>
                                     {{ match.prediction | capitalize }} <br />
                                     {{ match.bet_pick | upper }}
                                 </td>
+                                {% endif %}
+                                {% if not (current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d
+                                %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S')) %}
+                                <td class="text-center"> <i class="fas fa-lock"></i> </td>
+                                {% endif %}
                                 <td>
-                                    <small 
-                                        {% if current_user.phone == 'admin@tipspesa.com' %}
+                                    <small {% if current_user.phone=='admin@tipspesa.com' %}
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}')"
-                                        {% endif %}
-                                    >
+                                        {% endif %}>
                                         {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.status else '' }}
                                         {% if match.status == 'WON' %}
@@ -210,19 +217,19 @@
                                         {% endif %}
                                     </small>
                                 </td>
+
                             </tr>
-                            {% endif %}
                             {% endfor %}
-                            {% if current_user.active or slip.id==1 or loop.index < 5 %}
+                            {% if current_user.active or slip.id==1 %}
                             <tr>
                                 {% if slip.betika_share_code %}
                                 <td id="betika_share" class="text-sm" colspan="4">
                                     <small>
-                                    Betika Share Code </br>
-                                    <a class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded-full" href="#"
-                                        onclick="copyToClipboard('{{ slip.betika_share_code }}')">{{
-                                        slip.betika_share_code }}</a><br />
-                                    <i>Tap to Copy</i></small>
+                                        Betika Share Code </br>
+                                        <a class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded-full"
+                                            href="#" onclick="copyToClipboard('{{ slip.betika_share_code }}')">{{
+                                            slip.betika_share_code }}</a><br />
+                                        <i>Tap to Copy</i></small>
                                 </td>
                                 {% endif %}
                             </tr>
@@ -232,9 +239,9 @@
                                     <a href="#" data-toggle="modal" data-target="#loginModal">
                                         <button
                                             class="bg-yellow-100 text-yellow-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
-                                            Click to UNLOCK All betslips now<br />
+                                            Click to UNLOCK All Tips in All betslips now<br />
                                             @ KSh. 30 <br />
-                                            Once Paid, All betslips will be displayed.
+                                            Once Paid, All Tips in All betslips will be displayed.
                                         </button>
                                     </a>
                                 </th>
