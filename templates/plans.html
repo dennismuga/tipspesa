@@ -204,7 +204,7 @@
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}')"
                                         {% endif %}>
                                         {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
-                                        {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results and match.away_results else '' }}
+                                        {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not None or match.away_results is not None else '' }}
                                         {% if match.status == 'WON' %}
                                         <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
                                         {% elif match.status == 'LOST' %}
@@ -295,7 +295,7 @@
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}')"
                                         {% endif %}>
                                         {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
-                                        {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results and match.away_results else '' }}
+                                        {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not None or match.away_results is not None else '' }}
                                         {% if match.status == 'WON' %}
                                         <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
                                         {% elif match.status == 'LOST' %}
