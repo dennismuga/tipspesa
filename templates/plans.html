@@ -300,7 +300,8 @@
                                         <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
                                         {% elif match.status == 'LOST' %}
                                         <span class="fa fa-minus-circle" style="color: grey; font-size: 16px;"></span>
-
+                                        {% else %}
+                                        {{ '[' ~ match.status ~ ']' if match.status else '' }}
                                         {% endif %}
                                     </small>
                                 </td>
