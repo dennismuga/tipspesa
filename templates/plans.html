@@ -191,16 +191,14 @@
                                     {{ match.kickoff.strftime('%H:%M') }}
                                 </td>
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
-                                {% if current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d %H:%M:%S') >
-                                match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
+                                {% if current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
                                 <td>
                                     {{ match.prediction | capitalize }} <br />
                                     {{ match.bet_pick | upper }}
                                 </td>
-                                {% endif %}
-                                {% if not (current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S')) %}
-                                <td class="text-center"> <i class="fas fa-lock"></i> </td>
                                 {% else %}
+                                <td class="text-center"> <i class="fas fa-lock"></i> </td>
+                                {% endif %}
                                 <td>
                                     <small {% if current_user.phone=='admin@tipspesa.com' %}
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}')"
@@ -216,8 +214,6 @@
                                         {% endif %}
                                     </small>
                                 </td>
-                                {% endif %}
-
                             </tr>
                             {% endfor %}
                             {% if current_user.active or slip.id==1 %}
