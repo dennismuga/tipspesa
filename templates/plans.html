@@ -198,10 +198,9 @@
                                     {{ match.bet_pick | upper }}
                                 </td>
                                 {% endif %}
-                                {% if not (current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d
-                                %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S')) %}
+                                {% if not (current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S')) %}
                                 <td class="text-center"> <i class="fas fa-lock"></i> </td>
-                                {% endif %}
+                                {% else %}
                                 <td>
                                     <small {% if current_user.phone=='admin@tipspesa.com' %}
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}')"
@@ -217,6 +216,7 @@
                                         {% endif %}
                                     </small>
                                 </td>
+                                {% endif %}
 
                             </tr>
                             {% endfor %}
