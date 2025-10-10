@@ -345,7 +345,7 @@
             $('#away_team').html(away_team)
             $('#home_team_goals').val(home_team_goals)
             $('#away_team_goals').val(away_team_goals)
-            $('#status').val(status ? status != 'None' : '')
+            $('#status').val(status != 'None' ? status : '');
 
             // Show the modal
             $('#resultModal').modal('show');
