@@ -201,7 +201,7 @@
                                 {% endif %}
                                 <td>
                                     <small {% if current_user.phone=='admin@tipspesa.com' %}
-                                        onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', {{ match.home_results }}, {{ match.away_results }}, '{{ match.status }}')"
+                                        onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', '{{ match.home_results }}', '{{ match.away_results }}', '{{ match.status }}')"
                                         {% endif %}>
                                         {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not none or match.away_results is not none else '' }}
@@ -292,7 +292,7 @@
 
                                 <td>
                                     <small {% if current_user.phone=='admin@tipspesa.com' %}
-                                        onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', {{ match.home_results }}, {{ match.away_results }}, '{{ match.status }}')"
+                                        onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', '{{ match.home_results }}', '{{ match.away_results }}', '{{ match.status }}')"
                                         {% endif %}>
                                         {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not none or match.away_results is not none else '' }}
