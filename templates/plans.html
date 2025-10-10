@@ -191,7 +191,7 @@
                                     {{ match.kickoff.strftime('%H:%M') }}
                                 </td>
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
-                                {% if current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
+                                {% if true or current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
                                 <td>
                                     {{ match.prediction | capitalize }} <br />
                                     {{ match.bet_pick | upper }}
@@ -216,7 +216,7 @@
                                 </td>
                             </tr>
                             {% endfor %}
-                            {% if current_user.active or slip.id==1 %}
+                            {% if true or current_user.active or slip.id==1 %}
                             <tr>
                                 {% if slip.betika_share_code %}
                                 <td id="betika_share" class="text-sm" colspan="4">
@@ -391,6 +391,7 @@
 
     </script>
 </body>
+
 
 
 
