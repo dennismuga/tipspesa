@@ -201,7 +201,7 @@
                                 {% endif %}
                                 <td>
                                     <small {% if current_user.phone=='admin@tipspesa.com' %}
-                                        onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}')"
+                                        onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', {{ match.home_results }}, {{ match.away_results }}, '{{ match.status }}')"
                                         {% endif %}>
                                         {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not none or match.away_results is not none else '' }}
@@ -292,7 +292,7 @@
 
                                 <td>
                                     <small {% if current_user.phone=='admin@tipspesa.com' %}
-                                        onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}')"
+                                        onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', {{ match.home_results }}, {{ match.away_results }}, '{{ match.status }}')"
                                         {% endif %}>
                                         {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not none or match.away_results is not none else '' }}
@@ -338,11 +338,15 @@
             });
         }
 
-        function editMatch(id, home_team, away_team) {
+        function editMatch(id, home_team, away_team, home_team_goals, away_team_goals, status) {
             // Set the values in the modal
-            document.getElementById('match_id').value = id;
-            document.getElementById('home_team').innerText = home_team + ' Goals';
-            document.getElementById('away_team').innerText = away_team + ' Goals';
+            $('#match_id').val(id)
+            $('#home_team').html(home_team)
+            $('#away_team').html(away_team)
+            $('#home_team_goals').val(home_team_goals)
+            $('#away_team_goals').val(away_team_goals)
+            $('#status').val(status)
+
             // Show the modal
             $('#resultModal').modal('show');
         }
