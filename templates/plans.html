@@ -222,10 +222,13 @@
                                 <td id="betika_share" class="text-sm" colspan="4">
                                     <small>
                                         Betika Share Code </br>
-                                        <a class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded-full"
-                                            onclick="copyToClipboard('{{ slip.betika_share_code }}')">{{
-                                            slip.betika_share_code }}</a><br />
-                                        <i>Tap to Copy</i></small>
+                                        <span
+                                            class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full"
+                                            onclick="copyToClipboard('{{ slip.betika_share_code }}')">
+                                            {{ slip.betika_share_code }}
+                                        </span><br />
+                                        <i>Tap to Copy</i>
+                                    </small>
                                 </td>
                                 {% endif %}
                             </tr>
