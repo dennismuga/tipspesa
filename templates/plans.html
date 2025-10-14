@@ -191,20 +191,30 @@
                                     {{ match.kickoff.strftime('%H:%M') }}
                                 </td>
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
-                                {% if current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
+                                {% if current_user.active or slip.id==1 %}
                                 <td>
                                     {{ match.prediction | capitalize }} <br />
                                     {{ match.bet_pick | upper }}
                                 </td>
-                                {% else %}
-                                <td class="text-center"> <i class="fas fa-lock"></i> </td>
+                                {% elif loop.index==1 %}
+                                <td class="text-center" rowspan="{{ slip.matches | length }}">
+                                    <a href="#" data-toggle="modal" data-target="#loginModal">
+                                        <button
+                                            class="bg-yellow-100 text-yellow-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
+                                            Click Here to UNLOCK All Tips in All Betslips now<br />
+                                            @ KSh. 30 <br />
+                                            Once Paid, All Tips in All Betslips will be displayed.
+                                        </button>
+                                    </a>
+                                </td>
                                 {% endif %}
                                 <td>
                                     <small {% if current_user.phone=='admin@tipspesa.com' %}
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', '{{ match.home_results }}', '{{ match.away_results }}', '{{ match.status }}')"
                                         {% endif %}>
                                         {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
-                                        {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not none or match.away_results is not none else '' }}
+                                        {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
+                                        none or match.away_results is not none else '' }}
                                         {% if match.status == 'WON' %}
                                         <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
                                         {% elif match.status == 'LOST' %}
@@ -231,19 +241,6 @@
                                     </small>
                                 </td>
                                 {% endif %}
-                            </tr>
-                            {% else %}
-                            <tr>
-                                <th colspan="4">
-                                    <a href="#" data-toggle="modal" data-target="#loginModal">
-                                        <button
-                                            class="bg-yellow-100 text-yellow-800 text-md font-bold px-2 py-1 rounded-lg mt-2">
-                                            Click Here to UNLOCK All Tips in All Betslips now<br />
-                                            @ KSh. 30 <br />
-                                            Once Paid, All Tips in All Betslips will be displayed.
-                                        </button>
-                                    </a>
-                                </th>
                             </tr>
                             {% endif %}
                             <tr>
@@ -298,7 +295,8 @@
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', '{{ match.home_results }}', '{{ match.away_results }}', '{{ match.status }}')"
                                         {% endif %}>
                                         {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
-                                        {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not none or match.away_results is not none else '' }}
+                                        {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
+                                        none or match.away_results is not none else '' }}
                                         {% if match.status == 'WON' %}
                                         <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
                                         {% elif match.status == 'LOST' %}
