@@ -190,7 +190,10 @@
                                     match.kickoff.strftime('%A')==tomorrow else match.kickoff.strftime('%A') }} <br />
                                     {{ match.kickoff.strftime('%H:%M') }}
                                 </td>
-                                <td>{{ match.home_team }} vs {{ match.away_team }}</td>
+                                <td>
+                                    {{ match.home_team }} vs {{ match.away_team }} <br />
+                                    {{ '[' ~ match.league ~ ']' if match.league else '' }}
+                                </td>
                                 {% if true or current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}                                
                                 {% set ns.posted = ns.posted + 1 %}
                                 <td>

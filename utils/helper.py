@@ -77,6 +77,7 @@ class Helper():
             match.bet_pick = open_match[12]
             match.outcome_id = int(open_match[13])
             match.special_bet_value = open_match[14]
+            match.league = open_match[15]
             matches.append(match)
             
         return matches

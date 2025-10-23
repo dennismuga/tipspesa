@@ -24,6 +24,7 @@ class Match():
         self.kickoff = None
         self.home_team = None
         self.away_team = None
+        self.league = None
         self.prediction = None
         self.odd = 0
         self.home_results = None
