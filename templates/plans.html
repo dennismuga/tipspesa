@@ -49,20 +49,36 @@
                     <button type="button" class="close" data-dismiss="modal">×</button>
                 </div>
                 <div class="modal-body">
-                    <h6 class="text-center">🚀 Donate today and help us keep <b>TIPSPESA Project</b> Free Forever 🚀
+                    <h6 class="text-black">
+                        🚀 Donate today and help us keep <strong>TIPSPESA Project</strong> Free Forever 🚀
                     </h6><br />
                     <div class="form-group row">
-                        <label for="amount" class="form-label">Amount to Donate in USD: <b id="amount-value">1💲</b></label>
+                        <label for="amount" class="form-label">Amount to Donate in USD: <strong id="amount-value">1💲</strong></label>
                         <div class="input-group">
-                            <input type="range" class="form-range" min="1" max="10" name="amount" id="amount"
-                                value="1">
+                            <input type="range" class="form-range" min="1" max="10" name="amount" id="amount" value="1">
                         </div>
                     </div>
+                    <div class="form-group text-right">
+                        <button type="button" class="btn btn-success btn-flat pull-right" data-dismiss="modal"
+                            onclick="InitiateTransaction()">Donate Now</button>
+
+                    </div><br />
+
+                    <div class="row text-left">
+                        <h6 class="text-black">Why your support matters:</h6><br /><br />
+                        <blockquote class="blockquote">
+                            <footer class="blockquote-footer">🖥 Cover server costs to keep TIPSPESA running smoothly for everyone.</footer>
+                            <footer class="blockquote-footer">🛠 Fund ongoing development and new features at no cost to users.</footer>
+                            <footer class="blockquote-footer">🌍 Ensure free access for underserved communities worldwide.</footer>
+                            <footer class="blockquote-footer">💓 Help us sustain this open project—every dollar makes a difference!</footer>
+                        </blockquote>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal"
-                        onclick="InitiateTransaction()">Donate Now</button>
                 </div>
+
+
 
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
