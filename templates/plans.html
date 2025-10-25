@@ -32,22 +32,26 @@
 
 <body>
 
+    <div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="payModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="payModalContent">
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="donateModal" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                {% if access_code%}
-                <iframe src="https://checkout.paystack.com/{{ access_code }}" frameborder="0" width="100%"
-                    height="600px">
-                </iframe>
-                {% else %}
                 <form method="POST" class="form-horizontal">
                     <div class="modal-header text-center">
                         <h5 class="text-center">🙏 Support Us 🙏</h5>
                         <button type="button" class="close" data-dismiss="modal">×</button>
                     </div>
                     <div class="modal-body">
-                        <h6 class="text-center">🚀 Donate today and help us keep <b>TIPSPESA Project</b> Free Forever 🚀</h6><br />
+                        <h6 class="text-center">🚀 Donate today and help us keep <b>TIPSPESA Project</b> Free Forever 🚀
+                        </h6><br />
                         <div class="form-group row">
                             <label class="col-5 text-end control-label col-form-label">Amount in USD (💲)</label>
                             <div class="col-7">
@@ -58,11 +62,10 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" id="action" name="action" value="donate"
-                            class="btn btn-success">Donate</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal"
+                            onclick="InitiateTransaction()">Donate</button>
                     </div>
                 </form>
-                {% endif %}
             </div>
         </div>
     </div>
@@ -379,10 +382,39 @@
     <!--  include 'footer.html'  -->
 
     <script>
-
-        $(document).ready(function () {
-            $('#donateModal').modal("{{ 'show' if access_code else 'hide' }}");
-        });
+        function InitiateTransaction() {
+            amount = $("#amount").val()
+            
+            fetch("{{ url_for('index') }}", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    action: 'donate',
+                    amount: amount ? amount : 1
+                }) 
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success){
+                        $("#payModalContent").html(`
+                            <iframe 
+                                src=${data.authorization_url}
+                                frameborder="0" 
+                                width="100%" 
+                                height="600px">
+                            </iframe>
+                        `)
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching checkout URL:', error);
+                    $("#payModalContent").html('Payment initiation failed. Please try again.');
+                })
+                .finally(data => {
+                    // Show the modal
+                    $('#payModal').modal('show');
+                });
+        }
 
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(function () {

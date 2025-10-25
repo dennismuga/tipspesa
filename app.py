@@ -2,10 +2,10 @@
 import os
 
 from datetime import datetime, timedelta
-from typing import List, Tuple, Dict, Any
+from typing import List, Dict, Any
 
 from dotenv import load_dotenv
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, jsonify, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_session import Session
 import pytz
@@ -145,8 +145,7 @@ def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 7) -> Lis
 
 @app.route('/', methods=['GET', 'POST'])
 def index():   
-    access_code = None
-    if request.method == 'POST': 
+    if request.method == 'POST':         
         if request.form.get('action') == 'login':
             return subscribe()
         
@@ -156,12 +155,26 @@ def index():
             away_team_goals = request.form['away_team_goals']
             status = request.form['status']
             db.update_match_results(match_id, home_team_goals, away_team_goals, status.strip().upper())
-            
-        elif request.form.get('action') == 'donate':
-            amount = int(request.form['amount'])*100
-            order_details = paystack_transaction.initialize(email="donate.tipspesa@gmail.com", amount=amount)
-            if order_details.get('status'):
-                access_code = order_details.get('data').get('access_code')
+        
+        else:
+            data = request.get_json()              
+            if data.get('action') == 'donate':                               
+                amount = int(data.get('amount'))*100
+                order_details = paystack_transaction.initialize(email="donate.tipspesa@gmail.com", amount=amount)
+                if order_details.get('status'):
+                    authorization_url = order_details.get('data').get('authorization_url')
+                    return jsonify(
+                        {
+                            'success': True, 
+                            'authorization_url': authorization_url
+                        }
+                    ), 200  
+                        
+            return jsonify(
+                {
+                    'success': False
+                }
+            ), 504  
             
     today_matches, history = get_matches(50, 50)
     plan = Plan('Free', 0, 'green', 5, today_matches, history)  
@@ -169,8 +182,7 @@ def index():
     current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
     today = (current_time).strftime("%A")
     tomorrow = (current_time + timedelta(days=1)).strftime("%A")
-    return render_template('plans.html', plan=plan, slips=slips, access_code=access_code,
-                            current_time=current_time, today=today, tomorrow=tomorrow) 
+    return render_template('plans.html', plan=plan, slips=slips, current_time=current_time, today=today, tomorrow=tomorrow) 
 
 @app.route('/paystack-callback', methods=['GET', 'POST'])
 def paystack_callback():  
