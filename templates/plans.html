@@ -52,10 +52,10 @@
                     <h6 class="text-center">🚀 Donate today and help us keep <b>TIPSPESA Project</b> Free Forever 🚀
                     </h6><br />
                     <div class="form-group row">
-                        <label class="col-5 text-end control-label col-form-label">Amount in USD (💲):</label>
-                        <div class="col-7">
-                            <input type="number" name="amount" id="amount" required min="1"
-                                class="form-control input-sm" placeholder="Enter Amount to donate">
+                        <label for="amount" class="form-label">Amount to Donate in USD (💲): <b id="amount-value">1💲</b></label>
+                        <div class="input-group">
+                            <input type="range" class="form-range" min="1" max="10" name="amount" id="amount"
+                                value="1">
                         </div>
                     </div>
                 </div>
@@ -64,6 +64,20 @@
                     <button type="button" class="btn btn-success" data-dismiss="modal"
                         onclick="InitiateTransaction()">Donate</button>
                 </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const slider = document.getElementById('amount');
+                        const valueDisplay = document.getElementById('amount-value');
+
+                        function updateValue() {
+                            valueDisplay.textContent = '💲' + slider.value;
+                        }
+
+                        slider.addEventListener('input', updateValue);
+                        updateValue(); // Initialize with default value
+                    });
+                </script>
             </div>
         </div>
     </div>
