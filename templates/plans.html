@@ -31,6 +31,42 @@
 </style>
 
 <body>
+
+    <div class="modal fade" id="donateModal" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                {% if access_code%}
+                <iframe src="https://checkout.paystack.com/{{ access_code }}" frameborder="0" width="100%"
+                    height="600px">
+                </iframe>
+                {% else %}
+                <form method="POST" class="form-horizontal">
+                    <div class="modal-header text-center">
+                        <h5 class="text-center">🙏 Support TipsPesa 🙏</h5>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <h6 class="text-center">🚀 Donate to Tipspesa and help us keep TipsPesa Free Forever 🚀</h6>
+                        <div class="form-group row">
+                            <label class="col-4 text-end control-label col-form-label">Amount USD ($)</label>
+                            <div class="col-8">
+                                <input type="number" name="amount" id="amount" required min="1"
+                                    class="form-control input-sm" placeholder="Amount to donate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" id="action" name="action" value="donate"
+                            class="btn btn-success">Donate</button>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -137,10 +173,17 @@
 
     <!-- Main Content -->
     <div class="main-content bg-white">
+
+        <div class="donate-float">
+            <a href="#" data-toggle="modal" data-target="#donateModal">
+                <img src="{{ url_for('static', filename='donate.png') }}" alt="Support" width="64px">
+            </a>
+        </div>
+
         <div class="whatsapp-float">
             <a href="https://wa.me/+254759697757" class="text-white text-xs font-bold" target="_blank"
                 title="Chat with us on WhatsApp">
-                <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp">
+                <img src="{{ url_for('static', filename='whatsapp.png') }}" alt="WhatsApp">
             </a>
         </div>
 
@@ -194,7 +237,8 @@
                                     {{ match.home_team }} vs {{ match.away_team }} <br />
                                     {{ '[' ~ match.league ~ ']' if match.league else '' }}
                                 </td>
-                                {% if true or current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}                                
+                                {% if true or current_user.active or slip.id==1 or current_time.strftime('%Y-%m-%d
+                                %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
                                 {% set ns.posted = ns.posted + 1 %}
                                 <td>
                                     {{ match.prediction | capitalize }} <br />
@@ -335,6 +379,10 @@
     <!--  include 'footer.html'  -->
 
     <script>
+
+        $(document).ready(function () {
+            $('#donateModal').modal("{{ 'show' if access_code else 'hide' }}");
+        });
 
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(function () {

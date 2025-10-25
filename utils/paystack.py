@@ -21,8 +21,7 @@ class Transactions(Paystack):
         data={ 
             "email": email, 
             "amount": amount*100,
-            "currency": "KES",
-            "callback_url": "https://tipspesa.vercel.app/paystack-callback"
+            "currency": "KES"
         }
 
         try:

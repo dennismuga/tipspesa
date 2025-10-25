@@ -3,15 +3,25 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
-/* WhatsApp Float */
+/* WhatsApp & Support Float */
+.donate-float {
+    left: 2px;
+}
+
+
 .whatsapp-float {
+    right: 2px;
+}
+
+
+.whatsapp-float, .donate-float {
     position: fixed;
     bottom: 2px; 
     right: 2px;
     z-index: 1000;
 }
 
-.whatsapp-float a {
+.whatsapp-float a, .donate-float a {
     display: inline-block;
     background-color: #25d366;
     color: white;
@@ -21,7 +31,7 @@ body {
     transition: transform 0.3s ease-in-out;
 }
 
-.whatsapp-float a:hover {
+.whatsapp-float a:hover, .donate-float a:hover {
     transform: scale(1.1);
 }
 
