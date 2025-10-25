@@ -44,28 +44,26 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="POST" class="form-horizontal">
-                    <div class="modal-header text-center">
-                        <h5 class="text-center">🙏 Support Us 🙏</h5>
-                        <button type="button" class="close" data-dismiss="modal">×</button>
-                    </div>
-                    <div class="modal-body">
-                        <h6 class="text-center">🚀 Donate today and help us keep <b>TIPSPESA Project</b> Free Forever 🚀
-                        </h6><br />
-                        <div class="form-group row">
-                            <label class="col-5 text-end control-label col-form-label">Amount in USD (💲)</label>
-                            <div class="col-7">
-                                <input type="number" name="amount" id="amount" required min="1"
-                                    class="form-control input-sm" placeholder="Enter Amount to donate">
-                            </div>
+                <div class="modal-header text-center">
+                    <h5 class="text-center">🙏 Support Us 🙏</h5>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="text-center">🚀 Donate today and help us keep <b>TIPSPESA Project</b> Free Forever 🚀
+                    </h6><br />
+                    <div class="form-group row">
+                        <label class="col-5 text-end control-label col-form-label">Amount in USD (💲)</label>
+                        <div class="col-7">
+                            <input type="number" name="amount" id="amount" required min="1"
+                                class="form-control input-sm" placeholder="Enter Amount to donate">
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success" data-dismiss="modal"
-                            onclick="InitiateTransaction()">Donate</button>
-                    </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"
+                        onclick="InitiateTransaction()">Donate</button>
+                </div>
             </div>
         </div>
     </div>
@@ -384,18 +382,18 @@
     <script>
         function InitiateTransaction() {
             amount = $("#amount").val()
-            
+
             fetch("{{ url_for('index') }}", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
+                body: JSON.stringify({
                     action: 'donate',
                     amount: amount ? amount : 1
-                }) 
+                })
             })
                 .then(response => response.json())
                 .then(data => {
-                    if(data.success){
+                    if (data.success) {
                         $("#payModalContent").html(`
                             <iframe 
                                 src=${data.authorization_url}
