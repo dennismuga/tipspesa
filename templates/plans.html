@@ -268,7 +268,7 @@
                                 %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
                                 {% set ns.posted = ns.posted + 1 %}
                                 <td>
-                                    {{ match.prediction | capitalize }} <br />
+                                    <small>{{ match.prediction | capitalize }}</small> <br />
                                     {{ match.bet_pick | upper }}
                                 </td>
                                 {% elif loop.index==ns.posted+1 %}
@@ -362,7 +362,7 @@
                             <tr>
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                                 <td>
-                                    {{ match.prediction | capitalize }} <br />
+                                    <small>{{ match.prediction | capitalize }}</small> <br />
                                     {{ match.bet_pick | upper }}
                                 </td>
 
