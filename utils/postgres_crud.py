@@ -158,7 +158,6 @@ class PostgresCRUD:
                 FROM matches
                 INNER JOIN source_model ON source_model.parent_match_id=matches.parent_match_id
                 WHERE matches.kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
-                AND source_model.model IN('openai/gpt-4.1', 'openai/gpt-4.1-mini', 'xai/grok-3')
                 ORDER BY odd DESC, overall_prob DESC
                 LIMIT {limit}
             )
