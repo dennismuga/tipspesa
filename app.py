@@ -185,9 +185,10 @@ def index():
     plan = Plan('Free', 0, 'green', 5, today_matches, history)  
     slips = create_slips(today_matches)
     current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
+    yesterday = (current_time - timedelta(days=1)).strftime("%A")
     today = (current_time).strftime("%A")
     tomorrow = (current_time + timedelta(days=1)).strftime("%A")
-    return render_template('plans.html', plan=plan, slips=slips, current_time=current_time, today=today, tomorrow=tomorrow) 
+    return render_template('plans.html', plan=plan, slips=slips, current_time=current_time, yesterday=yesterday, today=today, tomorrow=tomorrow) 
 
 @app.route('/paystack-callback', methods=['GET', 'POST'])
 def paystack_callback():  
