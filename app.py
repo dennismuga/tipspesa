@@ -94,6 +94,8 @@ def filter_matches(day, comparator='=', status='', limit=56):
     for match in matches:
         kickoff = eat_tz.localize(match.kickoff)
         match.kickoff = kickoff.astimezone(user_tz)
+        if comparator == '>=' and match.kickoff.date() < datetime.now().astimezone(user_tz).date():
+            continue
         
         # Check if home_team or away_team is already in filtered_matches
         is_duplicate = any(
@@ -113,21 +115,23 @@ def get_matches(count, end_index):
     two_days_ago = filter_matches('-2')
     yesterday_matches = filter_matches('-1')
     today_matches = filter_matches('', '>=')
+    user_tz = helper.get_user_tz()
+    datetime_now = datetime.now().astimezone(user_tz)
     history = [
         {
-            'day': (datetime.now() - timedelta(days=5)).strftime("%A"),
+            'day': (datetime_now - timedelta(days=5)).strftime("%A"),
             'matches': sorted(five_days_ago, key=lambda match: match.kickoff) 
         },
         {
-            'day': (datetime.now() - timedelta(days=4)).strftime("%A"),
+            'day': (datetime_now - timedelta(days=4)).strftime("%A"),
             'matches': sorted(four_days_ago, key=lambda match: match.kickoff) 
         },
         {
-            'day': (datetime.now() - timedelta(days=3)).strftime("%A"),
+            'day': (datetime_now - timedelta(days=3)).strftime("%A"),
             'matches': sorted(three_days_ago, key=lambda match: match.kickoff) 
         },
         {
-            'day': (datetime.now() - timedelta(days=2)).strftime("%A"),
+            'day': (datetime_now - timedelta(days=2)).strftime("%A"),
             'matches': sorted(two_days_ago, key=lambda match: match.kickoff) 
         },
         {
