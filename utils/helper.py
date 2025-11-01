@@ -1,6 +1,11 @@
 
 import json, pytz, random, requests, time
+import pytz
+
 from datetime import datetime
+from flask import request, session
+from functools import lru_cache
+
 
 from utils.betika import Betika
 from utils.entities import Match
@@ -154,14 +159,11 @@ class Helper():
             
     def get_share_code(self, matches):
         link = ''
-        # Get current time in Nairobi (EAT, UTC+3)
-        nairobi_tz = pytz.timezone('Africa/Nairobi')
-        current_time = datetime.now(nairobi_tz)
+        current_time = datetime.now(self.get_user_tz())
         try:
             betslips = []
             for match in matches:   
-                kickoff_aware = nairobi_tz.localize(match.kickoff)
-                if not any(betslip["parent_match_id"] == match.parent_match_id for betslip in betslips) and kickoff_aware > current_time:
+                if not any(betslip["parent_match_id"] == match.parent_match_id for betslip in betslips) and match.kickoff > current_time:
                     betslip = {
                         "odd_key": match.bet_pick,
                         "outcome_id": match.outcome_id,
@@ -173,10 +175,11 @@ class Helper():
                        
             if betslips:
                 link = self.betika.share_bet(betslips)
-
-            return link if link else ''              
+                     
         except Exception as e:
             print(f"Error in get share code: {e}")
+        
+        return link if link else ''     
             
             
     def get_code(self):
@@ -189,7 +192,30 @@ class Helper():
         print(code)
         return code
     
-    
+    @lru_cache(maxsize=1000)  # Cache IP->TZ mappings (expires after 1000 unique IPs)
+    def get_tz_from_ip(self, ip):
+        try:
+            response = requests.get(f'https://ipapi.co/{ip}/json/', timeout=2)
+            if response.status_code == 200:
+                data = response.json()
+                tz_str = data.get('timezone', 'Africa/Nairobi')  # Fallback
+                return tz_str if tz_str else 'Africa/Nairobi'
+            
+        except Exception as e:
+            print(f"Error in get get_tz_from_ip code: {e}")
+        
+        return 'Africa/Nairobi'  # Ultimate fallback
+
+    def get_user_tz(self):
+        user_tz_str = session.get('user_timezone')
+        if not user_tz_str:  # Only geolocate if not cached
+            client_ip = request.remote_addr  # Or request.environ.get('HTTP_X_FORWARDED_FOR') for proxies
+            user_tz_str = self.get_tz_from_ip(client_ip)
+            session['user_timezone'] = user_tz_str  # Cache in session
+        
+        return pytz.timezone(user_tz_str)
+        
+        
 
 
 

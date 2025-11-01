@@ -1,14 +1,14 @@
 
 import os
+import pytz
 
 from datetime import datetime, timedelta
 from typing import List, Dict, Any
 
 from dotenv import load_dotenv
-from flask import Flask, jsonify, redirect, render_template, request, url_for
+from flask import Flask, jsonify, redirect, render_template, request, session, url_for
 from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_session import Session
-import pytz
 from redis import Redis
 
 from utils.entities import Plan
@@ -87,9 +87,12 @@ def filter_matches(day, comparator='=', status='', limit=56):
     matches = helper.fetch_matches(day, comparator, status, limit)
     filtered_matches = []
     total_odds = 1
-    to_return = []
+    to_return = []    
+    user_tz = helper.get_user_tz()
     
     for match in matches:
+        match.kickoff = match.kickoff.astimezone(user_tz)
+        
         # Check if home_team or away_team is already in filtered_matches
         is_duplicate = any(
             match.home_team == m.home_team and match.away_team == m.away_team 
