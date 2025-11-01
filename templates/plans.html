@@ -256,7 +256,7 @@
                             {% set ns.total_odds = ns.total_odds * match.odd %}
                             <tr>
                                 <td>
-                                    {{ 'Today' if match.kickoff.strftime('%A')==today else 'Tomorrow' if
+                                    {{ 'Yesterday' if match.kickoff.strftime('%A')==yesterday else 'Today' if match.kickoff.strftime('%A')==today else 'Tomorrow' if
                                     match.kickoff.strftime('%A')==tomorrow else match.kickoff.strftime('%A') }} <br />
                                     {{ match.kickoff.strftime('%H:%M') }}
                                 </td>
