@@ -89,9 +89,11 @@ def filter_matches(day, comparator='=', status='', limit=56):
     total_odds = 1
     to_return = []    
     user_tz = helper.get_user_tz()
+    eat_tz = pytz.timezone('Africa/Nairobi')
     
     for match in matches:
-        match.kickoff = match.kickoff.astimezone(user_tz)
+        kickoff = eat_tz.localize(match.kickoff)
+        match.kickoff = kickoff.astimezone(user_tz)
         
         # Check if home_team or away_team is already in filtered_matches
         is_duplicate = any(
