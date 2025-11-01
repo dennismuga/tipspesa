@@ -236,13 +236,14 @@
                     <!-- Tab Navigation -->
                     <div class="tab-nav flex justify-center mb-4">
                         {% for slip in slips %}
-                        <button
-                            class="tab-button px-2 py-2 mx-1 font-semibold text-gray-700 text-xs bg-gray-200 rounded-t-lg {% if slip.id == 1 %}active{% endif %}"
-                            data-tab="slip_{{ slip.id }}">Slip {{ slip.id }}</button>
+                        <a href="#{{ slip.id }}"
+                            class="slip-tab-button tab-button px-2 py-2 mx-1 font-semibold text-gray-700 text-xs bg-gray-200 rounded-t-lg"
+                            data-tab="slip_{{ slip.id }}">Slip {{ slip.id }}
+                        </a>
                         {% endfor %}
                     </div>
                     {% for slip in slips %}
-                    <div id="slip_{{ slip.id }}" class="tab-content {% if slip.id != 1 %}hidden{% endif %}">
+                    <div id="slip_{{ slip.id }}" class="slip-tab-content tab-content">
                         <table class="results-table">
                             {% if slip.matches %}
                             <tr>
@@ -342,7 +343,7 @@
                     <div class="tab-nav flex justify-center mb-4">
                         {% for history in plan.history %}
                         <button
-                            class="tab-button px-3 py-2 mx-1 font-semibold text-gray-700 text-xs bg-gray-200 rounded-t-lg {% if history.day == 'Yesterday' %}active{% endif %}"
+                            class="history-tab-button tab-button px-3 py-2 mx-1 font-semibold text-gray-700 text-xs bg-gray-200 rounded-t-lg {% if loop.last %}active{% endif %}"
                             data-tab="{{ history.day | lower }}">{{ history.day }}</button>
                         {% endfor %}
                     </div>
@@ -350,7 +351,7 @@
                     <!-- Tab Content -->
                     {% for history in plan.history %}
                     <div id="{{ history.day | lower }}"
-                        class="tab-content {% if history.day != 'Yesterday' %}hidden{% endif %}">
+                        class="history-tab-content tab-content {% if not loop.last %}hidden{% endif %}">
                         {% if history.matches | length > 0 %}
                         <table class="results-table w-full border-collapse">
                             <tr>
@@ -465,54 +466,124 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            //getBetikaShare()
-            const buttons = document.querySelectorAll('.tab-button');
-            const contents = document.querySelectorAll('.tab-content');
+            // Handle Slip Tabs (with hash support and special logic)
+            const slipButtons = document.querySelectorAll('.slip-tab-button');
+            const slipContents = document.querySelectorAll('.slip-tab-content');
 
-            buttons.forEach(button => {
+            // Helper function for slip tabs
+            function activateSlipTab(targetButton = null, targetTabId = null) {
+                // Remove active class from all slip buttons
+                slipButtons.forEach(btn => btn.classList.remove('active'));
+                // Hide all slip contents
+                slipContents.forEach(content => content.classList.add('hidden'));
+
+                if (targetButton) {
+                    // Add active class to target button
+                    targetButton.classList.add('active');
+                    // Show the selected tab content
+                    const tabId = targetButton.getAttribute('data-tab');
+                    const targetContent = document.getElementById(tabId);
+                    if (targetContent) {
+                        targetContent.classList.remove('hidden');
+                    }
+                } else if (targetTabId) {
+                    // Alternative: activate by tabId directly (e.g., for hash matching)
+                    const targetContent = document.getElementById(targetTabId);
+                    if (targetContent) {
+                        targetContent.classList.remove('hidden');
+                    }
+                    // Find and activate the button for this tabId
+                    const targetButton = Array.from(slipButtons).find(btn => btn.getAttribute('data-tab') === targetTabId);
+                    if (targetButton) {
+                        targetButton.classList.add('active');
+                    }
+                }
+            }
+
+            // Initial activation based on URL hash for slips (e.g., #3 activates Slip 3 tab)
+            function handleSlipHashActivation() {
+                const hash = window.location.hash.substring(1);  // e.g., "3" from "#3"
+                if (hash) {
+                    // Find button with matching href="#hash"
+                    const targetButton = Array.from(slipButtons).find(btn => btn.getAttribute('href') === `#${hash}`);
+                    if (targetButton) {
+                        const tabId = targetButton.getAttribute('data-tab');  // e.g., "slip_3"
+                        activateSlipTab(targetButton, tabId);
+                        // Optional: Scroll to the content
+                        const targetContent = document.getElementById(tabId);
+                        if (targetContent) {
+                            targetContent.scrollIntoView({ behavior: 'smooth' });
+                        }
+                        return;  // Activated, skip default
+                    }
+                }
+                // Default: Activate first slip tab
+                activateSlipTab(slipButtons[0]);
+            }
+
+            // Handle initial load for slips
+            handleSlipHashActivation();
+
+            // Listen for hash changes (e.g., browser back/forward or external links)
+            window.addEventListener('hashchange', () => {
+                handleSlipHashActivation();
+            });
+
+            // Click handler for slip buttons
+            slipButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    // Remove active class from all buttons
-                    buttons.forEach(btn => btn.classList.remove('active'));
+                    const tabId = button.getAttribute('data-tab');
+                    activateSlipTab(button, tabId);
+
+                    // Your special logic for slips
+                    const last = slipButtons.length - 1;
+                    slipButtons[last].classList.add('active');
+                    slipContents[last].classList.remove('hidden');
+                    if (typeof median !== 'undefined' && median.admob) {
+                        median.admob.showInterstitialIfReady();
+                    }
+                });
+            });
+
+            // Handle History Tabs (simple switching, no hash or special logic)
+            const historyButtons = document.querySelectorAll('.history-tab-button');
+            const historyContents = document.querySelectorAll('.history-tab-content');
+
+            historyButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all history buttons
+                    historyButtons.forEach(btn => btn.classList.remove('active'));
                     // Add active class to clicked button
                     button.classList.add('active');
 
-                    // Hide all tab contents
-                    contents.forEach(content => content.classList.add('hidden'));
+                    // Hide all history tab contents
+                    historyContents.forEach(content => content.classList.add('hidden'));
                     // Show the selected tab content
                     const tabId = button.getAttribute('data-tab');
-                    document.getElementById(tabId).classList.remove('hidden');
-
-                    if (!tabId.includes('slip_')) {
-                        buttons[0].classList.add('active');
-                        contents[0].classList.remove('hidden');
-                    } else {
-                        last = buttons.length - 1;
-                        buttons[last].classList.add('active');
-                        contents[last].classList.remove('hidden');
-                        median.admob.showInterstitialIfReady();
+                    const targetContent = document.getElementById(tabId);
+                    if (targetContent) {
+                        targetContent.classList.remove('hidden');
                     }
                 });
             });
 
             //show interstitial ad 20 seconds after page load
             setTimeout(() => {
-                median.admob.showInterstitialIfReady();
+                if (typeof median !== 'undefined' && median.admob) {
+                    median.admob.showInterstitialIfReady();
+                }
             }, 20000);
 
             //show interstitial ad 120 seconds after page load
             setTimeout(() => {
-                median.admob.showInterstitialIfReady();
+                if (typeof median !== 'undefined' && median.admob) {
+                    median.admob.showInterstitialIfReady();
+                }
             }, 120000);
 
         });
 
     </script>
 </body>
-
-
-
-
-
-
 
 </html>
