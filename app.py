@@ -152,6 +152,10 @@ def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 8) -> Lis
         } for i in range((len(today_matches) + slip_size - 1) // slip_size)
     ]
 
+@app.route('/ads.txt', methods=['GET'])
+def ads_txt():
+    return "google.com, pub-1757067070842104, DIRECT, f08c47fec0942fa0"
+
 @app.route('/', methods=['GET', 'POST'])
 def index():   
     if request.method == 'POST':         
@@ -236,6 +240,7 @@ def serve_app_ads_txt():
 if __name__ == '__main__':
     debug_mode = os.getenv('IS_DEBUG', 'False') in ['True', '1', 't']
     app.run(debug=debug_mode)
+
 
 
 
