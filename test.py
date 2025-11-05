@@ -1,12 +1,12 @@
-from utils.paystack import Transactions
+from utils.paystack import Charge, Transactions
 from utils.postgres_crud import PostgresCRUD
 
 db = PostgresCRUD()
 
 # Example usage
 if __name__ == "__main__":
-    transactions = Transactions()
-    transactions.initialize(email="dennismuga@gmail.com", amount=10)
+    #transactions = Transactions()
+    #transactions.initialize(email="dennismuga@gmail.com", amount=10)
     # reference = 'ulrudvrrbc'
     # transaction_details = Transactions().verify(reference=reference)
     # if transaction_details and transaction_details.get('status'):
@@ -20,3 +20,6 @@ if __name__ == "__main__":
     #     if status == 'success':
     #         days = 30 if amount==1000 else 7 if amount==300 else 1
     #         db.update_user_expiry(reference,'Premium', days)  
+    
+    charge = Charge( )     
+    charge.stk_push("+254105565532", 1, provider="mpesa")

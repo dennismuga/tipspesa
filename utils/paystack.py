@@ -52,4 +52,31 @@ class Transactions(Paystack):
             print(e)
             return None
 
+class Charge(Paystack):        
+    def stk_push(self, phone, amount, provider="mpesa"):
+        url = f'{self.base_url}/charge'        
+        amount = int(amount*1.025) + 0.99 #replace all coins with 0.99
+    
+        data={ 
+            "email": f"{phone}@{'safaricom.co.ke' if provider=='mpesa' else 'airtel.co.ke'}", 
+            "amount": int(amount*100),
+            "currency": "KES",            
+            "mobile_money": {
+                "phone" : phone,
+                "provider" : provider
+            }
+        }
+        
+        try:
+            # Make the POST request
+            response = requests.post(url, headers=self.headers, json=data)
+
+            response_json = response.json()
+            print(response_json)
+            return response_json
+            
+        except Exception as e:
+            print(e)
+            return None
+
 
