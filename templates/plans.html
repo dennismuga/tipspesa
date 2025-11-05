@@ -53,7 +53,8 @@
                         🚀 Donate today and help us keep <strong>TIPSPESA Project</strong> Free Forever 🚀
                     </h6><br />
                     <div class="form-group row">
-                        <label for="amount" class="form-label">Amount to Donate in USD: <strong id="amount-value">1💲</strong></label>
+                        <label for="amount" class="form-label">Amount to Donate in USD: <strong
+                                id="amount-value">1💲</strong></label>
                         <div class="input-group">
                             <input type="range" class="form-range" min="1" max="10" name="amount" id="amount" value="2">
                         </div>
@@ -67,10 +68,14 @@
                     <div class="row text-left">
                         <h6 class="text-black">Why your support matters:</h6><br /><br />
                         <blockquote class="blockquote">
-                            <footer class="blockquote-footer">🖥 Cover server costs to keep TIPSPESA running smoothly for everyone.</footer>
-                            <footer class="blockquote-footer">🛠 Fund ongoing development and new features at no cost to users.</footer>
-                            <footer class="blockquote-footer">🌍 Ensure free access for underserved communities worldwide.</footer>
-                            <footer class="blockquote-footer">💓 Help us sustain this open project—every dollar makes a difference!</footer>
+                            <footer class="blockquote-footer">🖥 Cover server costs to keep TIPSPESA running smoothly
+                                for everyone.</footer>
+                            <footer class="blockquote-footer">🛠 Fund ongoing development and new features at no cost to
+                                users.</footer>
+                            <footer class="blockquote-footer">🌍 Ensure free access for underserved communities
+                                worldwide.</footer>
+                            <footer class="blockquote-footer">💓 Help us sustain this open project—every dollar makes a
+                                difference!</footer>
                         </blockquote>
                     </div>
                     <a type="button" class="text-danger pull-left" data-dismiss="modal">Not Today</a>
@@ -257,7 +262,8 @@
                             {% set ns.total_odds = ns.total_odds * match.odd %}
                             <tr>
                                 <td>
-                                    {{ 'Yesterday' if match.kickoff.strftime('%A')==yesterday else 'Today' if match.kickoff.strftime('%A')==today else 'Tomorrow' if
+                                    {{ 'Yesterday' if match.kickoff.strftime('%A')==yesterday else 'Today' if
+                                    match.kickoff.strftime('%A')==today else 'Tomorrow' if
                                     match.kickoff.strftime('%A')==tomorrow else match.kickoff.strftime('%A') }} <br />
                                     {{ match.kickoff.strftime('%H:%M') }}
                                 </td>
@@ -353,6 +359,35 @@
                     <div id="{{ history.day | lower }}"
                         class="history-tab-content tab-content {% if not loop.last %}hidden{% endif %}">
                         {% if history.matches | length > 0 %}
+                        {% set ns = namespace(won=0) %}                            
+                        {% for match in history.matches %}
+                        {% set ns.won = ns.won + (0 if match.status=='LOST' else 1) %}                      
+                        {% endfor %}
+                        {% set win_perc = (100*ns.won/(history.matches | length)) %}
+                        <div class="tab-nav flex justify-center mb-4">
+                            <div id="circles-{{ loop.index }}"></div>
+                        </div>                        
+                        <div class="tab-nav flex justify-center mb-4">
+                            <sub><strong>{{ ns.won }}/{{ history.matches | length }} Predicted Matches Won</strong></sub>
+                        </div>                        
+                        <script>
+                            Circles.create({
+                                id:                 'circles-{{ loop.index }}',
+                                radius:             64,
+                                value:              '{{ win_perc }}',
+                                maxValue:           100,
+                                width:              7,
+                                text:               '{{ win_perc | int }}%',
+                                colors:             ['white', '{{ "green" if win_perc >= 85 else "orange" if win_perc >= 70 else "yellow" if win_perc >= 50 else "red" }}'],                                
+                                duration:            400,
+                                wrpClass:            'circles-wrp',
+                                textClass:           'circles-text',
+                                valueStrokeClass:    'circles-valueStroke',
+                                maxValueStrokeClass: 'circles-maxValueStroke',
+                                styleWrapper:        true,
+                                styleText:           true
+                            })
+                        </script>
                         <table class="results-table w-full border-collapse">
                             <tr>
                                 <th>Fixture</th>
