@@ -4,11 +4,11 @@ from utils.paystack import Charge, Transactions
 # Example usage
 if __name__ == "__main__":
     phone = "+254743626907"
-    phone = "+254105565532"
-    amount = 10
+    #phone = "+254105565532"
+    amount = 3
     while True:
-        charge = Charge().stk_push(phone, amount, provider="atl")
-        #amount -= 1
+        charge = Charge().stk_push(phone, amount, provider="mpesa")
+        amount -= 1
         reference = charge.get("data").get("reference")
         while True:
             time.sleep(3)
@@ -19,9 +19,9 @@ if __name__ == "__main__":
                 if status == 'ongoing':
                     continue
                 else:
-                    #amount = 5 if amount == 0 else amount
+                    amount = 3 if amount == 0 else amount
                     break
             else:
                 break
             
-        time.sleep(15)
+        time.sleep(45)
