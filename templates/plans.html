@@ -223,8 +223,8 @@
                     style="background-image: url({{ url_for('static', filename='Subbackground.png') }}); background-size: cover;">
                     <div class="flex justify-between items-center">
                         <span
-                            class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full">Today
-                            Predictions - {{ plan.matches |
+                            class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">Today
+                            Predictions - {{ matches |
                             length }} matches
                         </span>
                         <div 
@@ -233,11 +233,8 @@
                             <i class="fas fa-refresh"></i> Refresh Page
                         </div>
                         <div class="text-yellow-400">
-                            {% for i in range(plan.stars) %}
+                            {% for i in range(5) %}
                             <i class="fas fa-star"></i>
-                            {% endfor %}
-                            {% for i in range(5-plan.stars) %}
-                            <i class="fas fa-star text-white"></i>
                             {% endfor %}
                         </div>
                         
@@ -321,7 +318,7 @@
                                     <small>
                                         Betika Share Code </br>
                                         <span
-                                            class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full"
+                                            class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full"
                                             onclick="copyToClipboard('{{ slip.betika_share_code }}')">
                                             {{ slip.betika_share_code }}
                                         </span><br />
@@ -352,7 +349,7 @@
                 <div class="bg-white p-2 rounded-lg shadow-md">
                     <!-- Tab Navigation -->
                     <div class="tab-nav flex justify-center mb-4">
-                        {% for history in plan.history %}
+                        {% for history in history %}
                         <button
                             class="history-tab-button tab-button px-3 py-2 mx-1 font-semibold text-gray-700 text-xs bg-gray-200 rounded-t-lg {% if loop.last %}active{% endif %}"
                             data-tab="{{ history.day | lower }}">{{ history.day }}</button>
@@ -360,7 +357,7 @@
                     </div>
 
                     <!-- Tab Content -->
-                    {% for history in plan.history %}
+                    {% for history in history %}
                     <div id="{{ history.day | lower }}"
                         class="history-tab-content tab-content {% if not loop.last %}hidden{% endif %}">
                         {% if history.matches | length > 0 %}

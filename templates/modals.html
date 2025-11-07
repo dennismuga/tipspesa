@@ -1,0 +1,137 @@
+<!-- Donate Modal -->
+<div class="modal fade" id="donateModal" tabindex="-1" aria-labelledby="donateLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="donateLabel">🙏 Support TipsPesa</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Help keep predictions free! Choose amount:</p>
+                <div class="text-center">
+                    <label for="amount" class="form-label">Amount (USD): <strong id="amount-value">2$</strong></label>
+                    <input type="range" class="form-range" id="amount" min="1" max="10" value="2"
+                        aria-label="Donation amount">
+                </div>
+                <div class="mt-3">
+                    <h6>Why support?</h6>
+                    <div class="accordion" id="whyAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#why1">
+                                    Cover server costs
+                                </button>
+                            </h2>
+                            <div id="why1" class="accordion-collapse collapse" data-bs-parent="#whyAccordion">
+                                <div class="accordion-body">Keep the app running smoothly.</div>
+                            </div>
+                        </div>
+                        <!-- Add more accordions -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" onclick="InitiateTransaction()">Donate Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="plan"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Subscription:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="amount" id="daily" value="30" required>
+                            <label class="form-check-label" for="daily">Daily @ KSh. 30</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="amount" id="weekly" value="150" required>
+                            <label class="form-check-label" for="weekly">Weekly @ KSh. 150</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="amount" id="monthly" value="500"
+                                required>
+                            <label class="form-check-label" for="monthly">Monthly @ KSh. 500</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="phone" name="phone" placeholder="user@example.com"
+                            required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" name="action" value="login" class="btn btn-success">Subscribe</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Result Modal -->
+<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="POST">
+                <input type="hidden" name="match_id" id="match_id">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resultLabel">Update Match Result</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <label class="col-7 text-end fw-bold" id="home_team" for="home_team_goals"></label>
+                        <div class="col-5">
+                            <input type="number" class="form-control" name="home_team_goals" id="home_team_goals"
+                                min="0" placeholder="Goals" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-7 text-end fw-bold" id="away_team" for="away_team_goals"></label>
+                        <div class="col-5">
+                            <input type="number" class="form-control" name="away_team_goals" id="away_team_goals"
+                                min="0" placeholder="Goals" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status:</label>
+                        <select class="form-select" name="status" id="status">
+                            <option value="">Pending</option>
+                            <option value="Won">Won</option>
+                            <option value="Lost">Lost</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" name="action" value="update_results" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Toast for Copy (new) -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i class="fas fa-check text-success me-2"></i>
+            <strong class="me-auto">Copied!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">Betika code copied to clipboard.</div>
+    </div>
+</div>

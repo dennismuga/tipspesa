@@ -1,222 +1,94 @@
-
-import json, pytz, random, requests, time
+import asyncio
+import random
 import pytz
-
 from datetime import datetime
-from flask import request, session
 from functools import lru_cache
-
+from flask import request, session
+from typing import Dict, List, Optional
+from tenacity import retry, stop_after_attempt, wait_exponential
+import aiohttp
+import requests  # For sync fallback
 
 from utils.betika import Betika
 from utils.entities import Match
-from utils.postgres_crud import PostgresCRUD
 
-class Helper():   
-    def __init__(self, phone=None, password=None):
+class Helper:
+    def __init__(self, crud):
         self.betika = Betika()
-        self.db = PostgresCRUD()
-        if phone and password:
-            self.betika.login(phone, password)
-            
+        self.crud = crud
 
-    def fetch_data(self, url, timeout=10):
-        """
-        Fetch data from the given URL.
-
-        Args:
-            url (str): The URL to fetch data from.
-            timeout (int, optional): The timeout for the HTTP request.
-
-        Returns:
-            dict or None: The JSON data if successful, otherwise None.
-        """
-        headers = {
-            'User-Agent': 'PostmanRuntime/7.36.3',
-        }
-
-        response = requests.get(url, headers=headers, timeout=timeout)
-        if response.status_code == 200:
-            json_data = response.json()
-            if json_data:
-                return json_data
-            print("Invalid JSON data format")
-        else:
-            print(f"{response}")
-
+    @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=1, max=5))
+    async def fetch_data_async(self, url: str, timeout: int = 10) -> Optional[Dict]:
+        headers = {'User-Agent': 'TipsPesa/2.0'}
+        async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=timeout)) as session:
+            async with session.get(url, headers=headers) as resp:
+                if resp.status == 200:
+                    return await resp.json()
         return None
-    
-    def post_data(self, url, body, timeout=10):
-        """
-        Fetch data from the given URL with POST method.
 
-        Args:
-            url (str): The URL to fetch data from.
-            body (dict): The body of the POST request.
-            timeout (int, optional): The timeout for the HTTP request.
+    def fetch_data(self, url: str, timeout: int = 10) -> Optional[Dict]:
+        return asyncio.run(self.fetch_data_async(url, timeout))
 
-        Returns:
-            dict or None: The JSON data if successful, otherwise None.
-        """
+    def fetch_matches(self, day: str, comparator: str = '=', status: str = '', limit: int = 16) -> List[Match]:
+        raw_matches = self.crud.fetch_matches(day, comparator, status, limit)
+        return [Match(**m) for m in raw_matches]  # Pydantic auto-validates
 
-        body_dict = json.loads(body)
-
-        response = requests.post(url, json=body_dict, timeout=timeout)
-        return response.json()
-
-    def fetch_matches(self, day, comparator='=', status="AND status IS NOT NULL", limit=16):
-        matches = []
-        for open_match in self.db.fetch_matches(day, comparator, status, limit):
-            match = Match()
-            match.match_id = open_match[0]
-            match.kickoff = open_match[1]
-            match.home_team = open_match[2]
-            match.away_team = open_match[3]
-            match.prediction = open_match[4]    
-            match.odd = open_match[5]    
-            match.home_results = open_match[6] 
-            match.status = open_match[7] 
-            match.away_results = open_match[8] 
-            match.overall_prob = int(open_match[9])   
-            match.sub_type_id = int(open_match[10])  
-            match.parent_match_id = open_match[11]
-            match.bet_pick = open_match[12]
-            match.outcome_id = int(open_match[13])
-            match.special_bet_value = open_match[14]
-            match.league = open_match[15]
-            matches.append(match)
-            
-        return matches
-    
-    def get_upcoming_match_ids(self, live=False):    
-        total = 1001
-        limit = 1000
-        page = 1
-        matches_ids = set()
-        while limit*page < total:
-            total, page, events = self.betika.get_events(limit, page, live)
-            
-            for event in events:
-                parent_match_id = event.get('parent_match_id')
-                matches_ids.add(parent_match_id)
-        
-        return matches_ids
-     
-    def auto_bet(self, profile_id, matches, min_matches=1):
-        try:
-            betslips = []
-            composite_betslip = None
-            composite_betslips = [] 
-            total_odd = 1
-            
-            for match in sorted(matches, key=lambda x: x['start_time']):   
-                if not any(betslip["parent_match_id"] == match.get("parent_match_id") for betslip in betslips):
-                    betslip = {
-                        "sub_type_id": match.get("sub_type_id"),
-                        "bet_pick": match.get("bet_pick"),
-                        "odd_value": match.get("odd"),
-                        "outcome_id": match.get("outcome_id"),
-                        "sport_id": 14,
-                        "special_bet_value": match.get("special_bet_value"),
-                        "parent_match_id": match.get("parent_match_id"),
-                        "bet_type": 7
-                    }
-                    betslips.append(betslip)
-                    total_odd *= float(betslip.get('odd_value'))                                              
-                    composite_betslip = {
-                        'total_odd': total_odd,
-                        'betslips': betslips
-                    }
-                    #if total_odd >= min_odd*1.31: 
-                    if len(betslips) == min_matches: #total_odd >= min_odd:
-                        composite_betslips.append(composite_betslip)
-                        betslips = []
-                        total_odd = 1
-                        composite_betslip = None  
-                        
-            if len(betslips) > min_matches/2:
-                composite_betslips.append(composite_betslip)
-                
-            if len(composite_betslips) > 0:              
-                usable = self.betika.balance #+ self.betika.bonus
-                stake = int((usable/len(composite_betslips)))
-                stake = max(1, stake)
-                stake = 1 if (stake == 0 and int(usable)>0) else stake
-                if stake > 0:
-                    composite_betslips.sort(key=lambda cb: cb['total_odd'], reverse=True)
-                    for cb in composite_betslips:
-                        ttl_odd = cb['total_odd']
-                        slips = cb['betslips']
-                        print(slips, ttl_odd, stake)
-                        code = self.betika.place_bet(slips, ttl_odd, stake)
-                        if code:
-                            self.db.add_bet_slip(profile_id, slips, code)
-                        time.sleep(2)
-                else:
-                    print("Insufficient balance to place bets.")
-                            
-        except Exception as e:
-            print(f"Error in auto_bet: {e}")
-            
     def get_share_code(self, matches):
-        link = ''
         current_time = datetime.now(self.get_user_tz())
         try:
             betslips = []
             for match in matches:   
-                if not any(betslip["parent_match_id"] == match.parent_match_id for betslip in betslips) and match.kickoff > current_time:
+                kickoff = match.get("kickoff")
+                if kickoff is None:
+                    continue
+                # Assume kickoff is str or naive dt; make aware
+                if isinstance(kickoff, str):
+                    # Parse assuming UTC or local; adjust format
+                    kickoff_dt = datetime.strptime(kickoff, '%Y-%m-%d %H:%M:%S')  # Adjust format
+                    kickoff_aware = self.get_user_tz().localize(kickoff_dt)  # Or pytz.UTC.localize if UTC
+                elif isinstance(kickoff, datetime) and kickoff.tzinfo is None:
+                    kickoff_aware = self.get_user_tz().localize(kickoff)  # Assume naive is local/UTC
+                else:
+                    kickoff_aware = kickoff  # Already aware
+
+                if not any(betslip["parent_match_id"] == match.get("parent_match_id") for betslip in betslips) and kickoff_aware > current_time:
                     betslip = {
-                        "odd_key": match.bet_pick,
-                        "outcome_id": match.outcome_id,
-                        "special_bet_value": match.special_bet_value,
-                        "parent_match_id": match.parent_match_id,
-                        "sub_type_id": match.sub_type_id,
+                        "odd_key": match.get("bet_pick"),
+                        "outcome_id": match.get("outcome_id"),
+                        "special_bet_value": match.get("special_bet_value"),
+                        "parent_match_id": match.get("parent_match_id"),
+                        "sub_type_id": match.get("sub_type_id"),
                     }
                     betslips.append(betslip)
-                       
+                    
             if betslips:
-                link = self.betika.share_bet(betslips)
-                     
+                code = self.betika.share_bet(betslips)
+                return code if code else ''
+                
         except Exception as e:
             print(f"Error in get share code: {e}")
         
-        return link if link else ''     
-            
-            
-    def get_code(self):
-        # Define the allowed digits
-        digits = [1, 2, 5, 6, 8, 9]
+        return ''
 
-        # Generate a 6-digit code
-        code = ''.join(str(random.choice(digits)) for _ in range(6))
-
-        print(code)
-        return code
-    
-    @lru_cache(maxsize=1000)  # Cache IP->TZ mappings (expires after 1000 unique IPs)
-    def get_tz_from_ip(self, ip):
+    @lru_cache(maxsize=1000)
+    def get_tz_from_ip(self, ip: str) -> str:
         try:
-            response = requests.get(f'https://ipapi.co/{ip}/json/', timeout=2)
-            if response.status_code == 200:
-                data = response.json()
-                tz_str = data.get('timezone', 'Africa/Nairobi')  # Fallback
-                return tz_str if tz_str else 'Africa/Nairobi'
-            
-        except Exception as e:
-            print(f"Error in get get_tz_from_ip code: {e}")
-        
-        return 'Africa/Nairobi'  # Ultimate fallback
+            resp = requests.get(f'https://ipapi.co/{ip}/json/', timeout=2)
+            if resp.status_code == 200:
+                data = resp.json()
+                return data.get('timezone', 'Africa/Nairobi')
+        except Exception:
+            pass
+        return 'Africa/Nairobi'
 
     def get_user_tz(self):
-        user_tz_str = session.get('user_timezone')
-        if not user_tz_str:  # Only geolocate if not cached
-            client_ip = request.remote_addr  # Or request.environ.get('HTTP_X_FORWARDED_FOR') for proxies
-            user_tz_str = self.get_tz_from_ip(client_ip)
-            session['user_timezone'] = user_tz_str  # Cache in session
-        
-        return pytz.timezone(user_tz_str)
-        
-        
+        tz_str = session.get('user_timezone')
+        if not tz_str:
+            ip = request.remote_addr
+            tz_str = self.get_tz_from_ip(ip)
+            session['user_timezone'] = tz_str
+        return pytz.timezone(tz_str)
 
-
-
-
+    def get_code(self) -> str:
+        digits = [1, 2, 5, 6, 8, 9]
+        return ''.join(str(random.choice(digits)) for _ in range(6))
