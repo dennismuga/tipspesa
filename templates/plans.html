@@ -227,11 +227,10 @@
                             Predictions - {{ plan.matches |
                             length }} matches
                         </span>
-                        <div 
-                            class="bg-blue-100 text-blue-800 text-xs font-bold rounded-full px-2 py-1"  
-                            onclick="location.reload()">
-                            <i class="fas fa-refresh"></i> Refresh Page
-                        </div>
+                        <a href="javascript:location.reload()"
+   class="bg-blue-100 text-blue-800 text-xs font-bold rounded-full px-2 py-1 inline-flex items-center gap-2 cursor-pointer">
+    <i class="fas fa-refresh"></i> Refresh Page
+</a>
                         <div class="text-yellow-400">
                             {% for i in range(plan.stars) %}
                             <i class="fas fa-star"></i>
@@ -625,6 +624,7 @@
 
 
 </html>
+
 
 
 
