@@ -26,8 +26,8 @@ app.config['SESSION_TYPE'] = 'redis'
 app.config['SESSION_REDIS'] = Redis(
     host=os.getenv('REDIS_HOSTNAME'),
     port=os.getenv('REDIS_PORT'),
-    password=os.getenv('REDIS_PASSWORD') if os.getenv('REDIS_SSL') in ['True', '1'] else None,
-    ssl=False if os.getenv('REDIS_SSL') in ['False', '0'] else True
+    password=os.getenv('REDIS_PASSWORD'),
+    ssl=True
 )
 app.config['SESSION_COOKIE_SECURE'] = True if os.getenv('REDIS_SSL') in ['True', '1'] else False  # Set to True if using HTTPS on Vercel
 app.config['SESSION_COOKIE_HTTPONLY'] = True
