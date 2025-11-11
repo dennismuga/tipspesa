@@ -68,28 +68,5 @@
 
     <script src="{{ url_for('static', filename='circles.min.js') }}"></script>
 
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/_sw.js')
-                    .then(registration => {
-                        console.log('SW registered: ', registration);
-                    })
-                    .catch(registrationError => {
-                        console.log('SW registration failed: ', registrationError);
-                    });
-            });
-        }
-
-        // Offline Detection
-        window.addEventListener('online', () => {
-            const indicator = document.querySelector('.offline-indicator');
-            if (indicator) indicator.style.display = 'none';
-        });
-        window.addEventListener('offline', () => {
-            const indicator = document.querySelector('.offline-indicator');
-            if (indicator) indicator.style.display = 'block';
-        });
-    </script>
-
 </head>
+
