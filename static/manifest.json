@@ -1,21 +1,31 @@
 {
-    "name": "Tipspesa Betting Predictions",
-    "short_name": "Tipspesa",
-    "description": "Tipspesa App provides accurate and reliable betting predictions for sports enthusiasts.",
-    "start_url": "./index.php",
+    "name": "TipsPesa - Betting Predictions",
+    "short_name": "TipsPesa",
+    "description": "The best free football prediction app for accurate tips and profits",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
-    "theme_color": "#ffffff",
+    "theme_color": "#10b981",
+    "orientation": "portrait-primary",
     "icons": [
         {
-            "src": "./favicon.png",
+            "src": "{{ url_for('static', filename='favicon.png') }}",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         },
         {
-            "src": "./favicon.png",
+            "src": "{{ url_for('static', filename='favicon.png') }}",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         }
-    ]
+    ],
+    "categories": [
+        "sports",
+        "productivity"
+    ],
+    "lang": "en",
+    "dir": "ltr",
+    "scope": "/"
 }

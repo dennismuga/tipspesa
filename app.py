@@ -237,6 +237,15 @@ def serve_app_ads_txt():
     # Use app.send_static_file to serve the file directly from the static folder
     return app.send_static_file('app-ads.txt')
 
+# The route to serve app-ads.txt from the root URL.
+@app.route('/sw.js')
+def serve_sw_js():
+    """
+    Serves the sw.js file from the root URL of the domain.
+    """
+    # Use app.send_static_file to serve the file directly from the static folder
+    return app.send_static_file('sw.js')
+
 if __name__ == '__main__':
     debug_mode = os.getenv('IS_DEBUG', 'False') in ['True', '1', 't']
     app.run(debug=debug_mode)

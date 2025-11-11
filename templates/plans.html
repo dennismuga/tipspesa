@@ -198,7 +198,8 @@
             <a href="https://tipspesa.vercel.app/" class="flex">
                 <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="h-12">
             </a>
-            <a class="btn btn-sm btn-flat btn-success pull-right flex" href="#" data-toggle="modal" data-target="#donateModal">Support Us</a>
+            <a class="btn btn-sm btn-flat btn-success pull-right flex" href="#" data-toggle="modal"
+                data-target="#donateModal">Support Us</a>
         </div>
     </header>
 
@@ -234,7 +235,7 @@
                             <i class="fas fa-star text-white"></i>
                             {% endfor %}
                         </div>
-                        
+
                     </div>
                     <br />
                     <!-- Tab Navigation -->
@@ -358,33 +359,34 @@
                     <div id="{{ history.day | lower }}"
                         class="history-tab-content tab-content {% if not loop.last %}hidden{% endif %}">
                         {% if history.matches | length > 0 %}
-                        {% set ns = namespace(won=0) %}                            
+                        {% set ns = namespace(won=0) %}
                         {% for match in history.matches %}
-                        {% set ns.won = ns.won + (0 if match.status=='LOST' else 1) %}                      
+                        {% set ns.won = ns.won + (0 if match.status=='LOST' else 1) %}
                         {% endfor %}
                         {% set win_perc = (100*ns.won/(history.matches | length)) %}
                         <div class="tab-nav flex justify-center mb-4">
                             <div id="circles-{{ loop.index }}"></div>
-                        </div>                        
+                        </div>
                         <div class="tab-nav flex justify-center mb-4">
-                            <sub><strong>{{ ns.won }}/{{ history.matches | length }} Predicted Matches Won</strong></sub>
-                        </div>                        
+                            <sub><strong>{{ ns.won }}/{{ history.matches | length }} Predicted Matches
+                                    Won</strong></sub>
+                        </div>
                         <script>
                             Circles.create({
-                                id:                 'circles-{{ loop.index }}',
-                                radius:             64,
-                                value:              '{{ win_perc }}',
-                                maxValue:           100,
-                                width:              7,
-                                text:               '{{ win_perc | int }}%',
-                                colors:             ['white', '{{ "green" if win_perc >= 85 else "orange" if win_perc >= 70 else "yellow" if win_perc >= 50 else "red" }}'],                                
-                                duration:            400,
-                                wrpClass:            'circles-wrp',
-                                textClass:           'circles-text',
-                                valueStrokeClass:    'circles-valueStroke',
+                                id: 'circles-{{ loop.index }}',
+                                radius: 64,
+                                value: '{{ win_perc }}',
+                                maxValue: 100,
+                                width: 7,
+                                text: '{{ win_perc | int }}%',
+                                colors: ['white', '{{ "green" if win_perc >= 85 else "orange" if win_perc >= 70 else "yellow" if win_perc >= 50 else "red" }}'],
+                                duration: 400,
+                                wrpClass: 'circles-wrp',
+                                textClass: 'circles-text',
+                                valueStrokeClass: 'circles-valueStroke',
                                 maxValueStrokeClass: 'circles-maxValueStroke',
-                                styleWrapper:        true,
-                                styleText:           true
+                                styleWrapper: true,
+                                styleText: true
                             })
                         </script>
                         <table class="results-table w-full border-collapse">
@@ -431,14 +433,12 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" defer></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" defer></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='plugin.js') }}"></script>
-
-    <!--  include 'footer.html'  -->
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"
+        defer></script>
+    <script src="{{ url_for('static', filename='plugin.js') }}" defer></script>
 
     <script>
         function InitiateTransaction() {
@@ -612,15 +612,13 @@
                 }
             }, 120000);
 
+            // Fallback Service Worker Registration (if not loaded from head)
+            if ('serviceWorker' in navigator && !navigator.serviceWorker.controller) {
+                navigator.serviceWorker.register('/sw.js');
+            }
         });
 
     </script>
 </body>
 
-
 </html>
-
-
-
-
-

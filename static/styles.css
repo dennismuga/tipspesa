@@ -66,13 +66,13 @@ a {
 
 /**
 .box-shadow:hover{
-    -webkit-box-shadow: 0 20px 40px rgba(72,78,85,.6);
-    box-shadow: 0 20px 40px rgba(72,78,85,.6);
-    -webkit-transform: translateY(-15px);
-    -moz-transform: translateY(-15px);
-    -ms-transform: translateY(-15px);
-    -o-transform: translateY(-15px);
-    transform: translateY(-15px);
+-webkit-box-shadow: 0 20px 40px rgba(72,78,85,.6);
+box-shadow: 0 20px 40px rgba(72,78,85,.6);
+-webkit-transform: translateY(-15px);
+-moz-transform: translateY(-15px);
+-ms-transform: translateY(-15px);
+-o-transform: translateY(-15px);
+transform: translateY(-15px);
 }
 **/
 .card {
@@ -211,20 +211,20 @@ sub {
 }
 
 .modal-content {
-    /* background-color: #92c927; */
-    width: 100%;
-    padding: 15px;
-    overflow: hidden;
-    position: relative;
-    box-sizing: border-box;
-    max-width: 650px;
-    margin: auto;
-    border-radius: 0px;
-    border: 0px solid #fcfcfc;
-    padding: 15px;
-    /* Safari 3.1-5 */
-    -o-border-image: url(none) 30 stretch;
-    /* Opera 11-12.1 */
+    /* background-color: #92c927; /
+width: 100%;
+padding: 15px;
+overflow: hidden;
+position: relative;
+box-sizing: border-box;
+max-width: 650px;
+margin: auto;
+border-radius: 0px;
+border: 0px solid #fcfcfc;
+padding: 15px;
+/ Safari 3.1-5 /
+-o-border-image: url(none) 30 stretch;
+/ Opera 11-12.1 */
     border-image: url(none) 30 stretch;
 }
 
@@ -344,4 +344,19 @@ blink {
     50% {
         opacity: 0;
     }
+}
+
+/* Offline Indicator Styling (from head, but reinforced here if needed) */
+.offline-indicator {
+    background-color: #fbbf24;
+    color: #000;
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
 }
