@@ -71,7 +71,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register('/_sw.js')
                     .then(registration => {
                         console.log('SW registered: ', registration);
                     })
@@ -91,4 +91,5 @@
             if (indicator) indicator.style.display = 'block';
         });
     </script>
+
 </head>
