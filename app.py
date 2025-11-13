@@ -158,6 +158,8 @@ def ads_txt():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():   
+    admin = request.args.get('admin', False)
+    
     if request.method == 'POST':         
         if request.form.get('action') == 'login':
             return subscribe()
@@ -196,7 +198,7 @@ def index():
     yesterday = (current_time - timedelta(days=1)).strftime("%A")
     today = (current_time).strftime("%A")
     tomorrow = (current_time + timedelta(days=1)).strftime("%A")
-    return render_template('plans.html', plan=plan, slips=slips, current_time=current_time, yesterday=yesterday, today=today, tomorrow=tomorrow) 
+    return render_template('plans.html', plan=plan, slips=slips, current_time=current_time, yesterday=yesterday, today=today, tomorrow=tomorrow, admin=admin) 
 
 @app.route('/paystack-callback', methods=['GET', 'POST'])
 def paystack_callback():  

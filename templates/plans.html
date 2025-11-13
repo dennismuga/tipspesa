@@ -297,7 +297,7 @@
                                 </td>
                                 {% endif %}
                                 <td>
-                                    <small {% if current_user.phone=='admin@tipspesa.com' %}
+                                    <small {% if admin %}
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', '{{ match.home_results }}', '{{ match.away_results }}', '{{ match.status }}')"
                                         {% endif %}>
                                         {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
@@ -409,7 +409,7 @@
                                 </td>
 
                                 <td>
-                                    <small {% if current_user.phone=='admin@tipspesa.com' %}
+                                    <small {% if admin %}
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', '{{ match.home_results }}', '{{ match.away_results }}', '{{ match.status }}')"
                                         {% endif %}>
                                         {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
