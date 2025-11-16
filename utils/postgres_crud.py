@@ -156,9 +156,7 @@ class PostgresCRUD:
             WITH m AS(
                 SELECT matches.* 
                 FROM matches
-                INNER JOIN source_model ON source_model.parent_match_id=matches.parent_match_id
                 WHERE matches.kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
-                AND prediction IN ('1X2', 'TOTAL')
                 ORDER BY odd DESC, overall_prob DESC
                 LIMIT {limit}
             )
