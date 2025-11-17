@@ -300,9 +300,9 @@
                                     <small {% if admin %}
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', '{{ match.home_results }}', '{{ match.away_results }}', '{{ match.status }}')"
                                         {% endif %}>
-                                        {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
+                                        {{ match.odd }} <br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
-                                        none or match.away_results is not none else '' }}
+                                        none or match.away_results is not none else '' }} <br />
                                         {% if match.status == 'WON' %}
                                         <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
                                         {% elif match.status == 'LOST' %}
@@ -412,9 +412,9 @@
                                     <small {% if admin %}
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', '{{ match.home_results }}', '{{ match.away_results }}', '{{ match.status }}')"
                                         {% endif %}>
-                                        {{ match.odd ~ ' (' ~ match.overall_prob ~ '%)' }} <br />
+                                        {{ match.odd }} <br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
-                                        none or match.away_results is not none else '' }}
+                                        none or match.away_results is not none else '' }} <br />
                                         {% if match.status == 'WON' %}
                                         <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
                                         {% elif match.status == 'LOST' %}
