@@ -1,16 +1,13 @@
-# Use python base image
-FROM python:3.13-slim-bullseye
+FROM python:3.13-alpine
 
-# Update packages, install uuidgen, and clean up
-RUN apt-get update \
-    && apt-get install -y uuid-runtime git \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Only runtime packages needed
+RUN apk add --no-cache tzdata ca-certificates \
+    && cp /usr/share/zoneinfo/Africa/Nairobi /etc/localtime \
+    && echo "Africa/Nairobi" > /etc/timezone \
+    && pip install --upgrade pip
 
-COPY requirements.txt .
-#update pip & install dependencies
-RUN pip install --upgrade pip \
-    && pip install -r requirements.txt
+COPY . .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Set the timezone to Africa/Nairobi
-RUN ln -sf /usr/share/zoneinfo/Africa/Nairobi /etc/localtime
+ENV TZ=Africa/Nairobi
+
