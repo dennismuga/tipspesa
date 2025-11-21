@@ -384,7 +384,7 @@
                                 maxValue: 100,
                                 width: 7,
                                 text: '{{ win_perc | int }}%',
-                                colors: ['white', '{{ "green" if win_perc >= 85 else "orange" if win_perc >= 70 else "yellow" if win_perc >= 50 else "red" }}'],
+                                colors: ['white', '{{ "green" if win_perc >= 80 else "yellow" if win_perc >= 70 else "orange" if win_perc >= 50 else "red" }}'],
                                 duration: 400,
                                 wrpClass: 'circles-wrp',
                                 textClass: 'circles-text',
