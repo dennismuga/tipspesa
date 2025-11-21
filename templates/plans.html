@@ -202,7 +202,7 @@
             <a href="https://tipspesa.vercel.app/" class="flex">
                 <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="h-12">
             </a>
-            <span class="bg-yellow-100 text-yellow-800 text-lg font-bold px-2 py-1 rounded-full pull-right"
+            <span class="bg-yellow-100 text-yellow-800 text-lg font-bold px-2 py-1 pull-right"
                 data-toggle="modal" data-target="#donateModal">Support Us
             </span>
         </div>
@@ -316,14 +316,14 @@
                             {% endfor %}
                             {% if true or current_user.active or slip.id==1 %}
                             <tr>
-                                {% if slip.betika_share_code %}
+                                {% if slip.share_code %}
                                 <td id="betika_share" class="text-sm" colspan="4">
                                     <small>
-                                        Betika Share Code </br>
+                                        Sportybet Share Code </br>
                                         <span
-                                            class="bg-{{ plan.color }}-100 text-{{ plan.color }}-800 text-xs font-bold px-2 py-1 rounded-full"
-                                            onclick="copyToClipboard('{{ slip.betika_share_code }}')">
-                                            {{ slip.betika_share_code }}
+                                            class="bg-red-100 text-red-800 text-sm font-bold px-2 py-1"
+                                            onclick="copyToClipboard('{{ slip.share_code }}')">
+                                            {{ slip.share_code }}
                                         </span><br />
                                         <i>Tap to Copy</i>
                                     </small>
