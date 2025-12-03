@@ -58,6 +58,53 @@ class SportybetClient:
             logger.error("Unexpected error during %s %s: %s", method.upper(), endpoint, e)
 
         return None
+    
+
+    def available_selections(self, matches: List[Dict]) -> List[Dict]:
+        """
+        Check if provided matches/markets are available at this time
+        
+        Returns List of matches with available markets
+        """
+        selections = [
+            {
+                "eventId": f'sr:match:{match.parent_match_id}',
+                "marketId": str(match.sub_type_id),
+                "outcomeId": str(match.outcome_id),
+                "specifier": match.special_bet_value if match.special_bet_value!="" else None,
+            }
+            for match in matches
+            #if all(k in match for k in ("parent_match_id", "sub_type_id", "outcome_id"))
+        ]
+
+        if not selections:
+            logger.error("No valid selections to validate")
+            return None
+
+        payload = selections
+        response = self._request("POST", "/factsCenter/Outcomes", json=payload)  
+
+        
+        if response and "data" in response:
+            available_selections = []
+            for event in response.get("data"):
+                if "markets" in event:
+                    for market in event.get("markets"):
+                        if "outcomes" in market:
+                            for outcome in market.get("outcomes"):
+                                available_selections.append(
+                                    {
+                                        "eventId": event.get("eventId"),
+                                        "marketId": market.get("id"),
+                                        "outcomeId": outcome.get("id"),
+                                        "specifier": market.get("specifier")
+                                    }
+                                )
+                
+            return available_selections
+        
+        logger.error("Failed to validate matches, response: %s", response)
+        return []
 
 
     def book_bet(self, matches: List[Dict]) -> Optional[str]:
@@ -65,16 +112,7 @@ class SportybetClient:
         Book multiple selections and return share code.
         Each event must have _event_id, _market_id, _outcome_id.
         """
-        selections = [
-            {
-                "eventId": f'sr:match:{match.parent_match_id}',
-                "marketId": str(match.sub_type_id),
-                "outcomeId": str(match.outcome_id),
-                "specifier": match.special_bet_value,
-            }
-            for match in matches
-            #if all(k in match for k in ("parent_match_id", "sub_type_id", "outcome_id"))
-        ]
+        selections = self.available_selections(matches)
 
         if not selections:
             logger.error("No valid selections to book")

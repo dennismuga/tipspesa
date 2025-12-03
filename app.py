@@ -1,12 +1,12 @@
 
 import os
-import pytz
 
 from datetime import datetime, timedelta
 from typing import List, Dict, Any
 
+import pytz
 from dotenv import load_dotenv
-from flask import Flask, jsonify, redirect, render_template, request, session, url_for
+from flask import Flask, jsonify, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_session import Session
 from redis import Redis
