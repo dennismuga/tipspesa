@@ -70,7 +70,7 @@ class SportybetClient:
                 "eventId": f'sr:match:{match.parent_match_id}',
                 "marketId": str(match.sub_type_id),
                 "outcomeId": str(match.outcome_id),
-                "specifier": str(match.special_bet_value),
+                "specifier": match.special_bet_value,
             }
             for match in matches
             #if all(k in match for k in ("parent_match_id", "sub_type_id", "outcome_id"))
