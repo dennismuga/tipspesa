@@ -84,7 +84,7 @@ def page_not_found(e):
     # Redirect to a specific endpoint, like 'plans', or a custom 404 page
     return redirect(url_for('index'))
 
-def filter_matches(day, comparator='=', status='', limit=42):
+def filter_matches(day, comparator='=', status='', limit=100):
     matches = helper.fetch_matches(day, comparator, status, limit)
     filtered_matches = []
     total_odds = 1
@@ -243,6 +243,7 @@ def serve_app_ads_txt():
 if __name__ == '__main__':
     debug_mode = os.getenv('IS_DEBUG', 'False') in ['True', '1', 't']
     app.run(debug=debug_mode)
+
 
 
 
