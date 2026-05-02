@@ -143,7 +143,7 @@ def get_matches(count, end_index):
     
     return today_matches, history  
 
-def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 6) -> List[Dict[str, Any]]:
+def create_slips(today_matches: List[Dict[str, Any]], slip_size: int = 8) -> List[Dict[str, Any]]:
     """Create slips from today's matches with specified size."""
     return [
         {
