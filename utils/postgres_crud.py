@@ -156,7 +156,7 @@ class PostgresCRUD:
             WITH m AS(
                 SELECT matches.* 
                 FROM matches
-                WHERE matches.kickoff::date {comparator} (CURRENT_TIMESTAMP + INTERVAL '3 hours')::date {day} {status}
+                WHERE matches.kickoff::date {comparator} CURRENT_TIMESTAMP::date {day} {status}
                 ORDER BY odd DESC, overall_prob DESC
                 LIMIT {limit}
             )
@@ -175,7 +175,7 @@ class PostgresCRUD:
             WITH m AS(
                 SELECT kickoff, home_team, away_team, odd, parent_match_id, sub_type_id, bet_pick, special_bet_value, outcome_id 
                 FROM matches
-                WHERE kickoff > (CURRENT_TIMESTAMP + INTERVAL '3 hours')
+                WHERE kickoff > CURRENT_TIMESTAMP
                 AND overall_prob >= 80
                 AND sub_type_id NOT IN (1)
                 AND outcome_id NOT IN (11)
