@@ -162,7 +162,7 @@ class PostgresCRUD:
             )
             SELECT * 
             FROM m
-            ORDER BY kickoff, overall_prob DESC, odd DESC, match_id
+            ORDER BY kickoff, overall_prob DESC, odd DESC
             """
             cur.execute(query)
             return cur.fetchall()
