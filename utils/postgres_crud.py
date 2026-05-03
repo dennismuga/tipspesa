@@ -157,12 +157,12 @@ class PostgresCRUD:
                 SELECT matches.* 
                 FROM matches
                 WHERE matches.kickoff::date {comparator} CURRENT_TIMESTAMP::date {day} {status}
-                ORDER BY odd DESC, overall_prob DESC
-                LIMIT {limit}
+                ORDER BY kickoff DESC
             )
             SELECT * 
             FROM m
             ORDER BY kickoff, overall_prob DESC, odd DESC, match_id
+            LIMIT {limit}
             """
             cur.execute(query)
             return cur.fetchall()
