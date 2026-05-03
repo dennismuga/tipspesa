@@ -115,7 +115,7 @@ def get_matches(count, end_index):
     three_days_ago = filter_matches('-3')
     two_days_ago = filter_matches('-2')
     yesterday_matches = filter_matches('-1')
-    today_matches = filter_matches('', '>=')
+    today_matches = filter_matches('', '=')
     user_tz = helper.get_user_tz()
     datetime_now = datetime.now().astimezone(user_tz)
     history = [
