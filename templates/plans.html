@@ -310,7 +310,7 @@
                                         {% elif match.status == 'LOST' %}
                                         <span class="fa fa-times" style="color: orangered; font-size: 10px;"> {{ match.overall_prob }}%</span>
                                         {% elif match.status %}
-                                        {{ '[' ~ match.status ~ ']' }}
+                                        <br />{{ '[' ~ match.status ~ ']' }}
                                         {% else %}
                                         <span class="fa fa-fire" style="color: orange; font-size: 10px;"> {{ match.overall_prob }}%</span>
                                         {% endif %}
