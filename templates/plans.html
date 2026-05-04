@@ -306,9 +306,9 @@
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
                                         none or match.away_results is not none else '' }} <br />
                                         {% if match.status == 'WON' %}
-                                        <span class="fa fa-check" style="color: green; font-size: 16px;"> {{ match.overall_prob }}%</span>
+                                        <span class="fa fa-check" style="color: green; font-size: 10px;"> {{ match.overall_prob }}%</span>
                                         {% elif match.status == 'LOST' %}
-                                        <span class="fa fa-times" style="color: orange; font-size: 16px;"> {{ match.overall_prob }}%</span>
+                                        <span class="fa fa-times" style="color: orangered; font-size: 10px;"> {{ match.overall_prob }}%</span>
                                         {% else %}
                                         {{ '[' ~ match.status ~ ']' if match.status else '' }}
                                         {% endif %}
@@ -420,9 +420,9 @@
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
                                         none or match.away_results is not none else '' }} <br />
                                         {% if match.status == 'WON' %}
-                                        <span class="fa fa-check" style="color: green; font-size: 16px;"> {{ match.overall_prob }}%</span>
+                                        <span class="fa fa-check" style="color: green; font-size: 10px;"> {{ match.overall_prob }}%</span>
                                         {% elif match.status == 'LOST' %}
-                                        <span class="fa fa-times" style="color: orange; font-size: 16px;"> {{ match.overall_prob }}%</span>            
+                                        <span class="fa fa-times" style="color: orangered; font-size: 10px;"> {{ match.overall_prob }}%</span>            
                                         {% else %}
                                         {{ '[' ~ match.status ~ ']' if match.status else '' }}
                                         {% endif %}
