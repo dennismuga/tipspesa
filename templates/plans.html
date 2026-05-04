@@ -300,8 +300,7 @@
                                     <small {% if admin %}
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', '{{ match.home_results }}', '{{ match.away_results }}', '{{ match.status }}')"
                                         {% endif %}>
-                                        {{ match.odd }} <br />
-                                        {%if match.status %}
+                                        {{ match.odd }} [<span class="fa fa-fire" style="color: orange; font-size: 12px;"> {{ match.overall_prob }}%</span>] <br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
                                         none or match.away_results is not none else '' }} <br />
                                         {% if match.status == 'WON' %}
@@ -310,9 +309,6 @@
                                         <span class="fa fa-minus-circle" style="color: grey; font-size: 16px;"></span>
                                         {% else %}
                                         {{ '[' ~ match.status ~ ']' if match.status else '' }}
-                                        {% endif %}
-                                        {% else %}
-                                        <span class="fa fa-fire" style="color: orange; font-size: 12px;"> {{ match.overall_prob }}%</span>                                        
                                         {% endif %}
                                     </small>
                                 </td>
@@ -416,7 +412,7 @@
                                     <small {% if admin %}
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', '{{ match.home_results }}', '{{ match.away_results }}', '{{ match.status }}')"
                                         {% endif %}>
-                                        {{ match.odd }} <br />
+                                        {{ match.odd }} [<span class="fa fa-fire" style="color: orange; font-size: 12px;"> {{ match.overall_prob }}%</span>]<br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
                                         none or match.away_results is not none else '' }} <br />
                                         {% if match.status == 'WON' %}
