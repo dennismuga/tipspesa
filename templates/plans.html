@@ -312,7 +312,7 @@
                                         {{ '[' ~ match.status ~ ']' if match.status else '' }}
                                         {% endif %}
                                         {% else %}
-                                        {{ match.overall_prob }}%
+                                        <span class="fa fa-fire" style="color: green; font-size: 16px;"> {{ match.overall_prob }}%</span>                                        
                                         {% endif %}
                                     </small>
                                 </td>
