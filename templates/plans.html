@@ -304,7 +304,7 @@
                                         {% endif %}>
                                         {{ match.odd }} <br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
-                                        none or match.away_results is not none else '' }} <br />
+                                        none or match.away_results is not none else '' }}
                                         {% if match.status == 'WON' %}
                                         <span class="fa fa-check" style="color: green; font-size: 10px;"> {{ match.overall_prob }}%</span>
                                         {% elif match.status == 'LOST' %}
