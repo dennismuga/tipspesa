@@ -416,7 +416,7 @@
                                         {{ match.odd }} <br />
                                         <span class="fa fa-fire" style="color: orange; font-size: 12px;"> {{ match.overall_prob }}%</span><br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
-                                        none or match.away_results is not none else '' }} <br />
+                                        none or match.away_results is not none else '' }}&nbsp;
                                         {% if match.status == 'WON' %}
                                         <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
                                         {% elif match.status == 'LOST' %}
