@@ -280,8 +280,10 @@
                                 %H:%M:%S') > match.kickoff.strftime('%Y-%m-%d %H:%M:%S') %}
                                 {% set ns.posted = ns.posted + 1 %}
                                 <td>
-                                    <small><b>{{ match.prediction | upper }}</b></small> <br />
-                                    {{ match.bet_pick | upper }}
+                                    <small>
+                                        <b>{{ match.prediction | upper }}</b><br />
+                                        {{ match.bet_pick | upper }}
+                                    </small>
                                 </td>
                                 {% elif loop.index==ns.posted+1 %}
                                 <td class="text-center" rowspan="{{ (slip.matches | length)-ns.posted }}"
@@ -405,8 +407,10 @@
                             <tr>
                                 <td>{{ match.home_team }} vs {{ match.away_team }}</td>
                                 <td>
-                                    <small><b>{{ match.prediction | upper }}</b></small> <br />
-                                    {{ match.bet_pick | upper }}
+                                    <small>
+                                        <b>{{ match.prediction | upper }}</b><br />
+                                        {{ match.bet_pick | upper }}
+                                    </small>
                                 </td>
 
                                 <td>
