@@ -306,9 +306,9 @@
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
                                         none or match.away_results is not none else '' }} <br />
                                         {% if match.status == 'WON' %}
-                                        <span class="fa fa-check-circle" style="color: green; font-size: 16px;">{{ match.overall_prob }}%</span>
+                                        <span class="fa fa-check" style="color: green; font-size: 16px;"> {{ match.overall_prob }}%</span>
                                         {% elif match.status == 'LOST' %}
-                                        <span class="fa fa-minus-circle" style="color: orange; font-size: 16px;">{{ match.overall_prob }}%</span>
+                                        <span class="fa fa-times" style="color: orange; font-size: 16px;"> {{ match.overall_prob }}%</span>
                                         {% else %}
                                         {{ '[' ~ match.status ~ ']' if match.status else '' }}
                                         {% endif %}
@@ -417,13 +417,12 @@
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', '{{ match.home_results }}', '{{ match.away_results }}', '{{ match.status }}')"
                                         {% endif %}>
                                         {{ match.odd }} <br />
-                                        <span class="fa fa-fire" style="color: {{ 'green' if match.status == 'WON' else 'red' if match.status == 'LOST' else 'orange' }}; font-size: 12px;"> {{ match.overall_prob }}%</span><br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
-                                        none or match.away_results is not none else '' }}&nbsp;
+                                        none or match.away_results is not none else '' }} <br />
                                         {% if match.status == 'WON' %}
-                                        <span class="fa fa-check-circle" style="color: green; font-size: 16px;"></span>
+                                        <span class="fa fa-check" style="color: green; font-size: 16px;"> {{ match.overall_prob }}%</span>
                                         {% elif match.status == 'LOST' %}
-                                        <span class="fa fa-minus-circle" style="color: grey; font-size: 16px;"></span>
+                                        <span class="fa fa-times" style="color: orange; font-size: 16px;"> {{ match.overall_prob }}%</span>            
                                         {% else %}
                                         {{ '[' ~ match.status ~ ']' if match.status else '' }}
                                         {% endif %}
