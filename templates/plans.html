@@ -303,7 +303,7 @@
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', '{{ match.home_results }}', '{{ match.away_results }}', '{{ match.status }}')"
                                         {% endif %}>
                                         {{ match.odd }} <br />
-                                        <span class="fa fa-fire" style="color: orange; font-size: 12px;"> {{ match.overall_prob }}%</span> <br />
+                                        <span class="fa fa-fire" style="color: {{ 'green' if match.status == 'WON' else 'red' if match.status == 'LOST' else 'orange' }}; font-size: 12px;"> {{ match.overall_prob }}%</span> <br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
                                         none or match.away_results is not none else '' }}&nbsp;
                                         {% if match.status == 'WON' %}
@@ -418,7 +418,7 @@
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', '{{ match.home_results }}', '{{ match.away_results }}', '{{ match.status }}')"
                                         {% endif %}>
                                         {{ match.odd }} <br />
-                                        <span class="fa fa-fire" style="color: orange; font-size: 12px;"> {{ match.overall_prob }}%</span><br />
+                                        <span class="fa fa-fire" style="color: {{ 'green' if match.status == 'WON' else 'red' if match.status == 'LOST' else 'orange' }}; font-size: 12px;"> {{ match.overall_prob }}%</span><br />
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
                                         none or match.away_results is not none else '' }}&nbsp;
                                         {% if match.status == 'WON' %}
