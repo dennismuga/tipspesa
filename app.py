@@ -7,9 +7,6 @@ from typing import List, Dict, Any
 import pytz
 from dotenv import load_dotenv
 from flask import Flask, jsonify, redirect, render_template, request, url_for
-from flask_login import LoginManager, current_user, login_user, logout_user
-from flask_session import Session
-from redis import Redis
 
 from utils.entities import Plan
 from utils.helper import Helper
@@ -21,63 +18,10 @@ from utils.sportybet_client import SportybetClient
 load_dotenv()
 
 app = Flask(__name__)
-#app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000  # One year in seconds
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-app.config['SESSION_TYPE'] = 'redis'
-app.config['SESSION_REDIS'] = Redis(
-    host=os.getenv('REDIS_HOSTNAME'),
-    port=os.getenv('REDIS_PORT'),
-    password=os.getenv('REDIS_PASSWORD'),
-    ssl=True
-)
-app.config['SESSION_COOKIE_SECURE'] = True if os.getenv('REDIS_SSL') in ['True', '1'] else False  # Set to True if using HTTPS on Vercel
-app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-
-Session(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'free'
 
 db = PostgresCRUD()
 helper = Helper()
 paystack_transaction = Transactions()
-
-def free_pass():
-    free_user = db.get_user(phone='admin@tipspesa.com')
-    if not current_user:
-        login_user(free_user)
-    if current_user.is_authenticated and current_user != free_user:
-        logout_user()
-        login_user(free_user)
-        
-def subscribe():     
-    phone = request.form['phone']
-    amount = int(request.form['amount'])
-    user = db.get_user(phone=phone)
-        
-    if not user:
-        db.add_user(phone)
-        user = db.get_user(phone=phone)
-
-    if current_user.is_authenticated:
-        logout_user()
-
-    login_user(user)
-
-    order_details = paystack_transaction.initialize(email=phone, amount=amount)
-    if order_details.get('status'):
-        authorization_url = order_details.get('data').get('authorization_url')
-        reference = order_details.get('data').get('reference')
-        db.insert_transaction(reference, current_user.id, amount)
-        return redirect(authorization_url)
-    else:
-        return redirect(url_for('index'))
-
-# Callback to reload the user object
-@login_manager.user_loader
-def load_user(user_id):
-    return db.get_user(user_id=user_id)
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -109,7 +53,7 @@ def filter_matches(day, comparator='=', status='', limit=80):
             
     return filtered_matches
 
-def get_matches(count, end_index):
+def get_matches():
     five_days_ago = filter_matches('-5')
     four_days_ago = filter_matches('-4')
     three_days_ago = filter_matches('-3')
@@ -162,10 +106,7 @@ def index():
     admin = request.args.get('admin', False)
     
     if request.method == 'POST':         
-        if request.form.get('action') == 'login':
-            return subscribe()
-        
-        elif request.form.get('action') == 'update_results':
+        if request.form.get('action') == 'update_results':
             match_id = request.form['match_id']
             home_team_goals = request.form['home_team_goals']
             away_team_goals = request.form['away_team_goals']
@@ -192,7 +133,7 @@ def index():
                 }
             ), 504  
             
-    today_matches, history = get_matches(50, 50)
+    today_matches, history = get_matches()
     plan = Plan('Free', 0, 'green', 5, today_matches, history)  
     slips = create_slips(today_matches)
     current_time = datetime.now(pytz.timezone('Africa/Nairobi'))

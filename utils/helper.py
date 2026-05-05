@@ -207,12 +207,9 @@ class Helper():
         return 'Africa/Nairobi'  # Ultimate fallback
 
     def get_user_tz(self):
-        user_tz_str = session.get('user_timezone')
-        if not user_tz_str:  # Only geolocate if not cached
-            client_ip = request.remote_addr  # Or request.environ.get('HTTP_X_FORWARDED_FOR') for proxies
-            user_tz_str = self.get_tz_from_ip(client_ip)
-            session['user_timezone'] = user_tz_str  # Cache in session
-        
+        client_ip = request.remote_addr  # Or request.environ.get('HTTP_X_FORWARDED_FOR') for proxies
+        user_tz_str = self.get_tz_from_ip(client_ip)
+                
         return pytz.timezone(user_tz_str)
         
         
