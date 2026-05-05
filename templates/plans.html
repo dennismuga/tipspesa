@@ -303,12 +303,12 @@
                                         onclick="editMatch('{{ match.match_id }}', '{{ match.home_team }}', '{{ match.away_team }}', '{{ match.home_results }}', '{{ match.away_results }}', '{{ match.status }}')"
                                         {% endif %}>
                                         {{ match.odd }} <br />
-                                        {{ (match.home_results ~ '-' ~ match.away_results ~ '<br />') if match.home_results is not
-                                        none or match.away_results is not none else '' | safe }}
+                                        {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
+                                        none or match.away_results is not none else '' }}
                                         {% if match.status == 'WON' %}
-                                        <span class="fa fa-check" style="color: green; font-size: 10px;"> {{ match.overall_prob }}%</span>
+                                        <br /><span class="fa fa-check" style="color: green; font-size: 10px;"> {{ match.overall_prob }}%</span>
                                         {% elif match.status == 'LOST' %}
-                                        <span class="fa fa-times" style="color: orangered; font-size: 10px;"> {{ match.overall_prob }}%</span>
+                                        <br /><span class="fa fa-times" style="color: orangered; font-size: 10px;"> {{ match.overall_prob }}%</span>
                                         {% elif match.status %}
                                         <br />{{ '[' ~ match.status ~ ']' }}
                                         {% else %}
