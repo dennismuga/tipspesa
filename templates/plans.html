@@ -28,7 +28,8 @@
         display: none;
     }
 
-    td, th {
+    td,
+    th {
         font-size: small;
     }
 </style>
@@ -206,8 +207,8 @@
             <a href="https://tipspesa.vercel.app/" class="flex">
                 <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="h-12">
             </a>
-            <span class="bg-yellow-100 text-yellow-800 text-lg font-bold px-2 py-1 pull-right"
-                data-toggle="modal" data-target="#donateModal">Support Us
+            <span class="bg-yellow-100 text-yellow-800 text-lg font-bold px-2 py-1 pull-right" data-toggle="modal"
+                data-target="#donateModal">Support Us
             </span>
         </div>
     </header>
@@ -233,8 +234,8 @@
                             length }} matches
                         </span>
                         <a href="${window.location.href}"
-   class="bg-blue-100 text-blue-800 text-xs font-bold rounded-full px-2 py-1 inline-flex items-center gap-2">
-    <i class="fas fa-refresh"></i> Refresh Page
+                            class="bg-blue-100 text-blue-800 text-xs font-bold rounded-full px-2 py-1 inline-flex items-center gap-2">
+                            <i class="fas fa-refresh"></i> Refresh Page
                         </a>
                         <div class="text-yellow-400">
                             {% for i in range(plan.stars) %}
@@ -310,13 +311,16 @@
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
                                         none or match.away_results is not none else '' }}
                                         {% if match.status == 'WON' %}
-                                        <br /><span class="fa fa-check" style="color: green; font-size: 10px;"> {{ match.overall_prob }}%</span>
+                                        <br /><span class="fa fa-check" style="color: green; font-size: 10px;"> {{
+                                            match.overall_prob }}%</span>
                                         {% elif match.status == 'LOST' %}
-                                        <br /><span class="fa fa-times" style="color: orangered; font-size: 10px;"> {{ match.overall_prob }}%</span>
+                                        <br /><span class="fa fa-times" style="color: orangered; font-size: 10px;"> {{
+                                            match.overall_prob }}%</span>
                                         {% elif match.status %}
                                         <br />{{ '[' ~ match.status ~ ']' }}
                                         {% else %}
-                                        <span class="fa fa-fire" style="color: orange; font-size: 10px;"> {{ match.overall_prob }}%</span>
+                                        <span class="fa fa-fire" style="color: orange; font-size: 10px;"> {{
+                                            match.overall_prob }}%</span>
                                         {% endif %}
                                     </small>
                                 </td>
@@ -328,8 +332,7 @@
                                 <td id="betika_share" class="text-sm" colspan="4">
                                     <small>
                                         Sportybet Share Code </br>
-                                        <span
-                                            class="bg-red-100 text-red-800 text-sm font-bold px-2 py-1"
+                                        <span class="bg-red-100 text-red-800 text-sm font-bold px-2 py-1"
                                             onclick="copyToClipboard('{{ slip.share_code }}')">
                                             {{ slip.share_code }}
                                         </span><br />
@@ -426,9 +429,11 @@
                                         {{ (match.home_results ~ '-' ~ match.away_results) if match.home_results is not
                                         none or match.away_results is not none else '' }} <br />
                                         {% if match.status == 'WON' %}
-                                        <span class="fa fa-check" style="color: green; font-size: 10px;"> {{ match.overall_prob }}%</span>
+                                        <span class="fa fa-check" style="color: green; font-size: 10px;"> {{
+                                            match.overall_prob }}%</span>
                                         {% elif match.status == 'LOST' %}
-                                        <span class="fa fa-times" style="color: orangered; font-size: 10px;"> {{ match.overall_prob }}%</span>            
+                                        <span class="fa fa-times" style="color: orangered; font-size: 10px;"> {{
+                                            match.overall_prob }}%</span>
                                         {% else %}
                                         {{ '[' ~ match.status ~ ']' if match.status else '' }}
                                         {% endif %}
@@ -634,6 +639,10 @@
                 navigator.serviceWorker.register('/sw.js');
             }
         });
+
+        setInterval(function () {
+            location.reload();
+        }, 3 * 60 * 1000);
 
     </script>
 </body>
