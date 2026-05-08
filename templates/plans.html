@@ -463,6 +463,11 @@
     <!--  include 'footer.html'  -->
 
     <script>
+
+        setInterval(function () {
+            location.reload();
+        }, 3 * 60 * 1000);
+
         function InitiateTransaction() {
             amount = $("#amount").val()
 
@@ -639,10 +644,6 @@
                 navigator.serviceWorker.register('/sw.js');
             }
         });
-
-        setInterval(function () {
-            location.reload();
-        }, 3 * 60 * 1000);
 
     </script>
 </body>
