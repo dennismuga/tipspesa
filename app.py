@@ -28,7 +28,7 @@ def page_not_found(e):
     # Redirect to a specific endpoint, like 'plans', or a custom 404 page
     return redirect(url_for('index'))
 
-def filter_matches(day, comparator='=', status='', limit=80):
+def filter_matches(day, comparator='=', status='', limit=1000):
     matches = helper.fetch_matches(day, comparator, status, limit)
     filtered_matches = []
     total_odds = 1
@@ -135,7 +135,10 @@ def index():
             
     today_matches, history = get_matches()
     plan = Plan('Free', 0, 'green', 5, today_matches, history)  
-    slips = create_slips(today_matches)
+    
+    slip_size = len(today_matches) // 8
+        
+    slips = create_slips(today_matches=today_matches, slip_size=slip_size)
     current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
     yesterday = (current_time - timedelta(days=1)).strftime("%A")
     today = (current_time).strftime("%A")
