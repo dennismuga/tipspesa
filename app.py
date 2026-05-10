@@ -136,7 +136,7 @@ def index():
     today_matches, history = get_matches()
     plan = Plan('Free', 0, 'green', 5, today_matches, history)  
     
-    slip_size = len(today_matches) // 8
+    slip_size = max(len(today_matches) // 8, 4) # Ensure a minimum slip size of 4
         
     slips = create_slips(today_matches=today_matches, slip_size=slip_size)
     current_time = datetime.now(pytz.timezone('Africa/Nairobi'))
